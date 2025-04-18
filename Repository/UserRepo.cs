@@ -16,7 +16,6 @@ namespace SolmileAPI.Repository
         {
             return _context.Users.Where(u => u.Id == id).FirstOrDefault();
         }
-
         //public User GetByName(string name)
         //{
         //    throw new NotImplementedException();

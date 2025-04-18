@@ -6,7 +6,7 @@ namespace SolmileAPI.Interface
     {
         ICollection<User> GetUsers();
         User GetById(int id);
-        //User GetByName(string name);
+        User GetByName(string name);
         bool UserExist(int userId);
     }
 }

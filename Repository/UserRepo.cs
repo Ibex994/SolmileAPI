@@ -16,10 +16,10 @@ namespace SolmileAPI.Repository
         {
             return _context.Users.Where(u => u.Id == id).FirstOrDefault();
         }
-        //public User GetByName(string name)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public User GetByName(string name)
+        {
+           return _context.Users.Where(u => u.Username == name).FirstOrDefault();
+        }
 
         public ICollection<User> GetUsers()
         {

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SolmileAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e3487f7d1e48cda735fdd279d415cbf56b34350")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eefe8d3b8aca9f9c179cacd766f3ed01d65aec43")]
 [assembly: System.Reflection.AssemblyProductAttribute("SolmileAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SolmileAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -43,5 +43,17 @@ namespace SolmileAPI.Controllers
             return Ok(user);
 
         }
+
+        [HttpGet("name")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
+        [ProducesResponseType(400)]
+        public IActionResult GetByName(string name)
+        {
+            
+            var user = _mapper.Map<UserDto>(_userInterface.GetByName(name));
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(user);
+        }
     }
 }

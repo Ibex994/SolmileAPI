@@ -75,6 +75,11 @@
         "Name": "email",
         "Type": "System.String",
         "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -141,6 +146,11 @@
         "Name": "gender",
         "Type": "System.String",
         "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -176,6 +186,11 @@
         "Name": "status",
         "Type": "System.Boolean",
         "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [

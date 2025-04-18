@@ -44,8 +44,10 @@ namespace SolmileAPI.Controllers
         [HttpGet("status/{status}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
-        public IActionResult GetEmpByStatus(bool status)
+        public IActionResult GetEmpByStatus(bool status, int id)
         {
+            if (!_employeeInterface.EmployeeExist(id))
+                return NotFound();
             var employees = _mapper.Map<IEnumerable<EmployeeDto>>(_employeeInterface.GetEmployeeByStatus(status));
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -54,8 +56,10 @@ namespace SolmileAPI.Controllers
         [HttpGet("gender/{gender}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
-        public IActionResult GetEmpByGender(string gender)
+        public IActionResult GetEmpByGender(string gender, int id)
         {
+            if (!_employeeInterface.EmployeeExist(id))
+                return NotFound();
             var employees=_mapper.Map<IEnumerable<Employee>>(_employeeInterface.GetEmployeeByGender(gender));
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -64,8 +68,10 @@ namespace SolmileAPI.Controllers
         [HttpGet("email/{email}")]
         [ProducesResponseType(200, Type = typeof(Employee))]
         [ProducesResponseType(400)]
-        public IActionResult GetEmpByEmail(string email)
+        public IActionResult GetEmpByEmail(string email, int id)
         {
+            if (!_employeeInterface.EmployeeExist(id))
+                return NotFound();
             var employee = _mapper.Map<EmployeeDto>(_employeeInterface.GetEmployeeByEmail(email));
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

@@ -25,7 +25,7 @@ namespace SolmileAPI.Repository
 
         public Employee GetEmployeeByEmail(string email)
         {
-            return _context.Employees.Where(e=>e.Email==email).FirstOrDefault();
+            return _context.Employees.Where(e => e.Email == email).FirstOrDefault();
         }
 
         public Employee GetEmployeeById(int id)

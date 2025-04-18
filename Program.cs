@@ -28,6 +28,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<userInterface, UserRepo>();
+        builder.Services.AddScoped<EmployeeInterface, EmployeeRepo>();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //Enable Reference Handling
         builder.Services.AddControllers().AddJsonOptions(x =>

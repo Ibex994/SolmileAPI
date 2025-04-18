@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|c:\\users\\temeb\\source\\repos\\ibex994\\solmileapi\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|c:\\users\\temeb\\source\\repos\\ibex994\\solmileapi\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|solutionrelative:controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|c:\\users\\temeb\\source\\repos\\ibex994\\solmileapi\\repository\\userrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|solutionrelative:repository\\userrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|c:\\users\\temeb\\source\\repos\\ibex994\\solmileapi\\repository\\employeerepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|solutionrelative:repository\\employeerepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|c:\\users\\temeb\\source\\repos\\ibex994\\solmileapi\\models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|solutionrelative:models\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|c:\\users\\temeb\\source\\repos\\ibex994\\solmileapi\\interface\\employeeinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|solutionrelative:interface\\employeeinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|c:\\users\\temeb\\source\\repos\\ibex994\\solmileapi\\dto\\employeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7F61E032-1DCE-5F3C-022A-7686A5104868}|SolmileAPI.csproj|solutionrelative:dto\\employeedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,67 +54,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "EmployeeDto.cs",
-              "DocumentMoniker": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\DTO\\EmployeeDto.cs",
-              "RelativeDocumentMoniker": "DTO\\EmployeeDto.cs",
-              "ToolTip": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\DTO\\EmployeeDto.cs",
-              "RelativeToolTip": "DTO\\EmployeeDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T21:45:40.133Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EmployeeController.cs",
-              "DocumentMoniker": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Controllers\\EmployeeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EmployeeController.cs",
-              "ToolTip": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Controllers\\EmployeeController.cs*",
-              "RelativeToolTip": "Controllers\\EmployeeController.cs*",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAowEgAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T21:35:05.677Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "EmployeeRepo.cs",
               "DocumentMoniker": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Repository\\EmployeeRepo.cs",
               "RelativeDocumentMoniker": "Repository\\EmployeeRepo.cs",
               "ToolTip": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Repository\\EmployeeRepo.cs",
               "RelativeToolTip": "Repository\\EmployeeRepo.cs",
-              "ViewState": "AgIAABcAAADAmZmZmZkRwCcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAANDMzMzPzvwAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T21:29:21.136Z",
+              "WhenOpened": "2025-04-18T22:52:19.188Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Models\\Employee.cs",
-              "RelativeDocumentMoniker": "Models\\Employee.cs",
-              "ToolTip": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Models\\Employee.cs",
-              "RelativeToolTip": "Models\\Employee.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAiwBgAAAA4AAAAAAAAAA==",
+              "Title": "UserRepo.cs",
+              "DocumentMoniker": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Repository\\UserRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\UserRepo.cs",
+              "ToolTip": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Repository\\UserRepo.cs",
+              "RelativeToolTip": "Repository\\UserRepo.cs",
+              "ViewState": "AgIAABEAAAAgMzMzMzMhwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T21:27:43.136Z",
+              "WhenOpened": "2025-04-18T22:52:09.777Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EmployeeInterface.cs",
-              "DocumentMoniker": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Interface\\EmployeeInterface.cs",
-              "RelativeDocumentMoniker": "Interface\\EmployeeInterface.cs",
-              "ToolTip": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Interface\\EmployeeInterface.cs",
-              "RelativeToolTip": "Interface\\EmployeeInterface.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "EmployeeController.cs",
+              "DocumentMoniker": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Controllers\\EmployeeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EmployeeController.cs",
+              "ToolTip": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Controllers\\EmployeeController.cs",
+              "RelativeToolTip": "Controllers\\EmployeeController.cs",
+              "ViewState": "AgIAADwAAAAAmpmZmZkrwE4AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T21:25:12.316Z",
+              "WhenOpened": "2025-04-18T22:47:43.378Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\Temeb\\source\\repos\\Ibex994\\SolmileAPI\\Controllers\\UserController.cs*",
+              "RelativeToolTip": "Controllers\\UserController.cs*",
+              "ViewState": "AgIAACwAAAAAAAAAAAAqwDkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T22:46:15.427Z",
               "EditorCaption": ""
             }
           ]

@@ -44,7 +44,7 @@ namespace SolmileAPI.Controllers
 
         }
 
-        [HttpGet("name")]
+        [HttpGet("name/{name}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
         [ProducesResponseType(400)]
         public IActionResult GetByName(string name)
@@ -54,6 +54,15 @@ namespace SolmileAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(user);
+        }
+        [HttpGet("exists/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult UserExists(int id)
+        {
+            var exists = _userInterface.UserExist(id);
+            return Ok(exists);
+
         }
     }
 }

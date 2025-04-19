@@ -89,7 +89,18 @@ namespace SolmileAPI.Controllers
                 return BadRequest(ModelState);
             return Ok(empEmail);
         }
-
+        [HttpGet("pos/{position}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetEmpByPos(string position)
+        {
+            var empPos=await _employeeInterface
+                .GetEmployeeByPos(position)
+                .ToListAsync();
+            if(!ModelState.IsValid)
+               ModelState.AddModelError("Position", "No employee found with this position.");
+            return Ok(empPos);
+        }
 
         [HttpGet("exists/{userId}")]
         [ProducesResponseType(200)]

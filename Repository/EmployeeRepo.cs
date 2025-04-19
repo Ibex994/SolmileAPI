@@ -34,6 +34,11 @@ namespace SolmileAPI.Repository
             return _context.Employees.Where(e => e.Id == id).FirstOrDefault();
         }
 
+        public IQueryable<Employee> GetEmployeeByPos(string Posn)
+        {
+            return _context.Employees.Where(e => e.Position.ToLower() == Posn.ToLower());
+        }
+
         public IQueryable<Employee> GetEmployeeByStatus(bool status)
         {
             return _context.Employees.Where(es => es.Status == status);

@@ -11,6 +11,7 @@ namespace SolmileAPI.Helper
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
             CreateMap<Employee, EmployeeDto>();
+            CreateMap<EmployeeDto, Employee>();
         }
     }
 }

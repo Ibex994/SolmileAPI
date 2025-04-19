@@ -81,9 +81,8 @@ namespace SolmileAPI.Controllers
             var employee = await _employeeInterface
                 .GetEmployeeByEmail(email)
                 .ToListAsync();
-            if (employee == null)
-                    return NotFound();
-            var empEmail = _mapper.Map<EmployeeDto>(employee);
+           
+            var empEmail = _mapper.Map<List<EmployeeDto>>(employee);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(empEmail);

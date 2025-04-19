@@ -18,14 +18,9 @@ namespace SolmileAPI.Repository
             return _context.Employees.Any(e => e.Id == userid);   
         }
 
-        public ICollection<Employee> GetAllEmployees()
+        public IQueryable<Employee> GetEmployeeByGender(string gender)
         {
-            return _context.Employees.ToList();
-        }
-
-        public Employee GetEmployeeByEmail(string email)
-        {
-            return _context.Employees.Where(e => e.Email == email).FirstOrDefault();
+            return _context.Employees.Where(e => e.Gender.ToLower() == gender.ToLower());
         }
 
         public Employee GetEmployeeById(int id)
@@ -33,14 +28,19 @@ namespace SolmileAPI.Repository
             return _context.Employees.Where(e => e.Id == id).FirstOrDefault();
         }
 
-        ICollection<Employee> EmployeeInterface.GetEmployeeByGender(string gender)
+        public IQueryable<Employee> GetEmployeeByStatus(bool status)
         {
-            return _context.Employees.Where(e => e.Gender.ToLower() == gender.ToLower()).ToList();
+            return _context.Employees.Where(es => es.Status == status);
         }
 
-        ICollection<Employee> EmployeeInterface.GetEmployeeByStatus(bool status)
+        IQueryable<Employee> EmployeeInterface.GetAllEmployees()
         {
-            return _context.Employees.Where(es=>es.Status==status).ToList();
+            return _context.Employees.AsQueryable();
+        }
+
+        IQueryable<Employee> EmployeeInterface.GetEmployeeByEmail(string email)
+        {
+            return _context.Employees.Where(e => e.Email == email);
         }
     }
 }

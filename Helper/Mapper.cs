@@ -8,7 +8,8 @@ namespace SolmileAPI.Helper
     {
         public Mapper()
         {
-            CreateMap<User, UserDto>(); 
+            CreateMap<User, UserDto>();
+            CreateMap<UserDto, User>();
             CreateMap<Employee, EmployeeDto>();
         }
     }

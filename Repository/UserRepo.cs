@@ -12,6 +12,13 @@ namespace SolmileAPI.Repository
         {
             _context = context;
         }
+
+        public Task<bool> CreateUserAsync(User user)
+        {
+            _context.AddAsync(user);
+            return SaveAsync();
+        }
+
         public User GetById(int id)
         {
             return _context.Users.Where(u => u.Id == id).FirstOrDefault();
@@ -21,14 +28,20 @@ namespace SolmileAPI.Repository
            return _context.Users.Where(u => u.Username == name).FirstOrDefault();
         }
 
-        public ICollection<User> GetUsers()
+        public async Task<bool> SaveAsync()
         {
-            return _context.Users.ToList();
+            var saved = await _context.SaveChangesAsync();
+            return saved > 0;
         }
 
         public bool UserExist(int userId)
         {
             return _context.Users.Any(u=>u.Id == userId);
+        }
+
+        IQueryable<User> userInterface.GetUsers()
+        {
+            return _context.Users.AsQueryable();
         }
     }
 }

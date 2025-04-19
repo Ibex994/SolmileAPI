@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Solmile.Models;
 using SolmileAPI.DTO;
 using SolmileAPI.Interface;
@@ -44,39 +45,51 @@ namespace SolmileAPI.Controllers
         [HttpGet("status/{status}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
-        public IActionResult GetEmpByStatus(bool status, int id)
+        public async Task<IActionResult> GetEmpByStatus(bool status)
         {
-            if (!_employeeInterface.EmployeeExist(id))
-                return NotFound();
-            var employees = _mapper.Map<IEnumerable<EmployeeDto>>(_employeeInterface.GetEmployeeByStatus(status));
+            var employees = await _employeeInterface
+                .GetEmployeeByStatus(status)
+                .ToListAsync(); 
+
+            var empStatus = _mapper.Map<List<EmployeeDto>>(employees);
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(employees);
+
+            return Ok(empStatus);
         }
         [HttpGet("gender/{gender}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
-        public IActionResult GetEmpByGender(string gender, int id)
+       public async Task<IActionResult> GetEmpByGender(string gender)
         {
-            if (!_employeeInterface.EmployeeExist(id))
-                return NotFound();
-            var employees=_mapper.Map<IEnumerable<Employee>>(_employeeInterface.GetEmployeeByGender(gender));
-            if(!ModelState.IsValid)
+            var employees =  await _employeeInterface
+                .GetEmployeeByGender(gender)
+                .ToListAsync();
+            var empGender = _mapper.Map<List<EmployeeDto>>(employees);
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(employees);
+            return Ok(empGender);
+
         }
+
         [HttpGet("email/{email}")]
         [ProducesResponseType(200, Type = typeof(Employee))]
         [ProducesResponseType(400)]
-        public IActionResult GetEmpByEmail(string email, int id)
+       public async Task<IActionResult> GetEmpByEmail(string email)
         {
-            if (!_employeeInterface.EmployeeExist(id))
-                return NotFound();
-            var employee = _mapper.Map<EmployeeDto>(_employeeInterface.GetEmployeeByEmail(email));
+            var employee = await _employeeInterface
+                .GetEmployeeByEmail(email)
+                .ToListAsync();
+            if (employee == null)
+                    return NotFound();
+            var empEmail = _mapper.Map<EmployeeDto>(employee);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(employee);
+            return Ok(empEmail);
         }
+
+
         [HttpGet("exists/{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]

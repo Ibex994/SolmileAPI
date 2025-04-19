@@ -4,11 +4,11 @@ namespace SolmileAPI.Interface
 {
     public interface EmployeeInterface
     {
-        ICollection<Employee> GetAllEmployees();
+        IQueryable<Employee> GetAllEmployees();
         Employee GetEmployeeById(int id);
-        ICollection<Employee> GetEmployeeByStatus(bool status);
-        ICollection <Employee> GetEmployeeByGender(string gender);
-        Employee GetEmployeeByEmail(string email);
+        IQueryable<Employee> GetEmployeeByStatus(bool status);
+        IQueryable<Employee> GetEmployeeByGender(string gender);
+        IQueryable<Employee> GetEmployeeByEmail(string email);
         bool  EmployeeExist(int userid);
 
     }

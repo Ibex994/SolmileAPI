@@ -11,11 +11,13 @@ namespace SolmileAPI.Controllers
     [ApiController]
     public class EmployeeController : Controller
     {
+        private readonly userInterface _userInterface;
         private readonly EmployeeInterface _employeeInterface;
         private readonly IMapper _mapper;
 
-        public EmployeeController(EmployeeInterface employeeInterface, IMapper mapper)
+        public EmployeeController(userInterface userInterface, EmployeeInterface employeeInterface, IMapper mapper)
         {
+            _userInterface = userInterface;
             _employeeInterface = employeeInterface;
             _mapper = mapper;
         }
@@ -97,6 +99,69 @@ namespace SolmileAPI.Controllers
             var exists = _employeeInterface.EmployeeExist(userId);
             return Ok(exists);
         }
+
+        [HttpPost]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
+        [ProducesResponseType(500)]
+        [HttpPost]
+        public async Task<IActionResult> CreateEmp([FromBody] EmployeeDto createEmp)
+        {
+            if (createEmp == null)
+                return BadRequest("Employee data is missing.");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool employeeExists = await _employeeInterface.GetAllEmployees()
+                .AnyAsync(e => e.Email.ToLower() == createEmp.Email.ToLower());
+
+            if (employeeExists)
+            {
+                ModelState.AddModelError("Email", "Employee with this email already exists.");
+                return StatusCode(422, ModelState);
+            }
+            string Username;
+            do
+            {
+                var random = new Random();
+                int randomNumber = random.Next(1000, 9999);
+                Username = $"{createEmp.FirstName.ToLower()}@{randomNumber}";
+            }
+            while (await _userInterface.GetUsers().AnyAsync(u => u.Username == Username));
+
+            string username = Username;
+            string tempPassword = Guid.NewGuid().ToString();
+
+            createEmp.Username=username;
+            createEmp.Password = tempPassword;
+
+            var user = new User
+            {
+                Username = username,
+                Password = tempPassword 
+            };
+
+            var employee = _mapper.Map<Employee>(createEmp);
+            employee.User = user;
+
+            var employeeCreated = await _employeeInterface.CreateEmployee(employee);
+
+            if (!employeeCreated)
+            {
+                ModelState.AddModelError("", "Failed to create employee and user.");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok(new
+            {
+                Message = "Employee successfully created.",
+                Username = user.Username,
+                TemporaryPassword = tempPassword
+            });
+        }
+
 
     }
 }

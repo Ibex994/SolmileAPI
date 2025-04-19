@@ -8,9 +8,15 @@ namespace SolmileAPI.Repository
     {
         private readonly DataContext _context;
 
-        public EmployeeRepo(DataContext context )
+        public EmployeeRepo(DataContext context)
         {
             _context = context;
+        }
+
+        public Task<bool> CreateEmployee(Employee employee)
+        {
+           _context.AddAsync(employee);
+            return Save();
         }
 
         public bool EmployeeExist(int userid)
@@ -31,6 +37,12 @@ namespace SolmileAPI.Repository
         public IQueryable<Employee> GetEmployeeByStatus(bool status)
         {
             return _context.Employees.Where(es => es.Status == status);
+        }
+
+        public async Task<bool> Save()
+        {
+            var saved = await _context.SaveChangesAsync();
+            return saved > 0;
         }
 
         IQueryable<Employee> EmployeeInterface.GetAllEmployees()

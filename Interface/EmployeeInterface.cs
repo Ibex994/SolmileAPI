@@ -10,6 +10,8 @@ namespace SolmileAPI.Interface
         IQueryable<Employee> GetEmployeeByGender(string gender);
         IQueryable<Employee> GetEmployeeByEmail(string email);
         bool  EmployeeExist(int userid);
+        Task <bool> CreateEmployee(Employee employee);
+        Task <bool> Save();
 
     }
 }

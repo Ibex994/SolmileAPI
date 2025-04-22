@@ -1,4 +1,6 @@
-﻿using Solmile;
+﻿using Azure.Core;
+using Microsoft.EntityFrameworkCore;
+using Solmile;
 using Solmile.Models;
 using SolmileAPI.Interface;
 
@@ -26,6 +28,11 @@ namespace SolmileAPI.Repository
         public User GetByName(string name)
         {
            return _context.Users.Where(u => u.Username == name).FirstOrDefault();
+        }
+
+        public async Task<bool> Login(User user)
+        {
+            return await _context.Users.Include(a => a.Employee).AnyAsync(u => u.Username == user.Username && u.Password == user.Password);
         }
 
         public async Task<bool> SaveAsync()

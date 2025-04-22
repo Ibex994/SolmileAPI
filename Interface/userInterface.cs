@@ -10,5 +10,6 @@ namespace SolmileAPI.Interface
         bool UserExist(int userId);
         Task<bool> CreateUserAsync(User user);
         Task<bool> SaveAsync();
+        Task<bool> Login(User user);
     }
 }

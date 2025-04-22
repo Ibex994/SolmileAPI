@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Solmile.DTO;
 using Solmile.Models;
 using SolmileAPI.DTO;
 using SolmileAPI.Interface;
@@ -13,11 +14,13 @@ namespace SolmileAPI.Controllers
     {
         private readonly userInterface _userInterface;
         private readonly IMapper _mapper;
+        private readonly EmployeeInterface _employeeInterface;
 
-        public UserController(userInterface userInterface, IMapper mapper)
+        public UserController(userInterface userInterface, IMapper mapper, EmployeeInterface employeeInterface)
         {
             _userInterface = userInterface;
             _mapper = mapper;
+            _employeeInterface = employeeInterface;
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
@@ -96,7 +99,39 @@ namespace SolmileAPI.Controllers
 
         //    return StatusCode(201, "User created.");
         //}
+        [HttpPost("login")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
+        public async Task<ActionResult>Login([FromBody] LoginDto login)
+        {
+              if (login == null)
+                   return BadRequest("User data is missing.");
 
+              if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
+              var existingUser = await _employeeInterface.GetAllEmployees()
+                    .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
+
+            // Check if account is deactivated
+            if (existingUser == null)
+                return BadRequest("Invalid username or password.");
+
+            // password checking
+            if (existingUser.Password != login.Password)
+                return BadRequest("Invalid username or password.");
+
+            if (existingUser.Status == false)
+                return BadRequest("Account is deactivated.");
+            
+            return StatusCode(201, "Succesfully LoggedIn.");
+        }
+        [HttpPost("resetpassword")]
+        public async Task<IActionResult> resetpassword(Resetpassword _data)
+        {
+            var data = await _userInterface.ResetPassword(_data.username, _data.oldpassword, _data.newpassword);
+            return Ok(data);
+        }
     }
-}
+    }

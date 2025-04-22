@@ -17,4 +17,10 @@ namespace Solmile.Models
         public string Password { get; set; } 
         public virtual Employee Employee { get; set; }
     }
+    public class Resetpassword
+    {
+        public string username { get; set; } = string.Empty;
+        public string oldpassword { get; set; } = string.Empty;
+        public string newpassword { get; set; } = string.Empty;
+    }
 }

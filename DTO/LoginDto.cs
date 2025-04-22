@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Solmile.DTO
 {
-    class LoginDto
+    public class LoginDto
     {
         [Required]
         public string Username { get; set; }

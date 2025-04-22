@@ -1,4 +1,5 @@
-﻿using Solmile.Models;
+﻿using API.Helper;
+using Solmile.Models;
 
 namespace SolmileAPI.Interface
 {
@@ -10,5 +11,7 @@ namespace SolmileAPI.Interface
         bool UserExist(int userId);
         Task<bool> CreateUserAsync(User user);
         Task<bool> SaveAsync();
+        Task<bool> Login(User user);
+        Task<APIResponse> ResetPassword(string username, string oldpassword, string newpassword);
     }
 }

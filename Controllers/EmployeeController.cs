@@ -32,19 +32,19 @@ namespace SolmileAPI.Controllers
             return Ok(employees);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("ById")]
         [ProducesResponseType(200, Type = typeof(Employee))]
         [ProducesResponseType(400)]
-        public IActionResult GetEmpById(int id)
+        public IActionResult GetEmpById(int EmpId)
         {
-            if (!_employeeInterface.EmployeeExist(id))
+            if (!_employeeInterface.EmployeeExist(EmpId))
                 return NotFound();
-            var employee = _mapper.Map<EmployeeDto>(_employeeInterface.GetEmployeeById(id));
+            var employee = _mapper.Map<EmployeeDto>(_employeeInterface.GetEmployeeById(EmpId));
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(employee);
         }
-        [HttpGet("status/{status}")]
+        [HttpGet("status")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetEmpByStatus(bool status)
@@ -60,7 +60,7 @@ namespace SolmileAPI.Controllers
 
             return Ok(empStatus);
         }
-        [HttpGet("gender/{gender}")]
+        [HttpGet("gender")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
        public async Task<IActionResult> GetEmpByGender(string gender)
@@ -75,7 +75,7 @@ namespace SolmileAPI.Controllers
 
         }
 
-        [HttpGet("email/{email}")]
+        [HttpGet("email")]
         [ProducesResponseType(200, Type = typeof(Employee))]
         [ProducesResponseType(400)]
        public async Task<IActionResult> GetEmpByEmail(string email)
@@ -89,7 +89,7 @@ namespace SolmileAPI.Controllers
                 return BadRequest(ModelState);
             return Ok(empEmail);
         }
-        [HttpGet("pos/{position}")]
+        [HttpGet("position")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetEmpByPos(string position)
@@ -102,7 +102,7 @@ namespace SolmileAPI.Controllers
             return Ok(empPos);
         }
 
-        [HttpGet("exists/{userId}")]
+        [HttpGet("exists")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         public IActionResult EmployeeExists(int userId)
@@ -117,7 +117,7 @@ namespace SolmileAPI.Controllers
         [ProducesResponseType(422)]
         [ProducesResponseType(500)]
         [HttpPost]
-        public async Task<IActionResult> CreateEmp([FromBody] EmployeeDto createEmp)
+        public async Task<IActionResult> CreateEmployees([FromBody] EmployeeDto createEmp)
         {
             if (createEmp == null)
                 return BadRequest("Employee data is missing.");

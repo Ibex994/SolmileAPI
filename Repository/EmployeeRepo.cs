@@ -1,4 +1,5 @@
-﻿using Solmile;
+﻿using Microsoft.EntityFrameworkCore;
+using Solmile;
 using Solmile.Models;
 using SolmileAPI.Interface;
 
@@ -29,10 +30,11 @@ namespace SolmileAPI.Repository
             return _context.Employees.Where(e => e.Gender.ToLower() == gender.ToLower());
         }
 
-        public Employee GetEmployeeById(int id)
+        public async Task<Employee> GetEmployeeById(int id)
         {
-            return _context.Employees.Where(e => e.Id == id).FirstOrDefault();
+            return await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
         }
+
 
         public IQueryable<Employee> GetEmployeeByPos(string Posn)
         {
@@ -48,6 +50,12 @@ namespace SolmileAPI.Repository
         {
             var saved = await _context.SaveChangesAsync();
             return saved > 0;
+        }
+
+        public Task<bool> UpdateEmployee(Employee employee)
+        {
+           _context.Update(employee);
+            return Save();
         }
 
         IQueryable<Employee> EmployeeInterface.GetAllEmployees()

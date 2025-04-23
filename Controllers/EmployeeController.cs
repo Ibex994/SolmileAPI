@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Solmile.Models;
@@ -173,6 +174,37 @@ namespace SolmileAPI.Controllers
             });
         }
 
+        [HttpPut]
+        [ProducesResponseType(200,Type = typeof(Employee))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateEmployee(int EmpId, [FromBody] UpdateDto updateDto)
+        {
+            if (updateDto == null)
+                return BadRequest(ModelState);
+
+            if (EmpId != updateDto.Id)
+                return BadRequest(ModelState);
+
+            var existingEmployee = await _employeeInterface.GetEmployeeById(EmpId);
+            if (existingEmployee == null)
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            _mapper.Map(updateDto, existingEmployee);
+
+            bool updateSuccessful = await _employeeInterface.UpdateEmployee(existingEmployee);
+            if (!updateSuccessful)
+            {
+                ModelState.AddModelError("", "Error Updating Employee");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Updated Successfully");
+        }
 
     }
 }

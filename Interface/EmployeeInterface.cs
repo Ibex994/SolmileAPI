@@ -5,13 +5,14 @@ namespace SolmileAPI.Interface
     public interface EmployeeInterface
     {
         IQueryable<Employee> GetAllEmployees();
-        Employee GetEmployeeById(int id);
+        Task<Employee> GetEmployeeById(int id);
         IQueryable<Employee> GetEmployeeByStatus(bool status);
         IQueryable<Employee> GetEmployeeByGender(string gender);
         IQueryable<Employee> GetEmployeeByEmail(string email);
         IQueryable<Employee> GetEmployeeByPos(string Posn);
         bool  EmployeeExist(int userid);
         Task <bool> CreateEmployee(Employee employee);
+        Task <bool> UpdateEmployee(Employee employee);
         Task <bool> Save();
 
     }

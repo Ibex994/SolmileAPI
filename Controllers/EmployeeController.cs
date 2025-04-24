@@ -41,12 +41,12 @@ namespace SolmileAPI.Controllers
             if (!_employeeInterface.EmployeeExist(EmpId))
                 return NotFound();
 
-            var employeeEntity = await _employeeInterface.GetEmployeeById(EmpId); // ✅ Await it
+            var employeeEntity = await _employeeInterface.GetEmployeeById(EmpId);
 
             if (employeeEntity == null)
                 return NotFound();
 
-            var employeeDto = _mapper.Map<EmployeeDto>(employeeEntity); // ✅ Now you're mapping a real object
+            var employeeDto = _mapper.Map<EmployeeDto>(employeeEntity);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

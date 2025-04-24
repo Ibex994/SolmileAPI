@@ -114,11 +114,9 @@ namespace SolmileAPI.Controllers
               var existingUser = await _employeeInterface.GetAllEmployees()
                     .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
 
-            // Check if account is deactivated
             if (existingUser == null)
                 return BadRequest("Invalid username or password.");
 
-            // password checking
             if (existingUser.Password != login.Password)
                 return BadRequest("Invalid username or password.");
 
@@ -127,6 +125,7 @@ namespace SolmileAPI.Controllers
             
             return StatusCode(201, "Succesfully LoggedIn.");
         }
+
         [HttpPost("resetpassword")]
         public async Task<IActionResult> resetpassword(Resetpassword _data)
         {

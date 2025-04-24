@@ -37,31 +37,7 @@ public class Program
                     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // or omit this line
                     x.JsonSerializerOptions.WriteIndented = true;
                 });
-
-
-        //To SEED Data
-        builder.Services.AddScoped<DataSeeder>();
         var app = builder.Build();
-        if (args.Contains("seeddata", StringComparer.OrdinalIgnoreCase))
-        {
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var seeder = services.GetRequiredService<DataSeeder>();
-                    //await seeder.SeedAsync();
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
-                }
-            }
-
-            return;
-        }
-     
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

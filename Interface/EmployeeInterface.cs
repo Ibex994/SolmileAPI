@@ -13,6 +13,7 @@ namespace SolmileAPI.Interface
         bool  EmployeeExist(int userid);
         Task <bool> CreateEmployee(Employee employee);
         Task <bool> UpdateEmployee(Employee employee);
+        Task <bool> DeleteEmployee(Employee employee);
         Task <bool> Save();
 
     }

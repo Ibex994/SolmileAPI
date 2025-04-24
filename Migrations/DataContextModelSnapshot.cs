@@ -90,7 +90,7 @@ namespace SolmileAPI.Migrations
                     b.HasOne("Solmile.Models.User", "User")
                         .WithOne("Employee")
                         .HasForeignKey("Solmile.Models.Employee", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");

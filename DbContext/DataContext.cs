@@ -16,7 +16,6 @@ namespace Solmile
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<User> Users { get; set; }
-        //public DbSet<Reservation> Reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,14 +23,12 @@ namespace Solmile
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Employee>().ToTable("Employees");
-            //modelBuilder.Entity<User>()
-            //    .ToTable("Users");
-            //modelBuilder.Entity<Employee>()
-            //    .ToTable("Employees");
-            //modelBuilder.Entity<Employee>()
-            //   .HasOne(e => e.User)
-            //   .WithOne(u=>u.Employee)
-            //   .HasForeignKey<User>(u => u.Id);
+
+            modelBuilder.Entity<Employee>()
+                .HasOne(e => e.User)
+                .WithOne(u => u.Employee)
+                .HasForeignKey<Employee>(e => e.Id)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         }

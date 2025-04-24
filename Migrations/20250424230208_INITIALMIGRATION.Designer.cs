@@ -12,8 +12,8 @@ using Solmile;
 namespace SolmileAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250422180428_AddedTableOfOTP")]
-    partial class AddedTableOfOTP
+    [Migration("20250424230208_INITIALMIGRATION")]
+    partial class INITIALMIGRATION
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,47 +46,6 @@ namespace SolmileAPI.Migrations
                     b.ToTable("Users", (string)null);
 
                     b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("SolmileAPI.Models.OTP", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("Createddate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("createddate");
-
-                    b.Property<DateTime>("Expiration")
-                        .HasColumnType("datetime")
-                        .HasColumnName("expiration");
-
-                    b.Property<string>("Otptext")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(10)")
-                        .HasColumnName("otptext");
-
-                    b.Property<string>("Otptype")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("otptype");
-
-                    b.Property<string>("Username")
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("username");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OTPs");
                 });
 
             modelBuilder.Entity("Solmile.Models.Employee", b =>
@@ -134,7 +93,7 @@ namespace SolmileAPI.Migrations
                     b.HasOne("Solmile.Models.User", "User")
                         .WithOne("Employee")
                         .HasForeignKey("Solmile.Models.Employee", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");

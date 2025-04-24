@@ -20,6 +20,12 @@ namespace SolmileAPI.Repository
             return Save();
         }
 
+        public Task<bool> DeleteEmployee(Employee employee)
+        {
+            _context.Remove(employee);
+            return Save();
+        }
+
         public bool EmployeeExist(int userid)
         {
             return _context.Employees.Any(e => e.Id == userid);   

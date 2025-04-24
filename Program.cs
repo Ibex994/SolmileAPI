@@ -31,10 +31,13 @@ public class Program
         builder.Services.AddScoped<EmployeeInterface, EmployeeRepo>();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //Enable Reference Handling
-        builder.Services.AddControllers().AddJsonOptions(x =>
-        {
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-        });
+        builder.Services.AddControllers()
+                .AddJsonOptions(x =>
+                {
+                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // or omit this line
+                    x.JsonSerializerOptions.WriteIndented = true;
+                });
+
 
         //To SEED Data
         builder.Services.AddScoped<DataSeeder>();
@@ -47,7 +50,7 @@ public class Program
                 try
                 {
                     var seeder = services.GetRequiredService<DataSeeder>();
-                    await seeder.SeedAsync();
+                    //await seeder.SeedAsync();
                 }
                 catch (Exception ex)
                 {

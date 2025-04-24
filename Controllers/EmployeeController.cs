@@ -23,7 +23,7 @@ namespace SolmileAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type=typeof(IEnumerable<Employee>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
         public IActionResult GetEmployees()
         {
@@ -34,17 +34,26 @@ namespace SolmileAPI.Controllers
         }
 
         [HttpGet("ById")]
-        [ProducesResponseType(200, Type = typeof(Employee))]
+        [ProducesResponseType(200, Type = typeof(EmployeeDto))]
         [ProducesResponseType(400)]
-        public IActionResult GetEmpById(int EmpId)
+        public async Task<IActionResult> GetEmpById(int EmpId)
         {
             if (!_employeeInterface.EmployeeExist(EmpId))
                 return NotFound();
-            var employee = _mapper.Map<EmployeeDto>(_employeeInterface.GetEmployeeById(EmpId));
+
+            var employeeEntity = await _employeeInterface.GetEmployeeById(EmpId); // ✅ Await it
+
+            if (employeeEntity == null)
+                return NotFound();
+
+            var employeeDto = _mapper.Map<EmployeeDto>(employeeEntity); // ✅ Now you're mapping a real object
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(employee);
+
+            return Ok(employeeDto);
         }
+
         [HttpGet("status")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
@@ -52,7 +61,7 @@ namespace SolmileAPI.Controllers
         {
             var employees = await _employeeInterface
                 .GetEmployeeByStatus(status)
-                .ToListAsync(); 
+                .ToListAsync();
 
             var empStatus = _mapper.Map<List<EmployeeDto>>(employees);
 
@@ -64,9 +73,9 @@ namespace SolmileAPI.Controllers
         [HttpGet("gender")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
         [ProducesResponseType(400)]
-       public async Task<IActionResult> GetEmpByGender(string gender)
+        public async Task<IActionResult> GetEmpByGender(string gender)
         {
-            var employees =  await _employeeInterface
+            var employees = await _employeeInterface
                 .GetEmployeeByGender(gender)
                 .ToListAsync();
             var empGender = _mapper.Map<List<EmployeeDto>>(employees);
@@ -79,12 +88,12 @@ namespace SolmileAPI.Controllers
         [HttpGet("email")]
         [ProducesResponseType(200, Type = typeof(Employee))]
         [ProducesResponseType(400)]
-       public async Task<IActionResult> GetEmpByEmail(string email)
+        public async Task<IActionResult> GetEmpByEmail(string email)
         {
             var employee = await _employeeInterface
                 .GetEmployeeByEmail(email)
                 .ToListAsync();
-           
+
             var empEmail = _mapper.Map<List<EmployeeDto>>(employee);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -95,11 +104,11 @@ namespace SolmileAPI.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetEmpByPos(string position)
         {
-            var empPos=await _employeeInterface
+            var empPos = await _employeeInterface
                 .GetEmployeeByPos(position)
                 .ToListAsync();
-            if(!ModelState.IsValid)
-               ModelState.AddModelError("Position", "No employee found with this position.");
+            if (!ModelState.IsValid)
+                ModelState.AddModelError("Position", "No employee found with this position.");
             return Ok(empPos);
         }
 
@@ -146,13 +155,13 @@ namespace SolmileAPI.Controllers
             string username = Username;
             string tempPassword = Guid.NewGuid().ToString();
 
-            createEmp.Username=username;
+            createEmp.Username = username;
             createEmp.Password = tempPassword;
 
             var user = new User
             {
                 Username = username,
-                Password = tempPassword 
+                Password = tempPassword
             };
 
             var employee = _mapper.Map<Employee>(createEmp);
@@ -175,7 +184,7 @@ namespace SolmileAPI.Controllers
         }
 
         [HttpPut]
-        [ProducesResponseType(200,Type = typeof(Employee))]
+        [ProducesResponseType(200, Type = typeof(Employee))]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -206,5 +215,24 @@ namespace SolmileAPI.Controllers
             return Ok("Updated Successfully");
         }
 
+        [HttpDelete("EmpId")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteEmployee(int EmpId)
+        {
+            if (EmpId == 0)
+                return BadRequest(ModelState);
+            var employeeToDelete = await _employeeInterface.GetEmployeeById(EmpId);
+            if (employeeToDelete == null)
+                return NotFound();
+            bool deleteSuccessful = await _employeeInterface.DeleteEmployee(employeeToDelete);
+            if (!deleteSuccessful)
+            {
+                ModelState.AddModelError("", "Error Deleting Employee");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Deleted Successfully");
+        }
     }
 }

@@ -31,9 +31,24 @@ namespace SolmileAPI.Repository
            return _context.Users.Where(u => u.Username == name).FirstOrDefault();
         }
 
+        public async Task<bool> LockAccount(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) return false;
+
+            user.IsLocked = true;
+            return await SaveAsync();
+        }
+
         public async Task<bool> Login(User user)
         {
             return await _context.Users.Include(a => a.Employee).AnyAsync(u => u.Username == user.Username && u.Password == user.Password);
+        }
+
+        public async Task<bool> Logout(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            return user != null;
         }
 
         public async Task<APIResponse> ResetPassword(string username, string oldpassword, string newpassword)
@@ -62,10 +77,28 @@ namespace SolmileAPI.Repository
             };
         }
 
+        public async Task<bool> ResetStaffPassword(int staffId)
+        {
+            var user = await _context.Users.FindAsync(staffId);
+            if (user == null) return false;
+
+            user.Password = "Default@123";
+            return await SaveAsync();
+        }
+
         public async Task<bool> SaveAsync()
         {
             var saved = await _context.SaveChangesAsync();
             return saved > 0;
+        }
+
+        public async Task<bool> UnlockAccount(int adminId, int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) return false;
+
+            user.IsLocked = false;
+            return await SaveAsync();
         }
 
         public bool UserExist(int userId)

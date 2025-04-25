@@ -5,6 +5,7 @@ using Solmile.DTO;
 using Solmile.Models;
 using SolmileAPI.DTO;
 using SolmileAPI.Interface;
+using SolmileAPI.Repository;
 
 namespace SolmileAPI.Controllers
 {
@@ -103,34 +104,63 @@ namespace SolmileAPI.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
-        public async Task<ActionResult>Login([FromBody] LoginDto login)
+        public async Task<ActionResult> Login([FromBody] LoginDto login)
         {
-              if (login == null)
-                   return BadRequest("User data is missing.");
+            if (login == null)
+                return BadRequest("User data is missing.");
 
-              if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-              var existingUser = await _employeeInterface.GetAllEmployees()
-                    .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
+            var existingUser = await _employeeInterface.GetAllEmployees()
+                .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
 
-            if (existingUser == null)
+            if (existingUser == null || existingUser.Password != login.Password)
                 return BadRequest("Invalid username or password.");
 
-            if (existingUser.Password != login.Password)
-                return BadRequest("Invalid username or password.");
-
-            if (existingUser.Status == false)
+            if (!existingUser.Status)
                 return BadRequest("Account is deactivated.");
-            
-            return StatusCode(201, "Succesfully LoggedIn.");
+
+            if (existingUser.IsLocked)
+                return BadRequest("Account is locked. Contact admin.");
+
+            return StatusCode(201, "Successfully Logged In.");
         }
+
 
         [HttpPost("resetpassword")]
         public async Task<IActionResult> resetpassword(Resetpassword _data)
         {
             var data = await _userInterface.ResetPassword(_data.username, _data.oldpassword, _data.newpassword);
             return Ok(data);
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout(int userId)
+        {
+            bool result = await _userInterface.Logout(userId);
+            return result ? Ok("Logout successful") : NotFound("User not found");
+        }
+
+        [HttpPost("lock")]
+        public async Task<IActionResult> Lock(int userId)
+        {
+            bool result = await _userInterface.LockAccount(userId);
+            return result ? Ok("Account locked") : NotFound("User not found");
+        }
+
+        [HttpPost("unlock")]
+        public async Task<IActionResult> Unlock(int adminId, int userId)
+        {
+            bool result = await _userInterface.UnlockAccount(adminId, userId);
+            return result ? Ok("Account unlocked") : NotFound("User not found");
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetStaffPassword(int staffId)
+        {
+            bool result = await _userInterface.ResetStaffPassword(staffId);
+            return result ? Ok("Password reset") : NotFound("Staff not found");
         }
     }
     }

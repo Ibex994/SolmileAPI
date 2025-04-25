@@ -14,7 +14,8 @@ namespace Solmile.Models
         public int Id { get; set; }
         public string Username { get; set; }
         [Required]
-        public string Password { get; set; } 
+        public string Password { get; set; }
+        public bool IsLocked { get; set; } = false;
         public virtual Employee Employee { get; set; }
     }
     public class Resetpassword

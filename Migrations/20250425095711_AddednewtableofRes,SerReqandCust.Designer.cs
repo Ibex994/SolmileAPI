@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Solmile;
 
@@ -11,9 +12,11 @@ using Solmile;
 namespace SolmileAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250425095711_AddednewtableofRes,SerReqandCust")]
+    partial class AddednewtableofResSerReqandCust
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,26 +126,7 @@ namespace SolmileAPI.Migrations
 
                     b.HasIndex("RequestorId");
 
-                    b.HasIndex("ServiceTypeId");
-
                     b.ToTable("ServiceRequests");
-                });
-
-            modelBuilder.Entity("Solmile.Models.ServiceType", b =>
-                {
-                    b.Property<int>("ServiceTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceTypeId"));
-
-                    b.Property<string>("ServiceTypeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ServiceTypeId");
-
-                    b.ToTable("ServiceType");
                 });
 
             modelBuilder.Entity("Solmile.Models.User", b =>
@@ -277,15 +261,7 @@ namespace SolmileAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Solmile.Models.ServiceType", "ServiceType")
-                        .WithMany("ServiceRequests")
-                        .HasForeignKey("ServiceTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Requestor");
-
-                    b.Navigation("ServiceType");
                 });
 
             modelBuilder.Entity("Solmile.Models.Employee", b =>
@@ -297,11 +273,6 @@ namespace SolmileAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Solmile.Models.ServiceType", b =>
-                {
-                    b.Navigation("ServiceRequests");
                 });
 
             modelBuilder.Entity("Solmile.Models.User", b =>

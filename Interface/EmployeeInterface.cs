@@ -8,7 +8,7 @@ namespace SolmileAPI.Interface
         Task<Employee> GetEmployeeById(int id);
         IQueryable<Employee> GetEmployeeByStatus(bool status);
         IQueryable<Employee> GetEmployeeByGender(string gender);
-        IQueryable<Employee> GetEmployeeByEmail(string email);
+        Task<Employee> GetEmployeeByEmail(string email);
         IQueryable<Employee> GetEmployeeByPos(string Posn);
         bool  EmployeeExist(int userid);
         Task <bool> CreateEmployee(Employee employee);

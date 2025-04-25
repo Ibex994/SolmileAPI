@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace SolmileAPI.DTO
 {
@@ -19,5 +20,18 @@ namespace SolmileAPI.DTO
         public bool Status { get; set; }
 
         public string Gender { get; set; }
+    }
+
+    public class UpdateCust
+    {
+        public int CustomerId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime DateOfBirth { get; set; }
+        public string Nationality { get; set; }
+        public string Phone { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
     }
 }

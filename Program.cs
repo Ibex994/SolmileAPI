@@ -29,6 +29,7 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<userInterface, UserRepo>();
         builder.Services.AddScoped<EmployeeInterface, EmployeeRepo>();
+        builder.Services.AddScoped<CustomerInterface, CustomerRepo>();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //Enable Reference Handling
         builder.Services.AddControllers()

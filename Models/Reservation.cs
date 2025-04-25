@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SolmileAPI.Models;
 
 namespace Solmile.Models
 {
@@ -23,6 +24,9 @@ namespace Solmile.Models
 
         [MaxLength(500)]  
         public string Status { get; set; }
+
+        // Navigation Property
+        public virtual Customer Customer { get; set; }
 
     }
 }

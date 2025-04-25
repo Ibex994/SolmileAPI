@@ -11,7 +11,8 @@ namespace Solmile.Models
     {
         [Key]
         public int ServiceTypeId { get; set; }
-        public string ServiceTypeName { get; set; } // "pickup", "cleaning", "Maintenance"
+        public string ServiceTypeName { get; set; }
+        public virtual ICollection<ServiceRequest> ServiceRequests { get; set; }
 
     }
 }

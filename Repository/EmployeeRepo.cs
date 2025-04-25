@@ -69,9 +69,10 @@ namespace SolmileAPI.Repository
             return _context.Employees.AsQueryable();
         }
 
-        IQueryable<Employee> EmployeeInterface.GetEmployeeByEmail(string email)
+        public async Task<Employee> GetEmployeeByEmail(string email)
         {
-            return _context.Employees.Where(e => e.Email == email);
+            return await _context.Employees.FirstOrDefaultAsync(e => e.Email == email);
         }
+
     }
 }

@@ -23,7 +23,7 @@ namespace SolmileAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<EmployeeDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetEmployees()
         {
@@ -55,7 +55,7 @@ namespace SolmileAPI.Controllers
         }
 
         [HttpGet("status")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<EmployeeDto>))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetEmpByStatus(bool status)
         {
@@ -71,7 +71,7 @@ namespace SolmileAPI.Controllers
             return Ok(empStatus);
         }
         [HttpGet("gender")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<EmployeeDto>))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetEmpByGender(string gender)
         {
@@ -86,21 +86,20 @@ namespace SolmileAPI.Controllers
         }
 
         [HttpGet("email")]
-        [ProducesResponseType(200, Type = typeof(Employee))]
+        [ProducesResponseType(200, Type = typeof(EmployeeDto))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetEmpByEmail(string email)
         {
             var employee = await _employeeInterface
-                .GetEmployeeByEmail(email)
-                .ToListAsync();
+                .GetEmployeeByEmail(email);
 
-            var empEmail = _mapper.Map<List<EmployeeDto>>(employee);
+            var empEmail = _mapper.Map<EmployeeDto>(employee);
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(empEmail);
         }
         [HttpGet("position")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Employee>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<EmployeeDto>))]
         [ProducesResponseType(400)]
         public async Task<IActionResult> GetEmpByPos(string position)
         {
@@ -183,8 +182,8 @@ namespace SolmileAPI.Controllers
             });
         }
 
-        [HttpPut]
-        [ProducesResponseType(200, Type = typeof(Employee))]
+        [HttpPut("Update")]
+        [ProducesResponseType(200, Type = typeof(EmployeeDto))]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

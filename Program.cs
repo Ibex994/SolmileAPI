@@ -30,6 +30,7 @@ public class Program
         builder.Services.AddScoped<userInterface, UserRepo>();
         builder.Services.AddScoped<EmployeeInterface, EmployeeRepo>();
         builder.Services.AddScoped<CustomerInterface, CustomerRepo>();
+        builder.Services.AddScoped<ComplaintInterface, ComplaintRepo>();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //Enable Reference Handling
         builder.Services.AddControllers()

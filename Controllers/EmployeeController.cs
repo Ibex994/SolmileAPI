@@ -23,11 +23,11 @@ namespace SolmileAPI.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<EmployeeDto>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<GetEmployeeDto>))]
         [ProducesResponseType(400)]
         public IActionResult GetEmployees()
         {
-            var employees = _mapper.Map<List<EmployeeDto>>(_employeeInterface.GetAllEmployees());
+            var employees = _mapper.Map<List<GetEmployeeDto>>(_employeeInterface.GetAllEmployees());
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             return Ok(employees);

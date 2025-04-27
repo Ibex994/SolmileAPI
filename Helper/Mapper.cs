@@ -2,6 +2,7 @@
 using Solmile.Models;
 using SolmileAPI.DTO;
 using SolmileAPI.Models;
+using static SolmileAPI.DTO.ComplaintDto;
 
 namespace SolmileAPI.Helper
 {
@@ -9,14 +10,22 @@ namespace SolmileAPI.Helper
     {
         public Mapper()
         {
+            //user Dto
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+            //Employe Dto
             CreateMap<Employee, EmployeeDto>();
             CreateMap<EmployeeDto, Employee>();
+            CreateMap<Employee, GetEmployeeDto>();
             CreateMap<UpdateDto, Employee>();
+            //Customer Dto
             CreateMap<Customer, CustomerDto>();
             CreateMap<CustomerDto, Customer>();
             CreateMap<UpdateCust,Customer>();
+            //Complaint Dto
+            CreateMap<Complaint, ComplaintDto>();
+            CreateMap<ComplaintDto, Complaint>();
+            CreateMap<Complaint, UpdateCompDto>();
         }
     }
 }

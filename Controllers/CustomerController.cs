@@ -5,6 +5,7 @@ using Solmile.Models;
 using SolmileAPI.DTO;
 using SolmileAPI.Interface;
 using SolmileAPI.Models;
+using SolmileAPI.Repository;
 
 namespace SolmileAPI.Controllers
 {
@@ -24,21 +25,20 @@ namespace SolmileAPI.Controllers
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IQueryable<Customer>))]
         [ProducesResponseType(400)]
-        public IActionResult GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers()
         {
-            var customer = _mapper.Map<List<CustomerDto>>(_customerInterface.GetAllCustomers());
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            return Ok(customer);
+            var customers = await _customerInterface.GetAllCustomers();
+            var customerDtos = _mapper.Map<List<CustomerDto>>(customers); 
+            return Ok(customerDtos);
         }
         [HttpGet("ById")]
         [ProducesResponseType(200, Type = typeof(Customer))]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetEmpById(int EmpId)
+        public async Task<IActionResult> GetEmpById(int CustId)
         {
-            if (!_customerInterface.CustomerExist(EmpId))
+            if (!_customerInterface.CustomerExist(CustId))
                 return NotFound();
-            var Customers = await _customerInterface.GetCustomerById(EmpId);
+            var Customers = await _customerInterface.GetCustomerById(CustId);
 
             if (Customers == null)
                 return NotFound();
@@ -154,11 +154,11 @@ namespace SolmileAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> DeleteEmployee(int EmpId)
+        public async Task<IActionResult> DeleteEmployee(int CustId)
         {
-            if (EmpId == 0)
+            if (CustId == 0)
                 return BadRequest(ModelState);
-            var employeeToDelete = await _customerInterface.GetCustomerById(EmpId);
+            var employeeToDelete = await _customerInterface.GetCustomerById(CustId);
             if (employeeToDelete == null)
                 return NotFound();
             bool deleteSuccessful = await _customerInterface.DeleteCustomer(employeeToDelete);

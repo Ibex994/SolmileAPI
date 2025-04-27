@@ -55,6 +55,12 @@ namespace Solmile
                     .WithMany(st => st.ServiceRequests)
                     .HasForeignKey(sr => sr.ServiceTypeId);
 
+                modelBuilder.Entity<Complaint>()
+               .HasOne(c => c.Employee)
+               .WithMany(e => e.Complaints)
+               .HasForeignKey(c => c.EmployeeId)
+               .OnDelete(DeleteBehavior.SetNull);
+
 
         }
 

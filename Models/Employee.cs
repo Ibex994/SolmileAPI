@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using SolmileAPI.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Solmile.Models
@@ -29,5 +30,6 @@ namespace Solmile.Models
         [Required]
         public string Gender { get; set; } = string.Empty;
         public virtual User User { get; set; }
+        public virtual ICollection<Complaint> Complaints { get; set; }
     }
 }

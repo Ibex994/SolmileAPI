@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SolmileAPI.Models;
+using Solmile.Models;
 
-namespace Solmile.Models
+namespace SolmileAPI.Models
 {
     public class Complaint
     {
@@ -13,6 +13,8 @@ namespace Solmile.Models
         public  string Details { get; set; }
         public string Status { get; set; }
         public int CustomerId { get; set; }
+        public int? EmployeeId { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

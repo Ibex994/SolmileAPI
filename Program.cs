@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Solmile;
+using Solmile.Models;
 using SolmileAPI;
 using SolmileAPI.Interface;
 using SolmileAPI.Repository;
@@ -31,6 +32,7 @@ public class Program
         builder.Services.AddScoped<EmployeeInterface, EmployeeRepo>();
         builder.Services.AddScoped<CustomerInterface, CustomerRepo>();
         builder.Services.AddScoped<ComplaintInterface, ComplaintRepo>();
+        builder.Services.AddScoped<ReservationInterface, ReservationRepo>();
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //Enable Reference Handling
         builder.Services.AddControllers()

@@ -21,6 +21,7 @@ namespace Solmile
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
+        public DbSet<Room> Room { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,7 +46,7 @@ namespace Solmile
                     .WithOne(r => r.Customer)
                     .HasForeignKey(r => r.CustomerId);
 
-                modelBuilder.Entity<Customer>()
+            modelBuilder.Entity<Customer>()
                     .HasMany(c => c.ServiceRequests)
                     .WithOne(s => s.Requestor) 
                     .HasForeignKey(s => s.RequestorId);
@@ -56,11 +57,40 @@ namespace Solmile
                     .HasForeignKey(sr => sr.ServiceTypeId);
 
                 modelBuilder.Entity<Complaint>()
-               .HasOne(c => c.Employee)
-               .WithMany(e => e.Complaints)
-               .HasForeignKey(c => c.EmployeeId)
-               .OnDelete(DeleteBehavior.SetNull);
+                   .HasOne(c => c.Employee)
+                   .WithMany(e => e.Complaints)
+                   .HasForeignKey(c => c.EmployeeId)
+                   .OnDelete(DeleteBehavior.SetNull);
 
+                modelBuilder.Entity<Reservation>()
+                    .HasOne(r => r.Payment) 
+                    .WithOne(p => p.Reservation)  
+                    .HasForeignKey<Reservation>(r => r.PaymentId)  
+                    .OnDelete(DeleteBehavior.Restrict);
+            
+                    modelBuilder.Entity<Reservation>()
+                    .HasOne(r => r.Customer) // A reservation is associated with one customer
+                    .WithMany(c => c.Reservations) // A customer can have many reservations
+                    .HasForeignKey(r => r.CustomerId);
+
+            //Ensuring customer and reservation link with 1:1
+                    modelBuilder.Entity<Reservation>()
+                    .HasOne(r => r.Room)
+                    .WithOne(room => room.Reservation) 
+                    .HasForeignKey<Reservation>(r => r.RoomId)  
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            // PaymentMethod and Payment relationship (1:1)
+                    modelBuilder.Entity<PaymentMethod>()
+                    .HasOne(pm => pm.Payment) // One PaymentMethod has one Payment
+                    .WithOne(p => p.PaymentMethod) // One Payment has one PaymentMethod
+                    .HasForeignKey<Payment>(p => p.MethodId); // Foreign key in Payment
+
+                    modelBuilder.Entity<Room>()
+                    .HasOne(r => r.RoomTypes)  // Room has one RoomType
+                   .WithMany()                // RoomType does not have a navigation property back to Room
+                   .HasForeignKey(r => r.RoomTypeId) // Foreign key to RoomType
+                   .OnDelete(DeleteBehavior.Restrict);
 
         }
 

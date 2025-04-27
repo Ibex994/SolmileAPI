@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Solmile;
 
@@ -11,9 +12,11 @@ using Solmile;
 namespace SolmileAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250427084322_RoomTypeTable")]
+    partial class RoomTypeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,7 +66,7 @@ namespace SolmileAPI.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<string>("RoomId")
@@ -80,8 +83,7 @@ namespace SolmileAPI.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("PaymentId")
-                        .IsUnique()
-                        .HasFilter("[PaymentId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("RoomId")
                         .IsUnique();
@@ -391,7 +393,8 @@ namespace SolmileAPI.Migrations
                     b.HasOne("SolmileAPI.Models.Payment", "Payment")
                         .WithOne("Reservation")
                         .HasForeignKey("Solmile.Models.Reservation", "PaymentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Solmile.Models.Room", "Room")
                         .WithOne("Reservation")

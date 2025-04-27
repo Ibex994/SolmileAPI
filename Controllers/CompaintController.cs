@@ -34,11 +34,9 @@ namespace SolmileAPI.Controllers
             if (!await _complaintRepo.CustomerExists(customerId))
                 return NotFound($"Customer with ID {customerId} not found.");
 
-            // Map the DTO to the complaint entity
             var complaint = _mapper.Map<Complaint>(complaintDto);
             complaint.CustomerId = customerId;
 
-            // Set default status if not provided
             if (string.IsNullOrWhiteSpace(complaint.Status))
                 complaint.Status = "Unresolved";
 

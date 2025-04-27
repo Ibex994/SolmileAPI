@@ -26,6 +26,11 @@ namespace SolmileAPI.Helper
             CreateMap<Complaint, ComplaintDto>();
             CreateMap<ComplaintDto, Complaint>();
             CreateMap<Complaint, UpdateCompDto>();
+            //Reservation Dto
+            CreateMap<Reservation, ReservationDto>();
+            CreateMap<ReservationDto, Reservation>();
+            CreateMap<CreateResDto, Reservation>();
+            CreateMap<Reservation, CreateResDto>();
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Solmile;
 
@@ -11,9 +12,11 @@ using Solmile;
 namespace SolmileAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250427074244_RelationofReservationPaymentAndRoom")]
+    partial class RelationofReservationPaymentAndRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,30 +24,6 @@ namespace SolmileAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Solmile.Models.Branch", b =>
-                {
-                    b.Property<int>("BranchId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BranchId"));
-
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BranchId");
-
-                    b.ToTable("Branch");
-                });
 
             modelBuilder.Entity("Solmile.Models.Reservation", b =>
                 {
@@ -63,7 +42,7 @@ namespace SolmileAPI.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PaymentId")
+                    b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
                     b.Property<string>("RoomId")
@@ -80,8 +59,7 @@ namespace SolmileAPI.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("PaymentId")
-                        .IsUnique()
-                        .HasFilter("[PaymentId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("RoomId")
                         .IsUnique();
@@ -94,49 +72,19 @@ namespace SolmileAPI.Migrations
                     b.Property<string>("RoomID")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("BranchId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RoomNumberAssignmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoomTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RoomID");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("RoomTypeId");
-
-                    b.ToTable("Room");
-                });
-
-            modelBuilder.Entity("Solmile.Models.RoomTypes", b =>
-                {
-                    b.Property<int>("RoomTypeId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("TypeId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomTypeId"));
+                    b.HasKey("RoomID");
 
-                    b.Property<float>("PricePerNight")
-                        .HasColumnType("real");
-
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoomTypeId");
-
-                    b.ToTable("RoomTypes");
+                    b.ToTable("Room");
                 });
 
             modelBuilder.Entity("Solmile.Models.ServiceRequest", b =>
@@ -391,7 +339,8 @@ namespace SolmileAPI.Migrations
                     b.HasOne("SolmileAPI.Models.Payment", "Payment")
                         .WithOne("Reservation")
                         .HasForeignKey("Solmile.Models.Reservation", "PaymentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Solmile.Models.Room", "Room")
                         .WithOne("Reservation")
@@ -404,25 +353,6 @@ namespace SolmileAPI.Migrations
                     b.Navigation("Payment");
 
                     b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("Solmile.Models.Room", b =>
-                {
-                    b.HasOne("Solmile.Models.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Solmile.Models.RoomTypes", "RoomTypes")
-                        .WithMany()
-                        .HasForeignKey("RoomTypeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("RoomTypes");
                 });
 
             modelBuilder.Entity("Solmile.Models.ServiceRequest", b =>

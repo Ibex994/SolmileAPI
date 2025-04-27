@@ -9,25 +9,27 @@ using SolmileAPI.Models;
 
 namespace Solmile.Models
 {
-   public class Reservation
+    public class Reservation
     {
         [Key]
         public int ReservationId { get; set; }
+        public int CustomerId { get; set; } 
+        public int? PaymentId { get; set; } 
+        public string RoomId { get; set; }    
 
-        public int CustomerId { get; set; }
-
-        [MaxLength(500)]
-        public string RoomId { get; set; }
-
-        public DateTime CheckOutDate { get; set; }
+        [DataType(DataType.Date)]
         public DateTime CheckInDate { get; set; }
 
-        [MaxLength(500)]  
+        [DataType(DataType.Date)]
+        public DateTime CheckOutDate { get; set; }
+
+        [MaxLength(50)]
         public string Status { get; set; }
 
-        // Navigation Property
+        // Navigation Properties
         public virtual Customer Customer { get; set; }
-
+        public virtual Payment Payment { get; set; }
+        public virtual Room Room { get; set; }
     }
 }
 

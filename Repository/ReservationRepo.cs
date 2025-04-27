@@ -25,13 +25,13 @@ namespace SolmileAPI.Repository
                 RoomId = roomId,
                 CheckInDate = checkIn,
                 CheckOutDate = checkOut,
-                Status = "Pending" // You can set default status here
+                Status = "Pending"
             };
 
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 
-            return (reservation); // Return the created reservation
+            return (reservation);
         }
         public async Task<bool> CheckIfRoomExistsAsync(string roomId)
         {
@@ -179,28 +179,28 @@ namespace SolmileAPI.Repository
         public async Task<float> CalculatePaymentAsync(string reservationId)
         {
             var reservation = await _context.Reservations
-                .Include(r => r.Room)
-                .ThenInclude(r => r.RoomTypes)
+                .Include(r => r.Room) 
                 .FirstOrDefaultAsync(r => r.ReservationId.ToString() == reservationId);
 
             if (reservation == null)
-            {
-                return 0;
-            }
-            if (reservation.Room?.RoomTypes == null)
-            {
-                return 0;
-            }
-            float amountPerDay = reservation.Room.RoomTypes.PricePerNight;
+                return 0; 
 
-            TimeSpan duration = reservation.CheckOutDate - reservation.CheckInDate;
+           
+            var roomType = reservation.Room.RoomType; 
+            var pricePerNight = await _context.RoomTypes
+                .Where(rt => rt.RoomTypeId == roomType)
+                .Select(rt => rt.PricePerNight)
+                .FirstOrDefaultAsync();
 
-            if (duration.TotalDays <= 0)
-            {
-                return 0;
-            }
-            return (float)duration.TotalDays * amountPerDay;
+            if (pricePerNight == 0)
+                return 0; 
+
+            var numberOfNights = (reservation.CheckOutDate - reservation.CheckInDate).Days;
+            var totalPayment = pricePerNight * numberOfNights;
+
+            return totalPayment; 
         }
+
 
 
     }

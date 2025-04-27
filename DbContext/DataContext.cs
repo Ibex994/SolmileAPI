@@ -22,6 +22,7 @@ namespace Solmile
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
         public DbSet<Room> Room { get; set; }
+        public DbSet<RoomTypes> RoomTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,8 +70,8 @@ namespace Solmile
                     .OnDelete(DeleteBehavior.Restrict);
             
                     modelBuilder.Entity<Reservation>()
-                    .HasOne(r => r.Customer) // A reservation is associated with one customer
-                    .WithMany(c => c.Reservations) // A customer can have many reservations
+                    .HasOne(r => r.Customer) 
+                    .WithMany(c => c.Reservations) 
                     .HasForeignKey(r => r.CustomerId);
 
             //Ensuring customer and reservation link with 1:1
@@ -82,14 +83,14 @@ namespace Solmile
 
             // PaymentMethod and Payment relationship (1:1)
                     modelBuilder.Entity<PaymentMethod>()
-                    .HasOne(pm => pm.Payment) // One PaymentMethod has one Payment
-                    .WithOne(p => p.PaymentMethod) // One Payment has one PaymentMethod
-                    .HasForeignKey<Payment>(p => p.MethodId); // Foreign key in Payment
+                    .HasOne(pm => pm.Payment) 
+                    .WithOne(p => p.PaymentMethod) 
+                    .HasForeignKey<Payment>(p => p.MethodId); 
 
                     modelBuilder.Entity<Room>()
-                    .HasOne(r => r.RoomTypes)  // Room has one RoomType
-                   .WithMany()                // RoomType does not have a navigation property back to Room
-                   .HasForeignKey(r => r.RoomTypeId) // Foreign key to RoomType
+                    .HasOne(r => r.RoomTypes)  
+                   .WithMany()                
+                   .HasForeignKey(r => r.RoomTypeId) 
                    .OnDelete(DeleteBehavior.Restrict);
 
         }

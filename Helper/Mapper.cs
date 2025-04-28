@@ -31,6 +31,11 @@ namespace SolmileAPI.Helper
             CreateMap<ReservationDto, Reservation>();
             CreateMap<CreateResDto, Reservation>();
             CreateMap<Reservation, CreateResDto>();
+            //Room Dto
+            CreateMap<Room, RoomDto>();
+            CreateMap<RoomDto, Room>();
+            CreateMap<Room, CreateRoomDto>();
+            CreateMap<CreateRoomDto, Room>();
         }
     }
 }

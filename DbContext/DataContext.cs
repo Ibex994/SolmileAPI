@@ -22,6 +22,8 @@ namespace Solmile
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
         public DbSet<Room> Room { get; set; }
+        public DbSet<Branch> Branch { get; set; }
+        public DbSet<RoomAssignment> RoomAssignments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -82,15 +84,34 @@ namespace Solmile
 
             // PaymentMethod and Payment relationship (1:1)
                     modelBuilder.Entity<PaymentMethod>()
-                    .HasOne(pm => pm.Payment) // One PaymentMethod has one Payment
-                    .WithOne(p => p.PaymentMethod) // One Payment has one PaymentMethod
-                    .HasForeignKey<Payment>(p => p.MethodId); // Foreign key in Payment
+                    .HasOne(pm => pm.Payment) 
+                    .WithOne(p => p.PaymentMethod) 
+                    .HasForeignKey<Payment>(p => p.MethodId); 
 
                     modelBuilder.Entity<Room>()
-                    .HasOne(r => r.RoomTypes)  // Room has one RoomType
-                   .WithMany()                // RoomType does not have a navigation property back to Room
-                   .HasForeignKey(r => r.RoomTypeId) // Foreign key to RoomType
+                    .HasOne(r => r.RoomTypes)  
+                   .WithMany()                
+                   .HasForeignKey(r => r.RoomTypeId) 
                    .OnDelete(DeleteBehavior.Restrict);
+
+            // Room Assignment
+            modelBuilder.Entity<RoomAssignment>()
+        .HasOne(ra => ra.Room)
+        .WithMany(r => r.RoomAssignments)
+        .HasForeignKey(ra => ra.RoomID)
+        .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RoomAssignment>()
+                .HasOne(ra => ra.Branch)
+                .WithMany(b => b.RoomAssignments)
+                .HasForeignKey(ra => ra.BranchId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RoomAssignment>()
+                .HasOne(ra => ra.RoomType)
+                .WithMany(rt => rt.RoomAssignments)
+                .HasForeignKey(ra => ra.RoomTypeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
 

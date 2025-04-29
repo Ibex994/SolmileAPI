@@ -34,8 +34,6 @@ namespace SolmileAPI.Controllers
             var roomExists = await _reservationRepo.CheckIfRoomExistsAsync(createDto.RoomId);
             if (!roomExists)
                 return BadRequest("Room does not exist.");
-
-            // Use repository to create the reservation
             var createdReservation = await _reservationRepo.CreateReservationAsync(
                 createDto.RoomId,
                 createDto.CheckInDate,
@@ -43,29 +41,22 @@ namespace SolmileAPI.Controllers
 
             if (createdReservation == null)
                 return StatusCode(500, "Something went wrong while creating the reservation.");
-
-            // Map the created reservation to a DTO
             var reservationDto = _mapper.Map<ReservationDto>(createdReservation);
-
-            // Return the created reservation details
             return CreatedAtAction(nameof(GetReservationDetails), new { reservationId = reservationDto.ReservationId }, reservationDto);
         }
 
+        // create Update Reservation DTO for it
+       //[HttpPut]
+       //[Route("Update/{reservationId}")]
+       // public async Task<IActionResult> UpdateReservation([FromRoute] string reservationId, [FromBody] ReservationDto updatedDetails)
+       // {
+       //     bool result = await _reservationRepo.UpdateReservationAsync(reservationId, updatedDetails);
+       //     if (!result)
+       //         return NotFound("Reservation not found.");
 
+       //     return NoContent(); 
+       // }
 
-        // Update reservation details
-        //[HttpPut]
-        //[Route("Update/{reservationId}")]
-        //public async Task<IActionResult> UpdateReservation([FromRoute] string reservationId, [FromBody] ReservationDto updatedDetails)
-        //{
-        //    bool result = await _reservationRepo.UpdateReservationAsync(reservationId, updatedDetails);
-        //    if (!result)
-        //        return NotFound("Reservation not found.");
-
-        //    return NoContent(); // Status 204
-        //}
-
-        // Cancel a reservation
         [HttpPut]
         [Route("Cancel/{reservationId}")]
         public async Task<IActionResult> CancelReservation([FromRoute] string reservationId)
@@ -74,7 +65,7 @@ namespace SolmileAPI.Controllers
             if (!result)
                 return NotFound("Reservation not found.");
 
-            return NoContent(); // Status 204
+            return Content("Cancelled Successfully");
         }
 
         // Confirm a reservation
@@ -86,10 +77,10 @@ namespace SolmileAPI.Controllers
             if (!result)
                 return NotFound("Reservation not found.");
 
-            return NoContent(); // Status 204
+            return Content("Confirmed");
         }
 
-        // Extend a reservation's checkout date
+        
         [HttpPut]
         [Route("Extend/{reservationId}")]
         public async Task<IActionResult> ExtendReservation([FromRoute] string reservationId, [FromBody] DateTime newCheckOutDate)
@@ -98,10 +89,10 @@ namespace SolmileAPI.Controllers
             if (!result)
                 return NotFound("Reservation not found.");
 
-            return NoContent(); // Status 204
+            return Content("Reservation Extended");
         }
 
-        // Get reservation details by ID
+        // Get reservation details by Id
         [HttpGet]
         [Route("{reservationId}")]
         public async Task<IActionResult> GetReservationDetails([FromRoute] string reservationId)
@@ -131,7 +122,7 @@ namespace SolmileAPI.Controllers
             if (!result)
                 return NotFound("Reservation not found.");
 
-            return NoContent(); // Status 204
+            return NoContent();
         }
 
         // Check out a reservation
@@ -143,10 +134,10 @@ namespace SolmileAPI.Controllers
             if (!result)
                 return NotFound("Reservation not found.");
 
-            return NoContent(); // Status 204
+            return NoContent();
         }
 
-        // View reservation history for a customer
+        // View reservation history
         [HttpGet]
         [Route("History/{customerId}")]
         public async Task<IActionResult> ViewReservationHistory([FromRoute] int customerId)
@@ -164,7 +155,7 @@ namespace SolmileAPI.Controllers
             if (!result)
                 return NotFound("Reservation not found.");
 
-            return NoContent(); // Status 204
+            return NoContent();
         }
 
         // Calculate payment for a reservation
@@ -178,15 +169,5 @@ namespace SolmileAPI.Controllers
 
             return Ok(new { PaymentAmount = paymentAmount });
         }
-    }
-
-    // DTO for Reservation (used for creating and updating reservations)
-    public class ReservationDto
-    {
-        public string ReservationId { get; set; }
-        public int CustomerId { get; set; }
-        public string RoomId { get; set; }
-        public DateTime CheckInDate { get; set; }
-        public DateTime CheckOutDate { get; set; }
     }
 }

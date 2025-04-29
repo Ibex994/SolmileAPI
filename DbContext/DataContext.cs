@@ -24,6 +24,7 @@ namespace Solmile
         public DbSet<Room> Room { get; set; }
         public DbSet<Branch> Branch { get; set; }
         public DbSet<RoomAssignment> RoomAssignments { get; set; }
+        public DbSet<ContactDetail> ContactDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -71,8 +72,8 @@ namespace Solmile
                     .OnDelete(DeleteBehavior.Restrict);
             
                     modelBuilder.Entity<Reservation>()
-                    .HasOne(r => r.Customer) // A reservation is associated with one customer
-                    .WithMany(c => c.Reservations) // A customer can have many reservations
+                    .HasOne(r => r.Customer) 
+                    .WithMany(c => c.Reservations) 
                     .HasForeignKey(r => r.CustomerId);
 
             //Ensuring customer and reservation link with 1:1
@@ -95,23 +96,29 @@ namespace Solmile
                    .OnDelete(DeleteBehavior.Restrict);
 
             // Room Assignment
-            modelBuilder.Entity<RoomAssignment>()
-        .HasOne(ra => ra.Room)
-        .WithMany(r => r.RoomAssignments)
-        .HasForeignKey(ra => ra.RoomID)
-        .OnDelete(DeleteBehavior.Restrict);
+                    modelBuilder.Entity<RoomAssignment>()
+                    .HasOne(ra => ra.Room)
+                    .WithMany(r => r.RoomAssignments)
+                    .HasForeignKey(ra => ra.RoomID)
+                    .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<RoomAssignment>()
-                .HasOne(ra => ra.Branch)
-                .WithMany(b => b.RoomAssignments)
-                .HasForeignKey(ra => ra.BranchId)
-                .OnDelete(DeleteBehavior.Restrict);
+                    modelBuilder.Entity<RoomAssignment>()
+                    .HasOne(ra => ra.Branch)
+                    .WithMany(b => b.RoomAssignments)
+                    .HasForeignKey(ra => ra.BranchId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<RoomAssignment>()
-                .HasOne(ra => ra.RoomType)
-                .WithMany(rt => rt.RoomAssignments)
-                .HasForeignKey(ra => ra.RoomTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                    modelBuilder.Entity<RoomAssignment>()
+                        .HasOne(ra => ra.RoomType)
+                        .WithMany(rt => rt.RoomAssignments)
+                        .HasForeignKey(ra => ra.RoomTypeId)
+                        .OnDelete(DeleteBehavior.Restrict);
+                     //branch 
+                     modelBuilder.Entity<Branch>()
+                      .HasMany(b => b.ContactDetails)  
+                      .WithOne(cd => cd.Branch) 
+                      .HasForeignKey(cd => cd.BranchId) 
+                      .OnDelete(DeleteBehavior.Cascade);
 
         }
 

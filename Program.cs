@@ -35,6 +35,8 @@ public class Program
         builder.Services.AddScoped<ReservationInterface, ReservationRepo>();
         builder.Services.AddScoped<RoomInterface, RoomRepo>();
         builder.Services.AddScoped<RoomAssignmentInterface, RoomAssignmetRepo>();
+        builder.Services.AddScoped<BranchInterface, BranchRepo>();
+        builder.Services.AddScoped<ContactDetailInterface, ContactDetailRepo>(); 
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //Enable Reference Handling

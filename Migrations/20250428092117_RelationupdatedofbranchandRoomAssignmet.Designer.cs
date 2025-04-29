@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Solmile;
 
@@ -11,9 +12,11 @@ using Solmile;
 namespace SolmileAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250428092117_RelationupdatedofbranchandRoomAssignmet")]
+    partial class RelationupdatedofbranchandRoomAssignmet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,45 +295,6 @@ namespace SolmileAPI.Migrations
                     b.ToTable("Complaints");
                 });
 
-            modelBuilder.Entity("SolmileAPI.Models.ContactDetail", b =>
-                {
-                    b.Property<int>("ContactId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactId"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BranchId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ContactType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmergencyContact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.HasKey("ContactId");
-
-                    b.HasIndex("BranchId");
-
-                    b.ToTable("ContactDetails");
-                });
-
             modelBuilder.Entity("SolmileAPI.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
@@ -561,16 +525,6 @@ namespace SolmileAPI.Migrations
                     b.Navigation("Employee");
                 });
 
-            modelBuilder.Entity("SolmileAPI.Models.ContactDetail", b =>
-                {
-                    b.HasOne("Solmile.Models.Branch", "Branch")
-                        .WithMany("ContactDetails")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Branch");
-                });
-
             modelBuilder.Entity("SolmileAPI.Models.Payment", b =>
                 {
                     b.HasOne("SolmileAPI.Models.PaymentMethod", "PaymentMethod")
@@ -595,8 +549,6 @@ namespace SolmileAPI.Migrations
 
             modelBuilder.Entity("Solmile.Models.Branch", b =>
                 {
-                    b.Navigation("ContactDetails");
-
                     b.Navigation("RoomAssignments");
                 });
 

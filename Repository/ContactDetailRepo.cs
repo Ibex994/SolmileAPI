@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Solmile;
+using SolmileAPI.Enum;
 using SolmileAPI.Interface;
 using SolmileAPI.Models;
 
@@ -51,35 +52,46 @@ namespace SolmileAPI.Repository
             var contact = await _context.ContactDetails.FirstOrDefaultAsync(cd => cd.ContactId == contactId);
             if (contact == null)
             {
-                return false; 
+                return false;
             }
-
+            var branches = await _context.Branch
+                .Where(b => b.ContactId == contactId)
+                .ToListAsync();
+            if (branches.Count > 0)
+            {
+                foreach (var branch in branches)
+                {
+                    branch.ContactId = null;
+                }
+                await _context.SaveChangesAsync();
+            }
             _context.ContactDetails.Remove(contact);
-            return await _context.SaveChangesAsync() > 0;
+            var saveChangesResult = await _context.SaveChangesAsync();
+            return saveChangesResult > 0;
         }
-        public async Task<bool> AssignBranchToContactAsync(int contactId, int branchId)
+
+        public async Task<AssignBranchResult> AssignBranchToContactAsync(int contactId, int branchId)
         {
             var contact = await _context.ContactDetails
                 .FirstOrDefaultAsync(cd => cd.ContactId == contactId);
-
             if (contact == null)
-            {
-                return false;
-            }
+                return AssignBranchResult.ContactNotFound;
 
             var branch = await _context.Branch
                 .FirstOrDefaultAsync(b => b.BranchId == branchId);
-
             if (branch == null)
-            {
-                return false; 
-            }
+                return AssignBranchResult.BranchNotFound;
+
+            if (branch.ContactId != null)
+                return AssignBranchResult.BranchAlreadyAssigned;
 
             contact.BranchId = branchId;
+            branch.ContactId = contactId;
 
             await _context.SaveChangesAsync();
-            return true;
+            return AssignBranchResult.Success;
         }
+
 
         public bool ValidateContactDetails(ContactDetail details)
         {
@@ -99,6 +111,7 @@ namespace SolmileAPI.Repository
                 return false;
 
             return true;
-        } 
+        }
+
     }
- }
+}

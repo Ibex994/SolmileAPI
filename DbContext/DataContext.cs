@@ -126,9 +126,9 @@ namespace Solmile
                       .HasMany(b => b.ContactDetails)  
                       .WithOne(cd => cd.Branch) 
                       .HasForeignKey(cd => cd.BranchId) 
-                      .OnDelete(DeleteBehavior.Cascade);
-                    // Task
-                    modelBuilder.Entity<EmployeeTask>()
+                      .OnDelete(DeleteBehavior.SetNull);
+            // Task
+            modelBuilder.Entity<EmployeeTask>()
                     .HasOne(t => t.Employees)
                     .WithMany(e => e.EmployeeTasks)
                     .HasForeignKey(t => t.EmployeeId)
@@ -188,23 +188,21 @@ namespace Solmile
                         .OnDelete(DeleteBehavior.Cascade);
 
             // YearlyRatingsSummary
-            modelBuilder.Entity<YearlyRatingsSummary>()
-                .HasOne(y => y.Employee)
-                .WithOne(e => e.YearlyRatingsSummary)
-                .HasForeignKey<YearlyRatingsSummary>(y => y.EmployeeId)
-                .OnDelete(DeleteBehavior.Cascade);
+                    modelBuilder.Entity<YearlyRatingsSummary>()
+                        .HasOne(y => y.Employee)
+                        .WithOne(e => e.YearlyRatingsSummary)
+                        .HasForeignKey<YearlyRatingsSummary>(y => y.EmployeeId)
+                        .OnDelete(DeleteBehavior.Cascade);
             //Log
-            modelBuilder.Entity<Log>()
-                .Property(l => l.Level)
-                .HasConversion<string>();
+                    modelBuilder.Entity<Log>()
+                        .Property(l => l.Level)
+                        .HasConversion<string>();
 
-            modelBuilder.Entity<Log>()
-                .HasOne(l => l.Performer)
-                .WithMany(e => e.Logs)
-                .HasForeignKey(l => l.PerformedBy)
-                .OnDelete(DeleteBehavior.Cascade);
-
-
+                    modelBuilder.Entity<Log>()
+                        .HasOne(l => l.Performer)
+                        .WithMany(e => e.Logs)
+                        .HasForeignKey(l => l.PerformedBy)
+                        .OnDelete(DeleteBehavior.Cascade);
 
         }
 

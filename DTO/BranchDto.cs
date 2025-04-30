@@ -12,6 +12,12 @@
         public string Name { get; set; }
         public string Location { get; set; }
     }
+
+    public class UpdateBranchDto
+    {
+        public string Name { get; set; }
+        public string Location { get; set; }
+    }
     public class BranchDetailsDto
     {
         public int BranchId { get; set; }

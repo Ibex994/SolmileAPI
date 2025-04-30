@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SolmileAPI.DTO;
+using SolmileAPI.Enum;
 using SolmileAPI.Interface;
 using SolmileAPI.Models;
 using SolmileAPI.Repository;
@@ -57,12 +58,18 @@ namespace SolmileAPI.Controllers
             var branchId = dto.BranchId;
 
             var result = await _contactDetailInterface.AssignBranchToContactAsync(contactId, branchId);
-            if (result)
+
+            return result switch
             {
-                return Ok("Branch assigned to contact successfully.");
-            }
-            return BadRequest("Failed to assign branch to contact.");
+                AssignBranchResult.Success => Ok("Branch assigned to contact successfully."),
+                AssignBranchResult.ContactNotFound => NotFound("Contact not found."),
+                AssignBranchResult.BranchNotFound => NotFound("Branch not found."),
+                AssignBranchResult.ContactAlreadyAssigned => BadRequest("Contact already assigned to a branch."),
+                AssignBranchResult.BranchAlreadyAssigned => BadRequest("Branch already has a contact assigned."),
+                _ => StatusCode(500, "Unexpected error.")
+            };
         }
+
 
 
         [HttpPost("create-contact")]
@@ -101,5 +108,6 @@ namespace SolmileAPI.Controllers
             var isValid = _contactDetailInterface.ValidateContactDetails(details);
             return isValid ? Ok("Contact details are valid.") : BadRequest("Invalid contact details.");
         }
+
     }
 }

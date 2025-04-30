@@ -39,6 +39,10 @@ namespace SolmileAPI.Helper
             //Branch Dto
             CreateMap<Branch, BranchDto>();
             CreateMap<BranchDto, Branch>();
+            CreateMap<Branch, CreateBranchDto>();
+            CreateMap<CreateBranchDto, Branch>();
+            CreateMap<Branch, UpdateBranchDto>();
+            CreateMap<UpdateBranchDto, Branch>();
             //ContactDetailsDto
             CreateMap<ContactDetail, ContactDetailDto>();
             CreateMap<ContactDetailDto, ContactDetail>();

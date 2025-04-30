@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Solmile.Models;
+using SolmileAPI.Enum;
 
 namespace SolmileAPI.Interface
 {
@@ -9,7 +10,8 @@ namespace SolmileAPI.Interface
        public Task<bool> UpdateBranchAsync(int branchId, Branch updatedBranch);
         public Task<bool> DeleteBranchAsync(int branchId);
         public Task<Branch?> ViewBranchDetailsAsync(int branchId);
-        public Task<bool> AssignContactDetailsAsync(int branchId, int contactId);
+        Task<AssignContactResults> AssignContactDetailsAsync(int branchId, int contactId);
         public Task<bool> CheckBranchExistsAsync(int branchId);
+        Task<UnassignContactResult> UnassignContactFromBranchAsync(int contactId, int branchId);
     }
 }

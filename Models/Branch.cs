@@ -14,7 +14,7 @@ namespace Solmile.Models
         public int BranchId { get; set; }
         public string Location { get; set; }
         public string Name { get; set; }
-        public int ContactId { get; set; }
+        public int? ContactId { get; set; }
         public virtual ICollection<RoomAssignment> RoomAssignments { get; set; }
         public virtual ICollection<ContactDetail> ContactDetails { get; set; }
 

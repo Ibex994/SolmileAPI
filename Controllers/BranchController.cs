@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Solmile.Models;
 using SolmileAPI.DTO;
+using SolmileAPI.Enum;
 using SolmileAPI.Interface;
 using SolmileAPI.Repository;
 
@@ -14,7 +15,7 @@ namespace SolmileAPI.Controllers
         private readonly BranchInterface _branchInterface;
         private readonly IMapper _mapper;
 
-        public BranchController(BranchInterface branchInterface, IMapper mapper) 
+        public BranchController(BranchInterface branchInterface, IMapper mapper)
         {
             _branchInterface = branchInterface;
             _mapper = mapper;
@@ -23,7 +24,7 @@ namespace SolmileAPI.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> AddBranch([FromBody] BranchDto dto)
+        public async Task<IActionResult> AddBranch([FromBody] CreateBranchDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -43,10 +44,10 @@ namespace SolmileAPI.Controllers
         [HttpPut("{branchId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateBranch(int branchId, [FromBody] BranchDto dto)
+        public async Task<IActionResult> UpdateBranch(int branchId, [FromBody] UpdateBranchDto dto)
         {
             var updatedBranch = _mapper.Map<Branch>(dto);
-            updatedBranch.BranchId = branchId; 
+            updatedBranch.BranchId = branchId;
 
             bool result = await _branchInterface.UpdateBranchAsync(branchId, updatedBranch);
 
@@ -91,17 +92,44 @@ namespace SolmileAPI.Controllers
 
         [HttpPatch("{branchId}/assign-contact/{contactId}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> AssignContact(int branchId, int contactId)
         {
-            bool result = await _branchInterface.AssignContactDetailsAsync(branchId, contactId);
+            var result = await _branchInterface.AssignContactDetailsAsync(branchId, contactId);
 
-            if (result)
+            return result switch
             {
-                return Ok("Contact assigned successfully.");
-            }
-
-            return NotFound("Branch not found.");
+                AssignContactResults.Success => Ok("Contact assigned successfully."),
+                AssignContactResults.BranchNotFound => NotFound("Branch not found."),
+                AssignContactResults.ContactNotFound => NotFound("Contact not found."),
+                AssignContactResults.BranchAlreadyAssigned => BadRequest("Branch already has a contact assigned."),
+                AssignContactResults.ContactAlreadyAssigned => BadRequest("Contact is already assigned to a branch."),
+                _ => StatusCode(500, "Unexpected error.")
+            };
         }
+
+        [HttpPatch("unassign-contact/{contactId}/{branchId}")]
+        public async Task<IActionResult> UnassignContactFromBranch(int contactId, int branchId)
+        {
+            var result = await _branchInterface.UnassignContactFromBranchAsync(contactId, branchId);
+
+            return result switch
+            {
+                UnassignContactResult.Success => Ok("Contact successfully unassigned from branch."),
+                UnassignContactResult.ContactNotFound => NotFound("Contact not found."),
+                UnassignContactResult.ContactAlreadyUnassigned => BadRequest("Contact is already unassigned from this branch."),
+                UnassignContactResult.BranchNotFound => NotFound("Branch not found."),
+                UnassignContactResult.BranchContactMismatch => BadRequest("The contact is not assigned to the given branch."),
+                UnassignContactResult.DatabaseError => StatusCode(500, "An error occurred while processing the request."),
+                _ => StatusCode(500, "Unexpected error occurred.")
+            };
+        }
+
+
+
+
+
     }
 }
+

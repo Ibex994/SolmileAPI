@@ -1,4 +1,5 @@
-﻿using SolmileAPI.Models;
+﻿using SolmileAPI.Enum;
+using SolmileAPI.Models;
 
 namespace SolmileAPI.Interface
 {
@@ -9,6 +10,6 @@ namespace SolmileAPI.Interface
         bool ValidateContactDetails(ContactDetail details);
         Task<bool> CreateContactDetailsAsync(ContactDetail newDetails);
         Task<bool> DeleteContactDetailsAsync(int contactId);
-        public Task<bool> AssignBranchToContactAsync(int contactId, int branchId);
+        Task<AssignBranchResult> AssignBranchToContactAsync(int contactId, int branchId);
     }
 }

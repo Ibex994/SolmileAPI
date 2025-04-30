@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace Solmile.Models
 {
     public class Log
     {
         [Key]
+        public int LogId { get; set; }
+        [Required]
+        public string Action { get; set; }
+
+        public int? PerformedBy { get; set; }
+
+        [DataType(DataType.DateTime)]
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-        public string Action { get; set; }         // e.g., "UserLogin"
-        public string Message { get; set; }        // e.g., "Admin logged in"
-        public LogLevel Level { get; set; }        // Info, Warning, Error
-        public string User { get; set; }          // Optional: Associated user
+        public virtual Employee Performer { get; set; }
+        public LogLevel Level { get; set; }
     }
-    public enum LogLevel { Info, Warning, Error }
 }

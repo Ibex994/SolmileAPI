@@ -11,8 +11,6 @@ namespace Solmile
 {
     public class DataContext : DbContext
     {
-        public DataContext(){}
-
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<Employee> Employees { get; set; }
@@ -22,9 +20,19 @@ namespace Solmile
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
         public DbSet<Room> Room { get; set; }
+        public DbSet<RoomTypes> RoomTypes { get; set; }
         public DbSet<Branch> Branch { get; set; }
         public DbSet<RoomAssignment> RoomAssignments { get; set; }
         public DbSet<ContactDetail> ContactDetails { get; set; }
+        public DbSet<EmployeeTask> EmployeeTasks { get; set; } 
+        public DbSet<Payroll> Payroll { get; set; }
+        public DbSet<Tax> Taxs { get; set; }
+        public DbSet<FeedBack> Feedback { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Ratings> Ratings { get; set; }
+        public DbSet<YearlyRatingsSummary> yearlyRatingsSummaries { get; set; }
+        public DbSet<MonthlyAttendanceSummary> monthlyAttendanceSummaries { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -119,6 +127,84 @@ namespace Solmile
                       .WithOne(cd => cd.Branch) 
                       .HasForeignKey(cd => cd.BranchId) 
                       .OnDelete(DeleteBehavior.Cascade);
+                    // Task
+                    modelBuilder.Entity<EmployeeTask>()
+                    .HasOne(t => t.Employees)
+                    .WithMany(e => e.EmployeeTasks)
+                    .HasForeignKey(t => t.EmployeeId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+                    modelBuilder.Entity<ServiceRequest>()
+                    .HasOne(sr => sr.EmployeeTask)
+                    .WithMany(t => t.ServiceRequests)
+                    .HasForeignKey(sr => sr.TaskId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+            // Payroll
+                    modelBuilder.Entity<Payroll>()
+                        .HasOne(p => p.Employee)
+                        .WithMany(e => e.Payrolls)
+                        .HasForeignKey(p => p.EmployeeId)
+                        .OnDelete(DeleteBehavior.Cascade);
+            //Tax
+                   modelBuilder.Entity<Tax>()
+                        .HasOne(t => t.Employee)
+                        .WithMany(e => e.Taxs)
+                        .HasForeignKey(t => t.EmployeeId)
+                        .OnDelete(DeleteBehavior.Cascade);
+
+            // Feedback
+                    modelBuilder.Entity<FeedBack>()
+                        .HasOne(f => f.Customer)
+                        .WithMany(c => c.Feedbacks)
+                        .HasForeignKey(f => f.CustomerId)
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    modelBuilder.Entity<FeedBack>()
+                        .HasOne(f => f.Reservation)
+                        .WithMany(r => r.Feedbacks)
+                        .HasForeignKey(f => f.ReservationId)
+                        .OnDelete(DeleteBehavior.Cascade);
+
+            // Attendance
+                    modelBuilder.Entity<Attendance>()
+                        .HasOne(a => a.Employee)
+                        .WithMany(e => e.Attendances)
+                        .HasForeignKey(a => a.EmployeeId)
+                        .OnDelete(DeleteBehavior.Cascade);
+
+            // MonthlyAttendanceSummary
+                modelBuilder.Entity<MonthlyAttendanceSummary>()
+                    .HasOne(m => m.Employee)
+                    .WithOne(e => e.MonthlyAttendanceSummary)
+                    .HasForeignKey<MonthlyAttendanceSummary>(m => m.EmployeeId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            // Rating
+                    modelBuilder.Entity<Ratings>()
+                        .HasOne(r => r.Employee)
+                        .WithMany(e => e.Ratings)
+                        .HasForeignKey(r => r.EmployeeId)
+                        .OnDelete(DeleteBehavior.Cascade);
+
+            // YearlyRatingsSummary
+            modelBuilder.Entity<YearlyRatingsSummary>()
+                .HasOne(y => y.Employee)
+                .WithOne(e => e.YearlyRatingsSummary)
+                .HasForeignKey<YearlyRatingsSummary>(y => y.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+            //Log
+            modelBuilder.Entity<Log>()
+                .Property(l => l.Level)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Log>()
+                .HasOne(l => l.Performer)
+                .WithMany(e => e.Logs)
+                .HasForeignKey(l => l.PerformedBy)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
 
         }
 

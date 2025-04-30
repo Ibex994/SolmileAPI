@@ -27,6 +27,7 @@ namespace SolmileAPI.Models
         public ICollection<Complaint> Complaints { get; set; }
         public ICollection<Reservation> Reservations { get; set; }
         public ICollection<ServiceRequest> ServiceRequests { get; set; }
+        public ICollection<FeedBack> Feedbacks { get; set; }
     }
 
 

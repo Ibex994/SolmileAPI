@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Solmile;
 
@@ -11,9 +12,11 @@ using Solmile;
 namespace SolmileAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250430085454_AddedTblforEmpAndTax")]
+    partial class AddedTblforEmpAndTax
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,61 +77,32 @@ namespace SolmileAPI.Migrations
                     b.ToTable("EmployeeTasks");
                 });
 
-            modelBuilder.Entity("Solmile.Models.FeedBack", b =>
-                {
-                    b.Property<int>("FeedbackId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeedbackId"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Details")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FeedbackId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ReservationId");
-
-                    b.ToTable("Feedback");
-                });
-
             modelBuilder.Entity("Solmile.Models.Log", b =>
                 {
-                    b.Property<int>("LogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LogId"));
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Action")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Level")
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PerformedBy")
-                        .HasColumnType("int");
+                    b.Property<string>("User")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime2");
+                    b.HasKey("Timestamp");
 
-                    b.HasKey("LogId");
-
-                    b.HasIndex("PerformedBy");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Log");
                 });
@@ -158,34 +132,6 @@ namespace SolmileAPI.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Payroll");
-                });
-
-            modelBuilder.Entity("Solmile.Models.Ratings", b =>
-                {
-                    b.Property<int>("RatingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RatingId"));
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IsGivenBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RatingDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<float>("RatingValue")
-                        .HasColumnType("real");
-
-                    b.HasKey("RatingId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Solmile.Models.Reservation", b =>
@@ -409,64 +355,6 @@ namespace SolmileAPI.Migrations
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("Solmile.Models.YearlyRatingsSummary", b =>
-                {
-                    b.Property<int>("SummaryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SummaryId"));
-
-                    b.Property<float>("AverageRating")
-                        .HasColumnType("real");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("TotalRatingSum")
-                        .HasColumnType("real");
-
-                    b.Property<int>("TotalVotes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("SummaryId");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
-
-                    b.ToTable("yearlyRatingsSummaries");
-                });
-
-            modelBuilder.Entity("SolmileAPI.Models.Attendance", b =>
-                {
-                    b.Property<int>("AttendanceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendanceId"));
-
-                    b.Property<DateTime>("AttendanceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsPresent")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AttendanceId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Attendances");
-                });
-
             modelBuilder.Entity("SolmileAPI.Models.Complaint", b =>
                 {
                     b.Property<int>("ComplaintId")
@@ -571,32 +459,6 @@ namespace SolmileAPI.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("SolmileAPI.Models.MonthlyAttendanceSummary", b =>
-                {
-                    b.Property<int>("SummaryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SummaryId"));
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalDaysPresent")
-                        .HasColumnType("int");
-
-                    b.Property<string>("YearMonth")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SummaryId");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
-
-                    b.ToTable("monthlyAttendanceSummaries");
                 });
 
             modelBuilder.Entity("SolmileAPI.Models.Payment", b =>
@@ -724,50 +586,17 @@ namespace SolmileAPI.Migrations
                     b.Navigation("Employees");
                 });
 
-            modelBuilder.Entity("Solmile.Models.FeedBack", b =>
-                {
-                    b.HasOne("SolmileAPI.Models.Customer", "Customer")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Solmile.Models.Reservation", "Reservation")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Reservation");
-                });
-
             modelBuilder.Entity("Solmile.Models.Log", b =>
                 {
-                    b.HasOne("Solmile.Models.Employee", "Performer")
+                    b.HasOne("Solmile.Models.Employee", null)
                         .WithMany("Logs")
-                        .HasForeignKey("PerformedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Performer");
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("Solmile.Models.Payroll", b =>
                 {
                     b.HasOne("Solmile.Models.Employee", "Employee")
                         .WithMany("Payrolls")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("Solmile.Models.Ratings", b =>
-                {
-                    b.HasOne("Solmile.Models.Employee", "Employee")
-                        .WithMany("Ratings")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -873,28 +702,6 @@ namespace SolmileAPI.Migrations
                     b.Navigation("ServiceType");
                 });
 
-            modelBuilder.Entity("Solmile.Models.YearlyRatingsSummary", b =>
-                {
-                    b.HasOne("Solmile.Models.Employee", "Employee")
-                        .WithOne("YearlyRatingsSummary")
-                        .HasForeignKey("Solmile.Models.YearlyRatingsSummary", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("SolmileAPI.Models.Attendance", b =>
-                {
-                    b.HasOne("Solmile.Models.Employee", "Employee")
-                        .WithMany("Attendances")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("SolmileAPI.Models.Complaint", b =>
                 {
                     b.HasOne("SolmileAPI.Models.Customer", "Customer")
@@ -921,17 +728,6 @@ namespace SolmileAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Branch");
-                });
-
-            modelBuilder.Entity("SolmileAPI.Models.MonthlyAttendanceSummary", b =>
-                {
-                    b.HasOne("Solmile.Models.Employee", "Employee")
-                        .WithOne("MonthlyAttendanceSummary")
-                        .HasForeignKey("SolmileAPI.Models.MonthlyAttendanceSummary", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("SolmileAPI.Models.Payment", b =>
@@ -979,11 +775,6 @@ namespace SolmileAPI.Migrations
                     b.Navigation("ServiceRequests");
                 });
 
-            modelBuilder.Entity("Solmile.Models.Reservation", b =>
-                {
-                    b.Navigation("Feedbacks");
-                });
-
             modelBuilder.Entity("Solmile.Models.Room", b =>
                 {
                     b.Navigation("Reservation")
@@ -1012,8 +803,6 @@ namespace SolmileAPI.Migrations
                 {
                     b.Navigation("Complaints");
 
-                    b.Navigation("Feedbacks");
-
                     b.Navigation("Reservations");
 
                     b.Navigation("ServiceRequests");
@@ -1033,25 +822,15 @@ namespace SolmileAPI.Migrations
 
             modelBuilder.Entity("Solmile.Models.Employee", b =>
                 {
-                    b.Navigation("Attendances");
-
                     b.Navigation("Complaints");
 
                     b.Navigation("EmployeeTasks");
 
                     b.Navigation("Logs");
 
-                    b.Navigation("MonthlyAttendanceSummary")
-                        .IsRequired();
-
                     b.Navigation("Payrolls");
 
-                    b.Navigation("Ratings");
-
                     b.Navigation("Taxs");
-
-                    b.Navigation("YearlyRatingsSummary")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

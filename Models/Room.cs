@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Solmile.Models
 {
@@ -26,8 +27,9 @@ namespace Solmile.Models
             [Key]
             public int RoomTypeId { get; set; }
             public string TypeName { get; set; }
-            public float PricePerNight { get; set; }
-        public virtual ICollection<RoomAssignment> RoomAssignments { get; set; }
+             [Precision(18, 2)]
+             public decimal PricePerNight { get; set; }
+            public virtual ICollection<RoomAssignment> RoomAssignments { get; set; }
     }
 
     public class RoomAssignment

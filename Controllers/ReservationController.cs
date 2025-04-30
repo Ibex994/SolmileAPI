@@ -163,7 +163,8 @@ namespace SolmileAPI.Controllers
         [Route("CalculatePayment/{reservationId}")]
         public async Task<IActionResult> CalculatePayment([FromRoute] string reservationId)
         {
-            float paymentAmount = await _reservationRepo.CalculatePaymentAsync(reservationId);
+            decimal paymentAmount = await _reservationRepo.CalculatePaymentAsync(reservationId);
+
             if (paymentAmount == 0)
                 return NotFound("Reservation not found or invalid data.");
 

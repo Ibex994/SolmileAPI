@@ -15,7 +15,7 @@ namespace Solmile.Models
         public float Deductions { get; set; }
         private float NetSalary;
 
-      
+      public virtual Employee Employee { get; set; }
 
         // Method to calculate NetSalary
         private float CalculateNetSalary()

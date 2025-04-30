@@ -8,26 +8,26 @@ using Solmile.Interface;
 namespace Solmile.Service
 {
    
-        public class UserService:IUserService
-        {
-            public bool Login(string username, string password)
-            {
-                using (var context = new DataContext())
-                {
+        //public class UserService:IUserService
+        //{
+        //    public bool Login(string username, string password)
+        //    {
+        //        using (var context = new DataContext())
+        //        {
                     
-                    var user = context.Users.FirstOrDefault(u => u.Username.ToLower() == username.ToLower());
+        //            var user = context.Users.FirstOrDefault(u => u.Username.ToLower() == username.ToLower());
 
-                    if (user == null)
-                    {
+        //            if (user == null)
+        //            {
                        
-                        return false;
-                    }
+        //                return false;
+        //            }
 
                     
-                    bool isPasswordValid = (user.Password == password);
+        //            bool isPasswordValid = (user.Password == password);
 
-                    return isPasswordValid;
-                }
-            }
-        }
+        //            return isPasswordValid;
+        //        }
+        //    }
+        //}
     }

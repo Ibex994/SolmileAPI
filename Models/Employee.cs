@@ -14,22 +14,35 @@ namespace Solmile.Models
     public class Employee : User
     {
         [Required]
-        public string FirstName { get; set; } = string.Empty;
+        public string FirstName { get; set; } 
         [Required]
-        public string LastName { get; set; } = string.Empty;
+        public string LastName { get; set; } 
         [Required]
-        public string Position { get; set; } = string.Empty;
+        public string Position { get; set; }
         [Required]
-        public string Phone { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; }
+        public string Email { get; set; } 
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
         [Required]
+        [DataType(DataType.Date)]
         public DateTime HireDate { get; set; }
         [Required]
         public bool Status { get; set; }
         [Required]
-        public string Gender { get; set; } = string.Empty;
+        public string Gender { get; set; }
+       
+
+        // Navigation Property
         public virtual User User { get; set; }
         public virtual ICollection<Complaint> Complaints { get; set; }
+        public virtual ICollection<EmployeeTask> EmployeeTasks { get; set; }
+        public ICollection<Log> Logs { get; set; }
+        public ICollection<Payroll> Payrolls { get; set; }
+        public ICollection<Tax> Taxs { get; set; }
+        public ICollection<Attendance> Attendances { get; set; }
+        public MonthlyAttendanceSummary MonthlyAttendanceSummary { get; set; }
+        public ICollection<Ratings> Ratings { get; set; }
+        public YearlyRatingsSummary YearlyRatingsSummary { get; set; }
     }
 }

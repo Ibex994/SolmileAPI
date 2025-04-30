@@ -30,6 +30,7 @@ namespace Solmile.Models
         public virtual Customer Customer { get; set; }
         public virtual Payment Payment { get; set; }
         public virtual Room Room { get; set; }
+        public ICollection<FeedBack> Feedbacks { get; set; }
     }
 }
 

@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SolmileAPI.Models;
 
 namespace Solmile.Models
 {
     public class FeedBack
     {
         public int FeedbackId { get; set; }
-        public string ReservationId { get; set; }
-        public string CustomerId { get; set; }
+        public int ReservationId { get; set; }
+        public int CustomerId { get; set; }
         public string Details { get; set; }
         public int Rating { get; set; }
+
+        public Reservation Reservation { get; set; }
+        public Customer Customer { get; set; }
     }
 }

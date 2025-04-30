@@ -16,7 +16,9 @@ namespace Solmile.Models
         public string RequestedBy { get; set; }
         public int RequestorId { get; set; }
         public int ServiceTypeId { get; set; }
+        public int? TaskId { get; set; }
         public string Location { get; set; }
+        [DataType(DataType.Date)]
         public DateTime RequiredByDateTime { get; set; } // Replaced LocalDateTime with DateTime
         public string Status { get; set; }
         public string ExtraDetail { get; set; }
@@ -27,6 +29,7 @@ namespace Solmile.Models
         public virtual Customer Requestor { get; set; }
         [ForeignKey("ServiceTypeId")]
         public virtual ServiceType ServiceType { get; set; }
+        public virtual EmployeeTask EmployeeTask { get; set; }
 
 
 

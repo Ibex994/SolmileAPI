@@ -176,7 +176,7 @@ namespace SolmileAPI.Repository
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<float> CalculatePaymentAsync(string reservationId)
+        public async Task<decimal> CalculatePaymentAsync(string reservationId)
         {
             var reservation = await _context.Reservations
                 .Include(r => r.Room) 

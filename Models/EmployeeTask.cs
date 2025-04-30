@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace Solmile.Models
 {
-    public class GuestHouseTask
+    public class EmployeeTask
     {
         [Key]
         public int TaskId { get; set; }
         public int RequestId { get; set; }
-        public int EmployeeId { get; set; }
+        public int? EmployeeId { get; set; }
+        [DataType(DataType.Date)]
         public DateTime AssignedTime { get; set; }
         public string Status { get; set; }
+        public virtual Employee Employees { get; set; }
+        public virtual ICollection<ServiceRequest> ServiceRequests { get; set; }
     }
 }

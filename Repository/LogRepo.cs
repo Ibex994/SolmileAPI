@@ -37,7 +37,7 @@ namespace SolmileAPI.Repository
         {
             return await _context.Logs
                                  .Where(log => log.PerformedBy == employeeId)
-                                 .ToListAsync();  // Fetching logs for a specific employee
+                                 .ToListAsync();
         }
     }
 }

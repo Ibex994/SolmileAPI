@@ -16,12 +16,16 @@ namespace SolmileAPI.Controllers
         private readonly userInterface _userInterface;
         private readonly IMapper _mapper;
         private readonly EmployeeInterface _employeeInterface;
+        private readonly LogInterface _logInterface;
 
-        public UserController(userInterface userInterface, IMapper mapper, EmployeeInterface employeeInterface)
+        public UserController(userInterface userInterface, IMapper mapper, 
+            EmployeeInterface employeeInterface, 
+            LogInterface logInterface)
         {
             _userInterface = userInterface;
             _mapper = mapper;
             _employeeInterface = employeeInterface;
+            _logInterface = logInterface;
         }
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<User>))]
@@ -123,6 +127,7 @@ namespace SolmileAPI.Controllers
 
             if (existingUser.IsLocked)
                 return BadRequest("Account is locked. Contact admin.");
+            await _logInterface.CreateLogAsync("User logged in", LogLevel.Information, existingUser.Id);
 
             return StatusCode(201, "Successfully Logged In.");
         }

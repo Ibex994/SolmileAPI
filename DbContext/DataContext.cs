@@ -33,6 +33,7 @@ namespace Solmile
         public DbSet<Ratings> Ratings { get; set; }
         public DbSet<YearlyRatingsSummary> yearlyRatingsSummaries { get; set; }
         public DbSet<MonthlyAttendanceSummary> monthlyAttendanceSummaries { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

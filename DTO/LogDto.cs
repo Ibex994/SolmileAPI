@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace Solmile.DTO
 {
+    public class LogDto
+    {
+        public int LogId { get; set; }
+        public string Action { get; set; }
+        public string Level { get; set; }
+        public int? PerformedBy { get; set; }
+        public DateTime Timestamp { get; set; }
+    }
+
     public class LoginDto
     {
-        [Required]
         public string Username { get; set; }
-
-        [Required]
         public string Password { get; set; }
     }
 }

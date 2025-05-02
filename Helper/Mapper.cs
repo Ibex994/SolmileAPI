@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Solmile.DTO;
 using Solmile.Models;
 using SolmileAPI.DTO;
 using SolmileAPI.Models;
@@ -57,6 +58,11 @@ namespace SolmileAPI.Helper
             CreateMap<AttendanceCreateDto, Attendance>();
             CreateMap<UpdateEmployeeAttendanceDto, EmployeeAttendance>();
             CreateMap<EmployeeAttendance, UpdateEmployeeAttendanceDto>();
+            //LogDto
+            CreateMap<Log, LogDto>();
+            CreateMap<LogDto, Log>();
+            CreateMap<Log, LoginDto>();
+            CreateMap<LoginDto, Log>();
         }
     }
 }

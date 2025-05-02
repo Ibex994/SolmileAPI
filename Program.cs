@@ -38,6 +38,7 @@ public class Program
         builder.Services.AddScoped<BranchInterface, BranchRepo>();
         builder.Services.AddScoped<ContactDetailInterface, ContactDetailRepo>();
         builder.Services.AddScoped<AttendanceInterface, AttendanceRepo>();
+        builder.Services.AddScoped<LogInterface, LogRepo>();
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //Enable Reference Handling

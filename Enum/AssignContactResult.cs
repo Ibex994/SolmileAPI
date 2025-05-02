@@ -35,4 +35,12 @@
         DatabaseError
     }
 
+    public enum AttendanceResponse
+    {
+        Success,
+        NotFound,
+        Duplicate,
+        Error,
+        InvalidInput
+    }
 }

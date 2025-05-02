@@ -16,7 +16,7 @@ public class Program
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
                 options.JsonSerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals;
             });
-            builder = WebApplication.CreateBuilder(args);
+        builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
         builder.Services.AddDbContext<DataContext>(options =>
@@ -36,7 +36,8 @@ public class Program
         builder.Services.AddScoped<RoomInterface, RoomRepo>();
         builder.Services.AddScoped<RoomAssignmentInterface, RoomAssignmetRepo>();
         builder.Services.AddScoped<BranchInterface, BranchRepo>();
-        builder.Services.AddScoped<ContactDetailInterface, ContactDetailRepo>(); 
+        builder.Services.AddScoped<ContactDetailInterface, ContactDetailRepo>();
+        builder.Services.AddScoped<AttendanceInterface, AttendanceRepo>();
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         //Enable Reference Handling

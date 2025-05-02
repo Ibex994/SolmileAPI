@@ -41,6 +41,7 @@ namespace Solmile.Models
         public ICollection<Payroll> Payrolls { get; set; }
         public ICollection<Tax> Taxs { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
+        public ICollection<EmployeeAttendance> EmployeeAttendances { get; set; }
         public MonthlyAttendanceSummary MonthlyAttendanceSummary { get; set; }
         public ICollection<Ratings> Ratings { get; set; }
         public YearlyRatingsSummary YearlyRatingsSummary { get; set; }

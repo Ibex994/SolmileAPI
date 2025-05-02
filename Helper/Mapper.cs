@@ -48,6 +48,15 @@ namespace SolmileAPI.Helper
             CreateMap<ContactDetailDto, ContactDetail>();
             CreateMap<ContactDetail, CreateConDetDto>();
             CreateMap<CreateConDetDto, ContactDetail>();
+            //AttendanceDto
+            CreateMap<EmployeeAttendanceDto, EmployeeAttendance>();
+            CreateMap<EmployeeAttendanceDto, Attendance>();
+            CreateMap<Attendance, EmployeeAttendanceDto>();
+            CreateMap<EmployeeAttendance, EmployeeAttendanceDto>();
+            CreateMap<Attendance, AttendanceCreateDto>();
+            CreateMap<AttendanceCreateDto, Attendance>();
+            CreateMap<UpdateEmployeeAttendanceDto, EmployeeAttendance>();
+            CreateMap<EmployeeAttendance, UpdateEmployeeAttendanceDto>();
         }
     }
 }

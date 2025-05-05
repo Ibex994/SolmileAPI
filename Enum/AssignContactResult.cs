@@ -1,4 +1,6 @@
-﻿namespace SolmileAPI.Enum
+﻿using Solmile.Models;
+
+namespace SolmileAPI.Enum
 {
     public enum AssignContactResult
     {

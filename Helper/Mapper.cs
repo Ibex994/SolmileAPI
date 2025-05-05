@@ -63,6 +63,21 @@ namespace SolmileAPI.Helper
             CreateMap<LogDto, Log>();
             CreateMap<Log, LoginDto>();
             CreateMap<LoginDto, Log>();
+            //EmployeeTask
+            CreateMap<EmployeeTask, EmployeeTaskDto>();
+            CreateMap<EmployeeTaskDto, EmployeeTask>();
+            CreateMap<EmployeeTask, AssignTaskDto>();
+            CreateMap<AssignTaskDto, EmployeeTask>();
+            CreateMap<EmployeeTask, EmpTaskDto>()
+                 .ForMember(dest => dest.EmployeeName,
+                opt => opt.MapFrom(src =>
+                    src.Employee != null
+                        ? $"{src.Employee.FirstName} {src.Employee.LastName}"
+                        : null));
+            CreateMap<EmpTaskDto, EmployeeTask>();
+            CreateMap<EmployeeTask, CreateEmployeeTaskDto>();
+            CreateMap<CreateEmployeeTaskDto, EmployeeTask>();
+
         }
     }
 }

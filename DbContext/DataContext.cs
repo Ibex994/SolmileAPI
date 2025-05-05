@@ -131,7 +131,7 @@ namespace Solmile
              .OnDelete(DeleteBehavior.SetNull);
             // Task
             modelBuilder.Entity<EmployeeTask>()
-                    .HasOne(t => t.Employees)
+                    .HasOne(t => t.Employee)
                     .WithMany(e => e.EmployeeTasks)
                     .HasForeignKey(t => t.EmployeeId)
                     .OnDelete(DeleteBehavior.SetNull);

@@ -8,7 +8,7 @@ namespace SolmileAPI.Models
         [Key]
         public int AttendanceId { get; set; }
         [Required]
-        public DateTime AttendanceDate { get; set; }
+        public DateTime AttendanceDate { get; set; } = DateTime.UtcNow;
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
         public ICollection<EmployeeAttendance> EmployeeAttendances { get; set; } = new List<EmployeeAttendance>();
@@ -19,7 +19,7 @@ namespace SolmileAPI.Models
         public int EmpAttendanceId { get; set; }
         public int EmployeeId { get; set; }
         [DataType(DataType.Date)]
-        public DateTime AttendanceDate { get; set; }
+        public DateTime AttendanceDate { get; set; } = DateTime.UtcNow;
         public bool IsPresent { get; set; }
         public string? Reason { get; set; }
         [Required]

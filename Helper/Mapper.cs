@@ -33,7 +33,8 @@ namespace SolmileAPI.Helper
             CreateMap<CreateResDto, Reservation>();
             CreateMap<Reservation, CreateResDto>();
             //Room Dto
-            CreateMap<Room, RoomDto>();
+            CreateMap<Room, RoomDto>()
+                    .ForMember(dest => dest.RoomTypeName, opt => opt.MapFrom(src => src.RoomTypes.TypeName)); 
             CreateMap<RoomDto, Room>();
             CreateMap<Room, CreateRoomDto>();
             CreateMap<CreateRoomDto, Room>();
@@ -77,6 +78,11 @@ namespace SolmileAPI.Helper
             CreateMap<EmpTaskDto, EmployeeTask>();
             CreateMap<EmployeeTask, CreateEmployeeTaskDto>();
             CreateMap<CreateEmployeeTaskDto, EmployeeTask>();
+            //FeedBack
+            CreateMap<FeedBack, FeedbackDto>();
+            CreateMap<FeedbackDto, FeedBack>();
+            CreateMap<CreateFeedbackDto, FeedBack>();
+            CreateMap<FeedBack, CreateFeedbackDto>();
 
         }
     }

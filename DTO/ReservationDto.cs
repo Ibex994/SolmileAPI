@@ -19,6 +19,7 @@ namespace SolmileAPI.DTO
 
     public class CreateResDto
     {
+        public int CustomerId { get; set; }
         public string RoomId { get; set; }
 
         [DataType(DataType.Date)]

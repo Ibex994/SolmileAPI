@@ -12,27 +12,51 @@ namespace SolmileAPI.Repository
     public class ReservationRepo : ReservationInterface
     {
         private readonly DataContext _context;
+        private readonly ILogger<ReservationRepo> _logger;
 
-        public ReservationRepo(DataContext context)
+        public ReservationRepo(DataContext context, ILogger<ReservationRepo> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
-        public async Task<Reservation> CreateReservationAsync( string roomId, DateTime checkIn, DateTime checkOut)
+        public async Task<(bool Success, string Message, Reservation? Created)> CreateReservationAsync(
+     string roomId, DateTime checkIn, DateTime checkOut, int customerId)
         {
-            var reservation = new Reservation
+            if (!await _context.Room.AnyAsync(r => r.RoomID == roomId))
+                return (false, $"Room with ID {roomId} does not exist.", null);
+
+            if (!await _context.Customers.AnyAsync(c => c.CustomerId == customerId))
+                return (false, $"Customer with ID {customerId} does not exist.", null);
+
+            if (checkIn >= checkOut)
+                return (false, "Check-out date must be after check-in date.", null);
+
+            try
             {
-                RoomId = roomId,
-                CheckInDate = checkIn,
-                CheckOutDate = checkOut,
-                Status = "Pending"
-            };
+                var reservation = new Reservation
+                {
+                    RoomId = roomId,
+                    CustomerId = customerId,
+                    CheckInDate = checkIn,
+                    CheckOutDate = checkOut,
+                    Status = "Pending"
+                };
 
-            _context.Reservations.Add(reservation);
-            await _context.SaveChangesAsync();
+                _context.Reservations.Add(reservation);
+                await _context.SaveChangesAsync();
 
-            return (reservation);
+                return (true, "Reservation created.", reservation);
+            }
+            catch (Exception ex)
+            {
+                return (false, "Error occurred while creating reservation: " + ex.Message, null);
+            }
         }
+
+
+
+
         public async Task<bool> CheckIfRoomExistsAsync(string roomId)
         {
             return await _context.Room.AnyAsync(r => r.RoomID == roomId);

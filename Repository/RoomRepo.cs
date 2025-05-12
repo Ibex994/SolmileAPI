@@ -32,7 +32,6 @@ namespace SolmileAPI.Repository
 
             if (room == null) return false;
 
-            // Stub logic for availability
             return room.Status.ToLower() == "available";
         }
 
@@ -57,10 +56,20 @@ namespace SolmileAPI.Repository
 
         public async Task<bool> AddRoomAsync(Room room)
         {
+            var branchExists = await _context.Branch
+                .AnyAsync(b => b.BranchId == room.BranchId);
+
+            if (!branchExists)
+            {
+                throw new Exception($"Branch with ID {room.BranchId} does not exist.");
+            }
+
             await _context.Room.AddAsync(room);
             await SaveAsync();
+
             return true;
         }
+
 
         public async Task<bool> CheckBranchExistsAsync(int branchId)
         {

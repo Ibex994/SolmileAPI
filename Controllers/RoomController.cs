@@ -73,22 +73,16 @@ namespace SolmileAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-
-            // Check if the BranchId exists in the Branch table using the RoomInterface
             var branchExists = await _roomInterface.CheckBranchExistsAsync(dto.BranchId);
             if (!branchExists)
             {
                 return BadRequest("The specified BranchId does not exist.");
             }
-
-            // Check if the Room already exists by RoomID
             var roomExists = await _roomInterface.CheckRoomExistsAsync(dto.RoomID);
             if (roomExists)
             {
                 return BadRequest("A room with this RoomID already exists.");
             }
-
-            // Check if a RoomAssignment exists for the given RoomID
             var roomAssignmentExists = await _roomInterface.CheckRoomAssignmentExistsAsync(dto.RoomID);
             if (roomAssignmentExists)
             {
@@ -96,16 +90,11 @@ namespace SolmileAPI.Controllers
             }
 
             var room = _mapper.Map<Room>(dto);
-
-            // Set default status if not provided
             room.Status ??= "Available";
 
             var result = await _roomInterface.AddRoomAsync(room);
             return result ? Ok() : BadRequest("Failed to add room.");
         }
-
-
-
 
         [HttpPut("{roomId}")]
         [ProducesResponseType(200)]

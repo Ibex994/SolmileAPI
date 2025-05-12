@@ -18,6 +18,7 @@ namespace Solmile.Models
         public int RoomTypeId { get; set; }
 
         public virtual Reservation Reservation { get; set; }
+        public int BranchId { get; set; }
         public virtual Branch Branch { get; set; }
         public virtual RoomTypes RoomTypes { get; set; }
         public virtual ICollection<RoomAssignment> RoomAssignments { get; set; }

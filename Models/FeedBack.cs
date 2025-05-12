@@ -12,8 +12,9 @@ namespace Solmile.Models
         public int FeedbackId { get; set; }
         public int ReservationId { get; set; }
         public int CustomerId { get; set; }
-        public string Details { get; set; }
-        public int Rating { get; set; }
+        public decimal Rating { get; set; }
+        public string Comments { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public Reservation Reservation { get; set; }
         public Customer Customer { get; set; }

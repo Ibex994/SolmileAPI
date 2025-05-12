@@ -31,31 +31,39 @@ namespace SolmileAPI.Controllers
         {
             if (createDto == null)
                 return BadRequest("Invalid reservation data.");
-            var roomExists = await _reservationRepo.CheckIfRoomExistsAsync(createDto.RoomId);
-            if (!roomExists)
-                return BadRequest("Room does not exist.");
-            var createdReservation = await _reservationRepo.CreateReservationAsync(
+
+            var (success, message, reservation) = await _reservationRepo.CreateReservationAsync(
                 createDto.RoomId,
                 createDto.CheckInDate,
-                createDto.CheckOutDate);
+                createDto.CheckOutDate,
+                createDto.CustomerId);
 
-            if (createdReservation == null)
-                return StatusCode(500, "Something went wrong while creating the reservation.");
-            var reservationDto = _mapper.Map<ReservationDto>(createdReservation);
-            return CreatedAtAction(nameof(GetReservationDetails), new { reservationId = reservationDto.ReservationId }, reservationDto);
+            if (!success)
+                return BadRequest(message);
+
+            if (reservation == null)
+                return StatusCode(500, "Unknown error occurred while creating reservation.");
+
+            var reservationDto = _mapper.Map<ReservationDto>(reservation);
+
+            return CreatedAtAction(nameof(GetReservationDetails),
+                new { reservationId = reservationDto.ReservationId },
+                reservationDto);
         }
 
-        // create Update Reservation DTO for it
-       //[HttpPut]
-       //[Route("Update/{reservationId}")]
-       // public async Task<IActionResult> UpdateReservation([FromRoute] string reservationId, [FromBody] ReservationDto updatedDetails)
-       // {
-       //     bool result = await _reservationRepo.UpdateReservationAsync(reservationId, updatedDetails);
-       //     if (!result)
-       //         return NotFound("Reservation not found.");
 
-       //     return NoContent(); 
-       // }
+
+        // create Update Reservation DTO for it
+        //[HttpPut]
+        //[Route("Update/{reservationId}")]
+        // public async Task<IActionResult> UpdateReservation([FromRoute] string reservationId, [FromBody] ReservationDto updatedDetails)
+        // {
+        //     bool result = await _reservationRepo.UpdateReservationAsync(reservationId, updatedDetails);
+        //     if (!result)
+        //         return NotFound("Reservation not found.");
+
+        //     return NoContent(); 
+        // }
 
         [HttpPut]
         [Route("Cancel/{reservationId}")]

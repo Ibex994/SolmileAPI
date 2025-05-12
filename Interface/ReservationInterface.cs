@@ -5,7 +5,7 @@ namespace SolmileAPI.Interface
     public interface ReservationInterface
     {
             Task<decimal> CalculatePaymentAsync(string reservationId);
-            Task<Reservation> CreateReservationAsync( string roomId, DateTime checkIn, DateTime checkOut);
+            Task<(bool Success, string Message, Reservation? Created)> CreateReservationAsync(string roomId, DateTime checkIn, DateTime checkOut, int customerId);
             Task<bool> UpdateReservationAsync(string reservationId, Reservation updatedDetails);
             Task<bool> UpdateReservationAsync(string reservationId, DateTime newCheckOutDate);
             Task<bool> CancelReservationAsync(string reservationId);

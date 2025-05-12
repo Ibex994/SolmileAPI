@@ -157,6 +157,10 @@ namespace Solmile
 
             // Feedback
             modelBuilder.Entity<FeedBack>()
+                   .Property(f => f.Rating)
+                   .HasColumnType("decimal(3, 1)");
+
+            modelBuilder.Entity<FeedBack>()
                 .HasOne(f => f.Customer)
                 .WithMany(c => c.Feedbacks)
                 .HasForeignKey(f => f.CustomerId)

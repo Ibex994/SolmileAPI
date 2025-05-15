@@ -126,7 +126,23 @@ namespace SolmileGuesthouseAPI.Controllers
             await _context.SaveChangesAsync();
 
             serviceRequestDto.RequestId = serviceRequest.RequestId;
-            return CreatedAtAction("GetServiceRequest", new { id = serviceRequest.RequestId }, serviceRequestDto);
+            return new ServiceRequestDto
+            {
+                RequestId = serviceRequest.RequestId,
+                RequestedBy = serviceRequest.RequestedBy,
+                ReservationId = serviceRequest.ReservationId,
+                EmployeeId = serviceRequest.EmployeeId,
+                ServiceTypeId = serviceRequest.ServiceTypeId,
+                Location = serviceRequest.Location,
+                RequiredByDateTime = serviceRequest.RequiredByDateTime,
+                Status = serviceRequest.Status,
+                ExtraDetail = serviceRequest.ExtraDetail,
+                AttachPhotoUrl = serviceRequest.AttachPhotoUrl
+            };
+
+
+
+
         }
 
         // DELETE: api/ServiceRequests/5

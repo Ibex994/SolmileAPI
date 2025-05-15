@@ -96,7 +96,7 @@ namespace SolmileGuesthouseAPI.Controllers
 
         // POST: api/ContactDetails
         [HttpPost]
-        public async Task<ActionResult<UInsertionContactDetailsDto>> PostContactDetails(UInsertionContactDetailsDto contactDetailsDto)
+        public async Task<ActionResult<ContactDetailsDto>> PostContactDetails(UInsertionContactDetailsDto contactDetailsDto)
         {
             var contactDetails = new ContactDetails
             {
@@ -110,7 +110,14 @@ namespace SolmileGuesthouseAPI.Controllers
             await _context.SaveChangesAsync();
 
             contactDetailsDto.ContactId = contactDetails.ContactId;
-            return CreatedAtAction("GetContactDetails", new { id = contactDetails.ContactId }, contactDetailsDto);
+            return new ContactDetailsDto
+            {
+                ContactId = contactDetails.ContactId,
+                Phone = contactDetails.Phone,
+                Email = contactDetails.Email,
+                Address = contactDetails.Address,
+                EmergencyContact = contactDetails.EmergencyContact
+            };
         }
 
         // DELETE: api/ContactDetails/5

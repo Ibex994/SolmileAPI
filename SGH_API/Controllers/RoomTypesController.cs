@@ -118,7 +118,20 @@ namespace SolmileGuesthouseAPI.Controllers
             await _context.SaveChangesAsync();
 
             roomTypeDto.TypeId = roomType.TypeId;
-            return CreatedAtAction("findRoomTypeById", new { id = roomType.TypeId }, roomTypeDto);
+            return new RoomTypeDto
+            {
+                TypeId = roomType.TypeId,
+                Name = roomType.Name,
+                Title = roomType.Title,
+                Description = roomType.Description,
+                Amenities = roomType.Amenities,
+                PricePerNight = roomType.PricePerNight,
+                Capacity = roomType.Capacity,
+                ImageUrl = roomType.ImageUrl
+            };
+
+
+
         }
 
         // DELETE: api/RoomTypes/5

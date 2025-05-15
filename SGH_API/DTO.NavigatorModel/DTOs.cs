@@ -154,6 +154,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         }
         public class UInsertionRatingDto
         {
+            [JsonIgnore]
             public int RatingId { get; set; }
             public int EmployeeId { get; set; }
             public int ServiceRequestId { get; set; }

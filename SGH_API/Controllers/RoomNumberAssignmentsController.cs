@@ -100,7 +100,14 @@ namespace SolmileGuesthouseAPI.Controllers
             await _context.SaveChangesAsync();
 
             roomNumberAssignmentDto.RoomNumberAssignmentId = roomNumberAssignment.RoomNumberAssignmentId;
-            return CreatedAtAction("findRoomNumberAssignmentById", new { id = roomNumberAssignment.RoomNumberAssignmentId }, roomNumberAssignmentDto);
+            return new RoomNumberAssignmentDto
+            {
+                RoomNumberAssignmentId = roomNumberAssignment.RoomNumberAssignmentId,
+                BranchId = roomNumberAssignment.BranchId,
+                RoomNumber = roomNumberAssignment.RoomNumber
+            };
+
+
         }
 
         // DELETE: api/RoomNumberAssignments/5

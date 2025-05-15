@@ -134,7 +134,25 @@ namespace SolmileGuesthouseAPI.Controllers
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("FindEmployeeById", new { id = employee.Id }, employeeDto);
+
+          // return CreatedAtAction("FindEmployeeById", new { id = employee.Id }, employeeDto);
+          
+            return new EmployeeDto
+            {
+                Id = employee.Id,
+                Username = employee.Username,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Position = employee.Position,
+                Phone = employee.Phone,
+                Email = employee.Email,
+                DateOfBirth = employee.DateOfBirth,
+                HireDate = employee.HireDate,
+                Status = employee.Status,
+                Gender = employee.Gender,
+                BranchId = employee.BranchId
+            };
+
         }
 
         // DELETE: api/Employees/5

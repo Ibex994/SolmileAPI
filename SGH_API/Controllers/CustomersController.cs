@@ -185,6 +185,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 return new CustomerAddOrUpdateResponse
                 {
                     IsNewCustomer = false,
+                    CustomerId= existingCustomer.CustomerId,
                     Customer = customerDto
                 };
             }
@@ -209,6 +210,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 return new CustomerAddOrUpdateResponse
                 {
                     IsNewCustomer = true,
+                    CustomerId = customerDto.CustomerId,
                     Customer = customerDto
                 };
             }
@@ -218,7 +220,9 @@ namespace SolmileGuesthouseAPI.Controllers
     public class CustomerAddOrUpdateResponse
     {
         public bool IsNewCustomer { get; set; }
+        public int CustomerId { get; set; }
         public UInsertCustomerDto Customer { get; set; }
+        
     }
 
 }

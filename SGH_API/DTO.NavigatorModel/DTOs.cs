@@ -4,26 +4,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
 {
     public class DTOs
     {
-
-        // DTOs/BankDto.cs
-        public class BankDto
-        {
-            public int Id { get; set; }
-            public string ImageUrl { get; set; }
-            public string BankName { get; set; }
-            public string Type { get; set; }
-            public bool IsSelected { get; set; }
-        }
-        public class UInsertionBankDto
-        {
-            [JsonIgnore]
-            public int Id { get; set; }
-            public string ImageUrl { get; set; }
-            public string BankName { get; set; }
-            public string Type { get; set; }
-            public bool IsSelected { get; set; }
-        }
-
         // DTOs/BranchDto.cs
         public class BranchDto
         {

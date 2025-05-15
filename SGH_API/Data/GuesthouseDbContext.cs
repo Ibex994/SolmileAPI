@@ -20,7 +20,7 @@ namespace SolmileGuesthouseAPI.Data
         {
         }
 
-        public DbSet<Bank> Banks { get; set; }
+     
         public DbSet<Branch> Branches { get; set; }
         public DbSet<ContactDetails> ContactDetails { get; set; }
         public DbSet<Customer> Customers { get; set; }

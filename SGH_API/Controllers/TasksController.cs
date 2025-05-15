@@ -106,7 +106,16 @@ namespace SolmileGuesthouseAPI.Controllers
             await _context.SaveChangesAsync();
 
             taskDto.TaskId = task.TaskId;
-            return CreatedAtAction("GetTask", new { id = task.TaskId }, taskDto);
+            return new TaskDto
+            {
+                TaskId = task.TaskId,
+                RequestId = task.RequestId,
+                EmployeeId = task.EmployeeId,
+                AssignedTime = task.AssignedTime,
+                Status = task.Status
+            };
+
+
         }
 
         // DELETE: api/Tasks/5

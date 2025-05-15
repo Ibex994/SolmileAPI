@@ -94,7 +94,12 @@ namespace SolmileGuesthouseAPI.Controllers
             await _context.SaveChangesAsync();
 
             serviceTypeDto.ServiceTypeId = serviceType.ServiceTypeId;
-            return CreatedAtAction("GetServiceType", new { id = serviceType.ServiceTypeId }, serviceTypeDto);
+            return new ServiceTypeDto
+            {
+                ServiceTypeId = serviceType.ServiceTypeId,
+                ServiceTypeName = serviceType.ServiceTypeName
+            };
+
         }
 
         // DELETE: api/ServiceTypes/5

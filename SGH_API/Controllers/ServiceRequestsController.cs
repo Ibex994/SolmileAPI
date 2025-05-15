@@ -372,6 +372,22 @@ namespace SolmileGuesthouseAPI.Controllers
                 return NotFound(new { message = "Service request not found." });
             }
 
+            var task = await _context.Tasks
+               .FirstOrDefaultAsync(t => t.RequestId == serviceRequest.RequestId);
+
+            if (task != null)
+            {
+                return  new TaskDto
+                {
+                    TaskId = task.TaskId,
+                    RequestId = task.RequestId,
+                    EmployeeId = task.EmployeeId,
+                    AssignedTime = task.AssignedTime,
+                    Status = task.Status
+                };
+            }
+
+
             var position = GetPositionForServiceType(serviceRequest.ServiceTypeId);
             if (position == null)
             {

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Data;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
+using System.Security.Cryptography;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
@@ -63,22 +64,28 @@ namespace SolmileGuesthouseAPI.Controllers
 
         // PUT: api/RoomTypes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoomType(int id, UInsertionRoomTypeDto roomTypeDto)
+        public async Task<IActionResult> PutRoomType(int id, UpdateRoomTypeDto roomTypeDto)
         {
-           
             var roomType = await _context.RoomTypes.FindAsync(id);
             if (roomType == null)
             {
                 return NotFound();
             }
 
+            // Only update image if a new one is provided
+            if (roomTypeDto.ImageUrl != null)
+            {
+                using var stream = new MemoryStream();
+                await roomTypeDto.ImageUrl.CopyToAsync(stream);
+                roomType.ImageUrl = stream.ToArray();
+            }
+   
             roomType.Name = roomTypeDto.Name;
             roomType.Title = roomTypeDto.Title;
             roomType.Description = roomTypeDto.Description;
             roomType.Amenities = roomTypeDto.Amenities;
             roomType.PricePerNight = roomTypeDto.PricePerNight;
             roomType.Capacity = roomTypeDto.Capacity;
-            roomType.ImageUrl = roomTypeDto.ImageUrl;
 
             try
             {
@@ -101,23 +108,31 @@ namespace SolmileGuesthouseAPI.Controllers
 
         // POST: api/RoomTypes
         [HttpPost]
-        public async Task<ActionResult<RoomTypeDto>> PostRoomType(UInsertionRoomTypeDto roomTypeDto)
+        public async Task<ActionResult<RoomTypeDto>> PostRoomType(InsertionRoomTypeDto roomTypeDto)
         {
             var roomType = new RoomType
             {
+                TypeId = roomTypeDto.TypeId,
                 Name = roomTypeDto.Name,
                 Title = roomTypeDto.Title,
                 Description = roomTypeDto.Description,
                 Amenities = roomTypeDto.Amenities,
                 PricePerNight = roomTypeDto.PricePerNight,
                 Capacity = roomTypeDto.Capacity,
-                ImageUrl = roomTypeDto.ImageUrl
+                ImageUrl = null // Initialize as null
             };
+
+            // Only process image if provided
+            if (roomTypeDto.ImageUrl != null)
+            {
+                using var stream = new MemoryStream();
+                await roomTypeDto.ImageUrl.CopyToAsync(stream);
+                roomType.ImageUrl = stream.ToArray();
+            }
 
             _context.RoomTypes.Add(roomType);
             await _context.SaveChangesAsync();
 
-            roomTypeDto.TypeId = roomType.TypeId;
             return new RoomTypeDto
             {
                 TypeId = roomType.TypeId,
@@ -129,9 +144,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 Capacity = roomType.Capacity,
                 ImageUrl = roomType.ImageUrl
             };
-
-
-
         }
 
         // DELETE: api/RoomTypes/5

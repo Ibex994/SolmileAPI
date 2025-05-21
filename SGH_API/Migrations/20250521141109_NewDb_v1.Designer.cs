@@ -12,8 +12,8 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    [Migration("20250503050250_V1.4_MobileModels")]
-    partial class V14_MobileModels
+    [Migration("20250521141109_NewDb_v1")]
+    partial class NewDb_v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,34 +24,6 @@ namespace SolmileGuesthouseAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Bank", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BankName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsSelected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Banks");
-                });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Branch", b =>
                 {
@@ -117,8 +89,8 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
-                    b.Property<DateOnly>("DateOfBirth")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -137,7 +109,6 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
@@ -160,11 +131,8 @@ namespace SolmileGuesthouseAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GivenReason")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("RatingDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("RatingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("RatingValue")
                         .HasColumnType("real");
@@ -187,11 +155,11 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Property<string>("ReservationId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateOnly>("CheckInDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CheckInDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateOnly>("CheckOutDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -264,10 +232,7 @@ namespace SolmileGuesthouseAPI.Migrations
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.RoomType", b =>
                 {
                     b.Property<int>("TypeId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TypeId"));
 
                     b.Property<string>("Amenities")
                         .IsRequired()
@@ -281,9 +246,9 @@ namespace SolmileGuesthouseAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<byte[]>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -309,9 +274,8 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
 
-                    b.Property<string>("AttachPhotoUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("AttachPhotoUrl")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
@@ -355,10 +319,7 @@ namespace SolmileGuesthouseAPI.Migrations
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.ServiceType", b =>
                 {
                     b.Property<int>("ServiceTypeId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceTypeId"));
 
                     b.Property<string>("ServiceTypeName")
                         .IsRequired()
@@ -418,9 +379,12 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
 

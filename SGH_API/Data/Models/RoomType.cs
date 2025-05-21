@@ -27,7 +27,7 @@ namespace SolmileGuesthouseAPI.Data.Models
         public string Capacity { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public byte[]? ImageUrl { get; set; }
 
         // Navigation property
         public ICollection<Room> Rooms { get; set; }

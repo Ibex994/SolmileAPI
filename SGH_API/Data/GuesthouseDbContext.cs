@@ -39,6 +39,21 @@ namespace SolmileGuesthouseAPI.Data
         {
             // Configure relationships and constraints
 
+            // Configure RoomType's TypeId to not be auto-generated
+            modelBuilder.Entity<RoomType>()
+                .Property(r => r.TypeId)
+                .ValueGeneratedNever(); // This disables identity/auto-increment
+         // Configure ServiceType's ServiceTypeId to not be auto-generated
+            modelBuilder.Entity<ServiceType>()
+                .Property(r => r.ServiceTypeId)
+                .ValueGeneratedNever(); // This disables identity/auto-increment
+
+            // Add this configuration for unique Username
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+
+
             // Configure the inheritance
             modelBuilder.Entity<Employee>()
                 .HasBaseType<User>()

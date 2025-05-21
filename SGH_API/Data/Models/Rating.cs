@@ -24,6 +24,5 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         [Required]
         public string GivenBy { get; set; }
-        public int GivenReason { get; set; }
     }
 }

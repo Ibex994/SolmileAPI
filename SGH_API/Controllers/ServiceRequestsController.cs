@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Data;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
+using System.Security.Cryptography;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
@@ -67,7 +69,7 @@ namespace SolmileGuesthouseAPI.Controllers
 
         // PUT: api/ServiceRequests/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutServiceRequest(int id, UInsertionServiceRequestDto serviceRequestDto)
+        public async Task<IActionResult> PutServiceRequest(int id, [FromForm] UInsertionServiceRequestDto serviceRequestDto)
         {
 
             var serviceRequest = await _context.ServiceRequests.FindAsync(id);
@@ -75,6 +77,13 @@ namespace SolmileGuesthouseAPI.Controllers
             {
                 return NotFound();
             }
+            
+            if (serviceRequestDto.AttachPhotoUrl != null)
+            {
+                using var stream = new MemoryStream();
+                await serviceRequestDto.AttachPhotoUrl.CopyToAsync(stream);
+                serviceRequest.AttachPhotoUrl = stream.ToArray();
+           }
 
             serviceRequest.RequestedBy = serviceRequestDto.RequestedBy;
             serviceRequest.ReservationId = serviceRequestDto.ReservationId;
@@ -82,10 +91,8 @@ namespace SolmileGuesthouseAPI.Controllers
             serviceRequest.ServiceTypeId = serviceRequestDto.ServiceTypeId;
             serviceRequest.Location = serviceRequestDto.Location;
             serviceRequest.RequiredByDateTime = serviceRequestDto.RequiredByDateTime;
-            serviceRequest.Status = serviceRequestDto.Status;
             serviceRequest.ExtraDetail = serviceRequestDto.ExtraDetail;
-            serviceRequest.AttachPhotoUrl = serviceRequestDto.AttachPhotoUrl;
-
+       
             try
             {
                 await _context.SaveChangesAsync();
@@ -107,7 +114,7 @@ namespace SolmileGuesthouseAPI.Controllers
 
         // POST: api/ServiceRequests
         [HttpPost]
-        public async Task<ActionResult<ServiceRequestDto>> PostServiceRequest(UInsertionServiceRequestDto serviceRequestDto)
+        public async Task<ActionResult<ServiceRequestDto>> PostServiceRequest([FromForm] UInsertionServiceRequestDto serviceRequestDto)
         {
             var serviceRequest = new ServiceRequest
             {
@@ -119,13 +126,20 @@ namespace SolmileGuesthouseAPI.Controllers
                 RequiredByDateTime = serviceRequestDto.RequiredByDateTime,
                 Status = "Pending",
                 ExtraDetail = serviceRequestDto.ExtraDetail,
-                AttachPhotoUrl = serviceRequestDto.AttachPhotoUrl
+                AttachPhotoUrl = null
             };
+            // Only process image if provided
+            if (serviceRequestDto.AttachPhotoUrl != null)
+            {
+                using var stream = new MemoryStream();
+                await serviceRequestDto.AttachPhotoUrl.CopyToAsync(stream);
+                serviceRequest.AttachPhotoUrl = stream.ToArray();
+            }
 
             _context.ServiceRequests.Add(serviceRequest);
             await _context.SaveChangesAsync();
 
-            serviceRequestDto.RequestId = serviceRequest.RequestId;
+          //  serviceRequestDto.RequestId = serviceRequest.RequestId;
             return new ServiceRequestDto
             {
                 RequestId = serviceRequest.RequestId,
@@ -137,7 +151,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 RequiredByDateTime = serviceRequest.RequiredByDateTime,
                 Status = serviceRequest.Status,
                 ExtraDetail = serviceRequest.ExtraDetail,
-                AttachPhotoUrl = serviceRequest.AttachPhotoUrl
+                AttachPhotoUrl =serviceRequest.AttachPhotoUrl
             };
 
 

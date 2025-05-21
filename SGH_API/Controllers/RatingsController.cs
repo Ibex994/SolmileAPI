@@ -31,7 +31,7 @@ namespace SolmileGuesthouseAPI.Controllers
                     RatingValue = r.RatingValue,
                     RatingDate = r.RatingDate,
                     GivenBy = r.GivenBy,
-                    GivenReason = r.GivenReason
+                  
                 })
                 .ToListAsync();
         }
@@ -55,7 +55,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 RatingValue = rating.RatingValue,
                 RatingDate = rating.RatingDate,
                 GivenBy = rating.GivenBy,
-                GivenReason = rating.GivenReason
+             
             };
         }
 
@@ -79,7 +79,7 @@ namespace SolmileGuesthouseAPI.Controllers
             rating.RatingValue = ratingDto.RatingValue;
             rating.RatingDate = ratingDto.RatingDate;
             rating.GivenBy = ratingDto.GivenBy;
-            rating.GivenReason = ratingDto.GivenReason;
+           
 
             try
             {
@@ -146,7 +146,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 existingRating.RatingValue = request.RatingValue;
                 existingRating.RatingDate = DateTime.Now;
                 existingRating.GivenBy = request.IsGivenBy;
-                existingRating.GivenReason = request.GivenReason;
+              
             }
             else
             {
@@ -158,7 +158,7 @@ namespace SolmileGuesthouseAPI.Controllers
                     RatingValue = request.RatingValue,
                     RatingDate = DateTime.Now,
                     GivenBy = request.IsGivenBy,
-                    GivenReason = request.GivenReason
+              
                 };
 
                 _context.Ratings.Add(newRating);

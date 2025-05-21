@@ -38,7 +38,7 @@ namespace SolmileGuesthouseAPI.Data.Models
         [Required]
         public string Status { get; set; }
         public string ExtraDetail { get; set; }
-        public string? AttachPhotoUrl { get; set; }
+        public byte[]? AttachPhotoUrl { get; set; }
 
         // Navigation properties
         public ICollection<Task> Tasks { get; set; }

@@ -130,7 +130,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public float RatingValue { get; set; }
             public DateTime RatingDate { get; set; }
             public string GivenBy { get; set; }
-            public int GivenReason { get; set; }
         }
         public class UInsertionRatingDto
         {
@@ -141,7 +140,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public float RatingValue { get; set; }
             public DateTime RatingDate { get; set; }
             public string GivenBy { get; set; }
-            public int GivenReason { get; set; }
         }
 
         // DTOs/ReservationDto.cs
@@ -218,11 +216,10 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public string Amenities { get; set; }
             public float PricePerNight { get; set; }
             public string Capacity { get; set; }
-            public string ImageUrl { get; set; }
+            public byte[]? ImageUrl { get; set; }
         }
-        public class UInsertionRoomTypeDto
+        public class InsertionRoomTypeDto
         {
-            [JsonIgnore]
             public int TypeId { get; set; }
             public string Name { get; set; }
             public string Title { get; set; }
@@ -230,7 +227,17 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public string Amenities { get; set; }
             public float PricePerNight { get; set; }
             public string Capacity { get; set; }
-            public string ImageUrl { get; set; }
+            public IFormFile? ImageUrl { get; set; }
+        }
+        public class UpdateRoomTypeDto
+        {
+            public string Name { get; set; }
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public string Amenities { get; set; }
+            public float PricePerNight { get; set; }
+            public string Capacity { get; set; }
+            public IFormFile? ImageUrl { get; set; }
         }
 
         // DTOs/ServiceRequestDto.cs
@@ -245,22 +252,20 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public DateTime RequiredByDateTime { get; set; }
             public string Status { get; set; }
             public string ExtraDetail { get; set; }
-            public string? AttachPhotoUrl { get; set; }
+            public byte[]? AttachPhotoUrl { get; set; }
         }
         public class UInsertionServiceRequestDto
         {
-            [JsonIgnore]
-            public int RequestId { get; set; }
+           // [JsonIgnore]
+            // public int RequestId { get; set; }
             public string RequestedBy { get; set; }
             public string? ReservationId { get; set; }
             public int? EmployeeId { get; set; }
             public int ServiceTypeId { get; set; }
             public string Location { get; set; }
             public DateTime RequiredByDateTime { get; set; }
-            [JsonIgnore]
-            public string? Status { get; set; }
             public string ExtraDetail { get; set; }
-            public string? AttachPhotoUrl { get; set; }
+            public IFormFile? AttachPhotoUrl { get; set; }
         }
 
         // DTOs/ServiceTypeDto.cs

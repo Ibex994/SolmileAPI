@@ -22,7 +22,7 @@ namespace SolmileGuesthouseAPI.Data.Models
         [Required]
         public string Gender { get; set; }
 
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         [Required]
         public string Email { get; set; }

@@ -6,27 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SolmileGuesthouseAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class V1_MobileModels : Migration
+    public partial class NewDb_v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Banks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BankName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsSelected = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Banks", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "ContactDetails",
                 columns: table => new
@@ -53,7 +37,7 @@ namespace SolmileGuesthouseAPI.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -65,15 +49,14 @@ namespace SolmileGuesthouseAPI.Migrations
                 name: "RoomTypes",
                 columns: table => new
                 {
-                    TypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Amenities = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PricePerNight = table.Column<float>(type: "real", nullable: false),
                     Capacity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ImageUrl = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,8 +67,7 @@ namespace SolmileGuesthouseAPI.Migrations
                 name: "ServiceTypes",
                 columns: table => new
                 {
-                    ServiceTypeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ServiceTypeId = table.Column<int>(type: "int", nullable: false),
                     ServiceTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -140,7 +122,7 @@ namespace SolmileGuesthouseAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -234,7 +216,7 @@ namespace SolmileGuesthouseAPI.Migrations
                     RequiredByDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExtraDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AttachPhotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AttachPhotoUrl = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -269,8 +251,7 @@ namespace SolmileGuesthouseAPI.Migrations
                     ServiceRequestId = table.Column<int>(type: "int", nullable: false),
                     RatingValue = table.Column<float>(type: "real", nullable: false),
                     RatingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GivenBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GivenReason = table.Column<int>(type: "int", nullable: false)
+                    GivenBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -388,14 +369,17 @@ namespace SolmileGuesthouseAPI.Migrations
                 name: "IX_Users_BranchId",
                 table: "Users",
                 column: "BranchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Banks");
-
             migrationBuilder.DropTable(
                 name: "Ratings");
 

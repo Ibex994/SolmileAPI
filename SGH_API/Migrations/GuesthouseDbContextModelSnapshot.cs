@@ -106,7 +106,6 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
@@ -128,9 +127,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Property<string>("GivenBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GivenReason")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("RatingDate")
                         .HasColumnType("datetime2");
@@ -233,10 +229,7 @@ namespace SolmileGuesthouseAPI.Migrations
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.RoomType", b =>
                 {
                     b.Property<int>("TypeId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TypeId"));
 
                     b.Property<string>("Amenities")
                         .IsRequired()
@@ -250,9 +243,9 @@ namespace SolmileGuesthouseAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<byte[]>("ImageUrl")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -278,8 +271,8 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RequestId"));
 
-                    b.Property<string>("AttachPhotoUrl")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("AttachPhotoUrl")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
@@ -323,10 +316,7 @@ namespace SolmileGuesthouseAPI.Migrations
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.ServiceType", b =>
                 {
                     b.Property<int>("ServiceTypeId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceTypeId"));
 
                     b.Property<string>("ServiceTypeName")
                         .IsRequired()
@@ -386,9 +376,12 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
 

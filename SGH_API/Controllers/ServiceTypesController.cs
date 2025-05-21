@@ -83,10 +83,11 @@ namespace SolmileGuesthouseAPI.Controllers
 
         // POST: api/ServiceTypes
         [HttpPost]
-        public async Task<ActionResult<ServiceTypeDto>> PostServiceType(UInsertionServiceTypeDto serviceTypeDto)
+        public async Task<ActionResult<ServiceTypeDto>> PostServiceType(ServiceTypeDto serviceTypeDto)
         {
             var serviceType = new ServiceType
             {
+                ServiceTypeId = serviceTypeDto.ServiceTypeId,
                 ServiceTypeName = serviceTypeDto.ServiceTypeName
             };
 

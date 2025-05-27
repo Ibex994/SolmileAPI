@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
 namespace SolmileGuesthouseAPI.Data.Models
 {
     public class Employee : User
@@ -37,5 +36,14 @@ namespace SolmileGuesthouseAPI.Data.Models
         public ICollection<ServiceRequest> ServiceRequests { get; set; }
         public ICollection<Task> Tasks { get; set; }
         public ICollection<Rating> RatingsReceived { get; set; }
+
+        public virtual ICollection<Complaint> Complaints { get; set; }
+        public ICollection<Log> Logs { get; set; }
+        public ICollection<Payroll> Payrolls { get; set; }
+        public ICollection<Tax> Taxs { get; set; }
+        public ICollection<Attendance> Attendances { get; set; }
+        public ICollection<EmployeeAttendance> EmployeeAttendances { get; set; }
+        public MonthlyAttendanceSummary MonthlyAttendanceSummary { get; set; }
+        public YearlyRatingsSummary YearlyRatingsSummary { get; set; }
     }
 }

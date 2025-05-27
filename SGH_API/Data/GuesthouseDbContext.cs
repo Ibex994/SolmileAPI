@@ -16,11 +16,7 @@ namespace SolmileGuesthouseAPI.Data
 {
     public class GuesthouseDbContext : DbContext
     {
-        public GuesthouseDbContext(DbContextOptions<GuesthouseDbContext> options) : base(options)
-        {
-        }
-
-     
+        public GuesthouseDbContext(DbContextOptions<GuesthouseDbContext> options) : base(options){}
         public DbSet<Branch> Branches { get; set; }
         public DbSet<ContactDetails> ContactDetails { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -34,6 +30,18 @@ namespace SolmileGuesthouseAPI.Data
         public DbSet<ServiceType> ServiceTypes { get; set; }
         public DbSet<Models.Task> Tasks { get; set; }
         public DbSet<User> Users { get; set; }
+
+        // Abdelas Branch Additional Tables
+
+        public DbSet<Complaint> Complaints { get; set; }
+        public DbSet<Payroll> Payroll { get; set; }
+        public DbSet<Tax> Taxs { get; set; }
+        public DbSet<FeedBack> Feedback { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
+        public DbSet<YearlyRatingsSummary> yearlyRatingsSummaries { get; set; }
+        public DbSet<MonthlyAttendanceSummary> monthlyAttendanceSummaries { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -99,10 +107,10 @@ namespace SolmileGuesthouseAPI.Data
 
 
             modelBuilder.Entity<ServiceRequest>()
-    .HasOne(sr => sr.Reservation)
-    .WithMany(c => c.ServiceRequests)
-    .HasForeignKey(sr => sr.ReservationId)
-    .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(sr => sr.Reservation)
+                .WithMany(c => c.ServiceRequests)
+                .HasForeignKey(sr => sr.ReservationId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ServiceRequest>()
                 .HasOne(sr => sr.Employee)
@@ -147,63 +155,107 @@ namespace SolmileGuesthouseAPI.Data
                 .WithOne(r => r.Employee)
                 .HasForeignKey(r => r.EmployeeId);
 
-            //// Configure DateOnly properties (requires EF Core 6.0+)
-            //modelBuilder.Entity<Customer>()
-            //    .Property(c => c.DateOfBirth)
-            //    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            ////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////
+            ///
+            // PaymentMethod and Payment relationship (1:1)
+            modelBuilder.Entity<PaymentMethod>()
+            .HasOne(pm => pm.Payment)
+            .WithOne(p => p.PaymentMethod)
+            .HasForeignKey<Payment>(p => p.MethodId);
+            // Payroll
+            modelBuilder.Entity<Payroll>()
+                .HasOne(p => p.Employee)
+                .WithMany(e => e.Payrolls)
+                .HasForeignKey(p => p.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+            //Tax
+            modelBuilder.Entity<Tax>()
+                 .HasOne(t => t.Employee)
+                 .WithMany(e => e.Taxs)
+                 .HasForeignKey(t => t.EmployeeId)
+                 .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<Employee>()
-            //    .Property(e => e.DateOfBirth)
-            //    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            // Feedback
+            modelBuilder.Entity<FeedBack>()
+                   .Property(f => f.Rating)
+                   .HasColumnType("decimal(3, 1)");
 
-            //modelBuilder.Entity<Employee>()
-            //    .Property(e => e.HireDate)
-            //    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            modelBuilder.Entity<FeedBack>()
+                .HasOne(f => f.Customer)
+                .WithMany(c => c.Feedbacks)
+                .HasForeignKey(f => f.CustomerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Reservation>()
-            //    .Property(r => r.CheckInDate)
-            //    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            modelBuilder.Entity<FeedBack>()
+                .HasOne(f => f.Reservation)
+                .WithMany(r => r.Feedbacks)
+                .HasForeignKey(f => f.ReservationId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<Reservation>()
-            //    .Property(r => r.CheckOutDate)
-            //    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            // Attendance → Employee
+            modelBuilder.Entity<Attendance>()
+                .HasOne(a => a.Employee)
+                .WithMany(e => e.Attendances)
+                .HasForeignKey(a => a.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<Rating>()
-            //    .Property(r => r.RatingDate)
-            //    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            // MonthlyAttendanceSummary
+            modelBuilder.Entity<MonthlyAttendanceSummary>()
+                .HasOne(m => m.Employee)
+                .WithOne(e => e.MonthlyAttendanceSummary)
+                .HasForeignKey<MonthlyAttendanceSummary>(m => m.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+            // YearlyRatingsSummary
+            modelBuilder.Entity<YearlyRatingsSummary>()
+                .HasOne(y => y.Employee)
+                .WithOne(e => e.YearlyRatingsSummary)
+                .HasForeignKey<YearlyRatingsSummary>(y => y.EmployeeId)
+                .OnDelete(DeleteBehavior.Cascade);
+            //Log
+            modelBuilder.Entity<Log>()
+                .Property(l => l.Level)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Log>()
+                .HasOne(l => l.Performer)
+                .WithMany(e => e.Logs)
+                .HasForeignKey(l => l.PerformedBy)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // One Attendance has many EmployeeAttendances
+            modelBuilder.Entity<Attendance>()
+                .HasMany(a => a.EmployeeAttendances)
+                .WithOne(ea => ea.Attendance)
+                .HasForeignKey(ea => ea.AttendanceId);
+
+            // Unique constraint: one entry per employee per date
+            modelBuilder.Entity<EmployeeAttendance>()
+                .HasIndex(ea => new { ea.EmployeeId, ea.AttendanceId })
+                .IsUnique();
+
+            // Attendance → EmployeeAttendances
+            modelBuilder.Entity<Attendance>()
+                .HasMany(a => a.EmployeeAttendances)
+                .WithOne(ea => ea.Attendance)
+                .HasForeignKey(ea => ea.AttendanceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Employee → EmployeeAttendances
+            modelBuilder.Entity<EmployeeAttendance>()
+                .HasOne(ea => ea.Employee)
+                .WithMany(e => e.EmployeeAttendances)
+                .HasForeignKey(ea => ea.EmployeeId)
+                .OnDelete(DeleteBehavior.Restrict);
+            //Reservation Payment
+            modelBuilder.Entity<Reservation>()
+                    .HasOne(r => r.Payment)
+                    .WithOne(p => p.Reservation)
+                    .HasForeignKey<Payment>(p => p.ReservationId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+
 
         }
     }
-
-    //public class DateOnlyJsonConverter : JsonConverter<DateOnly>
-    //{
-    //    private const string Format = "yyyy-MM-dd";
-
-    //    public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    //    {
-    //        return DateOnly.Parse(reader.GetString());
-    //    }
-
-    //    public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)
-    //    {
-    //        writer.WriteStringValue(value.ToString(Format));
-    //    }
-    //}
-
-    //public class DateOnlyConverter : ValueConverter<DateOnly, DateTime>
-    //{
-    //    public DateOnlyConverter() : base(
-    //        dateOnly => dateOnly.ToDateTime(TimeOnly.MinValue),
-    //        dateTime => DateOnly.FromDateTime(dateTime))
-    //    { }
-    //}
-
-    //public class DateOnlyComparer : ValueComparer<DateOnly>
-    //{
-    //    public DateOnlyComparer() : base(
-    //        (d1, d2) => d1 == d2 && d1.DayNumber == d2.DayNumber,
-    //        d => d.GetHashCode())
-    //    { }
-    //}
-
 }

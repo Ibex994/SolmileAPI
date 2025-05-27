@@ -31,5 +31,7 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         // Navigation property
         public ICollection<ServiceRequest> ServiceRequests { get; set; }
+        public virtual Payment Payment { get; set; }
+        public ICollection<FeedBack> Feedbacks { get; set; }
     }
 }

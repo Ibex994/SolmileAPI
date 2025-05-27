@@ -6,6 +6,8 @@ namespace SolmileGuesthouseAPI.Data.Models
     {
         [Key]
         public int LogId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         [Required]
         public string Action { get; set; }
 

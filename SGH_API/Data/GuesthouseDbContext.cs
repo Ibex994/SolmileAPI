@@ -37,6 +37,8 @@ namespace SolmileGuesthouseAPI.Data
         public DbSet<Payroll> Payroll { get; set; }
         public DbSet<Tax> Taxs { get; set; }
         public DbSet<FeedBack> Feedback { get; set; }
+        public DbSet<Payment> payments { get; set; }
+        public DbSet<PaymentMethod> paymentMethods { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<EmployeeAttendance> EmployeeAttendances { get; set; }
         public DbSet<YearlyRatingsSummary> yearlyRatingsSummaries { get; set; }
@@ -158,11 +160,13 @@ namespace SolmileGuesthouseAPI.Data
             ////////////////////////////////////////////////////////
             ///////////////////////////////////////////////////////
             ///
-            // PaymentMethod and Payment relationship (1:1)
-            modelBuilder.Entity<PaymentMethod>()
-            .HasOne(pm => pm.Payment)
-            .WithOne(p => p.PaymentMethod)
-            .HasForeignKey<Payment>(p => p.MethodId);
+
+            // Payment and PaymentMethod relationship (1:*)
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.PaymentMethod)
+                .WithMany(pm => pm.Payments)
+                .HasForeignKey(p => p.MethodId)
+                .OnDelete(DeleteBehavior.Restrict);
             // Payroll
             modelBuilder.Entity<Payroll>()
                 .HasOne(p => p.Employee)

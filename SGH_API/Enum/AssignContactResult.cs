@@ -52,4 +52,6 @@ namespace SolmileGuesthouseAPI.Enum
         Error = 3,
         Critical = 4
     }
+
+
 }

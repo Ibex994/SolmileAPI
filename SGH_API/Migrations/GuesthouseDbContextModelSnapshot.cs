@@ -244,6 +244,14 @@ namespace SolmileGuesthouseAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Level")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -310,13 +318,12 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     b.HasKey("PaymentId");
 
-                    b.HasIndex("MethodId")
-                        .IsUnique();
+                    b.HasIndex("MethodId");
 
                     b.HasIndex("ReservationId")
                         .IsUnique();
 
-                    b.ToTable("Payment");
+                    b.ToTable("payments");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.PaymentMethod", b =>
@@ -333,7 +340,7 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     b.HasKey("MethodId");
 
-                    b.ToTable("PaymentMethod");
+                    b.ToTable("paymentMethods");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Payroll", b =>
@@ -349,6 +356,9 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     b.Property<float>("BasicSalary")
                         .HasColumnType("real");
+
+                    b.Property<string>("DeductionReason")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("Deductions")
                         .HasColumnType("real");
@@ -655,6 +665,9 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -852,9 +865,9 @@ namespace SolmileGuesthouseAPI.Migrations
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Payment", b =>
                 {
                     b.HasOne("SolmileGuesthouseAPI.Data.Models.PaymentMethod", "PaymentMethod")
-                        .WithOne("Payment")
-                        .HasForeignKey("SolmileGuesthouseAPI.Data.Models.Payment", "MethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("Payments")
+                        .HasForeignKey("MethodId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SolmileGuesthouseAPI.Data.Models.Reservation", "Reservation")
@@ -1053,8 +1066,7 @@ namespace SolmileGuesthouseAPI.Migrations
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.PaymentMethod", b =>
                 {
-                    b.Navigation("Payment")
-                        .IsRequired();
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Reservation", b =>

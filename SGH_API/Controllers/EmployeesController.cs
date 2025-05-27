@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SolmileGuesthouseAPI.Data.Models;
-using SolmileGuesthouseAPI.Data;
-using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
+﻿    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using SolmileGuesthouseAPI.Data.Models;
+    using SolmileGuesthouseAPI.Data;
+    using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
+    using SolmileGuesthouseAPI.Interface;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
@@ -12,10 +13,12 @@ namespace SolmileGuesthouseAPI.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;
+        private readonly LogInterface _logInterface;
 
-        public EmployeesController(GuesthouseDbContext context)
+        public EmployeesController(GuesthouseDbContext context, LogInterface logInterface)
         {
             _context = context;
+            _logInterface = logInterface;
         }
 
         // GET: api/Employees
@@ -73,7 +76,7 @@ namespace SolmileGuesthouseAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, UpdateEmployeeDto employeeDto)
         {
-            
+
 
             var employee = await _context.Employees.FindAsync(id);
             if (employee == null)
@@ -135,8 +138,8 @@ namespace SolmileGuesthouseAPI.Controllers
             await _context.SaveChangesAsync();
 
 
-          // return CreatedAtAction("FindEmployeeById", new { id = employee.Id }, employeeDto);
-          
+            // return CreatedAtAction("FindEmployeeById", new { id = employee.Id }, employeeDto);
+
             return new EmployeeDto
             {
                 Id = employee.Id,
@@ -227,6 +230,14 @@ namespace SolmileGuesthouseAPI.Controllers
                 return Unauthorized(new { message = "Account is disabled." });
             }
 
+            if (employee.IsLocked)
+            {
+                return Unauthorized(new { message = "Account is locked. Please contact admin." });
+            }
+
+            
+            await _logInterface.CreateLogAsync("User logged in", LogLevel.Information, employee.Id, employee.FirstName, employee.LastName);
+
             return new EmployeeLoginResponse
             {
                 Employee = new EmployeeDto
@@ -247,17 +258,18 @@ namespace SolmileGuesthouseAPI.Controllers
                 IsSuccess = true
             };
         }
-    }
 
-    public class EmployeeLoginRequest
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
 
-    public class EmployeeLoginResponse
-    {
-        public bool IsSuccess { get; set; }
-        public EmployeeDto Employee { get; set; }
+        public class EmployeeLoginRequest
+        {
+            public string Username { get; set; }
+            public string Password { get; set; }
+        }
+
+        public class EmployeeLoginResponse
+        {
+            public bool IsSuccess { get; set; }
+            public EmployeeDto Employee { get; set; }
+        }
     }
 }

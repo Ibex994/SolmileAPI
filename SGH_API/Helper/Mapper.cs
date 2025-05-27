@@ -30,11 +30,49 @@ namespace SolmileGuesthouseAPI.Helper
             CreateMap<Log, LoginDto>();
             CreateMap<LoginDto, Log>();
            
-            //FeedBack
+            //FeedBackDto
             CreateMap<FeedBack, FeedbackDto>();
             CreateMap<FeedbackDto, FeedBack>();
             CreateMap<CreateFeedbackDto, FeedBack>();
             CreateMap<FeedBack, CreateFeedbackDto>();
+
+            //PayrollDto
+            CreateMap<Payroll, PayrollDto>();
+            CreateMap<PayrollDto, Payroll>();
+            CreateMap<PayrollCreateDto, Payroll>();
+            CreateMap<Payroll, PayrollResponseDto>();
+            CreateMap<PayrollResponseDto, Payroll>();
+            CreateMap<Payroll, PayrollCreateDto>();
+            CreateMap<Payroll, DeductionRequestDto>();
+            CreateMap<DeductionRequestDto, Payroll>();
+
+            //TaxDto
+            CreateMap<Tax, TaxDto>();
+            CreateMap<TaxDto, Tax>();
+            CreateMap<Tax, CreateTaxDto>();
+            CreateMap<CreateTaxDto, Tax>();
+            CreateMap<Tax, UpdateTaxDto>();
+            CreateMap<UpdateTaxDto, Tax>();
+
+            //PaymentDto
+            CreateMap<Payment, PaymentDto>();
+            CreateMap<PaymentDto, Payment>();
+            CreateMap<CreatePaymentDto, Payment>();
+            CreateMap<Payment, CreatePaymentDto>();
+            CreateMap<Payment, UpdatePaymentDto>();
+            CreateMap<UpdatePaymentDto, Payment>();
+            CreateMap<Payment, ProcessPaymentDto>();
+            CreateMap<ProcessPaymentDto, Payment>();
+            CreateMap<PaymentResultDto, Payment>();
+            CreateMap<Payment, PaymentResultDto>();
+
+            //PaymentMethosDto
+            CreateMap<PaymentMethod, PaymentMethodDto>();
+            CreateMap<PaymentMethodDto,PaymentMethod>();
+            CreateMap<PaymentMethod,CreatePaymentMethodDto>();
+            CreateMap<CreatePaymentMethodDto, PaymentMethod>();
+            CreateMap<PaymentMethod, UpdatePaymentMethodDto>();
+            CreateMap<UpdatePaymentMethodDto, PaymentMethod>();
 
         }
     }

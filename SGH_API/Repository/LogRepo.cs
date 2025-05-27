@@ -14,13 +14,15 @@ namespace SolmileGuesthouseAPI.Repository
             _context = context;
         }
 
-        public async Task<bool> CreateLogAsync(string action, LogLevel level, int? performedBy)
+        public async Task<bool> CreateLogAsync(string action, LogLevel level, int? performedBy, string Fname, string Lname)
         {
             var log = new Log
             {
                 Action = action,
                 Level = level,
                 PerformedBy = performedBy,
+                FirstName=Fname,
+                LastName=Lname,
                 Timestamp = DateTime.UtcNow
             };
 

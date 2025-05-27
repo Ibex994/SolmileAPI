@@ -24,12 +24,16 @@ builder.Services.AddScoped<ComplaintInterface, ComplaintRepo>();
 builder.Services.AddScoped<AttendanceInterface, AttendanceRepo>();
 builder.Services.AddScoped<LogInterface, LogRepo>();
 builder.Services.AddScoped<FeedBackInterface, FeedBackRepo>();
+builder.Services.AddScoped<PayrollInterface, PayrollRepo>();
+builder.Services.AddScoped<TaxInterface, TaxRepo>();
+builder.Services.AddScoped<PaymentInterface, PaymentRepo>();
+builder.Services.AddScoped<PaymentMethodInterface, PaymentMethodRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Enable Reference Handling
 builder.Services.AddControllers()
         .AddJsonOptions(x =>
         {
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles; // or omit this line
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             x.JsonSerializerOptions.WriteIndented = true;
         });
 

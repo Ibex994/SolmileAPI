@@ -14,5 +14,6 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         [Required]
         public string Password { get; set; }
+        public bool IsLocked { get; set; }
     }
 }

@@ -118,6 +118,76 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
+        // POST: api/Users/lock
+        [HttpPost("lock")]
+        public async Task<IActionResult> Lock([FromQuery] int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+                return NotFound("User not found");
+
+            user.IsLocked = true;
+            await _context.SaveChangesAsync();
+
+            return Ok("Account locked");
+        }
+        // GET: api/Users/IsLocked/5
+        [HttpGet("IsLocked/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetLockStatus(int id)
+        {
+            var user = await _context.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            return Ok(new
+            {
+                UserId = user.Id,
+                IsLocked = user.IsLocked
+            });
+        }
+
+        // GET: api/Users/Locked
+        [HttpGet("Locked")]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetLockedUsers()
+        {
+            var lockedUsers = await _context.Users
+                .Where(u => u.IsLocked)
+                .Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    Username = u.Username,
+                    Password = u.Password // ⚠️ Do not include this in production
+                })
+                .ToListAsync();
+
+            return Ok(lockedUsers);
+        }
+
+
+        // POST: api/Users/unlock
+        [HttpPost("unlock")]
+        public async Task<IActionResult> Unlock([FromQuery] int adminId, [FromQuery] int userId)
+        {
+            // You could verify the adminId here if needed
+
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+                return NotFound("User not found");
+
+            user.IsLocked = false;
+            await _context.SaveChangesAsync();
+
+            return Ok("Account unlocked");
+        }
+
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);

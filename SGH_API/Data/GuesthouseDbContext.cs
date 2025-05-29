@@ -44,6 +44,8 @@ namespace SolmileGuesthouseAPI.Data
         public DbSet<YearlyRatingsSummary> yearlyRatingsSummaries { get; set; }
         public DbSet<MonthlyAttendanceSummary> monthlyAttendanceSummaries { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Role>Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -258,7 +260,19 @@ namespace SolmileGuesthouseAPI.Data
                     .HasForeignKey<Payment>(p => p.ReservationId)
                     .OnDelete(DeleteBehavior.Restrict);
 
+            // Role And UserRole
+            modelBuilder.Entity<UserRole>()
+        .HasKey(ur => new { ur.UserId, ur.RoleId });
 
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(ur => ur.UserId);
+
+            modelBuilder.Entity<UserRole>()
+                .HasOne(ur => ur.Role)
+                .WithMany(r => r.UserRoles)
+                .HasForeignKey(ur => ur.RoleId);
 
         }
     }

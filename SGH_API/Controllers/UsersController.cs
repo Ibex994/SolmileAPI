@@ -12,6 +12,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager,HR")]
     public class UsersController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;
@@ -171,7 +172,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 {
                     Id = u.Id,
                     Username = u.Username,
-                    Password = u.Password // ⚠️ Do not include this in production
+                    Password = u.Password 
                 })
                 .ToListAsync();
 
@@ -199,19 +200,26 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        // POST: api/Auth/Login
+        [AllowAnonymous]
         [HttpPost("Login")]
-        [ProducesResponseType(typeof(UserLoginResponse), 200)]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(400)]
         public async Task<ActionResult<UserLoginResponse>> Login([FromBody] LoginDto login)
         {
             if (login == null || !ModelState.IsValid)
                 return BadRequest(new UserLoginResponse { IsSuccess = false, Message = "Invalid login request." });
 
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower() && u.Password == login.Password);
+                    var user = await _context.Users
+                        .Include(u => u.UserRoles)
+                        .ThenInclude(ur => ur.Role)
+                        .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
+
 
             if (user == null)
+                return Unauthorized(new UserLoginResponse { IsSuccess = false, Message = "Incorrect username or password." });
+
+            bool isPasswordValid = PasswordHasher.VerifyHashedPassword(user.Password, login.Password);
+            if (!isPasswordValid)
                 return Unauthorized(new UserLoginResponse { IsSuccess = false, Message = "Incorrect username or password." });
 
             if (user.IsLocked)
@@ -228,16 +236,15 @@ namespace SolmileGuesthouseAPI.Controllers
                 {
                     Id = user.Id,
                     Username = user.Username
-                    // Optional: Do NOT return password
                 }
             });
         }
-        //[Authorize]
-        //[HttpGet("protected")]
-        //public IActionResult GetProtectedData()
-        //{
-        //    return Ok("This is protected data only accessible with a valid token.");
-        //}
-
     }
+    //[Authorize]
+    //[HttpGet("protected")]
+    //public IActionResult GetProtectedData()
+    //{
+    //    return Ok("This is protected data only accessible with a valid token.");
+    //}
+
 }

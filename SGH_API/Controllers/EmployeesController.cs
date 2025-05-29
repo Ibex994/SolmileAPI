@@ -5,11 +5,13 @@
     using SolmileGuesthouseAPI.Data;
     using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
     using SolmileGuesthouseAPI.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager,HR")]
     public class EmployeesController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;
@@ -118,45 +120,71 @@ namespace SolmileGuesthouseAPI.Controllers
         [HttpPost("CreateAccount")]
         public async Task<ActionResult<EmployeeDto>> PostEmployee(InsertionEmployeeDto employeeDto)
         {
-            var employee = new Employee
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
             {
-                Username = employeeDto.Username,
-                Password = employeeDto.Password,
-                FirstName = employeeDto.FirstName,
-                LastName = employeeDto.LastName,
-                Position = employeeDto.Position,
-                Phone = employeeDto.Phone,
-                Email = employeeDto.Email,
-                DateOfBirth = employeeDto.DateOfBirth,
-                HireDate = employeeDto.HireDate,
-                Status = employeeDto.Status,
-                Gender = employeeDto.Gender,
-                BranchId = employeeDto.BranchId
-            };
+                // 🔐 Hash the password using BCrypt
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(employeeDto.Password);
 
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+                var employee = new Employee
+                {
+                    Username = employeeDto.Username,
+                    Password = hashedPassword,
+                    FirstName = employeeDto.FirstName,
+                    LastName = employeeDto.LastName,
+                    Position = employeeDto.Position,
+                    Phone = employeeDto.Phone,
+                    Email = employeeDto.Email,
+                    DateOfBirth = employeeDto.DateOfBirth,
+                    HireDate = employeeDto.HireDate,
+                    Status = employeeDto.Status,
+                    Gender = employeeDto.Gender,
+                    BranchId = employeeDto.BranchId
+                };
 
+                _context.Employees.Add(employee);
+                await _context.SaveChangesAsync();
 
-            // return CreatedAtAction("FindEmployeeById", new { id = employee.Id }, employeeDto);
+                var role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == employee.Position);
+                if (role == null)
+                {
+                    await transaction.RollbackAsync();
+                    return BadRequest($"No role found matching position: '{employee.Position}'.");
+                }
 
-            return new EmployeeDto
+                _context.UserRoles.Add(new UserRole
+                {
+                    UserId = employee.Id,
+                    RoleId = role.Id
+                });
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return new EmployeeDto
+                {
+                    Id = employee.Id,
+                    Username = employee.Username,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Position = employee.Position,
+                    Phone = employee.Phone,
+                    Email = employee.Email,
+                    DateOfBirth = employee.DateOfBirth,
+                    HireDate = employee.HireDate,
+                    Status = employee.Status,
+                    Gender = employee.Gender,
+                    BranchId = employee.BranchId
+                };
+            }
+            catch (Exception ex)
             {
-                Id = employee.Id,
-                Username = employee.Username,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                Position = employee.Position,
-                Phone = employee.Phone,
-                Email = employee.Email,
-                DateOfBirth = employee.DateOfBirth,
-                HireDate = employee.HireDate,
-                Status = employee.Status,
-                Gender = employee.Gender,
-                BranchId = employee.BranchId
-            };
-
+                await transaction.RollbackAsync();
+                return StatusCode(500, $"Account creation failed: {ex.Message}");
+            }
         }
+
 
         // DELETE: api/Employees/5
         [HttpDelete("{id}")]
@@ -213,63 +241,75 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // POST: api/EmployeeExtensions/Login
-        [HttpPost("Login")]
-        public async Task<ActionResult<EmployeeLoginResponse>> Login(EmployeeLoginRequest loginRequest)
-        {
-            var employee = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Username == loginRequest.Username && e.Password == loginRequest.Password);
+        //[AllowAnonymous]
+        //[HttpPost("CreateBulkAccounts")]
+        //public async Task<IActionResult> CreateBulkAccounts([FromBody] BulkEmployeeDto bulkDto)
+        //{
+        //    using var transaction = await _context.Database.BeginTransactionAsync();
+        //    var createdEmployees = new List<EmployeeDto>();
 
-            if (employee == null)
-            {
-                return Unauthorized(new { message = "Incorrect credentials." });
-            }
+        //    try
+        //    {
+        //        foreach (var dto in bulkDto.Employees)
+        //        {
+        //            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
-            if (!employee.Status)
-            {
-                return Unauthorized(new { message = "Account is disabled." });
-            }
+        //            var employee = new Employee
+        //            {
+        //                Username = dto.Username,
+        //                Password = hashedPassword,
+        //                FirstName = dto.FirstName,
+        //                LastName = dto.LastName,
+        //                Position = dto.Position,
+        //                Phone = dto.Phone,
+        //                Email = dto.Email,
+        //                DateOfBirth = dto.DateOfBirth,
+        //                HireDate = dto.HireDate,
+        //                Status = dto.Status,
+        //                Gender = dto.Gender,
+        //                BranchId = dto.BranchId
+        //            };
 
-            if (employee.IsLocked)
-            {
-                return Unauthorized(new { message = "Account is locked. Please contact admin." });
-            }
+        //            _context.Employees.Add(employee);
+        //            await _context.SaveChangesAsync();
 
-            
-            await _logInterface.CreateLogAsync("User logged in", LogLevel.Information, employee.Id, employee.FirstName, employee.LastName);
+        //            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == dto.Position);
+        //            if (role != null)
+        //            {
+        //                _context.UserRoles.Add(new UserRole
+        //                {
+        //                    UserId = employee.Id,
+        //                    RoleId = role.Id
+        //                });
+        //                await _context.SaveChangesAsync();
+        //            }
 
-            return new EmployeeLoginResponse
-            {
-                Employee = new EmployeeDto
-                {
-                    Id = employee.Id,
-                    Username = employee.Username,
-                    FirstName = employee.FirstName,
-                    LastName = employee.LastName,
-                    Position = employee.Position,
-                    Phone = employee.Phone,
-                    Email = employee.Email,
-                    DateOfBirth = employee.DateOfBirth,
-                    HireDate = employee.HireDate,
-                    Status = employee.Status,
-                    Gender = employee.Gender,
-                    BranchId = employee.BranchId
-                },
-                IsSuccess = true
-            };
-        }
+        //            createdEmployees.Add(new EmployeeDto
+        //            {
+        //                Id = employee.Id,
+        //                Username = employee.Username,
+        //                FirstName = employee.FirstName,
+        //                LastName = employee.LastName,
+        //                Position = employee.Position,
+        //                Phone = employee.Phone,
+        //                Email = employee.Email,
+        //                DateOfBirth = employee.DateOfBirth,
+        //                HireDate = employee.HireDate,
+        //                Status = employee.Status,
+        //                Gender = employee.Gender,
+        //                BranchId = employee.BranchId
+        //            });
+        //        }
 
+        //        await transaction.CommitAsync();
+        //        return Ok(createdEmployees);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        await transaction.RollbackAsync();
+        //        return StatusCode(500, $"Bulk creation failed: {ex.Message}");
+        //    }
+        //}
 
-        public class EmployeeLoginRequest
-        {
-            public string Username { get; set; }
-            public string Password { get; set; }
-        }
-
-        public class EmployeeLoginResponse
-        {
-            public bool IsSuccess { get; set; }
-            public EmployeeDto Employee { get; set; }
-        }
     }
 }

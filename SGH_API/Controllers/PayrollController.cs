@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
@@ -9,6 +10,7 @@ namespace SolmileGuesthouseAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
+    [Authorize(Roles = "HR")]
     public class PayrollController : Controller
     {
         private readonly PayrollInterface _payrollInterface;

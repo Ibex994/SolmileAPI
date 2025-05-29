@@ -1,16 +1,16 @@
-﻿    using AutoMapper;
-    using Microsoft.AspNetCore.Mvc;
-    using SolmileGuesthouseAPI.Data.Models;
-    using SolmileGuesthouseAPI.DTO.NavigatorModel;
-    using SolmileGuesthouseAPI.Interface;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SolmileGuesthouseAPI.Data.Models;
+using SolmileGuesthouseAPI.DTO.NavigatorModel;
+using SolmileGuesthouseAPI.Interface;
 
-    namespace SolmileGuesthouseAPI.Controllers
+namespace SolmileGuesthouseAPI.Controllers
     {
         [ApiController]
         [Route("api/[controller]")]
-        public class TaxController : Controller
+        [Authorize(Roles = "HR")]
+    public class TaxController : Controller
         {
             private readonly TaxInterface _taxInterface;
             private readonly IMapper _mapper;

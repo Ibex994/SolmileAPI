@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
@@ -9,6 +10,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Supervisor,Manager,HR")]
     public class AttendanceController : Controller
     {
         private readonly AttendanceInterface _attendanceInterface;

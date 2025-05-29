@@ -315,5 +315,13 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public string Password { get; set; }
         }
 
+
+
+        //public class BulkEmployeeDto
+        //{
+        //    public List<InsertionEmployeeDto> Employees { get; set; }
+        //}
+
+
     }
 }

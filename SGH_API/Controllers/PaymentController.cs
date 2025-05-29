@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
@@ -8,8 +9,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Produces("application/json")]
-    [Consumes("application/json")]
+    [Authorize(Roles = "Manager,Reception")]
     public class PaymentController : ControllerBase
     {
         private readonly PaymentInterface _paymentInterface;

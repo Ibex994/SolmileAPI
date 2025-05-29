@@ -73,6 +73,12 @@ namespace SolmileGuesthouseAPI.Helper
             CreateMap<CreatePaymentMethodDto, PaymentMethod>();
             CreateMap<PaymentMethod, UpdatePaymentMethodDto>();
             CreateMap<UpdatePaymentMethodDto, PaymentMethod>();
+            // RoleDto
+            CreateMap<Role, RoleCreateDto>();
+            CreateMap<RoleCreateDto,Role>();
+            CreateMap<Role, RoleReadDto>();
+            CreateMap<RoleReadDto, Role>();
+
 
         }
     }

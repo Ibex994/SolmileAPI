@@ -6,11 +6,13 @@ using SolmileGuesthouseAPI.Data;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Supervisor,Reception,Customr")]
     public class ServiceRequestsController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;

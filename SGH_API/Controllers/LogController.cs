@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
 using SolmileGuesthouseAPI.Interface;
@@ -7,6 +8,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager")]
     public class LogController : Controller
     {
         private readonly LogInterface _logInterface;

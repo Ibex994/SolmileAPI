@@ -5,11 +5,13 @@ using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Data;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class RoomTypesController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;

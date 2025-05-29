@@ -4,11 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Data;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Customer")]
     public class CustomersController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;

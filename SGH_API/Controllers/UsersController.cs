@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Data;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
+using SolmileGuesthouseAPI.DTO.NavigatorModel;
+using SolmileGuesthouseAPI.Interface;
+using SolmileGuesthouseAPI.Helper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
@@ -12,10 +15,14 @@ namespace SolmileGuesthouseAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;
+        private readonly LogInterface _logInterface;
+        private readonly JwtService _jwtService;
 
-        public UsersController(GuesthouseDbContext context)
+        public UsersController(GuesthouseDbContext context, LogInterface logInterface, JwtService jwtService)
         {
             _context = context;
+            _logInterface = logInterface;
+            _jwtService = jwtService;
         }
 
         // GET: api/Users
@@ -55,7 +62,7 @@ namespace SolmileGuesthouseAPI.Controllers
         [HttpPut("UpdateUser/{id}")]
         public async Task<IActionResult> PutUser(int id, UInsertionUserDto userDto)
         {
-           
+
 
             var user = await _context.Users.FindAsync(id);
             if (user == null)
@@ -192,7 +199,45 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+        [HttpPost("Login")]
+        [ProducesResponseType(typeof(UserLoginResponse), 200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<UserLoginResponse>> Login([FromBody] LoginDto login)
+        {
+            if (login == null || !ModelState.IsValid)
+                return BadRequest(new UserLoginResponse { IsSuccess = false, Message = "Invalid login request." });
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower() && u.Password == login.Password);
+
+            if (user == null)
+                return Unauthorized(new UserLoginResponse { IsSuccess = false, Message = "Incorrect username or password." });
+
+            if (user.IsLocked)
+                return Unauthorized(new UserLoginResponse { IsSuccess = false, Message = "Account is locked. Contact admin." });
+
+            var token = _jwtService.GenerateToken(user);
+
+            return Ok(new UserLoginResponse
+            {
+                IsSuccess = true,
+                Message = "Login successful.",
+                Token = token,
+                User = new UserDto
+                {
+                    Id = user.Id,
+                    Username = user.Username
+                    // Optional: Do NOT return password
+                }
+            });
+        }
+        //[Authorize]
+        //[HttpGet("protected")]
+        //public IActionResult GetProtectedData()
+        //{
+        //    return Ok("This is protected data only accessible with a valid token.");
+        //}
+
     }
-
-
 }

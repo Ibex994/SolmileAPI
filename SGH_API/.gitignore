@@ -483,6 +483,6 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 # Entity Framework Core Migrations (exclude all migration files)
-Migrations/
-!Migrations/*.cs
-!Migrations/*.designer.cs
+#Migrations/
+#!Migrations/*.cs
+#!Migrations/*.designer.cs

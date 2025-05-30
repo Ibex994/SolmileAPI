@@ -12,7 +12,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager,HR")]
+    [Authorize(Roles = "Admin, Manager")]
     public class UsersController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;
@@ -26,7 +26,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _jwtService = jwtService;
         }
 
-        // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
@@ -40,7 +39,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
@@ -172,7 +170,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 {
                     Id = u.Id,
                     Username = u.Username,
-                    Password = u.Password 
+                    Password = u.Password
                 })
                 .ToListAsync();
 
@@ -184,7 +182,6 @@ namespace SolmileGuesthouseAPI.Controllers
         [HttpPost("unlock")]
         public async Task<IActionResult> Unlock([FromQuery] int adminId, [FromQuery] int userId)
         {
-            // You could verify the adminId here if needed
 
             var user = await _context.Users.FindAsync(userId);
             if (user == null)
@@ -209,10 +206,10 @@ namespace SolmileGuesthouseAPI.Controllers
             if (login == null || !ModelState.IsValid)
                 return BadRequest(new UserLoginResponse { IsSuccess = false, Message = "Invalid login request." });
 
-                    var user = await _context.Users
-                        .Include(u => u.UserRoles)
-                        .ThenInclude(ur => ur.Role)
-                        .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
+            var user = await _context.Users
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
 
 
             if (user == null)
@@ -231,20 +228,42 @@ namespace SolmileGuesthouseAPI.Controllers
             {
                 IsSuccess = true,
                 Message = "Login successful.",
-                Token = token,
-                User = new UserDto
-                {
-                    Id = user.Id,
-                    Username = user.Username
-                }
+                Token = token
             });
         }
+
+        //[Authorize]
+        //[HttpGet("protected")]
+        //public IActionResult GetProtectedData()
+        //{
+        //    return Ok("This is protected data only accessible with a valid token.");
+        //}
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPassworDto dto)
+        {
+            var token = Guid.NewGuid().ToString();
+
+            var user = await _context.Users
+                .SingleOrDefaultAsync(u => u.Username.ToLower() == dto.Username.ToLower());
+
+            if (user == null)
+            {
+                return BadRequest(new { success = false, message = "User not found" });
+            }
+            await _context.SaveChangesAsync();
+
+            user.Password = PasswordHasher.HashPassword(dto.NewPassword);
+            user.ResetToken = token;
+            user.ResetTokenExpiry = DateTime.UtcNow.AddMinutes(10);
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { success = true, message = "Password reset successful" });
+        }
+
+
     }
-    //[Authorize]
-    //[HttpGet("protected")]
-    //public IActionResult GetProtectedData()
-    //{
-    //    return Ok("This is protected data only accessible with a valid token.");
-    //}
 
 }

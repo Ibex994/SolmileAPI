@@ -4,7 +4,6 @@
     {
         public static string HashPassword(string password)
         {
-            // Example using BCrypt
             return BCrypt.Net.BCrypt.HashPassword(password);
         }
 

@@ -213,7 +213,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return _context.Employees.Any(e => e.Id == id);
         }
 
-        // GET: api/EmployeeExtensions/FindById/5
         [HttpGet("FindById/{id}")]
         public async Task<ActionResult<EmployeeDto>> FindEmployeeById(int id)
         {

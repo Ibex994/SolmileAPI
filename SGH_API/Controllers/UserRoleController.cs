@@ -8,7 +8,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,HR,Manager")]
     public class UserRoleController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;
@@ -18,7 +18,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/userrole
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetUserRoles()
         {
@@ -37,7 +36,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return Ok(userRoles);
         }
 
-        // POST: api/userrole
         [HttpPost]
         public async Task<IActionResult> AssignRole([FromBody] UserRole request)
         {
@@ -57,7 +55,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return Ok("Role assigned to user.");
         }
 
-        // DELETE: api/userrole?userId=1&roleId=2
         [HttpDelete]
         public async Task<IActionResult> RemoveRole(int userId, int roleId)
         {

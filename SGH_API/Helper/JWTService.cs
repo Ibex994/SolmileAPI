@@ -21,10 +21,10 @@ namespace SolmileGuesthouseAPI.Helper
             var roles = user.UserRoles?.Select(ur => ur.Role.Name).ToList() ?? new List<string>();
 
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Name, user.Username)
-    };
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username)
+            };
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 

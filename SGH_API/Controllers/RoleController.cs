@@ -19,7 +19,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/role
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoleReadDto>>> GetRoles()
         {
@@ -34,8 +33,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return Ok(roles);
         }
 
-
-        // POST: api/role
         [HttpPost]
         public async Task<ActionResult<Role>> CreateRole([FromBody] RoleCreateDto roleDto)
         {
@@ -53,7 +50,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return CreatedAtAction(nameof(GetRoles), new { id = role.Id }, role);
         }
 
-        // DELETE: api/role/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRole(int id)
         {

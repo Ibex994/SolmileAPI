@@ -482,3 +482,4 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/SGH_API/GeneratedSlip/ReservationSlip-XCTYT-Biruk Nigussie.pdf

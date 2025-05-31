@@ -34,7 +34,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 {
                     Id = u.Id,
                     Username = u.Username,
-                    Password = u.Password // Note: In production, you should never expose passwords
+                    Password = u.Password 
                 })
                 .ToListAsync();
         }
@@ -53,11 +53,10 @@ namespace SolmileGuesthouseAPI.Controllers
             {
                 Id = user.Id,
                 Username = user.Username,
-                Password = user.Password // Note: In production, you should never expose passwords
+                Password = user.Password
             };
         }
 
-        // PUT: api/Users/5
         [HttpPut("UpdateUser/{id}")]
         public async Task<IActionResult> PutUser(int id, UInsertionUserDto userDto)
         {
@@ -70,7 +69,7 @@ namespace SolmileGuesthouseAPI.Controllers
             }
 
             user.Username = userDto.Username;
-            user.Password = userDto.Password; // Note: In production, you should hash the password
+            user.Password = userDto.Password; 
 
             try
             {
@@ -124,7 +123,7 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Users/lock
+
         [HttpPost("lock")]
         public async Task<IActionResult> Lock([FromQuery] int userId)
         {
@@ -137,7 +136,7 @@ namespace SolmileGuesthouseAPI.Controllers
 
             return Ok("Account locked");
         }
-        // GET: api/Users/IsLocked/5
+
         [HttpGet("IsLocked/{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -159,7 +158,6 @@ namespace SolmileGuesthouseAPI.Controllers
             });
         }
 
-        // GET: api/Users/Locked
         [HttpGet("Locked")]
         [ProducesResponseType(200)]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetLockedUsers()
@@ -178,7 +176,6 @@ namespace SolmileGuesthouseAPI.Controllers
         }
 
 
-        // POST: api/Users/unlock
         [HttpPost("unlock")]
         public async Task<IActionResult> Unlock([FromQuery] int adminId, [FromQuery] int userId)
         {
@@ -198,7 +195,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return _context.Users.Any(e => e.Id == id);
         }
 
-        // POST: api/Auth/Login
         [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<ActionResult<UserLoginResponse>> Login([FromBody] LoginDto login)

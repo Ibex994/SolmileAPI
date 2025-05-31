@@ -486,3 +486,4 @@ $RECYCLE.BIN/
 #Migrations/
 #!Migrations/*.cs
 #!Migrations/*.designer.cs
+GeneratedSlip/

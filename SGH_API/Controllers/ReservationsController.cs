@@ -5,6 +5,7 @@ using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Data;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using SolmileGuesthouseAPI.DTO.NavigatorModel;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
@@ -164,10 +165,47 @@ namespace SolmileGuesthouseAPI.Controllers
                 CheckInDate = reservation.CheckInDate,
                 CheckOutDate = reservation.CheckOutDate,
                 TotalPrice = reservation.TotalPrice,
-                Status = reservation.Status
+                Status = reservation.Status,
             };
 
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(c => c.CustomerId == reservation.CustomerId);
+
+            if (customer == null)
+                return BadRequest("Customer not found");
+
+            var customerDto = new CustomerDto
+            {
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Phone = customer.Phone
+            };
+
+
+            var slipDto = new ReservationSlipDTO
+            {
+                FullName = $"{customer.FirstName} {customer.LastName}",
+                RoomNumber = availableRoom.RoomNumberAssignment.RoomNumber, 
+                CheckIn = reservation.CheckInDate,
+                CheckOut = reservation.CheckOutDate,
+                AmountPaid = reservation.TotalPrice, 
+                PaymentMethod = "Cash",             
+                ReservationCode = reservation.ReservationId
+            };
+
+     
+            var pdfSlip = new PdfSlipGenerator(slipDto);
+
+            string folderPath = @"C:\Users\Temeb\source\repos\Ibex994\SolmileAPI\SGH_API\GeneratedSlip";
+            Directory.CreateDirectory(folderPath);
+
+            string fileName = $"Slip-{slipDto.ReservationCode}-{customer.FirstName}.pdf";
+            string filePath = Path.Combine(folderPath, fileName);
+
+            pdfSlip.SaveToFile(filePath);
             return CreatedAtAction("GetReservation", new { id = reservation.ReservationId }, resultDto);
+           
+
         }
         // DELETE: api/Reservations/5
         [HttpDelete("{id}")]

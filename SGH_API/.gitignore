@@ -487,3 +487,4 @@ $RECYCLE.BIN/
 #!Migrations/*.cs
 #!Migrations/*.designer.cs
 GeneratedSlip/
+GeneratedPayrollsslips/

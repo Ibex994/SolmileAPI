@@ -31,6 +31,7 @@ namespace SolmileGuesthouseAPI.Data.Models
         [ForeignKey("Branch")]
         public int BranchId { get; set; }
         public Branch Branch { get; set; }
+        public byte[]? EmployeePhotoUrl { get; set; }
 
         // Navigation properties
         public ICollection<ServiceRequest> ServiceRequests { get; set; }

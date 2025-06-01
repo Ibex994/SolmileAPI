@@ -74,6 +74,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         public class EmployeeDto
         {
             public int Id { get; set; }
+            public byte[]? EmployeePhotoUrl { get; set; }
             public string Username { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
@@ -90,6 +91,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         {
             [JsonIgnore]
             public int Id { get; set; }
+            public byte[]? EmployeePhotoUrl { get; set; }
             public string Username { get; set; }
             public string Password { get; set; }
             public string FirstName { get; set; }
@@ -107,6 +109,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         {
             [JsonIgnore]
             public int Id { get; set; }
+            public byte[]? EmployeePhotoUrl { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Position { get; set; }

@@ -23,7 +23,7 @@ namespace SolmileGuesthouseAPI.Controllers
             _logInterface = logInterface;
         }
 
-        // GET: api/Employees
+  
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployees()
         {
@@ -41,45 +41,15 @@ namespace SolmileGuesthouseAPI.Controllers
                     HireDate = e.HireDate,
                     Status = e.Status,
                     Gender = e.Gender,
-                    BranchId = e.BranchId
+                    BranchId = e.BranchId,
+                    EmployeePhotoUrl = e.EmployeePhotoUrl
                 })
                 .ToListAsync();
         }
 
-        //// GET: api/Employees/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<EmployeeDto>> GetEmployee(int id)
-        //{
-        //    var employee = await _context.Employees.FindAsync(id);
-
-        //    if (employee == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return new EmployeeDto
-        //    {
-        //        Id = employee.Id,
-        //        Username = employee.Username,
-        //        FirstName = employee.FirstName,
-        //        LastName = employee.LastName,
-        //        Position = employee.Position,
-        //        Phone = employee.Phone,
-        //        Email = employee.Email,
-        //        DateOfBirth = employee.DateOfBirth,
-        //        HireDate = employee.HireDate,
-        //        Status = employee.Status,
-        //        Gender = employee.Gender,
-        //        BranchId = employee.BranchId
-        //    };
-        //}
-
-        // PUT: api/Employees/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, UpdateEmployeeDto employeeDto)
         {
-
-
             var employee = await _context.Employees.FindAsync(id);
             if (employee == null)
             {
@@ -96,6 +66,7 @@ namespace SolmileGuesthouseAPI.Controllers
             employee.Status = employeeDto.Status;
             employee.Gender = employeeDto.Gender;
             employee.BranchId = employeeDto.BranchId;
+            employee.EmployeePhotoUrl = employeeDto.EmployeePhotoUrl;
 
             try
             {
@@ -116,7 +87,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Employees
         [HttpPost("CreateAccount")]
         public async Task<ActionResult<EmployeeDto>> PostEmployee(InsertionEmployeeDto employeeDto)
         {
@@ -124,7 +94,6 @@ namespace SolmileGuesthouseAPI.Controllers
 
             try
             {
-                // 🔐 Hash the password using BCrypt
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(employeeDto.Password);
 
                 var employee = new Employee
@@ -140,7 +109,8 @@ namespace SolmileGuesthouseAPI.Controllers
                     HireDate = employeeDto.HireDate,
                     Status = employeeDto.Status,
                     Gender = employeeDto.Gender,
-                    BranchId = employeeDto.BranchId
+                    BranchId = employeeDto.BranchId,
+                    EmployeePhotoUrl = employeeDto.EmployeePhotoUrl
                 };
 
                 _context.Employees.Add(employee);
@@ -175,7 +145,8 @@ namespace SolmileGuesthouseAPI.Controllers
                     HireDate = employee.HireDate,
                     Status = employee.Status,
                     Gender = employee.Gender,
-                    BranchId = employee.BranchId
+                    BranchId = employee.BranchId,
+                    EmployeePhotoUrl = employee.EmployeePhotoUrl
                 };
             }
             catch (Exception ex)
@@ -185,8 +156,6 @@ namespace SolmileGuesthouseAPI.Controllers
             }
         }
 
-
-        // DELETE: api/Employees/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
@@ -206,7 +175,9 @@ namespace SolmileGuesthouseAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
+        
+    }
+
 
         private bool EmployeeExists(int id)
         {
@@ -217,7 +188,6 @@ namespace SolmileGuesthouseAPI.Controllers
         public async Task<ActionResult<EmployeeDto>> FindEmployeeById(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
-
             if (employee == null)
             {
                 return NotFound();
@@ -236,79 +206,10 @@ namespace SolmileGuesthouseAPI.Controllers
                 HireDate = employee.HireDate,
                 Status = employee.Status,
                 Gender = employee.Gender,
-                BranchId = employee.BranchId
+                BranchId = employee.BranchId,
+                EmployeePhotoUrl = employee.EmployeePhotoUrl
             };
         }
-
-        //[AllowAnonymous]
-        //[HttpPost("CreateBulkAccounts")]
-        //public async Task<IActionResult> CreateBulkAccounts([FromBody] BulkEmployeeDto bulkDto)
-        //{
-        //    using var transaction = await _context.Database.BeginTransactionAsync();
-        //    var createdEmployees = new List<EmployeeDto>();
-
-        //    try
-        //    {
-        //        foreach (var dto in bulkDto.Employees)
-        //        {
-        //            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
-
-        //            var employee = new Employee
-        //            {
-        //                Username = dto.Username,
-        //                Password = hashedPassword,
-        //                FirstName = dto.FirstName,
-        //                LastName = dto.LastName,
-        //                Position = dto.Position,
-        //                Phone = dto.Phone,
-        //                Email = dto.Email,
-        //                DateOfBirth = dto.DateOfBirth,
-        //                HireDate = dto.HireDate,
-        //                Status = dto.Status,
-        //                Gender = dto.Gender,
-        //                BranchId = dto.BranchId
-        //            };
-
-        //            _context.Employees.Add(employee);
-        //            await _context.SaveChangesAsync();
-
-        //            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == dto.Position);
-        //            if (role != null)
-        //            {
-        //                _context.UserRoles.Add(new UserRole
-        //                {
-        //                    UserId = employee.Id,
-        //                    RoleId = role.Id
-        //                });
-        //                await _context.SaveChangesAsync();
-        //            }
-
-        //            createdEmployees.Add(new EmployeeDto
-        //            {
-        //                Id = employee.Id,
-        //                Username = employee.Username,
-        //                FirstName = employee.FirstName,
-        //                LastName = employee.LastName,
-        //                Position = employee.Position,
-        //                Phone = employee.Phone,
-        //                Email = employee.Email,
-        //                DateOfBirth = employee.DateOfBirth,
-        //                HireDate = employee.HireDate,
-        //                Status = employee.Status,
-        //                Gender = employee.Gender,
-        //                BranchId = employee.BranchId
-        //            });
-        //        }
-
-        //        await transaction.CommitAsync();
-        //        return Ok(createdEmployees);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        await transaction.RollbackAsync();
-        //        return StatusCode(500, $"Bulk creation failed: {ex.Message}");
-        //    }
-        //}
 
     }
 }

@@ -1,86 +1,211 @@
-﻿    using Microsoft.EntityFrameworkCore;
-    using SolmileGuesthouseAPI.Data;
-    using SolmileGuesthouseAPI.Data.Models;
-    using SolmileGuesthouseAPI.Interface;
-    using Task = System.Threading.Tasks.Task;
+﻿using System.Globalization;
+using Microsoft.EntityFrameworkCore;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using SolmileGuesthouseAPI.Data;
+using SolmileGuesthouseAPI.Data.Models;
+using SolmileGuesthouseAPI.Interface;
+using QuestPDF;
+
+
+using Task = System.Threading.Tasks.Task;
 namespace SolmileGuesthouseAPI.Repository
+{
+    public class PayrollRepo : PayrollInterface
     {
-        public class PayrollRepo : PayrollInterface
+        private readonly GuesthouseDbContext _context;
+
+        public PayrollRepo(GuesthouseDbContext context)
         {
-            private readonly GuesthouseDbContext _context;
+            _context = context;
+        }
+        // CRUD
+        public async Task<Payroll> GetPayrollByIdAsync(int payrollId)
+        {
+            return await _context.Payroll
+                .Include(p => p.Employee)
+                .FirstOrDefaultAsync(p => p.PayrollId == payrollId)
+                .ConfigureAwait(false);
+        }
 
-            public PayrollRepo(GuesthouseDbContext context)
+        public async Task<List<Payroll>> GetAllPayrollsAsync()
+        {
+            return await _context.Payroll
+                .Include(p => p.Employee)
+                .ToListAsync()
+                .ConfigureAwait(false);
+        }
+
+        public async Task<Payroll> CreateOrUpdatePayrollAsync(Payroll payroll)
+        {
+            if (payroll.PayrollId == 0)
+                _context.Payroll.Add(payroll);
+            else
+                _context.Payroll.Update(payroll);
+
+            await _context.SaveChangesAsync();
+            return await _context.Payroll
+                .Include(p => p.Employee)
+                .FirstOrDefaultAsync(p => p.PayrollId == payroll.PayrollId);
+        }
+
+
+        public async Task<bool> DeletePayrollAsync(int payrollId)
+        {
+            var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
+            if (payroll == null) return false;
+
+            _context.Payroll.Remove(payroll);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return true;
+        }
+
+        public async Task<float> CalculateNetSalaryAsync(int payrollId)
+        {
+            var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
+            if (payroll == null) throw new Exception("Payroll not found");
+
+            payroll.NetSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return payroll.NetSalary;
+        }
+
+        public async Task<byte[]> GeneratePayslipPdfAsync(int employeeId)
+        {
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(e => e.Id == employeeId);
+
+            if (employee == null)
+                throw new KeyNotFoundException($"Employee with ID {employeeId} does not exist.");
+
+            var payroll = await _context.Payroll
+                .Include(p => p.Employee)
+                .Where(p => p.EmployeeId == employeeId)
+                .OrderByDescending(p => p.PayrollId)
+                .FirstOrDefaultAsync();
+
+            if (payroll == null)
+                throw new Exception("No payroll record found for this employee.");
+
+            var culture = new CultureInfo("am-ET");
+            var employeeName = $"{payroll.Employee.FirstName} {payroll.Employee.LastName}";
+            var date = DateTime.Now.ToString("MMMM yyyy", culture);
+
+            var document = Document.Create(container =>
             {
-                _context = context;
-            }
-            // CRUD
-            public async Task<Payroll> GetPayrollByIdAsync(int payrollId)
-            {
-                return await _context.Payroll
-                    .Include(p => p.Employee)
-                    .FirstOrDefaultAsync(p => p.PayrollId == payrollId)
-                    .ConfigureAwait(false);
-            }
+                container.Page(page =>
+                {
+                    page.Size(PageSizes.A5);
+                    page.Margin(30);
+                    page.Background(Colors.White);
 
-            public async Task<List<Payroll>> GetAllPayrollsAsync()
-            {
-                return await _context.Payroll
-                    .Include(p => p.Employee)
-                    .ToListAsync()
-                    .ConfigureAwait(false);
-            }
+                    // ===== Header =====
+                    page.Header().Row(row =>
+                    {
+                        row.ConstantItem(60).Column(col =>
+                        {
+                            try
+                            {
+                                var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Asset", "Black_and_Gold_Vintage_Luxury_Hotel_Logo-removebg-preview.png");
 
-            public async Task<Payroll> CreateOrUpdatePayrollAsync(Payroll payroll)
-            {
-                if (payroll.Deductions > 0 && string.IsNullOrWhiteSpace(payroll.DeductionReason))
-                    throw new ArgumentException("Deduction reason is required when deductions exist");
+                                if (!File.Exists(imagePath))
+                                    throw new FileNotFoundException("Logo not found");
 
-                if (payroll.Deductions == 0)
-                    payroll.DeductionReason = null;
+                                using var imageStream = File.OpenRead(imagePath);
+                            }
+                            catch (Exception ex)
+                            {
+                                col.Item().Text($"[Logo Error: {ex.Message}]").FontSize(8).Italic().FontColor(Colors.Red.Medium);
+                            }
+                        });
 
-                if (payroll.PayrollId == 0)
-                    _context.Payroll.Add(payroll);
-                else
-                    _context.Payroll.Update(payroll);
+                        row.RelativeItem().Column(col =>
+                        {
+                            col.Item().Text("Solmile Guesthouse").FontSize(18).Bold().FontColor(Colors.Black).AlignCenter();
+                            col.Item().Text("Payroll Slip / የክፍያ ዝርዝር").FontSize(14).FontColor(Colors.Grey.Darken2).AlignCenter();
+                            col.Item().Text(date).FontSize(10).Italic().FontColor(Colors.Grey.Medium).AlignCenter();
+                        });
+                    });
 
-                await _context.SaveChangesAsync().ConfigureAwait(false);
-                return payroll;
-            }
+                    // ===== Content =====
+                    page.Content().PaddingVertical(20).Column(col =>
+                    {
+                        col.Spacing(10);
 
-            public async Task<bool> DeletePayrollAsync(int payrollId)
-            {
-                var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
-                if (payroll == null) return false;
+                        col.Item().Text("👤 Employee Information").Bold().FontSize(12).Underline();
+                        col.Item().Row(r =>
+                        {
+                            r.RelativeItem().Text($"👤 Name: {employeeName}").FontSize(11);
+                            r.RelativeItem().Text($"📅 Date: {DateTime.Now:yyyy-MM-dd}").FontSize(11);
+                        });
 
-                _context.Payroll.Remove(payroll);
-                await _context.SaveChangesAsync().ConfigureAwait(false);
-                return true;
-            }
+                        col.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
 
-            // Business Logic
-            public async Task<float> CalculateNetSalaryAsync(int payrollId)
-            {
-                var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
-                if (payroll == null) throw new Exception("Payroll not found");
+                        col.Item().Text("💵 Payroll Summary").Bold().FontSize(12).Underline();
+                        col.Item().Table(table =>
+                        {
+                            table.ColumnsDefinition(cols =>
+                            {
+                                cols.RelativeColumn(2);
+                                cols.RelativeColumn(1);
+                            });
 
-                payroll.NetSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions;
-                await _context.SaveChangesAsync().ConfigureAwait(false);
-                return payroll.NetSalary;
-            }
+                            void AddRow(string label, string value, bool bold = false)
+                            {
+                                var cell0 = table.Cell().Text(label).FontSize(11);
+                                var cell1 = table.Cell().Text(value).FontSize(11).AlignRight();
 
-            public async Task<string> GeneratePayslipAsync(int payrollId)
-            {
-                var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
-                if (payroll == null) throw new Exception("Payroll not found");
+                                if (bold)
+                                {
+                                    cell0.Bold();
+                                    cell1.Bold().FontColor(Colors.Green.Darken2);
+                                }
+                            }
 
-                return $"PAYSLIP - {DateTime.Now:yyyy-MM-dd}\n" +
-                       $"Employee: {payroll.Employee.FirstName + payroll.Employee.LastName} (ID: {payroll.EmployeeId})\n" +
-                       $"Basic Salary: {payroll.BasicSalary}\n" +
-                       $"Allowances: {payroll.Allowances}\n" +
-                       $"Deductions: {payroll.Deductions}\n" +
-                       $"{(payroll.DeductionReason != null ? $"Deduction Reason: {payroll.DeductionReason}\n" : "")}" +
-                       $"Net Salary: {payroll.NetSalary}";
-            }
+                            AddRow("አጠቃላይ ደመወዝ (Basic Salary)", $"{payroll.BasicSalary:N2} ETB");
+                            AddRow("ተጨማሪ ክፍያ (Allowances)", $"{payroll.Allowances:N2} ETB");
+                            AddRow("መቀነሻ (Deductions)", $"-{payroll.Deductions:N2} ETB");
+
+                            if (!string.IsNullOrEmpty(payroll.DeductionReason))
+                            {
+                                AddRow("ምክንያት (Deduction Reason)", payroll.DeductionReason);
+                            }
+
+                            var netSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions;
+                            AddRow("የቀረ ክፍያ (Net Salary)", $"{netSalary:N2} ETB", bold: true);
+                        });
+
+                        col.Item().PaddingTop(20).Row(row =>
+                        {
+                            row.RelativeItem().Text("✍️ Signature: ____________________________");
+                            row.RelativeItem().Text("📍 Stamp: ____________________________").AlignRight();
+                        });
+                    });
+
+                    // ===== Footer =====
+                    page.Footer().AlignCenter().Text(text =>
+                    {
+                        text.Span("📄 Generated on ").SemiBold().FontSize(9).FontColor(Colors.Grey.Darken2);
+                        text.Span($"{DateTime.Now:yyyy-MM-dd HH:mm}").FontSize(9).FontColor(Colors.Grey.Darken2);
+                    });
+                });
+            });
+
+            using var stream = new MemoryStream();
+            document.GeneratePdf(stream);
+            var pdfBytes = stream.ToArray();
+
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "GeneratedPayrollslips");
+            Directory.CreateDirectory(folderPath);
+
+            string safeName = string.Join("_", (employeeName ?? "Unknown").Split(Path.GetInvalidFileNameChars()));
+            string filePath = Path.Combine(folderPath, $"Payslip_{safeName}_{DateTime.Now:yyyyMMddHHmmss}.pdf");
+
+            await File.WriteAllBytesAsync(filePath, pdfBytes);
+
+            return pdfBytes;
+        }
+
 
         public async Task<List<Payroll>> GetPayrollsByEmployeeIdAsync(int employeeId)
         {
@@ -99,6 +224,13 @@ namespace SolmileGuesthouseAPI.Repository
             payroll.Deductions += amount;
             payroll.DeductionReason = reason;
             await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+        public async Task<List<Payroll>> GetPayrollsByDateAsync(DateTime payPeriod)
+        {
+            return await _context.Payroll
+                .Include(p => p.Employee)
+                .Where(p => p.PayPeriod.Date == payPeriod.Date)
+                .ToListAsync();
         }
     }
     }

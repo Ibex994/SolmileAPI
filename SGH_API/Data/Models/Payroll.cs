@@ -8,12 +8,8 @@
         public float Allowances { get; set; }
         public string? DeductionReason { get; set; }
         public float Deductions { get; set; }
-        public float NetSalary;
-
+        public float NetSalary { get; set; }
+        public DateTime PayPeriod { get; set; }
         public virtual Employee Employee { get; set; }
-        private float CalculateNetSalary()
-        {
-            return BasicSalary + Allowances - Deductions;
-        }
     }
 }

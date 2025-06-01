@@ -244,6 +244,16 @@ namespace SolmileGuesthouseAPI.Controllers
                 DoorKey = reservation.DoorKey,
                 Status = reservation.Status
             };
+            var slipDto = new ReservationSlipDTO
+            {
+                FullName = $"{customer.FirstName} {customer.LastName}",
+                RoomNumber = availableRoom.RoomNumberAssignment.RoomNumber,
+                CheckIn = reservation.CheckInDate,
+                CheckOut = reservation.CheckOutDate,
+                AmountPaid = reservation.TotalPrice,
+                PaymentMethod = paymentMethod,
+                ReservationCode = reservation.ReservationId
+            };
 
             var pdfSlip = new PdfSlipGenerator(slipDto);
 

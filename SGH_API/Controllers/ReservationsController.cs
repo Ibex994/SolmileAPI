@@ -20,8 +20,6 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             _context = context;
         }
-
-        // GET: api/Reservations
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ReservationDto>>> GetReservations()
         {
@@ -93,18 +91,11 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-  
+
         // POST: api/Reservations
         [HttpPost]
         public async Task<ActionResult<ReservationDto>> PostReservation(string location, int roomTypeId, InsertionReservationDto reservationDto)
         {
-            //// Validate check-in and check-out dates
-            //if (reservationDto.CheckOutDate.Date <= reservationDto.CheckInDate.Date)
-            //{
-            //    return BadRequest("Check-out date must be after check-in date");
-            //}
-
-            // Find an available room based on provided criteria (similar to RoomsController's findAvailableRoom)
             var availableRooms = await _context.Rooms
                 .Include(r => r.RoomType)
                 .Include(r => r.RoomNumberAssignment)
@@ -115,7 +106,6 @@ namespace SolmileGuesthouseAPI.Controllers
                     r.Status == "Available")
                 .ToListAsync();
 
-            // Check each room for reservation conflicts
             Room availableRoom = null;
             foreach (var room in availableRooms)
             {
@@ -137,11 +127,9 @@ namespace SolmileGuesthouseAPI.Controllers
                 return NotFound("No available rooms found for the selected criteria and dates");
             }
 
-            // Calculate number of days and total price
-            var numberOfDays = (reservationDto.CheckOutDate - reservationDto.CheckInDate).Days +1;
+            var numberOfDays = (reservationDto.CheckOutDate - reservationDto.CheckInDate).Days + 1;
             var totalPrice = numberOfDays * availableRoom.RoomType.PricePerNight;
 
-            // Create the reservation
             var reservation = new Reservation
             {
                 ReservationId = GenerateUniqueReservationId(),
@@ -150,13 +138,36 @@ namespace SolmileGuesthouseAPI.Controllers
                 CheckInDate = reservationDto.CheckInDate,
                 CheckOutDate = reservationDto.CheckOutDate,
                 TotalPrice = totalPrice,
-                Status =  "Pending"
+                Status = "Pending"
             };
 
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 
-            // Return the reservation details
+            
+            var payment = new Payment
+            {
+                ReservationId = reservation.ReservationId,
+                Amount = reservation.TotalPrice,
+                PaymentDate = DateTime.Now,
+                MethodId = reservationDto.PaymentMethodId
+            };
+
+            _context.payments.Add(payment);
+            await _context.SaveChangesAsync();
+
+            var savedPayment = await _context.payments
+                .Include(p => p.PaymentMethod)
+                .FirstOrDefaultAsync(p => p.ReservationId == reservation.ReservationId);
+
+            string paymentMethod = savedPayment?.PaymentMethod?.MethodName ?? "N/A";
+
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(c => c.CustomerId == reservation.CustomerId);
+
+            if (customer == null)
+                return BadRequest("Customer not found");
+
             var resultDto = new ReservationDto
             {
                 ReservationId = reservation.ReservationId,
@@ -168,32 +179,17 @@ namespace SolmileGuesthouseAPI.Controllers
                 Status = reservation.Status,
             };
 
-            var customer = await _context.Customers
-                .FirstOrDefaultAsync(c => c.CustomerId == reservation.CustomerId);
-
-            if (customer == null)
-                return BadRequest("Customer not found");
-
-            var customerDto = new CustomerDto
-            {
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                Phone = customer.Phone
-            };
-
-
             var slipDto = new ReservationSlipDTO
             {
                 FullName = $"{customer.FirstName} {customer.LastName}",
-                RoomNumber = availableRoom.RoomNumberAssignment.RoomNumber, 
+                RoomNumber = availableRoom.RoomNumberAssignment.RoomNumber,
                 CheckIn = reservation.CheckInDate,
                 CheckOut = reservation.CheckOutDate,
-                AmountPaid = reservation.TotalPrice, 
-                PaymentMethod = "Cash",             
+                AmountPaid = reservation.TotalPrice,
+                PaymentMethod = paymentMethod,
                 ReservationCode = reservation.ReservationId
             };
 
-     
             var pdfSlip = new PdfSlipGenerator(slipDto);
 
             string folderPath = @"C:\Users\Temeb\source\repos\Ibex994\SolmileAPI\SGH_API\GeneratedSlip";
@@ -203,10 +199,10 @@ namespace SolmileGuesthouseAPI.Controllers
             string filePath = Path.Combine(folderPath, fileName);
 
             pdfSlip.SaveToFile(filePath);
-            return CreatedAtAction("GetReservation", new { id = reservation.ReservationId }, resultDto);
-           
 
+            return CreatedAtAction("GetReservation", new { id = reservation.ReservationId }, resultDto);
         }
+
         // DELETE: api/Reservations/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReservation(string id)

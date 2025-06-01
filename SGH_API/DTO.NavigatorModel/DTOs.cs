@@ -166,6 +166,8 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public float TotalPrice { get; set; }
             [JsonIgnore]
             public string? Status { get; set; }
+            public int PaymentMethodId { get; set; }
+
         }
         public class UpdateReservationDto
         {

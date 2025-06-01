@@ -12,8 +12,8 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    [Migration("20250601194522_AddedPayPeriodInPayroll")]
-    partial class AddedPayPeriodInPayroll
+    [Migration("20250601214335_AddedPayrollTables")]
+    partial class AddedPayrollTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -354,20 +354,24 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PayrollId"));
 
-                    b.Property<float>("Allowances")
-                        .HasColumnType("real");
+                    b.Property<double>("Allowances")
+                        .HasColumnType("float");
 
-                    b.Property<float>("BasicSalary")
-                        .HasColumnType("real");
+                    b.Property<double>("BasicSalary")
+                        .HasColumnType("float");
 
                     b.Property<string>("DeductionReason")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Deductions")
-                        .HasColumnType("real");
+                    b.Property<double>("Deductions")
+                        .HasColumnType("float");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<double>("NetSalary")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("PayPeriod")
                         .HasColumnType("datetime2");

@@ -12,8 +12,8 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    [Migration("20250601204407_AddedPayPeriodInPayrolls")]
-    partial class AddedPayPeriodInPayrolls
+    [Migration("20250601211159_AddedPayrollTable")]
+    partial class AddedPayrollTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

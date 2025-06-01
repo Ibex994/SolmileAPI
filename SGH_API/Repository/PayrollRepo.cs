@@ -9,6 +9,7 @@ using QuestPDF;
 
 
 using Task = System.Threading.Tasks.Task;
+using QuestPDF.Infrastructure;
 namespace SolmileGuesthouseAPI.Repository
 {
     public class PayrollRepo : PayrollInterface
@@ -67,7 +68,7 @@ namespace SolmileGuesthouseAPI.Repository
 
             payroll.NetSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions;
             await _context.SaveChangesAsync().ConfigureAwait(false);
-            return payroll.NetSalary;
+            return (float)payroll.NetSalary;
         }
 
         public async Task<byte[]> GeneratePayslipPdfAsync(int employeeId)
@@ -231,6 +232,79 @@ namespace SolmileGuesthouseAPI.Repository
                 .Include(p => p.Employee)
                 .Where(p => p.PayPeriod.Date == payPeriod.Date)
                 .ToListAsync();
+        }
+        public async Task<byte[]> GeneratePayrollPdfByDateAsync(DateTime payPeriod)
+        {
+            var payrolls = await GetPayrollsByDateAsync(payPeriod);
+
+            if (!payrolls.Any())
+                return null;
+
+            var document = Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Size(PageSizes.A4);
+                    page.Margin(30);
+                    page.DefaultTextStyle(x => x.FontSize(12));
+                    page.Content().Column(col =>
+                    {
+                        col.Spacing(25);
+
+                        col.Item().Text($"Payroll Report – {payPeriod:MMMM dd, yyyy}")
+                            .Bold().FontSize(18).AlignCenter();
+
+                        foreach (var payroll in payrolls)
+                        {
+                            var employeeName = $"{payroll.Employee?.FirstName} {payroll.Employee?.LastName}";
+                            var netSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions;
+
+                            col.Item().Border(1).Padding(10).Column(item =>
+                            {
+                                item.Spacing(5);
+
+                                item.Item().Text($"👤 Employee: {employeeName}").Bold();
+                                item.Item().Text($"📅 Pay Period: {payroll.PayPeriod:yyyy-MM-dd}");
+
+                                item.Item().Table(table =>
+                                {
+                                    table.ColumnsDefinition(c =>
+                                    {
+                                        c.ConstantColumn(150);
+                                        c.RelativeColumn();
+                                    });
+
+                                    table.Cell().Element(CellStyle).Text("Basic Salary:");
+                                    table.Cell().Element(CellStyle).Text($"{payroll.BasicSalary:N2} ETB");
+
+                                    table.Cell().Element(CellStyle).Text("Allowances:");
+                                    table.Cell().Element(CellStyle).Text($"{payroll.Allowances:N2} ETB");
+
+                                    table.Cell().Element(CellStyle).Text("Deductions:");
+                                    table.Cell().Element(CellStyle).Text($"{payroll.Deductions:N2} ETB");
+
+                                    if (!string.IsNullOrWhiteSpace(payroll.DeductionReason))
+                                    {
+                                        table.Cell().Element(CellStyle).Text("Deduction Reason:");
+                                        table.Cell().Element(CellStyle).Text(payroll.DeductionReason);
+                                    }
+
+                                    table.Cell().Element(CellStyle).Text("Net Salary:").Bold();
+                                    table.Cell().Element(CellStyle).Text($"{netSalary:N2} ETB").Bold();
+                                });
+
+                                item.Item().PaddingTop(10).Text("Signature: ____________________________");
+                            });
+                        }
+                    });
+                });
+            });
+
+            using var stream = new MemoryStream();
+            document.GeneratePdf(stream);
+            return stream.ToArray();
+
+            static IContainer CellStyle(IContainer container) => container.PaddingVertical(2);
         }
     }
     }

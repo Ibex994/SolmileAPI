@@ -5,25 +5,18 @@
 namespace SolmileGuesthouseAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedPayPeriodInPayrolls : Migration
+    public partial class AddedPayrollTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<float>(
-                name: "NetSalary",
-                table: "Payroll",
-                type: "real",
-                nullable: false,
-                defaultValue: 0f);
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "NetSalary",
-                table: "Payroll");
+
         }
     }
 }

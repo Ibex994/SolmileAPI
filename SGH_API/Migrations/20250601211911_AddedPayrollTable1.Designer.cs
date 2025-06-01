@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolmileGuesthouseAPI.Data;
 
@@ -11,9 +12,11 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    partial class GuesthouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250601211911_AddedPayrollTable1")]
+    partial class AddedPayrollTable1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,24 +354,23 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PayrollId"));
 
-                    b.Property<double>("Allowances")
-                        .HasColumnType("float");
+                    b.Property<float>("Allowances")
+                        .HasColumnType("real");
 
-                    b.Property<double>("BasicSalary")
-                        .HasColumnType("float");
+                    b.Property<float>("BasicSalary")
+                        .HasColumnType("real");
 
                     b.Property<string>("DeductionReason")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Deductions")
-                        .HasColumnType("float");
+                    b.Property<float>("Deductions")
+                        .HasColumnType("real");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<double>("NetSalary")
-                        .HasColumnType("float");
+                    b.Property<float>("NetSalary")
+                        .HasColumnType("real");
 
                     b.Property<DateTime>("PayPeriod")
                         .HasColumnType("datetime2");

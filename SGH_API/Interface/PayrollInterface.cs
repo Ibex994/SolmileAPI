@@ -13,7 +13,6 @@ namespace SolmileGuesthouseAPI.Interface
         Task<List<Payroll>> GetPayrollsByEmployeeIdAsync(int employeeId);
         Task AddDeductionAsync(int payrollId, float amount, string reason);
         Task<List<Payroll>> GetPayrollsByDateAsync(DateTime payPeriod);
-        
-
+        Task<byte[]> GeneratePayrollPdfByDateAsync(DateTime payPeriod);
     }
 }

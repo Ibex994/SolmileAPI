@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolmileGuesthouseAPI.Data;
 
@@ -11,9 +12,11 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    partial class GuesthouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250601061057_doorkeyAdded")]
+    partial class doorkeyAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,27 +24,6 @@ namespace SolmileGuesthouseAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Attendance", b =>
-                {
-                    b.Property<int>("AttendanceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttendanceId"));
-
-                    b.Property<DateTime>("AttendanceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AttendanceId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Attendances");
-                });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Branch", b =>
                 {
@@ -68,37 +50,6 @@ namespace SolmileGuesthouseAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("Branches");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Complaint", b =>
-                {
-                    b.Property<int>("ComplaintId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ComplaintId"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Details")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ComplaintId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Complaints");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.ContactDetails", b =>
@@ -163,214 +114,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.EmployeeAttendance", b =>
-                {
-                    b.Property<int>("EmpAttendanceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmpAttendanceId"));
-
-                    b.Property<DateTime>("AttendanceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("AttendanceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsPresent")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EmpAttendanceId");
-
-                    b.HasIndex("AttendanceId");
-
-                    b.HasIndex("EmployeeId", "AttendanceId")
-                        .IsUnique();
-
-                    b.ToTable("EmployeeAttendances");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.FeedBack", b =>
-                {
-                    b.Property<int>("FeedbackId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeedbackId"));
-
-                    b.Property<string>("Comments")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(3, 1)");
-
-                    b.Property<string>("ReservationId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("FeedbackId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ReservationId");
-
-                    b.ToTable("Feedback");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Log", b =>
-                {
-                    b.Property<int>("LogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LogId"));
-
-                    b.Property<string>("Action")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PerformedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("LogId");
-
-                    b.HasIndex("PerformedBy");
-
-                    b.ToTable("Logs");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.MonthlyAttendanceSummary", b =>
-                {
-                    b.Property<int>("SummaryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SummaryId"));
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TotalDaysPresent")
-                        .HasColumnType("int");
-
-                    b.Property<string>("YearMonth")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SummaryId");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
-
-                    b.ToTable("monthlyAttendanceSummaries");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Payment", b =>
-                {
-                    b.Property<int>("PaymentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
-
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
-
-                    b.Property<int>("MethodId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReservationId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PaymentId");
-
-                    b.HasIndex("MethodId");
-
-                    b.HasIndex("ReservationId")
-                        .IsUnique();
-
-                    b.ToTable("payments");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.PaymentMethod", b =>
-                {
-                    b.Property<int>("MethodId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MethodId"));
-
-                    b.Property<string>("MethodName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MethodId");
-
-                    b.ToTable("paymentMethods");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Payroll", b =>
-                {
-                    b.Property<int>("PayrollId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PayrollId"));
-
-                    b.Property<float>("Allowances")
-                        .HasColumnType("real");
-
-                    b.Property<float>("BasicSalary")
-                        .HasColumnType("real");
-
-                    b.Property<string>("DeductionReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Deductions")
-                        .HasColumnType("real");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PayrollId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Payroll");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Rating", b =>
@@ -442,23 +185,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Reservations");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Room", b =>
@@ -554,9 +280,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Property<byte[]>("AttachPhotoUrl")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
@@ -586,8 +309,6 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequestId");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("EmployeeId");
 
@@ -642,36 +363,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.ToTable("Tasks");
                 });
 
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Tax", b =>
-                {
-                    b.Property<int>("TaxId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TaxId"));
-
-                    b.Property<decimal>("Deduction")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TaxAmount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TaxRate")
-                        .HasPrecision(5, 4)
-                        .HasColumnType("decimal(5,4)");
-
-                    b.HasKey("TaxId");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Taxs");
-                });
-
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -685,18 +376,9 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
-                    b.Property<bool>("IsLocked")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResetToken")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ResetTokenExpiry")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -712,52 +394,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.HasDiscriminator().HasValue("User");
 
                     b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.UserRole", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("UserRoles");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.YearlyRatingsSummary", b =>
-                {
-                    b.Property<int>("SummaryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SummaryId"));
-
-                    b.Property<float>("AverageRating")
-                        .HasColumnType("real");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("TotalRatingSum")
-                        .HasColumnType("real");
-
-                    b.Property<int>("TotalVotes")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("SummaryId");
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
-
-                    b.ToTable("yearlyRatingsSummaries");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Employee", b =>
@@ -805,17 +441,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.HasDiscriminator().HasValue("Employee");
                 });
 
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Attendance", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
-                        .WithMany("Attendances")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Branch", b =>
                 {
                     b.HasOne("SolmileGuesthouseAPI.Data.Models.ContactDetails", "ContactDetails")
@@ -825,112 +450,6 @@ namespace SolmileGuesthouseAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("ContactDetails");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Complaint", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Customer", "Customer")
-                        .WithMany("Complaints")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
-                        .WithMany("Complaints")
-                        .HasForeignKey("EmployeeId");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.EmployeeAttendance", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Attendance", "Attendance")
-                        .WithMany("EmployeeAttendances")
-                        .HasForeignKey("AttendanceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
-                        .WithMany("EmployeeAttendances")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Attendance");
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.FeedBack", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Customer", "Customer")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Reservation", "Reservation")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Reservation");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Log", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Performer")
-                        .WithMany("Logs")
-                        .HasForeignKey("PerformedBy")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Performer");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.MonthlyAttendanceSummary", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
-                        .WithOne("MonthlyAttendanceSummary")
-                        .HasForeignKey("SolmileGuesthouseAPI.Data.Models.MonthlyAttendanceSummary", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Payment", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.PaymentMethod", "PaymentMethod")
-                        .WithMany("Payments")
-                        .HasForeignKey("MethodId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Reservation", "Reservation")
-                        .WithOne("Payment")
-                        .HasForeignKey("SolmileGuesthouseAPI.Data.Models.Payment", "ReservationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("PaymentMethod");
-
-                    b.Navigation("Reservation");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Payroll", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
-                        .WithMany("Payrolls")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Rating", b =>
@@ -1003,10 +522,6 @@ namespace SolmileGuesthouseAPI.Migrations
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.ServiceRequest", b =>
                 {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Customer", null)
-                        .WithMany("ServiceRequests")
-                        .HasForeignKey("CustomerId");
-
                     b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
                         .WithMany("ServiceRequests")
                         .HasForeignKey("EmployeeId")
@@ -1049,47 +564,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Navigation("ServiceRequest");
                 });
 
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Tax", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
-                        .WithMany("Taxs")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.UserRole", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.YearlyRatingsSummary", b =>
-                {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
-                        .WithOne("YearlyRatingsSummary")
-                        .HasForeignKey("SolmileGuesthouseAPI.Data.Models.YearlyRatingsSummary", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Employee", b =>
                 {
                     b.HasOne("SolmileGuesthouseAPI.Data.Models.Branch", "Branch")
@@ -1101,11 +575,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Navigation("Branch");
                 });
 
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Attendance", b =>
-                {
-                    b.Navigation("EmployeeAttendances");
-                });
-
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Branch", b =>
                 {
                     b.Navigation("Employees");
@@ -1115,33 +584,12 @@ namespace SolmileGuesthouseAPI.Migrations
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Customer", b =>
                 {
-                    b.Navigation("Complaints");
-
-                    b.Navigation("Feedbacks");
-
                     b.Navigation("Reservations");
-
-                    b.Navigation("ServiceRequests");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.PaymentMethod", b =>
-                {
-                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Reservation", b =>
                 {
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("Payment")
-                        .IsRequired();
-
                     b.Navigation("ServiceRequests");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Role", b =>
-                {
-                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Room", b =>
@@ -1172,36 +620,13 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Navigation("ServiceRequests");
                 });
 
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.User", b =>
-                {
-                    b.Navigation("UserRoles");
-                });
-
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Employee", b =>
                 {
-                    b.Navigation("Attendances");
-
-                    b.Navigation("Complaints");
-
-                    b.Navigation("EmployeeAttendances");
-
-                    b.Navigation("Logs");
-
-                    b.Navigation("MonthlyAttendanceSummary")
-                        .IsRequired();
-
-                    b.Navigation("Payrolls");
-
                     b.Navigation("RatingsReceived");
 
                     b.Navigation("ServiceRequests");
 
                     b.Navigation("Tasks");
-
-                    b.Navigation("Taxs");
-
-                    b.Navigation("YearlyRatingsSummary")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

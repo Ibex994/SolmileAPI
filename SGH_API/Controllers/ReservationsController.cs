@@ -32,6 +32,7 @@ namespace SolmileGuesthouseAPI.Controllers
                     CheckInDate = r.CheckInDate,
                     CheckOutDate = r.CheckOutDate,
                     TotalPrice = r.TotalPrice,
+                    DoorKey = r.DoorKey,
                     Status = r.Status
                 })
                 .ToListAsync();
@@ -56,6 +57,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 CheckInDate = reservation.CheckInDate,
                 CheckOutDate = reservation.CheckOutDate,
                 TotalPrice = reservation.TotalPrice,
+                DoorKey = reservation.DoorKey,
                 Status = reservation.Status
             };
         }
@@ -90,7 +92,70 @@ namespace SolmileGuesthouseAPI.Controllers
 
             return NoContent();
         }
+        [HttpPatch("CheckInOut/{id}")]
+        public async Task<IActionResult> PutReservation(string id, doorKeyUpdateReservationDto reservationDto)
+        {
+            var reservation = await _context.Reservations.FindAsync(id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
 
+            // Check if door key is changing from true to false
+            bool shouldCreateServiceRequest = reservation.DoorKey && !reservationDto.DoorKey;
+
+            reservation.DoorKey = reservationDto.DoorKey;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+
+                // If door key changed from true to false, create a service request
+                if (shouldCreateServiceRequest)
+                {
+                    var room = await _context.Rooms.FindAsync(reservation.RoomId);
+                    var realRoomNum = await _context.RoomNumberAssignments.FindAsync(room.RoomNumberAssignmentId);
+
+                    var serviceRequest = new ServiceRequest
+                    {
+                        RequestedBy = "Customer",
+                        ReservationId = reservation.ReservationId,
+                        EmployeeId = null,
+                        ServiceTypeId = 1, // Assuming 1 is for cleaning service
+                        Location = realRoomNum.RoomNumber.ToString(),
+                        RequiredByDateTime = DateTime.Now,
+                        Status = "Pending",
+                        ExtraDetail = "Full Cleaning Service",
+                        AttachPhotoUrl = null
+                    };
+
+                    _context.ServiceRequests.Add(serviceRequest);
+                    await _context.SaveChangesAsync();
+
+                    // Assign the service request to an employee
+                    var assignRequest = new AssignServiceRequestRequest
+                    {
+                        ServiceRequestId = serviceRequest.RequestId
+                    };
+
+                    var serviceRequestsController = new ServiceRequestsController(_context);
+                    await serviceRequestsController.AssignServiceRequestToEmployee(assignRequest);
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReservationExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
 
         // POST: api/Reservations
         [HttpPost]
@@ -176,18 +241,8 @@ namespace SolmileGuesthouseAPI.Controllers
                 CheckInDate = reservation.CheckInDate,
                 CheckOutDate = reservation.CheckOutDate,
                 TotalPrice = reservation.TotalPrice,
-                Status = reservation.Status,
-            };
-
-            var slipDto = new ReservationSlipDTO
-            {
-                FullName = $"{customer.FirstName} {customer.LastName}",
-                RoomNumber = availableRoom.RoomNumberAssignment.RoomNumber,
-                CheckIn = reservation.CheckInDate,
-                CheckOut = reservation.CheckOutDate,
-                AmountPaid = reservation.TotalPrice,
-                PaymentMethod = paymentMethod,
-                ReservationCode = reservation.ReservationId
+                DoorKey = reservation.DoorKey,
+                Status = reservation.Status
             };
 
             var pdfSlip = new PdfSlipGenerator(slipDto);
@@ -240,6 +295,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 CheckInDate = reservation.CheckInDate,
                 CheckOutDate = reservation.CheckOutDate,
                 TotalPrice = reservation.TotalPrice,
+                DoorKey = reservation.DoorKey,
                 Status = reservation.Status
             };
         }

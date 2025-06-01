@@ -151,6 +151,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public DateTime CheckInDate { get; set; }
             public DateTime CheckOutDate { get; set; }
             public float TotalPrice { get; set; }
+            public bool DoorKey { get; set; }
             public string Status { get; set; }
         }
         public class InsertionReservationDto
@@ -165,6 +166,8 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             [JsonIgnore]
             public float TotalPrice { get; set; }
             [JsonIgnore]
+            public bool DoorKey { get; set; } = false;
+            [JsonIgnore]
             public string? Status { get; set; }
             public int PaymentMethodId { get; set; }
 
@@ -174,6 +177,12 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             [JsonIgnore]
             public string? ReservationId { get; set; }
             public string Status { get; set; }
+        }
+        public class doorKeyUpdateReservationDto
+        {
+            [JsonIgnore]
+            public string? ReservationId { get; set; }
+            public bool DoorKey { get; set; }
         }
 
         // DTOs/RoomDto.cs

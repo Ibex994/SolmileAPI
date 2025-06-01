@@ -28,6 +28,8 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         [Required]
         public string Status { get; set; }
+        [Required]
+        public bool DoorKey { get; set; }
 
         // Navigation property
         public ICollection<ServiceRequest> ServiceRequests { get; set; }

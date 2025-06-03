@@ -42,7 +42,7 @@ namespace SolmileGuesthouseAPI.Controllers
                     Status = e.Status,
                     Gender = e.Gender,
                     BranchId = e.BranchId,
-                    EmployeePhotoUrl = e.EmployeePhotoUrl
+                    EmployeePhotoUrl = e.EmployeePhotoUrl,
                 })
                 .ToListAsync();
         }
@@ -55,8 +55,17 @@ namespace SolmileGuesthouseAPI.Controllers
             {
                 return NotFound();
             }
+            byte[]? photoBytes = null;
 
-            employee.FirstName = employeeDto.FirstName;
+            if (employeeDto.EmployeePhotoUrl != null && employeeDto.EmployeePhotoUrl.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await employeeDto.EmployeePhotoUrl.CopyToAsync(memoryStream);
+                    photoBytes = memoryStream.ToArray();
+                }
+            }
+                employee.FirstName = employeeDto.FirstName;
             employee.LastName = employeeDto.LastName;
             employee.Position = employeeDto.Position;
             employee.Phone = employeeDto.Phone;
@@ -66,7 +75,7 @@ namespace SolmileGuesthouseAPI.Controllers
             employee.Status = employeeDto.Status;
             employee.Gender = employeeDto.Gender;
             employee.BranchId = employeeDto.BranchId;
-            employee.EmployeePhotoUrl = employeeDto.EmployeePhotoUrl;
+            employee.EmployeePhotoUrl = photoBytes;
 
             try
             {
@@ -95,60 +104,70 @@ namespace SolmileGuesthouseAPI.Controllers
             try
             {
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(employeeDto.Password);
+                byte[]? photoBytes = null;
 
-                var employee = new Employee
+                if (employeeDto.EmployeePhotoUrl != null && employeeDto.EmployeePhotoUrl.Length > 0)
                 {
-                    Username = employeeDto.Username,
-                    Password = hashedPassword,
-                    FirstName = employeeDto.FirstName,
-                    LastName = employeeDto.LastName,
-                    Position = employeeDto.Position,
-                    Phone = employeeDto.Phone,
-                    Email = employeeDto.Email,
-                    DateOfBirth = employeeDto.DateOfBirth,
-                    HireDate = employeeDto.HireDate,
-                    Status = employeeDto.Status,
-                    Gender = employeeDto.Gender,
-                    BranchId = employeeDto.BranchId,
-                    EmployeePhotoUrl = employeeDto.EmployeePhotoUrl
-                };
-
-                _context.Employees.Add(employee);
-                await _context.SaveChangesAsync();
-
-                var role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == employee.Position);
-                if (role == null)
-                {
-                    await transaction.RollbackAsync();
-                    return BadRequest($"No role found matching position: '{employee.Position}'.");
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await employeeDto.EmployeePhotoUrl.CopyToAsync(memoryStream);
+                        photoBytes = memoryStream.ToArray();
+                    }
                 }
+                    var employee = new Employee
+                    {
+                        Username = employeeDto.Username,
+                        Password = hashedPassword,
+                        FirstName = employeeDto.FirstName,
+                        LastName = employeeDto.LastName,
+                        Position = employeeDto.Position,
+                        Phone = employeeDto.Phone,
+                        Email = employeeDto.Email,
+                        DateOfBirth = employeeDto.DateOfBirth,
+                        HireDate = employeeDto.HireDate,
+                        Status = employeeDto.Status,
+                        Gender = employeeDto.Gender,
+                        BranchId = employeeDto.BranchId,
+                        EmployeePhotoUrl = photoBytes
+                    };
 
-                _context.UserRoles.Add(new UserRole
-                {
-                    UserId = employee.Id,
-                    RoleId = role.Id
-                });
+                    _context.Employees.Add(employee);
+                    await _context.SaveChangesAsync();
 
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
+                    var role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == employee.Position);
+                    if (role == null)
+                    {
+                        await transaction.RollbackAsync();
+                        return BadRequest($"No role found matching position: '{employee.Position}'.");
+                    }
 
-                return new EmployeeDto
-                {
-                    Id = employee.Id,
-                    Username = employee.Username,
-                    FirstName = employee.FirstName,
-                    LastName = employee.LastName,
-                    Position = employee.Position,
-                    Phone = employee.Phone,
-                    Email = employee.Email,
-                    DateOfBirth = employee.DateOfBirth,
-                    HireDate = employee.HireDate,
-                    Status = employee.Status,
-                    Gender = employee.Gender,
-                    BranchId = employee.BranchId,
-                    EmployeePhotoUrl = employee.EmployeePhotoUrl
-                };
+                    _context.UserRoles.Add(new UserRole
+                    {
+                        UserId = employee.Id,
+                        RoleId = role.Id
+                    });
+
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+
+                    return new EmployeeDto
+                    {
+                        Id = employee.Id,
+                        Username = employee.Username,
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        Position = employee.Position,
+                        Phone = employee.Phone,
+                        Email = employee.Email,
+                        DateOfBirth = employee.DateOfBirth,
+                        HireDate = employee.HireDate,
+                        Status = employee.Status,
+                        Gender = employee.Gender,
+                        BranchId = employee.BranchId,
+                        EmployeePhotoUrl =photoBytes
+                    };
             }
+            
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();

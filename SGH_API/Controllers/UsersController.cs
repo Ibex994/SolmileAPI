@@ -7,6 +7,7 @@ using SolmileGuesthouseAPI.DTO.NavigatorModel;
 using SolmileGuesthouseAPI.Interface;
 using SolmileGuesthouseAPI.Helper;
 using Microsoft.AspNetCore.Authorization;
+using SolmileGuesthouseAPI.Data.Models;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
@@ -202,10 +203,11 @@ namespace SolmileGuesthouseAPI.Controllers
             if (login == null || !ModelState.IsValid)
                 return BadRequest(new UserLoginResponse { IsSuccess = false, Message = "Invalid login request." });
 
-            var user = await _context.Users
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
+                    var user = await _context.Users
+                    .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                    .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
+
 
 
             if (user == null)
@@ -220,11 +222,30 @@ namespace SolmileGuesthouseAPI.Controllers
 
             var token = _jwtService.GenerateToken(user);
 
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(e => e.Username.ToLower() == user.Username.ToLower());
+
             return Ok(new UserLoginResponse
             {
                 IsSuccess = true,
                 Message = "Login successful.",
-                Token = token
+                Token = token,
+                Employee =  new EmployeeDto
+                {
+                    Id = employee.Id,
+                    EmployeePhotoUrl = employee.EmployeePhotoUrl,
+                    Username = employee.Username,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Position = employee.Position,
+                    Phone = employee.Phone,
+                    Email = employee.Email,
+                    DateOfBirth = employee.DateOfBirth,
+                    HireDate = employee.HireDate,
+                    Status = employee.Status,
+                    Gender = employee.Gender,
+                    BranchId = employee.BranchId
+                }
             });
         }
 

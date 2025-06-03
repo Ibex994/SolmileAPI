@@ -14,7 +14,7 @@ namespace SolmileGuesthouseAPI.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
-    //[Authorize(Roles = "HR")]
+    [Authorize(Roles = "HR")]
     public class PayrollController : Controller
     {
         private readonly PayrollInterface _payrollInterface;

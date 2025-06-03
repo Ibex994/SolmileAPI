@@ -23,7 +23,7 @@
             {
                 page.Size(PageSizes.A5);
                 page.Margin(30);
-                page.Background(Colors.Black);
+                //page.Background(Colors.Black);
                 page.Header().Column(header =>
                 {
                     header.Item().Row(row =>
@@ -51,10 +51,10 @@
                         row.RelativeItem().Column(col =>
                         {
                             col.Item().AlignCenter().Text("Solmile Guesthouse")
-                                .FontSize(16).Bold().FontColor(Colors.Yellow.Lighten1);
+                                .FontSize(16).Bold().FontColor(Colors.Black);
 
                             col.Item().AlignCenter().Text("Reservation Slip")
-                                .FontSize(14).SemiBold().FontColor(Colors.Yellow.Lighten1); 
+                                .FontSize(14).SemiBold().FontColor(Colors.Black); 
                         });
 
                         row.ConstantItem(60).Column(col =>
@@ -78,29 +78,29 @@
                     col.Spacing(25);
 
                     col.Item().Text($"👤 Guest Name: {slip.FullName ?? "N/A"}")
-                        .FontSize(12).FontColor(Colors.Yellow.Lighten1);
+                        .FontSize(12).FontColor(Colors.Black);
 
                     col.Item().Text($"🛏 Room Number: {slip.RoomNumber}")
-                        .FontSize(12).FontColor(Colors.Yellow.Lighten1);
+                        .FontSize(12).FontColor(Colors.Black);
 
                     col.Item().Text($"📅 Check-In: {slip.CheckIn:yyyy-MM-dd}")
-                        .FontSize(12).FontColor(Colors.Yellow.Lighten1);
+                        .FontSize(12).FontColor(Colors.Black);
 
                     col.Item().Text($"📅 Check-Out: {slip.CheckOut:yyyy-MM-dd}")
-                        .FontSize(12).FontColor(Colors.Yellow.Lighten1);
+                        .FontSize(12).FontColor(Colors.Black);
 
                     col.Item().Text($"💰 Amount Paid: {slip.AmountPaid:C}")
-                        .FontSize(12).Bold().FontColor(Colors.Yellow.Lighten1); 
+                        .FontSize(12).Bold().FontColor(Colors.Black); 
 
                     col.Item().Text($"💳 Payment Method: {slip.PaymentMethod ?? "N/A"}")
-                        .FontSize(12).FontColor(Colors.Yellow.Lighten1);
+                        .FontSize(12).FontColor(Colors.Black);
 
                     col.Item().Text($"🧾 Reservation Code: {slip.ReservationCode ?? "N/A"}")
-                        .FontSize(12).Italic().FontColor(Colors.Yellow.Lighten1);
+                        .FontSize(12).Italic().FontColor(Colors.Black);
                 });
 
                 page.Footer().PaddingTop(15).AlignCenter().Text("Thank you for choosing Solmile Guesthouse")
-                    .Italic().FontSize(10).FontColor(Colors.Yellow.Lighten1);
+                    .Italic().FontSize(10).FontColor(Colors.Black);
             });
         }
 

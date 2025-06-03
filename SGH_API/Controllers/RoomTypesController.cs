@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Data;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
-using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
-
 namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -121,7 +118,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 Amenities = roomTypeDto.Amenities,
                 PricePerNight = roomTypeDto.PricePerNight,
                 Capacity = roomTypeDto.Capacity,
-                ImageUrl = null // Initialize as null
+                ImageUrl = null
             };
 
             // Only process image if provided
@@ -188,7 +185,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 ImageUrl = roomType.ImageUrl
             };
         }
-
         private bool RoomTypeExists(int id)
         {
             return _context.RoomTypes.Any(e => e.TypeId == id);

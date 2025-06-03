@@ -98,9 +98,6 @@ namespace SolmileGuesthouseAPI.Repository
                 {
                     page.Size(PageSizes.A5);
                     page.Margin(30);
-                    page.Background(Colors.White);
-
-                    // ===== Header =====
                     page.Header().Row(row =>
                     {
                         row.ConstantItem(60).Column(col =>
@@ -110,14 +107,16 @@ namespace SolmileGuesthouseAPI.Repository
                                 var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Asset", "Black_and_Gold_Vintage_Luxury_Hotel_Logo-removebg-preview.png");
 
                                 if (!File.Exists(imagePath))
-                                    throw new FileNotFoundException("Logo not found");
+                                    throw new FileNotFoundException($"Image not found at: {imagePath}");
 
                                 using var imageStream = File.OpenRead(imagePath);
+                                col.Item().Image(imageStream).FitArea();
                             }
                             catch (Exception ex)
                             {
                                 col.Item().Text($"[Logo Error: {ex.Message}]").FontSize(8).Italic().FontColor(Colors.Red.Medium);
                             }
+
                         });
 
                         row.RelativeItem().Column(col =>
@@ -128,7 +127,6 @@ namespace SolmileGuesthouseAPI.Repository
                         });
                     });
 
-                    // ===== Content =====
                     page.Content().PaddingVertical(20).Column(col =>
                     {
                         col.Spacing(10);
@@ -183,7 +181,6 @@ namespace SolmileGuesthouseAPI.Repository
                         });
                     });
 
-                    // ===== Footer =====
                     page.Footer().AlignCenter().Text(text =>
                     {
                         text.Span("📄 Generated on ").SemiBold().FontSize(9).FontColor(Colors.Grey.Darken2);

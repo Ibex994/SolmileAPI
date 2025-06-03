@@ -49,7 +49,7 @@ namespace SolmileGuesthouseAPI.Controllers
                     return BadRequest(ModelState);
 
                 var tax = _mapper.Map<Tax>(dto);
-                tax.TaxAmount = 0; // default
+                tax.TaxAmount = 0;
 
                 var created = await _taxInterface.CreateTaxAsync(tax);
                 return CreatedAtAction(nameof(GetTaxById), new { id = created.TaxId }, _mapper.Map<TaxDto>(created));

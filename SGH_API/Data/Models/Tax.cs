@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 namespace SolmileGuesthouseAPI.Data.Models
 {
@@ -17,4 +18,16 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         public Employee Employee { get; set; }
     }
+    public class TaxBracket
+    {
+        [JsonIgnore]
+        public int Id { get; set; }
+        public decimal From { get; set; }
+        public decimal To { get; set; }
+        [Precision(7, 4)] 
+        public decimal RatePercent { get; set; }
+        [Precision(18, 2)]
+        public decimal Deductible { get; set; }
+    }
+
 }

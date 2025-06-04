@@ -79,6 +79,10 @@ namespace SolmileGuesthouseAPI.Helper
             CreateMap<Role, RoleReadDto>();
             CreateMap<RoleReadDto, Role>();
 
+            //TaxBracket
+            CreateMap<CreateTaxBracketDto, TaxBracket>();
+            CreateMap<GrossSalaryDto, TaxBracket>();
+
 
         }
     }

@@ -20,4 +20,25 @@
         public decimal TaxAmount { get; set; }
     }
 
+    public class CreateTaxBracketDto
+    {
+        public decimal From { get; set; }
+        public decimal To { get; set; }
+        public decimal RatePercent { get; set; }
+        public decimal Deductible { get; set; }
+    }
+
+    public class TaxResultDto
+    {
+        public decimal GrossSalary { get; set; }
+        public decimal TaxAmount { get; set; }
+        public decimal NetSalary { get; set; }
+        public decimal TaxRateApplied { get; set; }
+        public decimal Deductible { get; set; }
+    }
+    public class GrossSalaryDto
+    {
+        public decimal GrossSalary { get; set; }
+    }
+
 }

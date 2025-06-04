@@ -9,7 +9,7 @@ namespace SolmileGuesthouseAPI.Controllers
     {
         [ApiController]
         [Route("api/[controller]")]
-        [Authorize(Roles = "HR")]
+        //[Authorize(Roles = "HR")]
     public class TaxController : Controller
         {
             private readonly TaxInterface _taxInterface;
@@ -82,16 +82,17 @@ namespace SolmileGuesthouseAPI.Controllers
             }
 
             [HttpGet("calculate/{taxId}/{salary}")]
-            [ProducesResponseType(typeof(float), 200)]
+            [ProducesResponseType(typeof(TaxResultDto), 200)]
             [ProducesResponseType(404)]
             public async Task<IActionResult> CalculateTax(int taxId, float salary)
             {
-                var amount = await _taxInterface.CalculateTaxAsync(taxId, salary);
-                if (amount == 0) return NotFound();
-                return Ok(amount);
+                var result = await _taxInterface.CalculateTaxAsync(taxId, salary);
+                if (result == null) return NotFound();
+                return Ok(result);
             }
 
-            [HttpGet("details/{employeeId}")]
+
+        [HttpGet("details/{employeeId}")]
             [ProducesResponseType(typeof(string), 200)]
             public async Task<IActionResult> ViewTaxDetails(int employeeId)
             {

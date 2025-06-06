@@ -14,8 +14,6 @@ namespace SolmileGuesthouseAPI.Data.Models
         [ForeignKey("ContactDetails")]
         public int ContactId { get; set; }
         public ContactDetails ContactDetails { get; set; }
-
-        // Navigation properties
         public ICollection<RoomNumberAssignment> RoomNumberAssignments { get; set; }
         public ICollection<Employee> Employees { get; set; }
     }

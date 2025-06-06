@@ -80,7 +80,6 @@ namespace SolmileGuesthouseAPI.Repository
             await _context.SaveChangesAsync();
             return true;
         }
-
         public async Task<bool> DeleteAttendanceAsync(int employeeId, DateTime attendanceDate)
         {
             var attendanceRecord = await _context.EmployeeAttendances

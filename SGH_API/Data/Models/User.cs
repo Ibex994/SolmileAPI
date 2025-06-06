@@ -15,8 +15,6 @@ namespace SolmileGuesthouseAPI.Data.Models
         public bool IsLocked { get; set; }
         public string? ResetToken { get; set; }
         public DateTime? ResetTokenExpiry { get; set; }
-
-
         public ICollection<UserRole> UserRoles { get; set; }
     }
 }

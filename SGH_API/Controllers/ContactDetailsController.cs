@@ -19,8 +19,6 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             _context = context;
         }
-
-        // GET: api/ContactDetails
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ContactDetailsDto>>> GetContactDetails()
         {
@@ -36,7 +34,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/ContactDetails/5
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<ContactDetailsDto>> findContactDetailsById(int id)
         {
@@ -57,15 +54,9 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/ContactDetails/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutContactDetails(int id, UInsertionContactDetailsDto contactDetailsDto)
         {
-           // if (id != contactDetailsDto.ContactId)
-          //  {
-            //    return BadRequest();
-          //  }
-
             var contactDetails = await _context.ContactDetails.FindAsync(id);
             if (contactDetails == null)
             {
@@ -92,11 +83,9 @@ namespace SolmileGuesthouseAPI.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
-        // POST: api/ContactDetails
         [HttpPost]
         public async Task<ActionResult<ContactDetailsDto>> PostContactDetails(UInsertionContactDetailsDto contactDetailsDto)
         {
@@ -121,8 +110,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 EmergencyContact = contactDetails.EmergencyContact
             };
         }
-
-        // DELETE: api/ContactDetails/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteContactDetails(int id)
         {

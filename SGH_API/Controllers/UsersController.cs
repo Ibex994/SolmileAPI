@@ -91,7 +91,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -230,15 +229,14 @@ namespace SolmileGuesthouseAPI.Controllers
             });
         }
 
-
         [HttpPost("change-password")]
-        [Authorize]  // Only authenticated users can change their password
+        [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid data");
 
-            var username = User.Identity?.Name?.ToLower(); // assumes JWT sets the Name claim
+            var username = User.Identity?.Name?.ToLower(); 
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Username.ToLower() == username);
 
@@ -246,20 +244,16 @@ namespace SolmileGuesthouseAPI.Controllers
             if (user == null)
                 return NotFound("User not found.");
 
-            // Validate current password
             bool isPasswordValid = PasswordHasher.VerifyHashedPassword(user.Password, dto.CurrentPassword);
             if (!isPasswordValid)
                 return Unauthorized("Current password is incorrect.");
 
-
-            // Update to new hashed password
             user.Password = PasswordHasher.HashPassword(dto.NewPassword);
             await _context.SaveChangesAsync();
 
             return Ok(new { success = true, message = "Password changed successfully." });
         }
 
-        // 1. Forgot Password: Generate and send 6-digit reset code
         [HttpPost("forgot-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequestDto dto)
@@ -273,7 +267,6 @@ namespace SolmileGuesthouseAPI.Controllers
 
             var code = SixDigitCode.GenerateSixDigitCode();
 
-            // Save OTP to OTP table
             var otp = new OTP
             {
                 Code = code,
@@ -292,12 +285,10 @@ namespace SolmileGuesthouseAPI.Controllers
             {
                 success = true,
                 message = "Password reset code generated and sent.",
-                resetCode = code // remove this in production
+                resetCode = code // remove this
             });
         }
 
-
-        // 2. Reset Password using username + 6-digit code + new password
         [HttpPost("reset-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ResetPasswordWithCode([FromBody] ResetPasswordWithCodeDto dto)
@@ -319,11 +310,9 @@ namespace SolmileGuesthouseAPI.Controllers
                 return BadRequest(new { success = false, message = "Invalid or expired reset code." });
             }
 
-            // Reset password
             user.Password = PasswordHasher.HashPassword(dto.NewPassword);
             _context.Users.Update(user);
 
-            // Mark OTP as used
             otp.IsUsed = true;
             _context.Otps.Update(otp);
 

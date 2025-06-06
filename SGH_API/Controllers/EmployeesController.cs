@@ -23,7 +23,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _logInterface = logInterface;
         }
 
-  
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployees()
         {
@@ -122,7 +121,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 }
                 while (await _context.Employees.AnyAsync(e => e.Username == Username));
 
-                // Generate temp password
                 string tempPassword = Guid.NewGuid().ToString().Substring(0, 8);
 
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(tempPassword);
@@ -202,7 +200,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 return StatusCode(500, $"Account creation failed: {ex.Message}");
             }
         }
-
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEmployee(int id)

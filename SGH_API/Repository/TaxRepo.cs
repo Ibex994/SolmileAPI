@@ -14,47 +14,26 @@ using SolmileGuesthouseAPI.Interface;
             {
                 _context = context;
             }
-        public async Task<TaxResultDto> CalculateTaxAsync(int taxId, float salary)
+        public async Task<TaxResultDto> CalculateTaxAsync(float basicSalary)
         {
-            var tax = await _context.Taxs.FindAsync(taxId);
-            if (tax == null) return null;
-
-            var salaryDecimal = (decimal)salary;
-
+            decimal salary = (decimal)basicSalary;
             var bracket = await _context.TaxBrackets
-                .FirstOrDefaultAsync(b => salaryDecimal >= b.From && salaryDecimal <= b.To);
+                .FirstOrDefaultAsync(b => salary >= b.From && salary <= b.To);
 
             if (bracket == null)
-            {
-                tax.TaxAmount = 0;
-                await _context.SaveChangesAsync();
-                return new TaxResultDto
-                {
-                    GrossSalary = (decimal)salary,
-                    TaxAmount = 0,
-                    NetSalary = (decimal)salary,
-                    TaxRateApplied = 0,
-                    Deductible = 0
-                };
-            }
+                return null;
+            decimal taxRate = bracket.RatePercent / 100m;
+            decimal taxAmount = (salary * taxRate) - bracket.Deductible;
+            if (taxAmount < 0) taxAmount = 0; 
 
-            var rate = bracket.RatePercent / 100;
-            var taxAmount = ((decimal)salary * rate) - bracket.Deductible;
-            tax.TaxAmount = taxAmount;
-
-            await _context.SaveChangesAsync();
+            decimal netSalary = salary - taxAmount;
 
             return new TaxResultDto
             {
-                GrossSalary = (decimal)salary,
                 TaxAmount = taxAmount,
-                NetSalary = (decimal)salary - taxAmount,
-                TaxRateApplied = bracket.RatePercent,
-                Deductible = bracket.Deductible
+                NetSalary = netSalary
             };
         }
-
-
         public async Task<string> ViewTaxDetailsAsync(int employeeId)
             {
                 var tax = await _context.Taxs.FirstOrDefaultAsync(t => t.EmployeeId == employeeId);

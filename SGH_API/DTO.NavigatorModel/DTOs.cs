@@ -23,7 +23,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public string Location { get; set; }
             public string Name { get; set; }
             public int ContactId { get; set; }
-            //public ContactDetailsDto ContactDetails { get; set; }
         }
 
         // DTOs/ContactDetailsDto.cs
@@ -194,14 +193,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public string Status { get; set; }
             public int TypeId { get; set; }
         }
-        //public class UInsertionRoomDto
-        //{
-        //    [JsonIgnore]
-        //    public string RoomId { get; set; }
-        //    public int RoomNumberAssignmentId { get; set; }
-        //    public string Status { get; set; }
-        //    public int TypeId { get; set; }
-        //}
 
         // DTOs/RoomNumberAssignmentDto.cs
         public class RoomNumberAssignmentDto
@@ -268,8 +259,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         }
         public class UInsertionServiceRequestDto
         {
-           // [JsonIgnore]
-            // public int RequestId { get; set; }
             public string RequestedBy { get; set; }
             public string? ReservationId { get; set; }
             public int? EmployeeId { get; set; }

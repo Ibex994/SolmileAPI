@@ -40,7 +40,6 @@ public class TaxBracketController : ControllerBase
         return Ok(bracket);
     }
 
-    // ✅ Tax Calculation Endpoint
     [HttpPost("calculate")]
     [ProducesResponseType(typeof(TaxResultDto), 200)]
     public async Task<IActionResult> CalculateTax([FromBody] GrossSalaryDto dto)

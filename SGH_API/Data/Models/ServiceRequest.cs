@@ -12,12 +12,8 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         [Required]
         public string RequestedBy { get; set; }
-
-        //       [Required]
-        //       public string RequestorId { get; set; }
-
-        public string? ReservationId { get; set; } // Nullable if requestor can be an employee
-        public int? EmployeeId { get; set; } // Nullable if requestor can be a customer
+        public string? ReservationId { get; set; }
+        public int? EmployeeId { get; set; } 
         [ForeignKey("ReservationId")]
         public Reservation? Reservation { get; set; }
 

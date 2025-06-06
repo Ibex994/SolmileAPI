@@ -20,7 +20,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Ratings
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RatingDto>>> GetRatings()
         {
@@ -38,7 +37,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Ratings/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RatingDto>> GetRating(int id)
         {
@@ -61,7 +59,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/Ratings/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRating(int id, UInsertionRatingDto ratingDto)
         {
@@ -102,9 +99,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-      
-
-        // DELETE: api/Ratings/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRating(int id)
         {
@@ -124,7 +118,7 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             return _context.Ratings.Any(e => e.RatingId == id);
         }
-        // POST: api/RatingsExtensions/AddOrUpdate
+
         [HttpPost("AddOrUpdate")]
         public async Task<ActionResult<RatingAddOrUpdateResponse>> AddOrUpdateRating(RatingAddOrUpdateRequest request)
         {
@@ -144,7 +138,6 @@ namespace SolmileGuesthouseAPI.Controllers
 
             if (existingRating != null)
             {
-                // Update existing rating
                 existingRating.RatingValue = request.RatingValue;
                 existingRating.RatingDate = DateTime.Now;
                 existingRating.GivenBy = request.IsGivenBy;
@@ -152,7 +145,6 @@ namespace SolmileGuesthouseAPI.Controllers
             }
             else
             {
-                // Add new rating
                 var newRating = new Rating
                 {
                     EmployeeId = request.EmployeeId,
@@ -174,7 +166,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // GET: api/RatingsExtensions/GetRatingValueOrNA/5
         [HttpGet("GetRatingValueOrNA/{serviceRequestId}")]
         public async Task<ActionResult<string>> GetRatingValueOrNA(int serviceRequestId)
         {

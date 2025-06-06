@@ -1,42 +1,43 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuestPDF.Fluent;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
-using System;
-using System.IO;
 
-namespace SolmileGuesthouseAPI.Controllers
+public class SlipController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class SlipController : ControllerBase
+    private readonly IWebHostEnvironment _env;
+
+    public SlipController(IWebHostEnvironment env)
     {
-        [HttpPost("GenerateSlip")]
-        public IActionResult GenerateSlip([FromBody] ReservationSlipDTO slipDto)
+        _env = env;
+    }
+
+    [HttpPost("GenerateSlip")]
+    public IActionResult GenerateSlip([FromBody] ReservationSlipDTO slipDto)
+    {
+        if (slipDto == null)
+            return BadRequest("Invalid slip data.");
+
+        try
         {
-            if (slipDto == null)
-                return BadRequest("Invalid slip data.");
+            var pdfSlip = new PdfSlipGenerator(slipDto);
+            string folderPath = Path.Combine(_env.ContentRootPath, "GeneratedSlip");
+            Directory.CreateDirectory(folderPath);
+            string safeGuestName = string.Join("_", slipDto.FullName.Split(Path.GetInvalidFileNameChars()));
+            string fileName = $"ReservationSlip-{slipDto.ReservationCode}-{safeGuestName}.pdf";
+            string filePath = Path.Combine(folderPath, fileName);
 
-            try
-            {
-                var pdfSlip = new PdfSlipGenerator(slipDto);
-                string folderPath = @"C:\Users\Temeb\source\repos\Ibex994\SolmileAPI\SGH_API\GeneratedSlip";
-                Directory.CreateDirectory(folderPath); 
+            pdfSlip.SaveToFile(filePath);
 
-                string safeGuestName = string.Join("_", slipDto.FullName.Split(Path.GetInvalidFileNameChars()));
-                string filePath = Path.Combine(folderPath, $"ReservationSlip-{slipDto.ReservationCode}-{safeGuestName}.pdf");
+            using var ms = new MemoryStream();
+            Document.Create(container => pdfSlip.Compose(container)).GeneratePdf(ms);
+            ms.Position = 0;
 
-                pdfSlip.SaveToFile(filePath);
-                using var ms = new MemoryStream();
-                Document.Create(container => pdfSlip.Compose(container)).GeneratePdf(ms);
-                ms.Position = 0;
-
-                return File(ms.ToArray(), "application/pdf", $"ReservationSlip-{slipDto.ReservationCode}-{safeGuestName}.pdf");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] PDF generation failed: {ex}");
-                return StatusCode(500, $"Server Error: PDF generation failed. Details: {ex.Message}");
-            }
+            return File(ms.ToArray(), "application/pdf", fileName);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ERROR] PDF generation failed: {ex}");
+            return StatusCode(500, $"Server Error: PDF generation failed. Details: {ex.Message}");
         }
     }
 }

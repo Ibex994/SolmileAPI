@@ -6,9 +6,8 @@ namespace SolmileGuesthouseAPI.Interface
 {
     public interface TaxInterface
     {
-        Task<TaxResultDto> CalculateTaxAsync(int taxId, float salary);
+        Task<TaxResultDto> CalculateTaxAsync(float salary);
         Task<string> ViewTaxDetailsAsync(int employeeId);
-
         Task<Tax> GetTaxByIdAsync(int taxId);
         Task<IEnumerable<Tax>> GetAllTaxesAsync();
         Task<Tax> CreateTaxAsync(Tax tax);

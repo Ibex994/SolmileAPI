@@ -38,7 +38,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Reservations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ReservationDto>> GetReservation(string id)
         {
@@ -62,7 +61,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/Reservations/5
         [HttpPatch("{id}")]
         public async Task<IActionResult> PutReservation(string id, UpdateReservationDto reservationDto)
         {
@@ -100,8 +98,6 @@ namespace SolmileGuesthouseAPI.Controllers
             {
                 return NotFound();
             }
-
-            // Check if door key is changing from true to false
             bool shouldCreateServiceRequest = reservation.DoorKey && !reservationDto.DoorKey;
 
             reservation.DoorKey = reservationDto.DoorKey;
@@ -109,8 +105,6 @@ namespace SolmileGuesthouseAPI.Controllers
             try
             {
                 await _context.SaveChangesAsync();
-
-                // If door key changed from true to false, create a service request
                 if (shouldCreateServiceRequest)
                 {
                     var room = await _context.Rooms.FindAsync(reservation.RoomId);
@@ -121,7 +115,7 @@ namespace SolmileGuesthouseAPI.Controllers
                         RequestedBy = "Customer",
                         ReservationId = reservation.ReservationId,
                         EmployeeId = null,
-                        ServiceTypeId = 1, // Assuming 1 is for cleaning service
+                        ServiceTypeId = 1,
                         Location = realRoomNum.RoomNumber.ToString(),
                         RequiredByDateTime = DateTime.Now,
                         Status = "Pending",
@@ -131,8 +125,6 @@ namespace SolmileGuesthouseAPI.Controllers
 
                     _context.ServiceRequests.Add(serviceRequest);
                     await _context.SaveChangesAsync();
-
-                    // Assign the service request to an employee
                     var assignRequest = new AssignServiceRequestRequest
                     {
                         ServiceRequestId = serviceRequest.RequestId
@@ -157,7 +149,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Reservations
         [HttpPost]
         public async Task<ActionResult<ReservationDto>> PostReservation(string location, int roomTypeId, InsertionReservationDto reservationDto)
         {
@@ -268,7 +259,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return CreatedAtAction("GetReservation", new { id = reservation.ReservationId }, resultDto);
         }
 
-        // DELETE: api/Reservations/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReservation(string id)
         {
@@ -284,7 +274,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // GET: api/Reservations/findByIdAndLastName
         [HttpGet("findByIdAndLastName")]
         public async Task<ActionResult<ReservationDto>> FindReservationByIdAndLastName(string id, string lastName)
         {
@@ -310,7 +299,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // GET: api/Reservations/findRoomTypeByRoomId/ABC123
         [HttpGet("findRoomTypeByRoomId/{roomId}")]
         public async Task<ActionResult<string>> FindRoomTypeByRoomId(string roomId)
         {
@@ -326,7 +314,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return room.RoomType.Name;
         }
 
-        // GET: api/Reservations/findBranchLocationByRoomId/ABC123
         [HttpGet("findBranchLocationByRoomId/{roomId}")]
         public async Task<ActionResult<string>> FindBranchLocationByRoomId(string roomId)
         {

@@ -18,8 +18,6 @@ namespace SolmileGuesthouseAPI.Data.Models
         [ForeignKey("RoomType")]
         public int TypeId { get; set; }
         public RoomType RoomType { get; set; }
-
-        // Navigation property
         public ICollection<Reservation> Reservations { get; set; }
     }
 }

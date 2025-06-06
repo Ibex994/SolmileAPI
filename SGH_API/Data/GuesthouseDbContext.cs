@@ -33,7 +33,6 @@ namespace SolmileGuesthouseAPI.Data
         public DbSet<User> Users { get; set; }
 
         // Abdelas Branch Additional Tables
-
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<Payroll> Payroll { get; set; }
         public DbSet<Tax> Taxs { get; set; }
@@ -60,6 +59,7 @@ namespace SolmileGuesthouseAPI.Data
             modelBuilder.Entity<RoomType>()
                 .Property(r => r.TypeId)
                 .ValueGeneratedNever(); // This disables identity/auto-increment
+
          // Configure ServiceType's ServiceTypeId to not be auto-generated
             modelBuilder.Entity<ServiceType>()
                 .Property(r => r.ServiceTypeId)
@@ -69,7 +69,6 @@ namespace SolmileGuesthouseAPI.Data
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
-
 
             // Configure the inheritance
             modelBuilder.Entity<Employee>()
@@ -163,10 +162,6 @@ namespace SolmileGuesthouseAPI.Data
                 .HasMany(e => e.RatingsReceived)
                 .WithOne(r => r.Employee)
                 .HasForeignKey(r => r.EmployeeId);
-
-            ////////////////////////////////////////////////////////
-            ///////////////////////////////////////////////////////
-            ///
 
             // Payment and PaymentMethod relationship (1:*)
             modelBuilder.Entity<Payment>()

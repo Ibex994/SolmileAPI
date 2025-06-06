@@ -84,7 +84,6 @@ using SolmileGuesthouseAPI.DTO.NavigatorModel;
                 };
             }
 
-            // Simulate payment success
             bool paymentSuccess = true;
 
             if (!paymentSuccess)
@@ -106,7 +105,7 @@ using SolmileGuesthouseAPI.DTO.NavigatorModel;
 
             _context.payments.Add(payment);
 
-            reservation.Status = "Confirmed"; // or "Paid" if you prefer
+            reservation.Status = "Confirmed";
 
             await _context.SaveChangesAsync();
 

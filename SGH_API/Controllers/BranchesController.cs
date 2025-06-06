@@ -19,8 +19,6 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             _context = context;
         }
-
-        // GET: api/Branches
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BranchDto>>> GetBranches()
         {
@@ -44,7 +42,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Branches/5
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<BranchDto>> findBranchById(int id)
         {
@@ -74,14 +71,9 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/Branches/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBranch(int id, UInsertionBranchDto branchDto)
         {
-            //if (id != branchDto.BranchId)
-            //{
-            //    return BadRequest();
-            //}
 
             var branch = await _context.Branches
                 .Include(b => b.ContactDetails)
@@ -95,8 +87,6 @@ namespace SolmileGuesthouseAPI.Controllers
             branch.Location = branchDto.Location;
             branch.Name = branchDto.Name;
             branch.ContactId = branchDto.ContactId;
-
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -112,39 +102,22 @@ namespace SolmileGuesthouseAPI.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
-        // POST: api/Branches
         [HttpPost]
         public async Task<ActionResult<BranchDto>> PostBranch(UInsertionBranchDto branchDto)
         {
-            //var contactdetails = new contactdetails
-            //{
-            //    phone = branchdto.contactdetails.phone,
-            //    email = branchdto.contactdetails.email,
-            //    address = branchdto.contactdetails.address,
-            //    emergencycontact = branchdto.contactdetails.emergencycontact
-            //};
-
-            // _context.ContactDetails.Add(contactDetails);
-            //  await _context.SaveChangesAsync();
-
             var branch = new Branch
             {
                 Location = branchDto.Location,
                 Name = branchDto.Name,
                 ContactId = branchDto.ContactId,
-                // ContactDetails = contactDetails
             };
 
             _context.Branches.Add(branch);
             await _context.SaveChangesAsync();
 
             branchDto.BranchId = branch.BranchId;
-            //  branchDto.ContactId = contactDetails.ContactId;
-            // return CreatedAtAction("findBranchById", new { id = branch.BranchId }, branchDto);
 
             return new BranchDto
             {
@@ -153,8 +126,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 Name = branch.Name,
                 ContactId = branch.ContactId};
             }
-
-        // DELETE: api/Branches/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBranch(int id)
         {

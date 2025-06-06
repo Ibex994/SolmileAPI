@@ -22,7 +22,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/ServiceRequests
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ServiceRequestDto>>> GetServiceRequests()
         {
@@ -43,7 +42,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/ServiceRequests/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceRequestDto>> GetServiceRequest(int id)
         {
@@ -69,7 +67,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/ServiceRequests/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutServiceRequest(int id, [FromForm] UInsertionServiceRequestDto serviceRequestDto)
         {
@@ -114,7 +111,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/ServiceRequests
         [HttpPost]
         public async Task<ActionResult<ServiceRequestDto>> PostServiceRequest([FromForm] UInsertionServiceRequestDto serviceRequestDto)
         {
@@ -130,7 +126,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 ExtraDetail = serviceRequestDto.ExtraDetail,
                 AttachPhotoUrl = null
             };
-            // Only process image if provided
+
             if (serviceRequestDto.AttachPhotoUrl != null)
             {
                 using var stream = new MemoryStream();
@@ -141,7 +137,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context.ServiceRequests.Add(serviceRequest);
             await _context.SaveChangesAsync();
 
-          //  serviceRequestDto.RequestId = serviceRequest.RequestId;
             return new ServiceRequestDto
             {
                 RequestId = serviceRequest.RequestId,
@@ -155,13 +150,8 @@ namespace SolmileGuesthouseAPI.Controllers
                 ExtraDetail = serviceRequest.ExtraDetail,
                 AttachPhotoUrl =serviceRequest.AttachPhotoUrl
             };
-
-
-
-
         }
 
-        // DELETE: api/ServiceRequests/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteServiceRequest(int id)
         {
@@ -182,7 +172,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return _context.ServiceRequests.Any(e => e.RequestId == id);
         }
 
-        // GET: api/ServiceRequestExtensions/FindById/5
         [HttpGet("FindById/{id}")]
         public async Task<ActionResult<ServiceRequestDto>> FindServiceRequestById(int id)
         {
@@ -208,7 +197,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // GET: api/ServiceRequestExtensions/GetByReservationId/ABC123
         [HttpGet("GetByReservationId/{reservationId}")]
         public async Task<ActionResult<IEnumerable<ServiceRequestDto>>> GetServiceRequestsByReservationId(string reservationId)
         {
@@ -232,7 +220,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return serviceRequests;
         }
 
-        // GET: api/ServiceRequestExtensions/GetTasksAndRequestsForEmployee/5
         [HttpGet("GetTasksAndRequestsForEmployee/{employeeId}")]
         public async Task<ActionResult<EmployeeTasksAndRequestsResponse>> GetTasksAndRequestsAssignedToEmployee(int employeeId)
         {
@@ -272,7 +259,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // GET: api/ServiceRequestExtensions/GetServiceTypeNameById/5
         [HttpGet("GetServiceTypeNameById/{serviceTypeId}")]
         public async Task<ActionResult<string>> GetServiceTypeNameById(int serviceTypeId)
         {
@@ -286,7 +272,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return serviceType.ServiceTypeName;
         }
 
-        // PUT: api/ServiceRequestExtensions/UpdateStatus
         [HttpPut("UpdateStatusTaskServiceRequest")]
         public async Task<IActionResult> UpdateStatus(UpdateStatusTaskServiceRequest request)
         {
@@ -313,7 +298,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // PUT: api/ServiceRequestExtensions/UpdateStatusServiceRequest
         [HttpPut("UpdateStatusServiceRequest")]
         public async Task<IActionResult> UpdateStatusServiceRequest(UpdateStatusServiceRequest request)
         {
@@ -324,14 +308,11 @@ namespace SolmileGuesthouseAPI.Controllers
                 return NotFound(new { message = "Service request not found." });
             }
 
-            // Check if the new status is "Cancelled" and the service request is already "Done"
             if (request.NewStatus.Equals("Cancelled", StringComparison.OrdinalIgnoreCase) &&
                 serviceRequest.Status.Equals("Done", StringComparison.OrdinalIgnoreCase))
             {
                 return BadRequest(new { message = "Cannot cancel a completed service request." });
             }
-
-            // Update the status
             serviceRequest.Status = request.NewStatus;
 
             await _context.SaveChangesAsync();
@@ -339,7 +320,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // PUT: api/ServiceRequestExtensions/UpdateStatusForReservation
         [HttpPut("UpdateStatusForReservation")]
         public async Task<IActionResult> UpdateStatusForReservation(UpdateStatusForReservationRequest request)
         {
@@ -378,7 +358,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/ServiceRequestExtensions/AssignServiceRequestToEmployee
         [HttpPost("AssignServiceRequestToEmployee")]
         public async Task<ActionResult<TaskDto>> AssignServiceRequestToEmployee(AssignServiceRequestRequest request)
         {
@@ -450,7 +429,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 return BadRequest(new { message = "No available employees with the required position." });
             }
 
-            // Get task counts for each employee on the required date
             var employeeTaskCounts = await _context.Tasks
                 .Include(t => t.ServiceRequest)
                 .Where(t => relevantEmployees.Select(e => e.Id).Contains(t.EmployeeId) &&
@@ -458,13 +436,9 @@ namespace SolmileGuesthouseAPI.Controllers
                 .GroupBy(t => t.EmployeeId)
                 .Select(g => new { EmployeeId = g.Key, Count = g.Count() })
                 .ToDictionaryAsync(x => x.EmployeeId, x => x.Count);
-
-            // Find employee with least tasks
             var selectedEmployee = relevantEmployees
                 .OrderBy(e => employeeTaskCounts.GetValueOrDefault(e.Id, 0))
                 .First();
-
-            // Create new task
             var newTask = new Data.Models.Task
             {
                 RequestId = serviceRequest.RequestId,

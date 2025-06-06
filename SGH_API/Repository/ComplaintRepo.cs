@@ -35,8 +35,6 @@ namespace SolmileGuesthouseAPI.Repository
 
             return complaint;
         }
-
-
         public async Task<bool> DeleteComplaintAsync(int complaintId)
         {
             var complaint = await _context.Complaints.FindAsync(complaintId);

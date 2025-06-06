@@ -20,8 +20,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _paymentInterface = paymentInterface;
             _mapper = mapper;
         }
-
-        // GET: api/payment
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<PaymentDto>), 200)]
         public async Task<IActionResult> GetAllPayments()
@@ -30,7 +28,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<PaymentDto>>(payments));
         }
 
-        // GET: api/payment/{id}
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(PaymentDto), 200)]
         [ProducesResponseType(404)]
@@ -43,7 +40,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return Ok(_mapper.Map<PaymentDto>(payment));
         }
 
-        // POST: api/payment
         [HttpPost]
         [ProducesResponseType(typeof(PaymentDto), 201)]
         [ProducesResponseType(400)]
@@ -57,7 +53,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return CreatedAtAction(nameof(GetPaymentById), new { id = created.PaymentId }, _mapper.Map<PaymentDto>(created));
         }
 
-        // PUT: api/payment/{id}
         [HttpPut("{id:int}")]
         [ProducesResponseType(typeof(PaymentDto), 200)]
         [ProducesResponseType(400)]
@@ -76,7 +71,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return Ok(_mapper.Map<PaymentDto>(updated));
         }
 
-        // DELETE: api/payment/{id}
         [HttpDelete("{id:int}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -86,7 +80,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return deleted ? NoContent() : NotFound(new { Message = $"Payment with ID {id} not found." });
         }
 
-        // POST: api/payment/process
         [HttpPost("process")]
         [ProducesResponseType(typeof(PaymentResultDto), 200)]
         [ProducesResponseType(400)]

@@ -20,7 +20,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/ServiceTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ServiceTypeDto>>> GetServiceTypes()
         {
@@ -33,7 +32,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/ServiceTypes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceTypeDto>> GetServiceType(int id)
         {
@@ -51,7 +49,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/ServiceTypes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutServiceType(int id, UInsertionServiceTypeDto serviceTypeDto)
         {
@@ -83,7 +80,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/ServiceTypes
         [HttpPost]
         public async Task<ActionResult<ServiceTypeDto>> PostServiceType(ServiceTypeDto serviceTypeDto)
         {
@@ -105,7 +101,6 @@ namespace SolmileGuesthouseAPI.Controllers
 
         }
 
-        // DELETE: api/ServiceTypes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteServiceType(int id)
         {
@@ -125,7 +120,7 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             return _context.ServiceTypes.Any(e => e.ServiceTypeId == id);
         }
-        // GET: api/ServiceTypeExtensions/GetServiceTypeIdByName/Housekeeping
+
         [HttpGet("GetServiceTypeIdByName/{name}")]
         public async Task<ActionResult<int>> GetServiceTypeIdByName(string name)
         {
@@ -140,7 +135,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return serviceType.ServiceTypeId;
         }
 
-        // GET: api/ServiceTypeExtensions/GetServiceListForCustomer
         [HttpGet("GetServiceListForCustomer")]
         public async Task<ActionResult<List<string>>> GetServiceListForCustomer()
         {

@@ -31,6 +31,7 @@
         public float Allowances { get; set; }
         public float Deductions { get; set; }
         public string? DeductionReason { get; set; }
+        public decimal Tax { get; set; }
         public float NetSalary { get; set; }
     }
 

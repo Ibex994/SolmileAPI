@@ -5,9 +5,6 @@ using QuestPDF.Helpers;
 using SolmileGuesthouseAPI.Data;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Interface;
-using QuestPDF;
-
-
 using Task = System.Threading.Tasks.Task;
 using QuestPDF.Infrastructure;
 namespace SolmileGuesthouseAPI.Repository
@@ -20,7 +17,6 @@ namespace SolmileGuesthouseAPI.Repository
         {
             _context = context;
         }
-        // CRUD
         public async Task<Payroll> GetPayrollByIdAsync(int payrollId)
         {
             return await _context.Payroll
@@ -66,10 +62,15 @@ namespace SolmileGuesthouseAPI.Repository
             var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
             if (payroll == null) throw new Exception("Payroll not found");
 
-            payroll.NetSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions;
+            payroll.Tax = (decimal)(payroll.BasicSalary * 0.15);
+
+            payroll.NetSalary = (double)payroll.BasicSalary + (double)payroll.Allowances - (double)payroll.Deductions - (double)payroll.Tax;
+
+
             await _context.SaveChangesAsync().ConfigureAwait(false);
             return (float)payroll.NetSalary;
         }
+
 
         public async Task<byte[]> GeneratePayslipPdfAsync(int employeeId)
         {
@@ -164,6 +165,8 @@ namespace SolmileGuesthouseAPI.Repository
                             AddRow("አጠቃላይ ደመወዝ (Basic Salary)", $"{payroll.BasicSalary:N2} ETB");
                             AddRow("ተጨማሪ ክፍያ (Allowances)", $"{payroll.Allowances:N2} ETB");
                             AddRow("መቀነሻ (Deductions)", $"-{payroll.Deductions:N2} ETB");
+                            AddRow("ታክስ (Tax)", $"-{payroll.Tax:N2} ETB");
+
 
                             if (!string.IsNullOrEmpty(payroll.DeductionReason))
                             {
@@ -288,6 +291,10 @@ namespace SolmileGuesthouseAPI.Repository
 
                                     table.Cell().Element(CellStyle).Text("Net Salary:").Bold();
                                     table.Cell().Element(CellStyle).Text($"{netSalary:N2} ETB").Bold();
+
+                                    table.Cell().Element(CellStyle).Text("Tax:");
+                                    table.Cell().Element(CellStyle).Text($"{payroll.Tax:N2} ETB");
+
                                 });
 
                                 item.Item().PaddingTop(10).Text("Signature: ____________________________");

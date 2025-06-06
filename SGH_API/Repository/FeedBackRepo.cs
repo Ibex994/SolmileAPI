@@ -48,7 +48,6 @@ namespace SolmileGuesthouseAPI.Repository
                 .Where(f => f.CustomerId == customerId)
                 .ToListAsync();
         }
-
         public async Task<FeedBack?> GetFeedbackByIdAsync(int feedbackId)
         {
             return await _context.Feedback
@@ -68,7 +67,6 @@ namespace SolmileGuesthouseAPI.Repository
                 return false;
             }
         }
-
         public async Task<bool> DeleteFeedbackAsync(int feedbackId)
         {
             try

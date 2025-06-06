@@ -28,8 +28,6 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         [Required]
         public byte[]? ImageUrl { get; set; }
-
-        // Navigation property
         public ICollection<Room> Rooms { get; set; }
     }
 }

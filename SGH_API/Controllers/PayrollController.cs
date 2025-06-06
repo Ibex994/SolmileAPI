@@ -20,11 +20,15 @@ namespace SolmileGuesthouseAPI.Controllers
         private readonly PayrollInterface _payrollInterface;
         private readonly IMapper _mapper;
         private readonly ILogger<PayrollController> _logger;
-        public PayrollController(PayrollInterface payrollInterface, IMapper mapper, ILogger<PayrollController> logger)
+        private readonly TaxInterface _taxInterface;
+
+        public PayrollController(PayrollInterface payrollInterface, IMapper mapper, ILogger<PayrollController> logger,
+            TaxInterface taxInterface)
         {
             _payrollInterface = payrollInterface;
             _mapper = mapper;
             _logger = logger;
+            _taxInterface = taxInterface;
         }
 
         [HttpGet("{id}")]
@@ -76,22 +80,29 @@ namespace SolmileGuesthouseAPI.Controllers
             {
                 var payroll = _mapper.Map<Payroll>(dto);
 
-                var createdPayroll = await _payrollInterface.CreateOrUpdatePayrollAsync(payroll);
+                // Auto-calculate tax using only salary
+                var taxResult = await _taxInterface.CalculateTaxAsync((float)payroll.BasicSalary);
 
-                await _payrollInterface.CalculateNetSalaryAsync(createdPayroll.PayrollId);
+                if (taxResult == null)
+                {
+                    _logger.LogWarning("No applicable tax bracket found for BasicSalary {BasicSalary}", payroll.BasicSalary);
+                    return BadRequest("No applicable tax bracket found for the given basic salary.");
+                }
+
+                payroll.Tax = (decimal)(payroll.BasicSalary * 0.15); 
+
+                payroll.NetSalary = (double)payroll.BasicSalary + (double)payroll.Allowances - (double)payroll.Deductions - (double)payroll.Tax;
+
+
+                var createdPayroll = await _payrollInterface.CreateOrUpdatePayrollAsync(payroll);
 
                 var updatedPayroll = await _payrollInterface.GetPayrollByIdAsync(createdPayroll.PayrollId);
 
                 var result = _mapper.Map<PayrollResponseDto>(updatedPayroll);
-                if (updatedPayroll.Employee != null)
-                {
-                    result.EmployeeName = $"{updatedPayroll.Employee.FirstName} {updatedPayroll.Employee.LastName}";
-                }
-                else
-                {
-                    result.EmployeeName = "Unknown Employee";
-                    _logger.LogWarning("Employee info was null for Payroll ID {PayrollId}", updatedPayroll.PayrollId);
-                }
+
+                result.EmployeeName = updatedPayroll.Employee != null
+                    ? $"{updatedPayroll.Employee.FirstName} {updatedPayroll.Employee.LastName}"
+                    : "Unknown Employee";
 
                 return CreatedAtAction(
                     nameof(GetPayrollById),
@@ -109,6 +120,8 @@ namespace SolmileGuesthouseAPI.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+
 
         [HttpPost("{id}/deductions")]
         [ProducesResponseType(204)]

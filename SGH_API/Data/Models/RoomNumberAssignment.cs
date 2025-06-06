@@ -15,8 +15,6 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         [Required]
         public int RoomNumber { get; set; }
-
-        // Navigation property
         public ICollection<Room> Rooms { get; set; }
     }
 }

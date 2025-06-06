@@ -20,7 +20,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Rooms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomDto>>> GetRooms()
         {
@@ -35,7 +34,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Rooms/5
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<RoomDto>> findRoomById(string id)
         {
@@ -55,7 +53,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/Rooms/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoom(string id, RoomDto roomDto)
         {
@@ -93,7 +90,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Rooms
         [HttpPost]
         public async Task<ActionResult<RoomDto>> PostRoom(RoomDto roomDto)
         {
@@ -111,7 +107,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return CreatedAtAction("findRoomById", new { id = room.RoomId }, roomDto);
         }
 
-        // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(string id)
         {
@@ -127,7 +122,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // GET: api/Rooms/findAvailableRoom?location=NewYork&roomTypeId=1&checkInDate=2023-01-01&checkOutDate=2023-01-10
         [HttpGet("findAvailableRoom")]
         public async Task<ActionResult<RoomDto>> FindAvailableRoom(string location, int roomTypeId, DateTime checkInDate, DateTime checkOutDate)
         {

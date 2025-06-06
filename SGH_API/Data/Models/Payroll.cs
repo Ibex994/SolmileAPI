@@ -6,6 +6,7 @@
         public int EmployeeId { get; set; }
         public double BasicSalary { get; set; }
         public double Allowances { get; set; }
+        public decimal Tax { get; set; }
         public double Deductions { get; set; }
         public double NetSalary { get; set; }
         public DateTime PayPeriod { get; set; }

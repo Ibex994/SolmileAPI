@@ -33,7 +33,6 @@ namespace SolmileGuesthouseAPI.Data.Models
         public Branch Branch { get; set; }
         public byte[]? EmployeePhotoUrl { get; set; }
 
-        // Navigation properties
         public ICollection<ServiceRequest> ServiceRequests { get; set; }
         public ICollection<Task> Tasks { get; set; }
         public ICollection<Rating> RatingsReceived { get; set; }

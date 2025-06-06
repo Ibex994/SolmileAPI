@@ -20,7 +20,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/RoomNumberAssignments
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomNumberAssignmentDto>>> GetRoomNumberAssignments()
         {
@@ -34,7 +33,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/RoomNumberAssignments/5
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<RoomNumberAssignmentDto>> findRoomNumberAssignmentById(int id)
         {
@@ -53,7 +51,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/RoomNumberAssignments/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoomNumberAssignment(int id, UInsertionRoomNumberAssignmentDto roomNumberAssignmentDto)
         {
@@ -87,7 +84,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/RoomNumberAssignments
         [HttpPost]
         public async Task<ActionResult<RoomNumberAssignmentDto>> PostRoomNumberAssignment(UInsertionRoomNumberAssignmentDto roomNumberAssignmentDto)
         {
@@ -111,7 +107,6 @@ namespace SolmileGuesthouseAPI.Controllers
 
         }
 
-        // DELETE: api/RoomNumberAssignments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoomNumberAssignment(int id)
         {

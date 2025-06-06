@@ -18,7 +18,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/RoomTypes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RoomTypeDto>>> GetRoomTypes()
         {
@@ -37,7 +36,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/RoomTypes/5
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<RoomTypeDto>> findRoomTypeById(int id)
         {
@@ -61,7 +59,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/RoomTypes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoomType(int id, UpdateRoomTypeDto roomTypeDto)
         {
@@ -71,7 +68,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 return NotFound();
             }
 
-            // Only update image if a new one is provided
             if (roomTypeDto.ImageUrl != null)
             {
                 using var stream = new MemoryStream();
@@ -105,7 +101,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/RoomTypes
         [HttpPost]
         public async Task<ActionResult<RoomTypeDto>> PostRoomType(InsertionRoomTypeDto roomTypeDto)
         {
@@ -121,7 +116,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 ImageUrl = null
             };
 
-            // Only process image if provided
             if (roomTypeDto.ImageUrl != null)
             {
                 using var stream = new MemoryStream();
@@ -145,7 +139,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // DELETE: api/RoomTypes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoomType(int id)
         {
@@ -161,7 +154,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // GET: api/RoomTypes/findByName/Standard
         [HttpGet("[action]/{name}")]
         public async Task<ActionResult<RoomTypeDto>> findRoomTypeByName(string name)
         {

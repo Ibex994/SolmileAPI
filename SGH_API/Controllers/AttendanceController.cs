@@ -48,13 +48,10 @@ namespace SolmileGuesthouseAPI.Controllers
         [HttpGet("date/{attendanceDate}")]
         public async Task<IActionResult> GetAttendanceByDate(DateTime attendanceDate)
         {
-            // Call the service method to get all attendance records for the given date
             var attendances = await _attendanceInterface.GetAttendanceByDateAsync(attendanceDate);
 
             if (attendances == null || !attendances.Any())
                 return NotFound("No attendance records found for this date.");
-
-            // Return the records mapped to the DTO
             return Ok(_mapper.Map<List<EmployeeAttendanceDto>>(attendances));
         }
 

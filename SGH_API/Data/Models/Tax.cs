@@ -22,7 +22,9 @@ namespace SolmileGuesthouseAPI.Data.Models
     {
         [JsonIgnore]
         public int Id { get; set; }
+        [Precision(18, 4)]
         public decimal From { get; set; }
+        [Precision(18, 4)]
         public decimal To { get; set; }
         [Precision(7, 4)] 
         public decimal RatePercent { get; set; }

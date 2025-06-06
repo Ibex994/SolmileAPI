@@ -14,7 +14,7 @@ namespace SolmileGuesthouseAPI.Data.Models
         public string Username { get; set; }
 
         [Required]
-        public string Reason { get; set; } // e.g., "ForgotPassword", "LoginVerification"
+        public string Reason { get; set; } 
 
         public DateTime CreatedAt { get; set; }
 

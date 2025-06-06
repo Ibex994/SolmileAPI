@@ -11,8 +11,6 @@ namespace SolmileGuesthouseAPI.Data.Models
 
         [Required]
         public string ServiceTypeName { get; set; }
-
-        // Navigation property
         public ICollection<ServiceRequest> ServiceRequests { get; set; }
     }
 }

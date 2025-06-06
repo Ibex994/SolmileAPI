@@ -19,7 +19,6 @@ namespace SolmileGuesthouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/Tasks
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskDto>>> GetTasks()
         {
@@ -35,7 +34,6 @@ namespace SolmileGuesthouseAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Tasks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskDto>> GetTask(int id)
         {
@@ -56,7 +54,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // PUT: api/Tasks/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTask(int id, UInsertionTaskDto taskDto)
         {
@@ -92,7 +89,6 @@ namespace SolmileGuesthouseAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Tasks
         [HttpPost]
         public async Task<ActionResult<TaskDto>> PostTask(UInsertionTaskDto taskDto)
         {
@@ -116,11 +112,8 @@ namespace SolmileGuesthouseAPI.Controllers
                 AssignedTime = task.AssignedTime,
                 Status = task.Status
             };
-
-
         }
 
-        // DELETE: api/Tasks/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {
@@ -140,7 +133,7 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             return _context.Tasks.Any(e => e.TaskId == id);
         }
-        // GET: api/TaskExtensions/FindByServiceRequest/5
+
         [HttpGet("FindByServiceRequest/{serviceRequestId}")]
         public async Task<ActionResult<TaskDto>> FindTaskByServiceRequest(int serviceRequestId)
         {
@@ -162,7 +155,6 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
-        // GET: api/TaskExtensions/FindEmployeeIdByRequestId/5
         [HttpGet("FindEmployeeIdByRequestId/{requestId}")]
         public async Task<ActionResult<int>> FindEmployeeIdByRequestId(int requestId)
         {

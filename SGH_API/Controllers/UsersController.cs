@@ -8,6 +8,7 @@ using SolmileGuesthouseAPI.Interface;
 using SolmileGuesthouseAPI.Helper;
 using Microsoft.AspNetCore.Authorization;
 using SolmileGuesthouseAPI.Data.Models;
+using static System.Net.WebRequestMethods;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
@@ -19,7 +20,6 @@ namespace SolmileGuesthouseAPI.Controllers
         private readonly GuesthouseDbContext _context;
         private readonly LogInterface _logInterface;
         private readonly JwtService _jwtService;
-
         public UsersController(GuesthouseDbContext context, LogInterface logInterface, JwtService jwtService)
         {
             _context = context;
@@ -90,23 +90,6 @@ namespace SolmileGuesthouseAPI.Controllers
 
             return NoContent();
         }
-
-        //// POST: api/Users
-        //[HttpPost]
-        //public async Task<ActionResult<UserDto>> PostUser(UserDto userDto)
-        //{
-        //    var user = new User
-        //    {
-        //        Username = userDto.Username,
-        //        Password = userDto.Password // Note: In production, you should hash the password
-        //    };
-
-        //    _context.Users.Add(user);
-        //    await _context.SaveChangesAsync();
-
-        //    userDto.Id = user.Id;
-        //    return CreatedAtAction("GetUser", new { id = user.Id }, userDto);
-        //}
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
@@ -207,9 +190,6 @@ namespace SolmileGuesthouseAPI.Controllers
                     .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
                     .FirstOrDefaultAsync(u => u.Username.ToLower() == login.Username.ToLower());
-
-
-
             if (user == null)
                 return Unauthorized(new UserLoginResponse { IsSuccess = false, Message = "Incorrect username or password." });
 
@@ -233,7 +213,8 @@ namespace SolmileGuesthouseAPI.Controllers
                 Employee =  new EmployeeDto
                 {
                     Id = employee.Id,
-                    EmployeePhotoUrl = employee.EmployeePhotoUrl,
+                    EmployeePhotoUrl = employee.EmployeePhotoUrl != null ?
+            Convert.ToBase64String(employee.EmployeePhotoUrl) : null,
                     Username = employee.Username,
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
@@ -249,38 +230,106 @@ namespace SolmileGuesthouseAPI.Controllers
             });
         }
 
-        //[Authorize]
-        //[HttpGet("protected")]
-        //public IActionResult GetProtectedData()
-        //{
-        //    return Ok("This is protected data only accessible with a valid token.");
-        //}
-        [HttpPost("reset-password")]
-        [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPassworDto dto)
-        {
-            var token = Guid.NewGuid().ToString();
 
+        [HttpPost("change-password")]
+        [Authorize]  // Only authenticated users can change their password
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data");
+
+            var username = User.Identity?.Name?.ToLower(); // assumes JWT sets the Name claim
             var user = await _context.Users
-                .SingleOrDefaultAsync(u => u.Username.ToLower() == dto.Username.ToLower());
+                .FirstOrDefaultAsync(u => u.Username.ToLower() == username);
+
+
+            if (user == null)
+                return NotFound("User not found.");
+
+            // Validate current password
+            bool isPasswordValid = PasswordHasher.VerifyHashedPassword(user.Password, dto.CurrentPassword);
+            if (!isPasswordValid)
+                return Unauthorized("Current password is incorrect.");
+
+
+            // Update to new hashed password
+            user.Password = PasswordHasher.HashPassword(dto.NewPassword);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { success = true, message = "Password changed successfully." });
+        }
+
+        // 1. Forgot Password: Generate and send 6-digit reset code
+        [HttpPost("forgot-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequestDto dto)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username.ToLower() == dto.Username.ToLower());
 
             if (user == null)
             {
                 return BadRequest(new { success = false, message = "User not found" });
             }
+
+            var code = SixDigitCode.GenerateSixDigitCode();
+
+            // Save OTP to OTP table
+            var otp = new OTP
+            {
+                Code = code,
+                Username = user.Username,
+                Reason = "ForgotPassword",
+                CreatedAt = DateTime.UtcNow,
+                ExpiryAt = DateTime.UtcNow.AddMinutes(10),
+                IsUsed = false
+            };
+
+            _context.Otps.Add(otp);
             await _context.SaveChangesAsync();
 
-            user.Password = PasswordHasher.HashPassword(dto.NewPassword);
-            user.ResetToken = token;
-            user.ResetTokenExpiry = DateTime.UtcNow.AddMinutes(10);
-
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { success = true, message = "Password reset successful" });
+            // TODO: Send code via SMS or email
+            return Ok(new
+            {
+                success = true,
+                message = "Password reset code generated and sent.",
+                resetCode = code // remove this in production
+            });
         }
 
 
-    }
+        // 2. Reset Password using username + 6-digit code + new password
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPasswordWithCode([FromBody] ResetPasswordWithCodeDto dto)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username.ToLower() == dto.Username.ToLower());
 
+            if (user == null)
+            {
+                return BadRequest(new { success = false, message = "User not found." });
+            }
+
+            var otp = await _context.Otps
+                .Where(o => o.Username == user.Username && o.Reason == "ForgotPassword" && !o.IsUsed)
+                .OrderByDescending(o => o.CreatedAt)
+                .FirstOrDefaultAsync();
+
+            if (otp == null || otp.Code != dto.Code || otp.ExpiryAt < DateTime.UtcNow)
+            {
+                return BadRequest(new { success = false, message = "Invalid or expired reset code." });
+            }
+
+            // Reset password
+            user.Password = PasswordHasher.HashPassword(dto.NewPassword);
+            _context.Users.Update(user);
+
+            // Mark OTP as used
+            otp.IsUsed = true;
+            _context.Otps.Update(otp);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { success = true, message = "Password has been reset successfully." });
+        }
+    }
 }

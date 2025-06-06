@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolmileGuesthouseAPI.Data.Models;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace SolmileGuesthouseAPI.Data
 {
@@ -47,6 +48,8 @@ namespace SolmileGuesthouseAPI.Data
         public DbSet<Role>Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<TaxBracket> TaxBrackets { get; set; }
+        public DbSet<OTP> Otps { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

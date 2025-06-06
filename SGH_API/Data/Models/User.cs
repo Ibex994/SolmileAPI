@@ -8,15 +8,14 @@ namespace SolmileGuesthouseAPI.Data.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         [Required]
         public string Username { get; set; }
-
         [Required]
         public string Password { get; set; }
+        public bool IsLocked { get; set; }
         public string? ResetToken { get; set; }
         public DateTime? ResetTokenExpiry { get; set; }
-        public bool IsLocked { get; set; }
+
 
         public ICollection<UserRole> UserRoles { get; set; }
     }

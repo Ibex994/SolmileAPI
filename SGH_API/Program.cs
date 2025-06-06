@@ -75,8 +75,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
-
 builder.Services.AddScoped<ComplaintInterface, ComplaintRepo>();
 builder.Services.AddScoped<AttendanceInterface, AttendanceRepo>();
 builder.Services.AddScoped<LogInterface, LogRepo>();
@@ -96,26 +94,24 @@ builder.Services.AddControllers()
         });
 //JWT
 builder.Services.AddScoped<JwtService>();
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(opt =>
-{
-    opt.TokenValidationParameters = new TokenValidationParameters
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
     {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],    // <-- check here
-        ValidAudience = builder.Configuration["Jwt:Issuer"],  // <-- and here
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])  // <-- THIS is null
-        )
-    };
-});
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])
+            )
+        };
+    });
+
+
 
 
 

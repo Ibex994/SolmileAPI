@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace SolmileGuesthouseAPI.DTO.NavigatorModel
 {
@@ -75,7 +76,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         {
             public int Id { get; set; }
             [JsonIgnore]
-            public byte[]? EmployeePhotoUrl { get; set; }
+            public string? EmployeePhotoUrl { get; set; }
             public string Username { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
@@ -90,8 +91,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         }
         public class InsertionEmployeeDto
         {
-            public string Username { get; set; }
-            public string Password { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public string Position { get; set; }
@@ -327,14 +326,5 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public string Username { get; set; }
             public string Password { get; set; }
         }
-
-
-
-        //public class BulkEmployeeDto
-        //{
-        //    public List<InsertionEmployeeDto> Employees { get; set; }
-        //}
-
-
     }
 }

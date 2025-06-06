@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolmileGuesthouseAPI.Data;
 
@@ -11,9 +12,11 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    partial class GuesthouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250606113919_Addphonephiledinuser")]
+    partial class Addphonephiledinuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -293,40 +296,6 @@ namespace SolmileGuesthouseAPI.Migrations
                         .IsUnique();
 
                     b.ToTable("monthlyAttendanceSummaries");
-                });
-
-            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.OTP", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiryAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsUsed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Otps");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Payment", b =>
@@ -757,6 +726,10 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

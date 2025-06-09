@@ -1,4 +1,5 @@
-﻿using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
+﻿using SolmileGuesthouseAPI.Data.Models;
+using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
 
 namespace SolmileGuesthouseAPI.DTO.NavigatorModel
 {
@@ -11,7 +12,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
-        public string Token { get; internal set; }
+        public string Token { get; set; }
         public EmployeeDto Employee { get; set; }
     }
 

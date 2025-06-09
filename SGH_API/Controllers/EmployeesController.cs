@@ -121,7 +121,8 @@ namespace SolmileGuesthouseAPI.Controllers
                 }
                 while (await _context.Employees.AnyAsync(e => e.Username == Username));
 
-                string tempPassword = Guid.NewGuid().ToString().Substring(0, 8);
+                //string tempPassword = Guid.NewGuid().ToString().Substring(0, 8);
+                string tempPassword = "pass123";
 
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(tempPassword);
 

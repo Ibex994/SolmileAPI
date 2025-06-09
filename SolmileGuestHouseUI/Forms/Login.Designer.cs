@@ -41,19 +41,17 @@
             textBoxUsername = new TextBox();
             pictureBoxHide = new PictureBox();
             pictureBoxShow = new PictureBox();
-            panel2 = new Panel();
-            pictureBox1 = new PictureBox();
             pictureBoxMinimize = new PictureBox();
             pictureBoxClose = new PictureBox();
+            pictureBox1 = new PictureBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxHide).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxShow).BeginInit();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMinimize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxClose).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -61,7 +59,7 @@
             label1.AutoSize = true;
             label1.BackColor = Color.White;
             label1.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(0, 323);
+            label1.Location = new Point(1, 369);
             label1.Name = "label1";
             label1.Size = new Size(235, 16);
             label1.TabIndex = 0;
@@ -69,18 +67,20 @@
             // 
             // groupBox1
             // 
+            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox1.BackColor = Color.Transparent;
             groupBox1.Controls.Add(pictureBox3);
             groupBox1.Controls.Add(pictureBox2);
             groupBox1.Controls.Add(buttonLogin);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(textBoxPassword);
             groupBox1.Controls.Add(textBoxUsername);
-            groupBox1.Controls.Add(pictureBoxHide);
             groupBox1.Controls.Add(pictureBoxShow);
+            groupBox1.Controls.Add(pictureBoxHide);
             groupBox1.FlatStyle = FlatStyle.Flat;
-            groupBox1.Location = new Point(274, 46);
+            groupBox1.Location = new Point(414, 18);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(359, 326);
+            groupBox1.Size = new Size(257, 375);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Please Login First";
@@ -88,7 +88,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
-            pictureBox3.Location = new Point(34, 110);
+            pictureBox3.Location = new Point(6, 99);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(33, 40);
             pictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -98,7 +98,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(34, 170);
+            pictureBox2.Location = new Point(6, 164);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(30, 38);
             pictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -112,7 +112,7 @@
             buttonLogin.FlatAppearance.BorderSize = 0;
             buttonLogin.FlatStyle = FlatStyle.Flat;
             buttonLogin.ForeColor = Color.Cornsilk;
-            buttonLogin.Location = new Point(107, 224);
+            buttonLogin.Location = new Point(56, 212);
             buttonLogin.Name = "buttonLogin";
             buttonLogin.Size = new Size(134, 23);
             buttonLogin.TabIndex = 2;
@@ -125,8 +125,8 @@
             label4.Anchor = AnchorStyles.None;
             label4.AutoSize = true;
             label4.Cursor = Cursors.Hand;
-            label4.ForeColor = Color.Red;
-            label4.Location = new Point(103, 255);
+            label4.ForeColor = Color.Black;
+            label4.Location = new Point(64, 254);
             label4.Name = "label4";
             label4.Size = new Size(138, 18);
             label4.TabIndex = 1;
@@ -135,10 +135,10 @@
             // textBoxPassword
             // 
             textBoxPassword.Anchor = AnchorStyles.None;
-            textBoxPassword.Location = new Point(73, 183);
+            textBoxPassword.Location = new Point(42, 168);
             textBoxPassword.Name = "textBoxPassword";
             textBoxPassword.PlaceholderText = "Password";
-            textBoxPassword.Size = new Size(182, 26);
+            textBoxPassword.Size = new Size(160, 26);
             textBoxPassword.TabIndex = 1;
             textBoxPassword.UseSystemPasswordChar = true;
             // 
@@ -146,10 +146,10 @@
             // 
             textBoxUsername.Anchor = AnchorStyles.None;
             textBoxUsername.BackColor = SystemColors.Window;
-            textBoxUsername.Location = new Point(73, 125);
+            textBoxUsername.Location = new Point(42, 117);
             textBoxUsername.Name = "textBoxUsername";
             textBoxUsername.PlaceholderText = "UserName";
-            textBoxUsername.Size = new Size(182, 26);
+            textBoxUsername.Size = new Size(160, 26);
             textBoxUsername.TabIndex = 0;
             // 
             // pictureBoxHide
@@ -157,9 +157,9 @@
             pictureBoxHide.BorderStyle = BorderStyle.FixedSingle;
             pictureBoxHide.Cursor = Cursors.Hand;
             pictureBoxHide.Image = (Image)resources.GetObject("pictureBoxHide.Image");
-            pictureBoxHide.Location = new Point(261, 183);
+            pictureBoxHide.Location = new Point(208, 168);
             pictureBoxHide.Name = "pictureBoxHide";
-            pictureBoxHide.Size = new Size(27, 26);
+            pictureBoxHide.Size = new Size(24, 26);
             pictureBoxHide.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxHide.TabIndex = 4;
             pictureBoxHide.TabStop = false;
@@ -171,34 +171,14 @@
             pictureBoxShow.BorderStyle = BorderStyle.FixedSingle;
             pictureBoxShow.Cursor = Cursors.Hand;
             pictureBoxShow.Image = (Image)resources.GetObject("pictureBoxShow.Image");
-            pictureBoxShow.Location = new Point(261, 183);
+            pictureBoxShow.Location = new Point(208, 168);
             pictureBoxShow.Name = "pictureBoxShow";
-            pictureBoxShow.Size = new Size(27, 26);
+            pictureBoxShow.Size = new Size(24, 26);
             pictureBoxShow.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxShow.TabIndex = 4;
             pictureBoxShow.TabStop = false;
             pictureBoxShow.Click += pictureBoxShow_Click;
             pictureBoxShow.MouseHover += pictureBoxShow_MouseHover;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(label1);
-            panel2.Controls.Add(pictureBox1);
-            panel2.Location = new Point(0, 2);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(260, 344);
-            panel2.TabIndex = 6;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Dock = DockStyle.Fill;
-            //pictureBox1.Image = Properties.Resources.OIP;
-            pictureBox1.Location = new Point(0, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(260, 344);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 6;
-            pictureBox1.TabStop = false;
             // 
             // pictureBoxMinimize
             // 
@@ -228,18 +208,29 @@
             pictureBoxClose.Click += pictureBoxClose_Click_1;
             pictureBoxClose.MouseHover += pictureBoxClose_MouseHover_1;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = SystemColors.Window;
+            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
+            pictureBox1.Location = new Point(1, 2);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(670, 391);
+            pictureBox1.TabIndex = 6;
+            pictureBox1.TabStop = false;
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BackColor = Color.FromArgb(55, 57, 93);
+            BackColor = SystemColors.Window;
             ClientSize = new Size(670, 394);
+            Controls.Add(label1);
             Controls.Add(pictureBoxMinimize);
             Controls.Add(pictureBoxClose);
-            Controls.Add(panel2);
             Controls.Add(groupBox1);
+            Controls.Add(pictureBox1);
             Font = new Font("Arial Black", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -254,12 +245,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxHide).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxShow).EndInit();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxMinimize).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBoxClose).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -274,9 +264,8 @@
         private PictureBox pictureBoxHide;
         private PictureBox pictureBox3;
         private PictureBox pictureBox2;
-        private Panel panel2;
-        private PictureBox pictureBox1;
         private PictureBox pictureBoxMinimize;
         private PictureBox pictureBoxClose;
+        private PictureBox pictureBox1;
     }
 }

@@ -9,7 +9,7 @@ namespace SolmileGuesthouseAPI.Controllers
     {
         [ApiController]
         [Route("api/[controller]")]
-        [Authorize(Roles = "HR")]
+        //[Authorize(Roles = "HR")]
     public class TaxController : Controller
         {
             private readonly TaxInterface _taxInterface;

@@ -43,4 +43,8 @@
     <PackageReference Include="Twilio" Version="7.11.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SharedModel\SharedModel.csproj" />
+  </ItemGroup>
+
 </Project>

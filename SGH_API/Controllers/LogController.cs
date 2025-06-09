@@ -8,7 +8,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     public class LogController : Controller
     {
         private readonly LogInterface _logInterface;

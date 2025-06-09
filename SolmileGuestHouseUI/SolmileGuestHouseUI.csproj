@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Forms\.vs\Forms\v17\DocumentLayout.json" />
+    <Content Include="Forms\.vs\Forms\v17\ResourceExplorer\settings.json" />
+    <Content Include="Forms\.vs\ProjectSettings.json" />
+    <Content Include="Forms\.vs\VSWorkspaceState.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Forms\.vs\Forms\CopilotIndices\17.13.449.12402\CodeChunks.db" />
+    <None Include="Forms\.vs\Forms\CopilotIndices\17.13.449.12402\SemanticSymbols.db" />
+    <None Include="Forms\.vs\Forms\FileContentIndex\3a1c78e9-d76c-4532-88d2-31db3464f88a.vsidx" />
+    <None Include="Forms\.vs\slnx.sqlite" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http.Json" Version="9.0.5" />
+  </ItemGroup>
+
+</Project>

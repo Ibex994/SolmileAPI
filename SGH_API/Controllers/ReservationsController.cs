@@ -11,7 +11,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager,Reception")]
+    //[Authorize(Roles = "Manager,Reception")]
     public class ReservationsController : ControllerBase
     {
         private readonly GuesthouseDbContext _context;

@@ -9,7 +9,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     public class FeedBackController : Controller
     {
         private readonly FeedBackInterface _feedBackInterface;

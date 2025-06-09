@@ -10,7 +10,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Supervisor,Manager,HR")]
+    //[Authorize(Roles = "Supervisor,Manager,HR")]
     public class AttendanceController : Controller
     {
         private readonly AttendanceInterface _attendanceInterface;

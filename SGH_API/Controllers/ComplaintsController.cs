@@ -10,7 +10,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager,HR,Supervisor")]
+    //[Authorize(Roles = "Manager,HR,Supervisor")]
     public class ComplaintsController : Controller
     {
         private readonly ComplaintInterface _complaintRepo;

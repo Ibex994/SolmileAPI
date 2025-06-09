@@ -5,6 +5,10 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolmileGuesthouseAPI", "SGH_API\SolmileGuesthouseAPI.csproj", "{8E567274-4C01-4CCD-850F-551D997E01A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolmileGuestHouseUI", "SolmileGuestHouseUI\SolmileGuestHouseUI.csproj", "{30279352-81D4-4727-B15B-917490953150}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModel", "SharedModel\SharedModel.csproj", "{1A7BBDB0-D919-4E74-8AF8-004C312916FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{8E567274-4C01-4CCD-850F-551D997E01A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E567274-4C01-4CCD-850F-551D997E01A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E567274-4C01-4CCD-850F-551D997E01A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30279352-81D4-4727-B15B-917490953150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30279352-81D4-4727-B15B-917490953150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30279352-81D4-4727-B15B-917490953150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30279352-81D4-4727-B15B-917490953150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A7BBDB0-D919-4E74-8AF8-004C312916FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7BBDB0-D919-4E74-8AF8-004C312916FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7BBDB0-D919-4E74-8AF8-004C312916FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7BBDB0-D919-4E74-8AF8-004C312916FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,7 +9,7 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     public class PaymentMethodController : ControllerBase
     {
         private readonly PaymentMethodInterface _paymentMethodInterface;

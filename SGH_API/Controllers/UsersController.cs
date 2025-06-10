@@ -9,6 +9,7 @@ using SolmileGuesthouseAPI.Helper;
 using Microsoft.AspNetCore.Authorization;
 using SolmileGuesthouseAPI.Data.Models;
 using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Identity;
 
 namespace SolmileGuesthouseAPI.Controllers
 {
@@ -274,7 +275,10 @@ namespace SolmileGuesthouseAPI.Controllers
                 Reason = "ForgotPassword",
                 CreatedAt = DateTime.UtcNow,
                 ExpiryAt = DateTime.UtcNow.AddMinutes(10),
-                IsUsed = false
+                IsUsed = false,
+                ResetToken = null,
+                ResetTokenExpiryAt = null,
+                ResetTokenUsed = false
             };
 
             _context.Otps.Add(otp);
@@ -291,14 +295,61 @@ namespace SolmileGuesthouseAPI.Controllers
 
         [HttpPost("reset-password")]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPasswordWithCode([FromBody] ResetPasswordWithCodeDto dto)
+        public async Task<IActionResult> ResetPasswordWithCode([FromBody] ResetPasswordDto dto)
+        {
+            if (dto.NewPassword != dto.ConfirmPassword)
+                return BadRequest(new { success = false, message = "Passwords do not match." });
+
+            var otp = await _context.Otps
+                .Where(o => o.ResetToken == dto.ResetToken && !o.ResetTokenUsed && o.ResetTokenExpiryAt > DateTime.UtcNow)
+                .FirstOrDefaultAsync();
+
+            if (otp == null)
+                return BadRequest(new { success = false, message = "Invalid or expired reset token." });
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == otp.Username);
+            if (user == null)
+                return BadRequest(new { success = false, message = "User not found." });
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+            user.Password = hashedPassword; 
+
+            otp.ResetTokenUsed = true;
+
+            _context.Users.Update(user);
+            _context.Otps.Update(otp);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { success = true, message = "Password reset successfully." });
+        }
+
+        [HttpPost("check-exists")]
+        [AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CheckUserExists([FromBody] UsernameCheckDto dto)
+        {
+            if (dto == null || string.IsNullOrWhiteSpace(dto.Username))
+            {
+                return BadRequest(new { success = false, message = "Username cannot be empty." });
+            }
+
+            var user = await _context.Users
+                                    .AsNoTracking()
+                                    .AnyAsync(u => u.Username.ToLower() == dto.Username.ToLower());
+
+            return Ok(new { exists = user });
+        }
+        [HttpPost("verify-otp")]
+        [AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpDto dto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(u => u.Username.ToLower() == dto.Username.ToLower());
-
             if (user == null)
-            {
                 return BadRequest(new { success = false, message = "User not found." });
-            }
 
             var otp = await _context.Otps
                 .Where(o => o.Username == user.Username && o.Reason == "ForgotPassword" && !o.IsUsed)
@@ -306,19 +357,18 @@ namespace SolmileGuesthouseAPI.Controllers
                 .FirstOrDefaultAsync();
 
             if (otp == null || otp.Code != dto.Code || otp.ExpiryAt < DateTime.UtcNow)
-            {
-                return BadRequest(new { success = false, message = "Invalid or expired reset code." });
-            }
-
-            user.Password = PasswordHasher.HashPassword(dto.NewPassword);
-            _context.Users.Update(user);
+                return BadRequest(new { success = false, message = "Invalid or expired verification code." });
 
             otp.IsUsed = true;
-            _context.Otps.Update(otp);
 
+            otp.ResetToken = Guid.NewGuid().ToString();
+            otp.ResetTokenExpiryAt = DateTime.UtcNow.AddMinutes(15);
+            otp.ResetTokenUsed = false;
+
+            _context.Otps.Update(otp);
             await _context.SaveChangesAsync();
 
-            return Ok(new { success = true, message = "Password has been reset successfully." });
+            return Ok(new { success = true, resetToken = otp.ResetToken, message = "OTP verified. Use the reset token to change password." });
         }
     }
 }

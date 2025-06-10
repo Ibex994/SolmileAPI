@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolmileGuesthouseAPI.Data;
 
@@ -11,9 +12,11 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    partial class GuesthouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250610205617_OTPTblResetNull")]
+    partial class OTPTblResetNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

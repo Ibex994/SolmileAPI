@@ -15,5 +15,10 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         public string Token { get; set; }
         public EmployeeDto Employee { get; set; }
     }
+    public class VerifyOtpDto
+    {
+        public string Username { get; set; }
+        public string Code { get; set; }
+    }
 
 }

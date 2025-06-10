@@ -21,5 +21,8 @@ namespace SolmileGuesthouseAPI.Data.Models
         public DateTime ExpiryAt { get; set; }
 
         public bool IsUsed { get; set; } = false;
+        public string? ResetToken { get; set; }
+        public DateTime? ResetTokenExpiryAt { get; set; }
+        public bool ResetTokenUsed { get; set; }
     }
 }

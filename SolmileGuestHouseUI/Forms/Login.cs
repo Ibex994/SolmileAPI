@@ -7,6 +7,7 @@ using Solmile.Forms.ManagerForms;
 using Solmile.Interface;
 using Solmile.Service;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
+using SolmileGuestHouseUI.Forms.ForgetPassword;
 
 namespace Solmile
 {
@@ -63,7 +64,7 @@ namespace Solmile
                 {
                     Username = username,
                     Password = password,
-                    
+
                 };
 
                 string apiUrl = "https://localhost:7107/api/Users/Login";
@@ -80,16 +81,16 @@ namespace Solmile
                         PropertyNameCaseInsensitive = true
                     });
 
-                if (string.IsNullOrWhiteSpace(loginResult?.Token))
+                    if (string.IsNullOrWhiteSpace(loginResult?.Token))
                     {
                         MessageBox.Show("No token returned from the server.", "Token Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    
+
 
                     string token = loginResult.Token;
-                    MessageBox.Show("Received token:\n" + token);  // Add this to debug
-                    string role = GetRoleFromToken(token);         // This is where it was crashing
+                    MessageBox.Show("Received token:\n" + token);
+                    string role = GetRoleFromToken(token);
 
                     // Show a form based on role
                     Form nextForm = role switch
@@ -148,9 +149,6 @@ namespace Solmile
             return roleClaim?.Value ?? throw new Exception("Role claim not found in token.");
         }
 
-
-
-
         private void pictureBoxMinimize_Click_1(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -169,6 +167,13 @@ namespace Solmile
         private void pictureBoxClose_MouseHover_1(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(pictureBoxClose, "Close");
+        }
+
+        private void ForgetPassBtnn_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            ForgetPassword forgetForm = new ForgetPassword(this);
+            forgetForm.Show();
         }
     }
 }

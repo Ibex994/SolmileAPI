@@ -15,7 +15,10 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             [JsonIgnore]
             public ContactDetailsDto ContactDetails { get; set; }
         }
-
+        public class UsernameCheckDto
+        {
+            public string Username { get; set; }
+        }
         public class UInsertionBranchDto
         {
             [JsonIgnore]

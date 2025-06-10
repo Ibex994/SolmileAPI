@@ -4,9 +4,9 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
 {
     public class ResetPasswordDto
     {
-        public string PhoneNumber { get; set; }
-        public string Code { get; set; }
+        public string ResetToken { get; set; }
         public string NewPassword { get; set; }
+        public string ConfirmPassword { get; set; }
     }
     public class ForgotPasswordRequestDto
     {

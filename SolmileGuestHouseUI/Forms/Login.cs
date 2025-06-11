@@ -19,9 +19,6 @@ namespace Solmile
             InitializeComponent();
             _userService = userService;
         }
-
-
-
         private void pictureBoxShow_MouseHover(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(pictureBoxShow, "Show Password");
@@ -31,7 +28,6 @@ namespace Solmile
         {
             toolTip1.SetToolTip(pictureBoxHide, "Hide Password");
         }
-
         private void pictureBoxShow_Click(object sender, EventArgs e)
         {
             pictureBoxShow.Hide();
@@ -128,8 +124,6 @@ namespace Solmile
                 MessageBox.Show($"Unexpected error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        // Method to extract role from JWT token
         private string GetRoleFromToken(string token)
         {
             if (string.IsNullOrWhiteSpace(token))
@@ -148,27 +142,22 @@ namespace Solmile
 
             return roleClaim?.Value ?? throw new Exception("Role claim not found in token.");
         }
-
         private void pictureBoxMinimize_Click_1(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
-
         private void pictureBoxClose_Click_1(object sender, EventArgs e)
         {
             this.Close();
         }
-
         private void pictureBoxMinimize_MouseHover_1(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(pictureBoxShow, "Show Password");
         }
-
         private void pictureBoxClose_MouseHover_1(object sender, EventArgs e)
         {
             toolTip1.SetToolTip(pictureBoxClose, "Close");
         }
-
         private void ForgetPassBtnn_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Hide();

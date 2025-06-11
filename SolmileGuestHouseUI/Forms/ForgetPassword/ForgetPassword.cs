@@ -38,7 +38,7 @@ using System.Threading.Tasks;
             }
             Otpbtn.Enabled = false;
             Otpbtn.Text = "Sending OTP...";
-            Otpbtn.Size = new Size(150, 26);
+            Otpbtn.Size = new Size(150, 28);
             Otpbtn.Location = new Point(252, 222);
 
             bool otpRequestSuccessful = await RequestOtpThroughForgotPasswordApi(identifier);
@@ -160,20 +160,12 @@ using System.Threading.Tasks;
         {
             if (sender is Verfication verifiedOtpControl)
             {
-                string username = verifiedOtpControl.EnteredUsername; // Make sure 'EnteredUsername' is accessible (e.g., public property or control directly)
-
-                // Retrieve the VerifiedResetToken from the Verfication control's property
+                string username = verifiedOtpControl.EnteredUsername; 
                 string resetToken = verifiedOtpControl.VerifiedResetToken;
-
-                // Create an instance of your NewCode control
                 NewCode newCodeControl = new NewCode();
                 newCodeControl.PasswordResetSuccess += NewCodeControl_PasswordResetSuccess;
-
-                // Pass the retrieved data to the NewCode control's properties
                 newCodeControl.UsernameForReset = username;
                 newCodeControl.ResetToken = resetToken;
-
-                // Create a new Form to host the NewCode control
                 Form newPasswordContainerForm = new Form();
                 newPasswordContainerForm.Text = "Set New Password";
                 newPasswordContainerForm.Controls.Add(newCodeControl);
@@ -181,22 +173,13 @@ using System.Threading.Tasks;
                 newPasswordContainerForm.Size = newCodeControl.MinimumSize.IsEmpty ? new System.Drawing.Size(400, 300) : newCodeControl.MinimumSize;
                 newPasswordContainerForm.StartPosition = FormStartPosition.CenterScreen;
 
-                // Get a reference to the current form hosting the Verfication control
-                Form currentVerificationHostForm = verifiedOtpControl.FindForm(); // Find the parent form
-
-                // Hide/Close the current form hosting the Verfication control
+                Form currentVerificationHostForm = verifiedOtpControl.FindForm();
                 if (currentVerificationHostForm != null)
                 {
-                    currentVerificationHostForm.Hide(); // Hide it
-                    currentVerificationHostForm.Dispose(); // Dispose it to release resources
+                    currentVerificationHostForm.Hide();
+                    currentVerificationHostForm.Dispose(); 
                 }
-
-                // Show the New Password form modally
                 newPasswordContainerForm.ShowDialog();
-
-                // After newPasswordContainerForm is closed (user sets password or cancels),
-                // the original ForgetPasswordForm (this) should ideally be closed or redirected.
-                // This is already handled by the `this.Close()` after `ShowDialog()` in `Otpbtn_Click`.
             }
         }
     }

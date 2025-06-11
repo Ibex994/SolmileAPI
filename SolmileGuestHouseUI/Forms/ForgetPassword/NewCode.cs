@@ -13,35 +13,32 @@ using System.Windows.Forms;
 namespace SolmileGuestHouseUI.Forms.ForgetPassword
 {
     public partial class NewCode : UserControl
-    {// These properties will be set by the calling form (ForgetPassword.cs)
+    {
         public string UsernameForReset { get; set; }
         public string UsernameToVerify { get; set; }
         public string ResetToken { get; set; }
 
-        // Event to signal the parent form (or application) that the password reset is complete
         public event EventHandler PasswordResetSuccess;
 
         public NewCode()
         {
             InitializeComponent();
         }
-
         private async void resetPasswordBtn_Click(object sender, EventArgs e)
         {
             string newPassword = NewPassTxt.Text.Trim();
             string confirmPassword = ConPassTxt.Text.Trim();
 
-            // --- Input Validation ---
             if (string.IsNullOrEmpty(newPassword) || string.IsNullOrEmpty(confirmPassword))
             {
                 MessageBox.Show("Please enter and confirm your new password.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            } 
+            }
             if (newPassword.Length < 8 ||
-                !Regex.IsMatch(newPassword, @"[A-Z]") || // At least one uppercase
-                !Regex.IsMatch(newPassword, @"[a-z]") || // At least one lowercase
-                !Regex.IsMatch(newPassword, @"\d") ||    // At least one digit
-                !Regex.IsMatch(newPassword, @"[!@#$%^&*()_+=\[{\]};:<>|./?,-]") // At least one special character
+                !Regex.IsMatch(newPassword, @"[A-Z]") ||
+                !Regex.IsMatch(newPassword, @"[a-z]") ||
+                !Regex.IsMatch(newPassword, @"\d") ||
+                !Regex.IsMatch(newPassword, @"[!@#$%^&*()_+=\[{\]};:<>|./?,-]")
                )
             {
                 MessageBox.Show("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.",
@@ -51,63 +48,50 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
                 return;
             }
 
-            if (newPassword != confirmPassword) // This is the line causing your error
+            if (newPassword != confirmPassword)
             {
                 MessageBox.Show("New password and confirm password do not match.", "Input Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 NewPassTxt.Focus();
                 ConPassTxt.SelectAll();
-                return; // Stops the method execution here
+                return;
             }
 
-
-            // Ensure ResetToken and UsernameForReset are available
             if (string.IsNullOrEmpty(ResetToken) || string.IsNullOrEmpty(UsernameForReset))
             {
                 MessageBox.Show("Required information (username or reset token) is missing. Please restart the password reset process.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // --- Disable UI during API call ---
             resetPasswordBtn.Enabled = false;
             resetPasswordBtn.Text = "Resetting...";
 
-            // --- API Call to Change Password ---
             bool passwordChangeSuccessful = await ChangePasswordApi(UsernameForReset, ResetToken, newPassword, confirmPassword);
 
-            // --- Re-enable UI and handle result ---
             resetPasswordBtn.Enabled = true;
             resetPasswordBtn.Text = "Reset Password";
 
             if (passwordChangeSuccessful)
             {
                 MessageBox.Show("Your password has been successfully reset. You can now log in with your new password.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Raise the event to notify the parent form (ForgetPasswordForm)
                 PasswordResetSuccess?.Invoke(this, EventArgs.Empty);
-
-                // *** CRITICAL: DO NOT call Close() here in NewCode.cs ***
-                // *** Leave it commented or remove it completely. ***
-                // this.FindForm()?.Close(); // <--- This line should NOT be here if you want parent to control closing
             }
             else
             {
-                // API call failed, keep the form open for user to retry
                 NewPassTxt.Clear();
                 usernameDisplayTxt.Clear();
                 NewPassTxt.Focus();
             }
         }
-
         private async Task<bool> ChangePasswordApi(string username, string resetToken, string newPassword, string confirmPassword)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7107/"); // Your API base URL
-                string apiUrl = "api/Users/reset-password"; // Your specific API endpoint
+                client.BaseAddress = new Uri("https://localhost:7107/");
+                string apiUrl = "api/Users/reset-password";
 
                 var requestBody = new
                 {
-                    username = username, // Include username if your API requires it for reset (often it does)
+                    username = username,
                     resetToken = resetToken,
                     newPassword = newPassword,
                     confirmPassword = confirmPassword
@@ -141,10 +125,8 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
                                 {
                                     errorMessage = errorElement.GetString();
                                 }
-                                // Check for common validation errors from API (e.g., from ModelState)
                                 else if (root.TryGetProperty("errors", out JsonElement errorsElement) && errorsElement.ValueKind == JsonValueKind.Object)
                                 {
-                                    // This handles typical ASP.NET Core validation errors
                                     var errorMessages = new List<string>();
                                     foreach (var prop in errorsElement.EnumerateObject())
                                     {
@@ -186,14 +168,12 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
         }
         private void NewCode_Load_1(object sender, EventArgs e)
         {
-            // You can use UsernameForReset to display a label, e.g.:
             if (!string.IsNullOrEmpty(UsernameForReset))
             {
-                // Assuming you have a Label control named 'usernameDisplayTxt' on your NewCode designer
                 usernameDisplayTxt.Text = UsernameForReset;
                 usernameDisplayTxt.Enabled = false;
             }
-            // For debugging: show if token is received
+
             MessageBox.Show($"Received Username: {UsernameForReset}, Token: {ResetToken}");
         }
     }

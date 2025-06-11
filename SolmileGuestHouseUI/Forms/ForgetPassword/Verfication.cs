@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net.Http; // Make sure this is included for HttpClient
 
 namespace SolmileGuestHouseUI.Forms.ForgetPassword
 {
@@ -19,52 +14,31 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
         public string UsernameToVerify { get; set; }
         public string VerifiedOtpCode { get; private set; }
         public string VerifiedResetToken { get; private set; }
+
         public string EnteredUsername
         {
             get { return usernametxt.Text.Trim(); }
         }
-
-        // REMOVE THIS LINE: public TextBox usernameTxt;
-        // The textbox named 'usernametxt' (or whatever you named it in the designer)
-        // is already declared in the designer-generated .Designer.cs file for this partial class.
-        // If your designer textbox is actually named 'usernameTxt' (with a capital T),
-        // ensure consistent casing when referring to it.
-        // Assuming your designer textbox is named 'usernametxt' (all lowercase 't') based on your usage in methods.
-
         public event EventHandler OtpVerificationSuccess;
-
-        // Default constructor
         public Verfication()
         {
-            InitializeComponent(); // Initialize all designer components
-            // No need to set usernameTxt.Text here. Use the OnLoad event.
+            InitializeComponent();
         }
-
-        // Constructor to pass the parent form
-        public Verfication(Form forgetPassword) : this() // Call the default constructor first, which calls InitializeComponent()
+        public Verfication(Form forgetPassword) : this()
         {
-            // Do NOT call InitializeComponent() again here. It's already done by :this().
             _forgetPassword = forgetPassword;
             this.AutoSize = false;
-            // No need to set usernameTxt.Text here. Use the OnLoad event.
         }
-
-        // Use the Load event to set properties that depend on controls being initialized
         private void Verfication_Load(object sender, EventArgs e)
         {
             this.AutoSize = false;
-            // You called base.OnLoad(e); here, but it's not strictly necessary in a simple Load event handler.
-            // However, if you had overridden OnLoad in the UserControl itself, you would keep it.
-            // For a simple event handler, it's fine as is.
 
             if (!string.IsNullOrEmpty(UsernameToVerify))
             {
-                // Ensure 'usernametxt' matches the actual name of your TextBox control in the designer.
                 usernametxt.Text = UsernameToVerify;
-                usernametxt.Enabled = false; // Optional: disable if pre-filled
+                usernametxt.Enabled = false;
             }
         }
-
         private void Backbtn_Click(object sender, EventArgs e)
         {
             if (this.Parent is Form currentHostForm && _forgetPassword != null)
@@ -78,12 +52,10 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
                 this.Hide();
             }
         }
-
         private async void checkOTPbtn_Click(object sender, EventArgs e)
         {
-            // Ensure 'usernametxt' here matches the actual name of your TextBox control in the designer.
             string username = usernametxt.Text.Trim();
-            string otpCode = otpTxt.Text.Trim(); // Assuming otpTxt is correctly named in designer
+            string otpCode = otpTxt.Text.Trim();
 
             if (string.IsNullOrEmpty(username))
             {
@@ -115,11 +87,10 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
                 otpTxt.SelectAll();
                 return;
             }
-
             checkOTPbtn.Enabled = false;
             checkOTPbtn.Text = "Verifying OTP...";
-            checkOTPbtn.Size = new Size(150, 26);
-            checkOTPbtn.Location = new Point(252, 222); // Adjusted position to match the original button
+            checkOTPbtn.Size = new System.Drawing.Size(150, 28);
+            checkOTPbtn.Location = new System.Drawing.Point(252, 222);
 
             bool otpVerified = await VerifyOtpOnly(username, otpCode);
 
@@ -136,7 +107,6 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
                 otpTxt.SelectAll();
             }
         }
-
         private async Task<bool> VerifyOtpOnly(string username, string otpCode)
         {
             using (HttpClient client = new HttpClient())
@@ -161,7 +131,7 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
                             if (root.TryGetProperty("resetToken", out JsonElement tokenElement))
                             {
                                 VerifiedResetToken = tokenElement.GetString();
-                                VerifiedOtpCode = otpCode; // Store the OTP code if needed, though reset token is primary
+                                VerifiedOtpCode = otpCode;
                             }
                         }
                         return true;
@@ -178,7 +148,7 @@ namespace SolmileGuestHouseUI.Forms.ForgetPassword
                                     errorMessage = messageElement.GetString();
                             }
                         }
-                        catch (JsonException) { /* Handle cases where response is not valid JSON */ }
+                        catch (JsonException) { }
 
                         MessageBox.Show($"OTP Verification Failed: {errorMessage}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;

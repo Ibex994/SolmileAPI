@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Solmile.Forms.ManagerForms
 {
-    public partial class ManagerForms: Form
+    public partial class ManagerForms : Form
     {
         public ManagerForms()
         {

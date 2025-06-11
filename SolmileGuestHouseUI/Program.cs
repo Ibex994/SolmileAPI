@@ -17,7 +17,7 @@ namespace SharedModel
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             IUserService userService = new UserService();
-            //Application.Run(new SplashScreen());
+            Application.Run(new SplashScreen());
             Application.Run(new Login(userService));
             //Application.Run(new ReceptionForm());
         }

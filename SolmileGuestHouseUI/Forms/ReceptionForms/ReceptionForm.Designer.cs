@@ -307,7 +307,6 @@
             btnCloseChildForm.FlatAppearance.BorderSize = 0;
             btnCloseChildForm.FlatStyle = FlatStyle.Flat;
             btnCloseChildForm.ForeColor = Color.Transparent;
-            //btnCloseChildForm.Image = Assets.icons8_hotel_48;
             btnCloseChildForm.Location = new Point(168, 50);
             btnCloseChildForm.Name = "btnCloseChildForm";
             btnCloseChildForm.Size = new Size(40, 34);
@@ -338,7 +337,7 @@
             panelTitleBar.Dock = DockStyle.Top;
             panelTitleBar.Location = new Point(208, 0);
             panelTitleBar.Name = "panelTitleBar";
-            panelTitleBar.Size = new Size(859, 50);
+            panelTitleBar.Size = new Size(855, 50);
             panelTitleBar.TabIndex = 1;
             // 
             // labelUsername
@@ -381,7 +380,7 @@
             pictureBoxMinimize.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBoxMinimize.Cursor = Cursors.Hand;
             pictureBoxMinimize.Image = (Image)resources.GetObject("pictureBoxMinimize.Image");
-            pictureBoxMinimize.Location = new Point(806, 0);
+            pictureBoxMinimize.Location = new Point(802, 0);
             pictureBoxMinimize.Name = "pictureBoxMinimize";
             pictureBoxMinimize.Size = new Size(27, 18);
             pictureBoxMinimize.SizeMode = PictureBoxSizeMode.Zoom;
@@ -394,7 +393,7 @@
             pictureBoxClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBoxClose.Cursor = Cursors.Hand;
             pictureBoxClose.Image = (Image)resources.GetObject("pictureBoxClose.Image");
-            pictureBoxClose.Location = new Point(830, 0);
+            pictureBoxClose.Location = new Point(826, 0);
             pictureBoxClose.Name = "pictureBoxClose";
             pictureBoxClose.Size = new Size(29, 18);
             pictureBoxClose.SizeMode = PictureBoxSizeMode.Zoom;
@@ -409,17 +408,16 @@
             panelDesktopPane.Dock = DockStyle.Fill;
             panelDesktopPane.Location = new Point(208, 50);
             panelDesktopPane.Name = "panelDesktopPane";
-            panelDesktopPane.Size = new Size(859, 583);
+            panelDesktopPane.Size = new Size(855, 583);
             panelDesktopPane.TabIndex = 2;
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Dock = DockStyle.Fill;
-            //pictureBox1.Image = Properties.Resources.OIP;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(859, 583);
+            pictureBox1.Size = new Size(855, 583);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -432,7 +430,7 @@
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(1067, 633);
+            ClientSize = new Size(1063, 633);
             Controls.Add(panelDesktopPane);
             Controls.Add(panelTitleBar);
             Controls.Add(panelMenu);

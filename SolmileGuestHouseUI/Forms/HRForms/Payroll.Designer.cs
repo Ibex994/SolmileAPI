@@ -1,6 +1,6 @@
-﻿namespace Solmile.Forms.ReceptionForms
+﻿namespace SolmileGuestHouseUI.Forms.HRForms
 {
-    partial class RoomInfo
+    partial class Payroll
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,11 +30,11 @@
         {
             SuspendLayout();
             // 
-            // RoomInfo
+            // Payroll
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Name = "RoomInfo";
+            Name = "Payroll";
             Size = new Size(860, 730);
             ResumeLayout(false);
         }

@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Solmile.Forms.ManagerForms
+namespace SolmileGuestHouseUI.Forms.AdminForms
 {
-    public partial class ManagerForms : Form
+    public partial class RoomNumAssignment : UserControl
     {
-        public ManagerForms()
+        public RoomNumAssignment()
         {
             InitializeComponent();
         }

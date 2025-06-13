@@ -16,6 +16,7 @@
     public class UpdateEmployeeAttendanceDto
     {
         public int EmployeeId { get; set; }
+        public DateTime AttendanceDate { get; set; }
         public bool IsPresent { get; set; }
         public string? Reason { get; set; }
     }

@@ -93,7 +93,7 @@ namespace Solmile
                     {
                         "Admin" => new ReceptionForm(),
                         "Reception" => new ReceptionForm(),
-                        "Manager" => new ManagerForms(),
+                        "Manager" => new ManagerForm(),
                         _ => null
                     };
 

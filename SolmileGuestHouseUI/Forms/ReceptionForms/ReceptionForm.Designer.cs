@@ -307,6 +307,7 @@
             btnCloseChildForm.FlatAppearance.BorderSize = 0;
             btnCloseChildForm.FlatStyle = FlatStyle.Flat;
             btnCloseChildForm.ForeColor = Color.Transparent;
+            btnCloseChildForm.Image = SolmileGuestHouseUI.Properties.Resources.icons8_home_30;
             btnCloseChildForm.Location = new Point(168, 50);
             btnCloseChildForm.Name = "btnCloseChildForm";
             btnCloseChildForm.Size = new Size(40, 34);

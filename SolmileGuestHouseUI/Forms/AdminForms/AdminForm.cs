@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Solmile;
-using Solmile.Forms.ReceptionForms;
 using Solmile.Forms.Themes;
 using Solmile.Interface;
 using SolmileGuestHouseUI.Forms.ManagerForms;
@@ -36,7 +28,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri("https://localhost:7107/") // replace with actual base URL
+                BaseAddress = new Uri("https://localhost:7107/")
             };
         }
         private void DisableButton()

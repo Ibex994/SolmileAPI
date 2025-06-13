@@ -87,7 +87,9 @@
             // 
             // ForgetPassBtnn
             // 
+            ForgetPassBtnn.ActiveLinkColor = Color.Goldenrod;
             ForgetPassBtnn.AutoSize = true;
+            ForgetPassBtnn.Cursor = Cursors.Help;
             ForgetPassBtnn.Location = new Point(81, 250);
             ForgetPassBtnn.Name = "ForgetPassBtnn";
             ForgetPassBtnn.Size = new Size(138, 18);

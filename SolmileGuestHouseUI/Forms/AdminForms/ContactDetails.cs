@@ -23,8 +23,6 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             btnSave.Click += BtnSave_Click;
             btnUpdate.Click += BtnUpdate_Click;
             btnDelete.Click += BtnDelete_Click;
-            btnLoad.Click += btnLoad_Click;
-            btnLoad.Click += btnLoad_Click;
             BtnClear.Click += BtnClear_Click;
             LoadContacts();
         }
@@ -171,14 +169,10 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             selectedContactId = null;
         }
 
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
-            LoadContacts();
-        }
-
         private void BtnClear_Click(object sender, EventArgs e)
         {
             ClearFields();
+            LoadContacts();
         }
 
         private void dgvContacts_SelectionChanged_1(object sender, EventArgs e)

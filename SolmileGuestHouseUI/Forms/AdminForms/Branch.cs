@@ -126,24 +126,24 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             }
         }
 
-        // ✅ Optional: GET by ID
-        private async Task<BranchDto> GetBranchById(int id)
-        {
-            try
-            {
-                var response = await _httpClient.GetAsync($"{BaseUrl}/findBranchById/{id}");
-                response.EnsureSuccessStatusCode();
+        //// ✅ Optional: GET by ID
+        //private async Task<BranchDto> GetBranchById(int id)
+        //{
+        //    try
+        //    {
+        //        var response = await _httpClient.GetAsync($"{BaseUrl}/findBranchById/{id}");
+        //        response.EnsureSuccessStatusCode();
 
-                var json = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<BranchDto>(json);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Unable to find the branch with the specified ID. Please verify and try again.",
-                    "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return null;
-            }
-        }
+        //        var json = await response.Content.ReadAsStringAsync();
+        //        return JsonConvert.DeserializeObject<BranchDto>(json);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Unable to find the branch with the specified ID. Please verify and try again.",
+        //            "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return null;
+        //    }
+        //}
 
         private void dgvBranches_SelectionChanged(object sender, EventArgs e)
         {

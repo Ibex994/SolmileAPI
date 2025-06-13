@@ -32,6 +32,7 @@ namespace Solmile.Forms
             this.Text = string.Empty;
             this.ControlBox = false;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+            username = labelUsername.Text;
         }
         //Methods
         private Color SelectThemeColor()
@@ -99,7 +100,7 @@ namespace Solmile.Forms
                 this.panelDesktopPane.Controls.Remove(activeControl);
 
             ActivateButton(btnSender);
-            activeControl = childControl; 
+            activeControl = childControl;
 
             childControl.Dock = DockStyle.Fill;
             this.panelDesktopPane.Controls.Add(childControl);
@@ -107,10 +108,10 @@ namespace Solmile.Forms
             childControl.BringToFront();
             childControl.Show();
 
-            lblTitle.Text = childControl.Name; 
+            lblTitle.Text = childControl.Name;
         }
         private void btnCheckIn_Click(object sender, EventArgs e)
-        { 
+        {
             OpenChildForm(new Forms.ReceptionForms.CheckIn(), sender);
         }
         private void btncheckOut_Click(object sender, EventArgs e)
@@ -182,11 +183,11 @@ namespace Solmile.Forms
             {
                 for (double opacity = 1.0; opacity > 0; opacity -= 0.1)
                 {
-                   
+
                     this.Invoke((MethodInvoker)delegate
                     {
                         this.Opacity = opacity;
-                    }); 
+                    });
                 }
                 this.Invoke((MethodInvoker)delegate
                 {

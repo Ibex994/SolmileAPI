@@ -15,7 +15,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.DataGridView dgvContacts;
 
         /// <summary> 
@@ -46,7 +45,6 @@
             btnUpdate = new Button();
             btnDelete = new Button();
             dgvContacts = new DataGridView();
-            btnLoad = new Button();
             BtnClear = new Button();
             btnSearch = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvContacts).BeginInit();
@@ -149,18 +147,9 @@
             dgvContacts.TabIndex = 11;
             dgvContacts.SelectionChanged += dgvContacts_SelectionChanged_1;
             // 
-            // btnLoad
-            // 
-            btnLoad.Location = new Point(450, 146);
-            btnLoad.Name = "btnLoad";
-            btnLoad.Size = new Size(100, 30);
-            btnLoad.TabIndex = 11;
-            btnLoad.Text = "Load";
-            btnLoad.Click += btnLoad_Click;
-            // 
             // BtnClear
             // 
-            BtnClear.Location = new Point(556, 70);
+            BtnClear.Location = new Point(450, 150);
             BtnClear.Name = "BtnClear";
             BtnClear.Size = new Size(100, 30);
             BtnClear.TabIndex = 11;
@@ -169,7 +158,7 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(556, 30);
+            btnSearch.Location = new Point(556, 86);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(100, 30);
             btnSearch.TabIndex = 11;
@@ -182,7 +171,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(btnSearch);
             Controls.Add(BtnClear);
-            Controls.Add(btnLoad);
             Controls.Add(lblPhone);
             Controls.Add(txtPhone);
             Controls.Add(lblEmail);

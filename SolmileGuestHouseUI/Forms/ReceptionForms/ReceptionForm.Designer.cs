@@ -346,7 +346,7 @@
             labelUsername.AutoSize = true;
             labelUsername.BackColor = Color.Transparent;
             labelUsername.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            labelUsername.ForeColor = Color.White;
+            labelUsername.ForeColor = Color.Black;
             labelUsername.Location = new Point(76, 23);
             labelUsername.Name = "labelUsername";
             labelUsername.Size = new Size(19, 20);
@@ -431,6 +431,7 @@
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
+            BackColor = Color.White;
             ClientSize = new Size(1063, 633);
             Controls.Add(panelDesktopPane);
             Controls.Add(panelTitleBar);

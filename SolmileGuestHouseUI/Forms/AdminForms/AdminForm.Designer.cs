@@ -157,7 +157,7 @@
             // 
             resources.ApplyResources(labelUsername, "labelUsername");
             labelUsername.BackColor = Color.Transparent;
-            labelUsername.ForeColor = Color.White;
+            labelUsername.ForeColor = Color.Black;
             labelUsername.Name = "labelUsername";
             // 
             // label1

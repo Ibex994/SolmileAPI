@@ -7,7 +7,10 @@ using Solmile.Forms.ManagerForms;
 using Solmile.Interface;
 using Solmile.Service;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
+using SolmileGuestHouseUI.Forms.AdminForms;
 using SolmileGuestHouseUI.Forms.ForgetPassword;
+using SolmileGuestHouseUI.Forms.HRForms;
+using SolmileGuestHouseUI.Forms.SupervisorForms;
 
 namespace Solmile
 {
@@ -91,15 +94,20 @@ namespace Solmile
                     // Show a form based on role
                     Form nextForm = role switch
                     {
-                        "Admin" => new ReceptionForm(),
+                        "Admin" => new AdminForm(),
                         "Reception" => new ReceptionForm(),
                         "Manager" => new ManagerForm(),
+                        "Supervisor" => new SupervisorForm(),
+                        "HR" => new HRForm(),
                         _ => null
                     };
 
                     if (nextForm != null)
                     {
                         MessageBox.Show($"Welcome {username}! You are logged in as {role}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        dynamic formWithUsername = nextForm;
+                        formWithUsername.username = username;
+
                         textBoxUsername.Clear();
                         textBoxPassword.Clear();
                         nextForm.Show();

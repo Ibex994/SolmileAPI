@@ -125,26 +125,6 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                     "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        //// ✅ Optional: GET by ID
-        //private async Task<BranchDto> GetBranchById(int id)
-        //{
-        //    try
-        //    {
-        //        var response = await _httpClient.GetAsync($"{BaseUrl}/findBranchById/{id}");
-        //        response.EnsureSuccessStatusCode();
-
-        //        var json = await response.Content.ReadAsStringAsync();
-        //        return JsonConvert.DeserializeObject<BranchDto>(json);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Unable to find the branch with the specified ID. Please verify and try again.",
-        //            "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        return null;
-        //    }
-        //}
-
         private void dgvBranches_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvBranches.CurrentRow == null) return;
@@ -153,17 +133,14 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             txtLocation.Text = dgvBranches.CurrentRow.Cells["location"].Value?.ToString();
             txtContactId.Text = dgvBranches.CurrentRow.Cells["contactId"].Value?.ToString();
         }
-
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             LoadBranches();
         }
-
         private void btnLoad_Click(object sender, EventArgs e)
         {
             LoadBranches();
         }
-
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtBranchName.Text = "";
@@ -174,7 +151,6 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             MessageBox.Show("Form has been cleared. You can now add or update a new branch.",
                 "Form Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
         private void dgvBranches_CellClick(object sender, EventArgs e)
         {
             if (dgvBranches.CurrentRow != null)
@@ -184,15 +160,15 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 txtContactId.Text = dgvBranches.CurrentRow.Cells["contactId"].Value?.ToString();
             }
         }
-        private async Task<object> GetBranchAsync(int id)
+        private async Task<object> GetBranchByInputAsync(string input)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"{BaseUrl}/findBranchById/{id}");
+                var response = await _httpClient.GetAsync($"{BaseUrl}/find-by-location/{input}");
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<BranchDto>(json);
+                    return JsonConvert.DeserializeObject<List<BranchDto>>(json);
                 }
             }
             catch (Exception ex)
@@ -203,7 +179,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
         }
         private async void btnSearch_Click(object sender, EventArgs e)
         {
-            var searchForm = new SearchByIdForm("Search Branch", GetBranchAsync);
+            var searchForm = new SearchByInputForm("Search Branch", GetBranchByInputAsync);
             if (searchForm.ShowDialog() == DialogResult.OK)
             {
                 var branch = searchForm.SelectedItem as BranchDto;

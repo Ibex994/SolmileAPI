@@ -17,7 +17,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             this.Text = title;
 
             btnFind.Click += BtnFind_Click;
-            pictureBoxClose.Click += pictureBoxClose_Click;
+            pictureBoxClose.Click += pictureBoxClose_Click_1;
             txtSearchId.KeyDown += TxtSearchId_KeyDown;
             this.KeyPreview = true; // Enable form to capture key events
             this.KeyDown += SearchByIdForm_KeyDown;
@@ -82,7 +82,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             if (e.KeyCode == Keys.Enter)
             {
                 e.Handled = true;
-                e.SuppressKeyPress = true; // prevent ding sound
+                e.SuppressKeyPress = true;
                 _ = PerformSearchAsync();
             }
         }
@@ -95,8 +95,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 this.Close();
             }
         }
-
-        private void pictureBoxClose_Click(object sender, EventArgs e)
+        private void pictureBoxClose_Click_1(object sender, EventArgs e)
         {
             this.Close();
         }

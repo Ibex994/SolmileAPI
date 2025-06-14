@@ -51,6 +51,7 @@
             // 
             // txtBranchId
             // 
+            txtBranchId.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtBranchId.Location = new Point(140, 27);
             txtBranchId.Name = "txtBranchId";
             txtBranchId.Size = new Size(150, 23);
@@ -58,7 +59,8 @@
             // 
             // txtRoomNumber
             // 
-            txtRoomNumber.Location = new Point(140, 67);
+            txtRoomNumber.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtRoomNumber.Location = new Point(172, 70);
             txtRoomNumber.Name = "txtRoomNumber";
             txtRoomNumber.Size = new Size(150, 23);
             txtRoomNumber.TabIndex = 4;
@@ -116,18 +118,20 @@
             // lblBranchId
             // 
             lblBranchId.AutoSize = true;
+            lblBranchId.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblBranchId.Location = new Point(40, 30);
             lblBranchId.Name = "lblBranchId";
-            lblBranchId.Size = new Size(61, 15);
+            lblBranchId.Size = new Size(93, 18);
             lblBranchId.TabIndex = 1;
             lblBranchId.Text = "Branch ID:";
             // 
             // lblRoomNumber
             // 
             lblRoomNumber.AutoSize = true;
+            lblRoomNumber.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblRoomNumber.Location = new Point(40, 70);
             lblRoomNumber.Name = "lblRoomNumber";
-            lblRoomNumber.Size = new Size(89, 15);
+            lblRoomNumber.Size = new Size(126, 18);
             lblRoomNumber.TabIndex = 3;
             lblRoomNumber.Text = "Room Number:";
             // 

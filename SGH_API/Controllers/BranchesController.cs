@@ -144,6 +144,39 @@ namespace SolmileGuesthouseAPI.Controllers
 
             return NoContent();
         }
+        [HttpGet("find-by-location/{location}")]
+        public async Task<ActionResult<IEnumerable<BranchDto>>> FindBranchesByLocation(string location)
+        {
+            if (string.IsNullOrWhiteSpace(location))
+                return BadRequest("Location is required.");
+
+            location = location.Trim().ToLower();
+
+            var branches = await _context.Branches
+                .Include(b => b.ContactDetails)
+                .Where(b => b.Location.ToLower().Contains(location))
+                .Select(b => new BranchDto
+                {
+                    BranchId = b.BranchId,
+                    Location = b.Location,
+                    Name = b.Name,
+                    ContactId = b.ContactId,
+                    ContactDetails = new ContactDetailsDto
+                    {
+                        ContactId = b.ContactDetails.ContactId,
+                        Phone = b.ContactDetails.Phone,
+                        Email = b.ContactDetails.Email,
+                        Address = b.ContactDetails.Address,
+                        EmergencyContact = b.ContactDetails.EmergencyContact
+                    }
+                })
+                .ToListAsync();
+
+            if (!branches.Any())
+                return NotFound("No branches found for the given location.");
+
+            return Ok(branches);
+        }
 
         private bool BranchExists(int id)
         {

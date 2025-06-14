@@ -57,6 +57,7 @@
             // 
             // txtTypeId
             // 
+            txtTypeId.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtTypeId.Location = new Point(30, 30);
             txtTypeId.Name = "txtTypeId";
             txtTypeId.PlaceholderText = "Type ID";
@@ -65,6 +66,7 @@
             // 
             // txtName
             // 
+            txtName.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtName.Location = new Point(30, 70);
             txtName.Name = "txtName";
             txtName.PlaceholderText = "Name";
@@ -73,6 +75,7 @@
             // 
             // txtTitle
             // 
+            txtTitle.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtTitle.Location = new Point(30, 110);
             txtTitle.Name = "txtTitle";
             txtTitle.PlaceholderText = "Title";
@@ -81,6 +84,7 @@
             // 
             // txtDescription
             // 
+            txtDescription.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtDescription.Location = new Point(236, 120);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
@@ -90,6 +94,7 @@
             // 
             // txtAmenities
             // 
+            txtAmenities.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtAmenities.Location = new Point(30, 139);
             txtAmenities.Multiline = true;
             txtAmenities.Name = "txtAmenities";
@@ -99,6 +104,7 @@
             // 
             // txtPrice
             // 
+            txtPrice.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtPrice.Location = new Point(30, 205);
             txtPrice.Name = "txtPrice";
             txtPrice.PlaceholderText = "Price Per Night";
@@ -107,6 +113,7 @@
             // 
             // txtCapacity
             // 
+            txtCapacity.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtCapacity.Location = new Point(30, 234);
             txtCapacity.Name = "txtCapacity";
             txtCapacity.PlaceholderText = "Capacity";

@@ -15,6 +15,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             [JsonIgnore]
             public ContactDetailsDto ContactDetails { get; set; }
         }
+      //
         public class UsernameCheckDto
         {
             public string Username { get; set; }
@@ -48,6 +49,10 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public string Email { get; set; }
             public string Address { get; set; }
             public string EmergencyContact { get; set; }
+        }
+        public class FindUserByUsernameDto
+        {
+            public string Username { get; set; }
         }
 
         // DTOs/CustomerDto.cs
@@ -314,6 +319,12 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         public class UInsertionUserDto
         {
             [JsonIgnore]
+            public int Id { get; set; }
+            public string Username { get; set; }
+            public string Password { get; set; }
+        }
+        public class InputUserDto
+        {
             public int Id { get; set; }
             public string Username { get; set; }
             public string Password { get; set; }

@@ -59,11 +59,20 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
 
+        [HttpPost("find-by-username")]
+        public async Task<IActionResult> FindByUsername([FromBody] FindUserByUsernameDto dto)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == dto.Username);
+            if (user == null)
+                return NotFound();
+
+            return Ok(new UserDto { Id = user.Id, Username = user.Username, Password = user.Password });
+        }
+
+
         [HttpPut("UpdateUser/{id}")]
         public async Task<IActionResult> PutUser(int id, UInsertionUserDto userDto)
         {
-
-
             var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
@@ -71,7 +80,11 @@ namespace SolmileGuesthouseAPI.Controllers
             }
 
             user.Username = userDto.Username;
-            user.Password = userDto.Password; 
+
+            if (!string.IsNullOrWhiteSpace(userDto.Password))
+            {
+                user.Password = PasswordHasher.HashPassword(userDto.Password);
+            }
 
             try
             {

@@ -1,11 +1,14 @@
 ﻿namespace SolmileGuestHouseUI.Forms.AdminForms
 {
-    partial class SearchByIdForm
+    partial class SearchByInputForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private System.Windows.Forms.TextBox txtSearchInput;
+        private System.Windows.Forms.Button btnFind;
+        private System.Windows.Forms.PictureBox pictureBoxClose;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -21,78 +24,63 @@
         }
 
         #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchByIdForm));
-            txtSearchId = new TextBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchByInputForm));
+            txtSearchInput = new TextBox();
             btnFind = new Button();
             pictureBoxClose = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBoxClose).BeginInit();
             SuspendLayout();
             // 
-            // txtSearchId
+            // txtSearchInput
             // 
-            txtSearchId.Cursor = Cursors.Hand;
-            txtSearchId.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtSearchId.Location = new Point(124, 27);
-            txtSearchId.Name = "txtSearchId";
-            txtSearchId.PlaceholderText = "ID";
-            txtSearchId.Size = new Size(211, 26);
-            txtSearchId.TabIndex = 0;
-            txtSearchId.TextAlign = HorizontalAlignment.Center;
+            txtSearchInput.Font = new Font("Arial Rounded MT Bold", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearchInput.Location = new Point(86, 30);
+            txtSearchInput.Name = "txtSearchInput";
+            txtSearchInput.Size = new Size(200, 26);
+            txtSearchInput.TabIndex = 2;
+            txtSearchInput.TextAlign = HorizontalAlignment.Center;
             // 
             // btnFind
             // 
-            btnFind.Location = new Point(183, 66);
+            btnFind.Location = new Point(140, 59);
             btnFind.Name = "btnFind";
             btnFind.Size = new Size(75, 23);
             btnFind.TabIndex = 1;
             btnFind.Text = "Find";
-            btnFind.UseVisualStyleBackColor = true;
-            btnFind.Click += this.BtnFind_Click;
+            btnFind.Click += BtnFind_Click;
             // 
             // pictureBoxClose
             // 
-            pictureBoxClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             pictureBoxClose.Cursor = Cursors.Hand;
-            pictureBoxClose.Image = (Image)resources.GetObject("pictureBoxClose.Image");
-            pictureBoxClose.ImeMode = ImeMode.NoControl;
-            pictureBoxClose.Location = new Point(417, 0);
+            pictureBoxClose.Image = Properties.Resources.icons8_close_96;
+            pictureBoxClose.Location = new Point(360, 0);
             pictureBoxClose.Name = "pictureBoxClose";
-            pictureBoxClose.Size = new Size(29, 18);
+            pictureBoxClose.Size = new Size(20, 16);
             pictureBoxClose.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBoxClose.TabIndex = 3;
+            pictureBoxClose.TabIndex = 0;
             pictureBoxClose.TabStop = false;
-            pictureBoxClose.Click += pictureBoxClose_Click_1;
+            pictureBoxClose.Click += pictureBoxClose_Click;
             // 
-            // SearchByIdForm
+            // SearchByInputForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
-            ClientSize = new Size(446, 121);
+            ClientSize = new Size(380, 100);
             Controls.Add(pictureBoxClose);
             Controls.Add(btnFind);
-            Controls.Add(txtSearchId);
+            Controls.Add(txtSearchInput);
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "SearchByIdForm";
+            Name = "SearchByInputForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "BranchDetailsForm";
+            Text = "Search by Username";
             ((System.ComponentModel.ISupportInitialize)pictureBoxClose).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
-
-        #endregion
-
-        private TextBox txtSearchId;
-        private Button btnFind;
-        private PictureBox pictureBoxClose;
     }
+#endregion
+
 }

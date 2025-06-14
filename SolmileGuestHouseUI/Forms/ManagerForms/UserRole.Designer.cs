@@ -6,6 +6,11 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private ComboBox cbUsers;
+        private ComboBox cbRoles;
+        private Button btnAssign;
+        private Button btnRemove;
+        private DataGridView dgvUserRoles;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -20,116 +25,73 @@
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
-
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
+            cbUsers = new ComboBox();
+            cbRoles = new ComboBox();
+            btnAssign = new Button();
+            btnRemove = new Button();
             dgvUserRoles = new DataGridView();
-            lblRoleId = new Label();
-            txtRoleId = new TextBox();
-            lblRoleName = new Label();
-            txtRoleName = new TextBox();
-            btnGetAllRoles = new Button();
-            btnAddRole = new Button();
-            btnDeleteRole = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvUserRoles).BeginInit();
             SuspendLayout();
             // 
+            // cbUsers
+            // 
+            cbUsers.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbUsers.Location = new Point(202, 31);
+            cbUsers.Name = "cbUsers";
+            cbUsers.Size = new Size(200, 23);
+            cbUsers.TabIndex = 0;
+            // 
+            // cbRoles
+            // 
+            cbRoles.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbRoles.Location = new Point(442, 31);
+            cbRoles.Name = "cbRoles";
+            cbRoles.Size = new Size(200, 23);
+            cbRoles.TabIndex = 1;
+            // 
+            // btnAssign
+            // 
+            btnAssign.Location = new Point(231, 77);
+            btnAssign.Name = "btnAssign";
+            btnAssign.Size = new Size(120, 30);
+            btnAssign.TabIndex = 2;
+            btnAssign.Text = "Update Role";
+            btnAssign.Click += BtnAssign_Click;
+            // 
+            // btnRemove
+            // 
+            btnRemove.Location = new Point(430, 77);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(200, 30);
+            btnRemove.TabIndex = 3;
+            btnRemove.Text = "Remove Selected Role";
+            btnRemove.Click += BtnRemove_Click;
+            // 
             // dgvUserRoles
             // 
-            dgvUserRoles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUserRoles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvUserRoles.Location = new Point(20, 130);
+            dgvUserRoles.BackgroundColor = Color.White;
+            dgvUserRoles.Location = new Point(30, 130);
+            dgvUserRoles.MultiSelect = false;
             dgvUserRoles.Name = "dgvUserRoles";
-            dgvUserRoles.Size = new Size(810, 570);
-            dgvUserRoles.TabIndex = 0;
-            // 
-            // lblRoleId
-            // 
-            lblRoleId.Location = new Point(20, 20);
-            lblRoleId.Name = "lblRoleId";
-            lblRoleId.Size = new Size(100, 23);
-            lblRoleId.TabIndex = 1;
-            lblRoleId.Text = "Role ID:";
-            // 
-            // txtRoleId
-            // 
-            txtRoleId.Location = new Point(130, 20);
-            txtRoleId.Name = "txtRoleId";
-            txtRoleId.Size = new Size(150, 23);
-            txtRoleId.TabIndex = 2;
-            // 
-            // lblRoleName
-            // 
-            lblRoleName.Location = new Point(20, 60);
-            lblRoleName.Name = "lblRoleName";
-            lblRoleName.Size = new Size(100, 23);
-            lblRoleName.TabIndex = 3;
-            lblRoleName.Text = "Role Name:";
-            // 
-            // txtRoleName
-            // 
-            txtRoleName.Location = new Point(130, 60);
-            txtRoleName.Name = "txtRoleName";
-            txtRoleName.Size = new Size(150, 23);
-            txtRoleName.TabIndex = 4;
-            // 
-            // btnGetAllRoles
-            // 
-            btnGetAllRoles.Location = new Point(320, 20);
-            btnGetAllRoles.Name = "btnGetAllRoles";
-            btnGetAllRoles.Size = new Size(120, 28);
-            btnGetAllRoles.TabIndex = 5;
-            btnGetAllRoles.Text = "Get All Roles";
-            // 
-            // btnAddRole
-            // 
-            btnAddRole.Location = new Point(320, 60);
-            btnAddRole.Name = "btnAddRole";
-            btnAddRole.Size = new Size(120, 28);
-            btnAddRole.TabIndex = 6;
-            btnAddRole.Text = "Add Role";
-            // 
-            // btnDeleteRole
-            // 
-            btnDeleteRole.Location = new Point(320, 100);
-            btnDeleteRole.Name = "btnDeleteRole";
-            btnDeleteRole.Size = new Size(120, 28);
-            btnDeleteRole.TabIndex = 7;
-            btnDeleteRole.Text = "Delete Role";
+            dgvUserRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvUserRoles.Size = new Size(793, 415);
+            dgvUserRoles.TabIndex = 4;
             // 
             // UserRole
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            Controls.Add(cbUsers);
+            Controls.Add(cbRoles);
+            Controls.Add(btnAssign);
+            Controls.Add(btnRemove);
             Controls.Add(dgvUserRoles);
-            Controls.Add(lblRoleId);
-            Controls.Add(txtRoleId);
-            Controls.Add(lblRoleName);
-            Controls.Add(txtRoleName);
-            Controls.Add(btnGetAllRoles);
-            Controls.Add(btnAddRole);
-            Controls.Add(btnDeleteRole);
             Name = "UserRole";
-            Size = new Size(860, 730);
+            Size = new Size(880, 588);
             ((System.ComponentModel.ISupportInitialize)dgvUserRoles).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
-
-        private System.Windows.Forms.DataGridView dgvUserRoles;
-        private System.Windows.Forms.Label lblRoleId;
-        private System.Windows.Forms.TextBox txtRoleId;
-        private System.Windows.Forms.Label lblRoleName;
-        private System.Windows.Forms.TextBox txtRoleName;
-
-        private System.Windows.Forms.Button btnGetAllRoles;
-        private System.Windows.Forms.Button btnAddRole;
-        private System.Windows.Forms.Button btnDeleteRole;
-        #endregion
     }
 }

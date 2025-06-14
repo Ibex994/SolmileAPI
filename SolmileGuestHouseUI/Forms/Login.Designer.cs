@@ -239,7 +239,6 @@
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LogIn";
-            WindowState = FormWindowState.Minimized;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();

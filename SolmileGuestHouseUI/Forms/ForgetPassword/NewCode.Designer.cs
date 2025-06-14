@@ -46,6 +46,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.Black_and_Gold_Vintage_Luxury_Hotel_Logo_removebg_preview;
+            pictureBox1.InitialImage = null;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(656, 355);
@@ -151,6 +152,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Window;
             BackgroundImageLayout = ImageLayout.None;
+            BorderStyle = BorderStyle.Fixed3D;
             Controls.Add(label2);
             Controls.Add(ConPasslbl);
             Controls.Add(NewPasslbl);
@@ -164,7 +166,7 @@
             MaximumSize = new Size(654, 355);
             MinimumSize = new Size(654, 355);
             Name = "NewCode";
-            Size = new Size(654, 355);
+            Size = new Size(650, 351);
             Load += NewCode_Load_1;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)Backbtn).EndInit();

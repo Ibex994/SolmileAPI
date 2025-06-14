@@ -83,6 +83,7 @@
             // 
             pictureBox1.BackColor = SystemColors.Window;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.InitialImage = null;
             pictureBox1.Location = new Point(-2, -1);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(654, 355);

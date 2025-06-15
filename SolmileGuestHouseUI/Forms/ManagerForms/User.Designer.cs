@@ -2,211 +2,270 @@
 {
     partial class User
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.DataGridView dgvUsers;
-        private System.Windows.Forms.TextBox txtUserId;
-        private System.Windows.Forms.Button btnLoadUsers;
-        private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button btnDeleteUser;
-        private System.Windows.Forms.Button btnUpdateUser;
-        private System.Windows.Forms.Button btnLock;
-        private System.Windows.Forms.Button btnUnlock;
-        private System.Windows.Forms.Button btnIsLocked;
-        private System.Windows.Forms.Button btnGetLockedUsers;
-        private System.Windows.Forms.Button btnCheckUsername;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        private TabControl tabControl;
+        private TabPage tabManageUsers;
+        private TabPage tabLockUnlock;
+        private TabPage tabUtility;
+
+        private TextBox txtUserId;
+        private TextBox txtUsername;
+        private TextBox txtPassword;
+
+        private Button btnLoadUsers;
+        private Button btnSearch;
+        private Button btnDeleteUser;
+        private Button btnUpdateUser;
+        private Button btnClearManage;
+
+        private Button btnLock;
+        private Button btnUnlock;
+        private Button btnIsLocked;
+        private Button btnGetLockedUsers;
+
+        private Button btnCheckUsername;
+        private Button btnClearUtility;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
-
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
+            tabControl = new TabControl();
+            tabManageUsers = new TabPage();
             dgvUsers = new DataGridView();
             txtUserId = new TextBox();
+            txtUsername = new TextBox();
+            txtPassword = new TextBox();
             btnLoadUsers = new Button();
             btnSearch = new Button();
-            btnDeleteUser = new Button();
             btnUpdateUser = new Button();
-            btnLock = new Button();
-            btnUnlock = new Button();
-            btnIsLocked = new Button();
+            btnDeleteUser = new Button();
+            btnClearManage = new Button();
+            tabLockUnlock = new TabPage();
             btnGetLockedUsers = new Button();
+            btnIsLocked = new Button();
+            btnUnlock = new Button();
+            btnLock = new Button();
+            tabUtility = new TabPage();
             btnCheckUsername = new Button();
-            txtPassword = new TextBox();
-            txtUsername = new TextBox();
-            btnClear = new Button();
+            btnClearUtility = new Button();
+            tabControl.SuspendLayout();
+            tabManageUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
+            tabLockUnlock.SuspendLayout();
+            tabUtility.SuspendLayout();
             SuspendLayout();
+            // 
+            // tabControl
+            // 
+            tabControl.Controls.Add(tabManageUsers);
+            tabControl.Controls.Add(tabLockUnlock);
+            tabControl.Controls.Add(tabUtility);
+            tabControl.Location = new Point(10, 10);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(866, 571);
+            tabControl.TabIndex = 0;
+            tabControl.SelectedIndexChanged += tabControl_SelectedIndexChanged;
+            // 
+            // tabManageUsers
+            // 
+            tabManageUsers.BackColor = Color.White;
+            tabManageUsers.Controls.Add(dgvUsers);
+            tabManageUsers.Controls.Add(txtUserId);
+            tabManageUsers.Controls.Add(txtUsername);
+            tabManageUsers.Controls.Add(txtPassword);
+            tabManageUsers.Controls.Add(btnLoadUsers);
+            tabManageUsers.Controls.Add(btnSearch);
+            tabManageUsers.Controls.Add(btnUpdateUser);
+            tabManageUsers.Controls.Add(btnDeleteUser);
+            tabManageUsers.Controls.Add(btnClearManage);
+            tabManageUsers.Location = new Point(4, 24);
+            tabManageUsers.Name = "tabManageUsers";
+            tabManageUsers.Size = new Size(858, 543);
+            tabManageUsers.TabIndex = 0;
+            tabManageUsers.Text = "Manage Users";
             // 
             // dgvUsers
             // 
+            dgvUsers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUsers.BackgroundColor = Color.White;
-            dgvUsers.Location = new Point(12, 119);
+            dgvUsers.BorderStyle = BorderStyle.None;
+            dgvUsers.Location = new Point(10, 110);
             dgvUsers.Name = "dgvUsers";
-            dgvUsers.Size = new Size(711, 347);
-            dgvUsers.TabIndex = 0;
+            dgvUsers.ReadOnly = true;
+            dgvUsers.Size = new Size(800, 416);
+            dgvUsers.TabIndex = 9;
             dgvUsers.CellClick += dgvUsers_CellClick;
             // 
             // txtUserId
             // 
             txtUserId.Enabled = false;
-            txtUserId.Location = new Point(12, 12);
+            txtUserId.Location = new Point(10, 10);
             txtUserId.Name = "txtUserId";
             txtUserId.PlaceholderText = "User ID";
-            txtUserId.Size = new Size(247, 23);
-            txtUserId.TabIndex = 1;
+            txtUserId.Size = new Size(250, 23);
+            txtUserId.TabIndex = 0;
+            // 
+            // txtUsername
+            // 
+            txtUsername.Location = new Point(10, 40);
+            txtUsername.Name = "txtUsername";
+            txtUsername.PlaceholderText = "Username";
+            txtUsername.Size = new Size(250, 23);
+            txtUsername.TabIndex = 1;
+            // 
+            // txtPassword
+            // 
+            txtPassword.Location = new Point(10, 70);
+            txtPassword.Name = "txtPassword";
+            txtPassword.PlaceholderText = "Password";
+            txtPassword.Size = new Size(250, 23);
+            txtPassword.TabIndex = 2;
             // 
             // btnLoadUsers
             // 
-            btnLoadUsers.Location = new Point(294, 12);
+            btnLoadUsers.Location = new Point(280, 10);
             btnLoadUsers.Name = "btnLoadUsers";
-            btnLoadUsers.Size = new Size(104, 23);
-            btnLoadUsers.TabIndex = 4;
+            btnLoadUsers.Size = new Size(110, 23);
+            btnLoadUsers.TabIndex = 3;
             btnLoadUsers.Text = "Load All Users";
             btnLoadUsers.Click += btnLoadUsers_Click;
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(294, 42);
+            btnSearch.Location = new Point(280, 40);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(104, 23);
-            btnSearch.TabIndex = 5;
+            btnSearch.Size = new Size(110, 23);
+            btnSearch.TabIndex = 4;
             btnSearch.Text = "Search";
             btnSearch.Click += btnSearch_Click;
             // 
+            // btnUpdateUser
+            // 
+            btnUpdateUser.Location = new Point(400, 10);
+            btnUpdateUser.Name = "btnUpdateUser";
+            btnUpdateUser.Size = new Size(110, 23);
+            btnUpdateUser.TabIndex = 5;
+            btnUpdateUser.Text = "Update User";
+            btnUpdateUser.Click += btnUpdateUser_Click;
+            // 
             // btnDeleteUser
             // 
-            btnDeleteUser.Location = new Point(294, 72);
+            btnDeleteUser.Location = new Point(400, 40);
             btnDeleteUser.Name = "btnDeleteUser";
-            btnDeleteUser.Size = new Size(104, 23);
+            btnDeleteUser.Size = new Size(110, 23);
             btnDeleteUser.TabIndex = 6;
             btnDeleteUser.Text = "Delete User";
             btnDeleteUser.Click += btnDeleteUser_Click;
             // 
-            // btnUpdateUser
+            // btnClearManage
             // 
-            btnUpdateUser.Location = new Point(404, 12);
-            btnUpdateUser.Name = "btnUpdateUser";
-            btnUpdateUser.Size = new Size(104, 23);
-            btnUpdateUser.TabIndex = 7;
-            btnUpdateUser.Text = "Update User";
-            btnUpdateUser.Click += btnUpdateUser_Click;
+            btnClearManage.Location = new Point(280, 70);
+            btnClearManage.Name = "btnClearManage";
+            btnClearManage.Size = new Size(110, 23);
+            btnClearManage.TabIndex = 7;
+            btnClearManage.Text = "Clear";
+            btnClearManage.Click += btnClear_Click;
             // 
-            // btnLock
+            // tabLockUnlock
             // 
-            btnLock.Location = new Point(404, 42);
-            btnLock.Name = "btnLock";
-            btnLock.Size = new Size(104, 23);
-            btnLock.TabIndex = 8;
-            btnLock.Text = "Lock User";
-            btnLock.Click += btnLock_Click;
-            // 
-            // btnUnlock
-            // 
-            btnUnlock.Location = new Point(404, 72);
-            btnUnlock.Name = "btnUnlock";
-            btnUnlock.Size = new Size(104, 23);
-            btnUnlock.TabIndex = 9;
-            btnUnlock.Text = "Unlock User";
-            btnUnlock.Click += btnUnlock_Click;
-            // 
-            // btnIsLocked
-            // 
-            btnIsLocked.Location = new Point(514, 12);
-            btnIsLocked.Name = "btnIsLocked";
-            btnIsLocked.Size = new Size(110, 23);
-            btnIsLocked.TabIndex = 10;
-            btnIsLocked.Text = "Is Locked?";
-            btnIsLocked.Click += btnIsLocked_Click;
+            tabLockUnlock.BackColor = Color.White;
+            tabLockUnlock.Controls.Add(btnGetLockedUsers);
+            tabLockUnlock.Controls.Add(btnIsLocked);
+            tabLockUnlock.Controls.Add(btnUnlock);
+            tabLockUnlock.Controls.Add(btnLock);
+            tabLockUnlock.Location = new Point(4, 24);
+            tabLockUnlock.Name = "tabLockUnlock";
+            tabLockUnlock.Size = new Size(858, 543);
+            tabLockUnlock.TabIndex = 1;
+            tabLockUnlock.Text = "Lock/Unlock";
             // 
             // btnGetLockedUsers
             // 
-            btnGetLockedUsers.Location = new Point(514, 42);
+            btnGetLockedUsers.Location = new Point(300, 20);
             btnGetLockedUsers.Name = "btnGetLockedUsers";
-            btnGetLockedUsers.Size = new Size(110, 23);
-            btnGetLockedUsers.TabIndex = 11;
+            btnGetLockedUsers.Size = new Size(130, 23);
+            btnGetLockedUsers.TabIndex = 1;
             btnGetLockedUsers.Text = "Get Locked Users";
             btnGetLockedUsers.Click += btnGetLockedUsers_Click;
             // 
+            // btnIsLocked
+            // 
+            btnIsLocked.Location = new Point(300, 50);
+            btnIsLocked.Name = "btnIsLocked";
+            btnIsLocked.Size = new Size(130, 23);
+            btnIsLocked.TabIndex = 2;
+            btnIsLocked.Text = "Is Locked?";
+            btnIsLocked.Click += btnIsLocked_Click;
+            // 
+            // btnUnlock
+            // 
+            btnUnlock.Location = new Point(300, 80);
+            btnUnlock.Name = "btnUnlock";
+            btnUnlock.Size = new Size(130, 23);
+            btnUnlock.TabIndex = 3;
+            btnUnlock.Text = "Unlock User";
+            btnUnlock.Click += btnUnlock_Click;
+            // 
+            // btnLock
+            // 
+            btnLock.Location = new Point(440, 20);
+            btnLock.Name = "btnLock";
+            btnLock.Size = new Size(130, 23);
+            btnLock.TabIndex = 4;
+            btnLock.Text = "Lock User";
+            btnLock.Click += btnLock_Click;
+            // 
+            // tabUtility
+            // 
+            tabUtility.BackColor = Color.White;
+            tabUtility.Controls.Add(btnCheckUsername);
+            tabUtility.Controls.Add(btnClearUtility);
+            tabUtility.Location = new Point(4, 24);
+            tabUtility.Name = "tabUtility";
+            tabUtility.Size = new Size(858, 543);
+            tabUtility.TabIndex = 2;
+            tabUtility.Text = "Utility";
+            // 
             // btnCheckUsername
             // 
-            btnCheckUsername.Location = new Point(514, 72);
+            btnCheckUsername.Location = new Point(324, 20);
             btnCheckUsername.Name = "btnCheckUsername";
-            btnCheckUsername.Size = new Size(139, 23);
-            btnCheckUsername.TabIndex = 12;
+            btnCheckUsername.Size = new Size(160, 23);
+            btnCheckUsername.TabIndex = 1;
             btnCheckUsername.Text = "Check Username Exists";
             btnCheckUsername.Click += btnCheckUsername_Click;
             // 
-            // txtPassword
+            // btnClearUtility
             // 
-            txtPassword.Location = new Point(12, 72);
-            txtPassword.Name = "txtPassword";
-            txtPassword.PlaceholderText = "Password";
-            txtPassword.Size = new Size(247, 23);
-            txtPassword.TabIndex = 1;
-            // 
-            // txtUsername
-            // 
-            txtUsername.Location = new Point(12, 43);
-            txtUsername.Name = "txtUsername";
-            txtUsername.PlaceholderText = "UserName";
-            txtUsername.Size = new Size(247, 23);
-            txtUsername.TabIndex = 1;
-            // 
-            // btnClear
-            // 
-            btnClear.Location = new Point(630, 31);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(75, 23);
-            btnClear.TabIndex = 12;
-            btnClear.Text = "Clear";
-            btnClear.Click += btnClear_Click;
+            btnClearUtility.Location = new Point(494, 20);
+            btnClearUtility.Name = "btnClearUtility";
+            btnClearUtility.Size = new Size(80, 23);
+            btnClearUtility.TabIndex = 2;
+            btnClearUtility.Text = "Clear";
+            btnClearUtility.Click += btnClear_Click;
             // 
             // User
             // 
             BackColor = Color.White;
-            Controls.Add(dgvUsers);
-            Controls.Add(txtUsername);
-            Controls.Add(txtPassword);
-            Controls.Add(txtUserId);
-            Controls.Add(btnLoadUsers);
-            Controls.Add(btnSearch);
-            Controls.Add(btnDeleteUser);
-            Controls.Add(btnUpdateUser);
-            Controls.Add(btnLock);
-            Controls.Add(btnUnlock);
-            Controls.Add(btnIsLocked);
-            Controls.Add(btnGetLockedUsers);
-            Controls.Add(btnClear);
-            Controls.Add(btnCheckUsername);
+            Controls.Add(tabControl);
             Name = "User";
-            Size = new Size(794, 501);
+            Size = new Size(922, 600);
+            tabControl.ResumeLayout(false);
+            tabManageUsers.ResumeLayout(false);
+            tabManageUsers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
+            tabLockUnlock.ResumeLayout(false);
+            tabUtility.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
-
-        #endregion
-        private TextBox txtPassword;
-        private TextBox txtUsername;
-        private Button btnClear;
+        private DataGridView dgvUsers;
     }
 }

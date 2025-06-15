@@ -71,11 +71,13 @@
             // 
             // dgvUserRoles
             // 
+            dgvUserRoles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUserRoles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUserRoles.BackgroundColor = Color.White;
             dgvUserRoles.Location = new Point(30, 130);
             dgvUserRoles.MultiSelect = false;
             dgvUserRoles.Name = "dgvUserRoles";
+            dgvUserRoles.ReadOnly = true;
             dgvUserRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUserRoles.Size = new Size(793, 415);
             dgvUserRoles.TabIndex = 4;

@@ -186,7 +186,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 });
             }
 
-            if (dto.AttendanceDate == default || dto.AttendanceDate.Date < DateTime.Today)
+            if (dto.AttendanceDate == default)
             {
                 return BadRequest(new { message = "Attendance date must be today or a future date." });
             }

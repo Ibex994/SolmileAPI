@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SolmileGuesthouseAPI.Data;
 using SolmileGuesthouseAPI.Data.Models;
+using SolmileGuesthouseAPI.DTO.NavigatorModel;
 using SolmileGuesthouseAPI.Enum;
 using SolmileGuesthouseAPI.Interface;
 
@@ -46,8 +48,20 @@ namespace SolmileGuesthouseAPI.Repository
                 .Where(ea => ea.AttendanceDate.Date == attendanceDate.Date)
                 .ToListAsync();
         }
-        public async Task<bool> CreateDailyAttendanceAsync(DateTime date, List<EmployeeAttendance> employeeAttendances)
+        public async Task<bool> CreateDailyEmployeeAttendanceAsync(DateTime date, List<EmployeeAttendance> employeeAttendances)
         {
+            // Verify all employee IDs exist first
+            var employeeIds = employeeAttendances.Select(e => e.EmployeeId).ToList();
+            var existingEmployees = await _context.Users
+                .Where(u => employeeIds.Contains(u.Id))
+                .Select(u => u.Id)
+                .ToListAsync();
+
+            var invalidIds = employeeIds.Except(existingEmployees).ToList();
+            if (invalidIds.Any())
+            {
+                throw new ArgumentException($"The following employee IDs don't exist: {string.Join(", ", invalidIds)}");
+            }
             var existing = await _context.Attendances
                 .Include(a => a.EmployeeAttendances)
                 .FirstOrDefaultAsync(a => a.AttendanceDate.Date == date.Date);
@@ -73,7 +87,13 @@ namespace SolmileGuesthouseAPI.Repository
             var attendance = new Attendance
             {
                 AttendanceDate = date,
-                EmployeeAttendances = employeeAttendances
+                EmployeeAttendances = employeeAttendances.Select(ea => new EmployeeAttendance
+                {
+                    EmployeeId = ea.EmployeeId,
+                    AttendanceDate = ea.AttendanceDate,
+                    IsPresent = ea.IsPresent,
+                    Reason = ea.Reason
+                }).ToList()
             };
 
             _context.Attendances.Add(attendance);
@@ -111,6 +131,46 @@ namespace SolmileGuesthouseAPI.Repository
             return (AttendanceResponse.Success, existing);
         }
 
+        public async Task<bool> CreateDailyAttendanceAsync(DateTime attendanceDate)
+        {
+            var exists = await _context.Attendances.AnyAsync(a => a.AttendanceDate.Date == attendanceDate.Date);
+            if (exists)
+                return false;
+
+            var attendance = new Attendance
+            {
+                AttendanceDate = attendanceDate.Date
+            };
+
+            await _context.Attendances.AddAsync(attendance);
+            await _context.SaveChangesAsync(); 
+
+            var employees = await _context.Employees.ToListAsync();
+
+            var attendanceRecords = employees.Select(emp => new EmployeeAttendance
+            {
+                EmployeeId = emp.Id,
+                AttendanceDate = attendanceDate.Date,
+                AttendanceId = attendance.AttendanceId, 
+                IsPresent = true,
+                Reason = null
+            }).ToList();
+
+            await _context.EmployeeAttendances.AddRangeAsync(attendanceRecords);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+
+        public async Task<IEnumerable<DateTime>> GetAllAttendanceDatesAsync()
+        {
+            return await _context.EmployeeAttendances
+                                 .Select(a => a.AttendanceDate.Date)
+                                 .Distinct()
+                                 .OrderByDescending(d => d)
+                                 .ToListAsync();
+        }
 
     }
 }

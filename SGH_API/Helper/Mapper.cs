@@ -16,13 +16,15 @@ namespace SolmileGuesthouseAPI.Helper
             CreateMap<Complaint, UpdateCompDto>();
 
            //AttendanceDto
-            CreateMap<EmployeeAttendanceDto, EmployeeAttendance>();
-            CreateMap<EmployeeAttendanceDto, Attendance>();
-            CreateMap<Attendance, EmployeeAttendanceDto>();
-            CreateMap<EmployeeAttendance, EmployeeAttendanceDto>();
+            CreateMap<EmployeeAttendanceCreateDto, EmployeeAttendance>();
+            CreateMap<EmployeeAttendanceCreateDto, Attendance>();
+            CreateMap<Attendance, EmployeeAttendanceCreateDto>();
+            CreateMap<EmployeeAttendance, EmployeeAttendanceCreateDto>();
             CreateMap<Attendance, AttendanceCreateDto>();
             CreateMap<AttendanceCreateDto, Attendance>();
             CreateMap<UpdateEmployeeAttendanceDto, EmployeeAttendance>();
+            CreateMap<EmployeeAttendanceCreateDto, EmployeeAttendance>()
+                 .ForMember(dest => dest.Employee, opt => opt.Ignore());
             CreateMap<EmployeeAttendance, UpdateEmployeeAttendanceDto>();
             //LogDto
             CreateMap<Log, LogDto>();
@@ -83,6 +85,9 @@ namespace SolmileGuesthouseAPI.Helper
             CreateMap<CreateTaxBracketDto, TaxBracket>();
             CreateMap<GrossSalaryDto, TaxBracket>();
 
+            //MonthlyAttendance
+            CreateMap<MonthlyAttendanceSummaryDto, MonthlyAttendanceSummary>();
+            CreateMap<MonthlyAttendanceSummary, MonthlyAttendanceSummaryDto>();
 
         }
     }

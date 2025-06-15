@@ -22,9 +22,9 @@ namespace SharedModel
             ApplicationConfiguration.Initialize();
             IUserService userService = new UserService();
             //Application.Run(new SplashScreen());
-            Application.Run(new Login(userService));
+            //Application.Run(new Login(userService));
             //Application.Run(new ReceptionForm());
-            //Application.Run(new ManagerForm());
+            Application.Run(new ManagerForm());
             //Application.Run(new SupervisorForm());
             //Application.Run(new AdminForm());
             //Application.Run(new HRForm());

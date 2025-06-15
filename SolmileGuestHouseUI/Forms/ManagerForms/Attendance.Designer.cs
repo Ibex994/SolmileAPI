@@ -7,18 +7,26 @@
         private System.Windows.Forms.Label lblEmployeeId;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Label lblIsPresent;
+
+        private System.Windows.Forms.ComboBox cmbIsPresent;
 
         private System.Windows.Forms.TextBox txtEmployeeId;
         private System.Windows.Forms.DateTimePicker dtpAttendanceDate;
-        private System.Windows.Forms.TextBox txtStatus;
-
-        private System.Windows.Forms.Button btnGetAll;
+        private System.Windows.Forms.TextBox txtReason;
         private System.Windows.Forms.Button btnGetByEmployeeAndDate;
         private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
 
+        private System.Windows.Forms.TabControl tabControlAttendance;
+        private System.Windows.Forms.TabPage tabSingleAttendance;
+        private System.Windows.Forms.TabPage tabMultipleAttendance;
+
         private System.Windows.Forms.DataGridView dgvAttendance;
+        private System.Windows.Forms.DataGridView dgvMultipleAttendance;
+
+        private System.Windows.Forms.Button btnMultipleSave;
 
         /// <summary> 
         /// Clean up any resources being used.
@@ -39,22 +47,38 @@
             lblEmployeeId = new Label();
             lblDate = new Label();
             lblStatus = new Label();
+            lblIsPresent = new Label();
             txtEmployeeId = new TextBox();
             dtpAttendanceDate = new DateTimePicker();
-            txtStatus = new TextBox();
-            btnGetAll = new Button();
+            txtReason = new TextBox();
+            cmbIsPresent = new ComboBox();
             btnGetByEmployeeAndDate = new Button();
             btnCreate = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
             dgvAttendance = new DataGridView();
+            dgvMultipleAttendance = new DataGridView();
+            btnMultipleSave = new Button();
+            tabControlAttendance = new TabControl();
+            tabMultipleAttendance = new TabPage();
+            dateTimePicker2 = new DateTimePicker();
+            dateTimePicker1 = new DateTimePicker();
+            dateTime2 = new DateTimePicker();
+            tabSingleAttendance = new TabPage();
+            btnGetAll = new PictureBox();
+            btnById = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvAttendance).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvMultipleAttendance).BeginInit();
+            tabControlAttendance.SuspendLayout();
+            tabMultipleAttendance.SuspendLayout();
+            tabSingleAttendance.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)btnGetAll).BeginInit();
             SuspendLayout();
             // 
             // lblEmployeeId
             // 
             lblEmployeeId.AutoSize = true;
-            lblEmployeeId.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblEmployeeId.Font = new Font("Arial Rounded MT Bold", 9F);
             lblEmployeeId.ForeColor = Color.Goldenrod;
             lblEmployeeId.Location = new Point(20, 20);
             lblEmployeeId.Name = "lblEmployeeId";
@@ -65,7 +89,7 @@
             // lblDate
             // 
             lblDate.AutoSize = true;
-            lblDate.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblDate.Font = new Font("Arial Rounded MT Bold", 9F);
             lblDate.ForeColor = Color.Goldenrod;
             lblDate.Location = new Point(20, 60);
             lblDate.Name = "lblDate";
@@ -76,58 +100,67 @@
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Arial Rounded MT Bold", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblStatus.Font = new Font("Arial Rounded MT Bold", 9F);
             lblStatus.ForeColor = Color.Goldenrod;
-            lblStatus.Location = new Point(20, 100);
+            lblStatus.Location = new Point(220, 100);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(55, 14);
-            lblStatus.TabIndex = 4;
+            lblStatus.TabIndex = 6;
             lblStatus.Text = "Reason:";
+            // 
+            // lblIsPresent
+            // 
+            lblIsPresent.AutoSize = true;
+            lblIsPresent.Font = new Font("Arial Rounded MT Bold", 9F);
+            lblIsPresent.ForeColor = Color.Goldenrod;
+            lblIsPresent.Location = new Point(20, 100);
+            lblIsPresent.Name = "lblIsPresent";
+            lblIsPresent.Size = new Size(48, 14);
+            lblIsPresent.TabIndex = 4;
+            lblIsPresent.Text = "Status:";
             // 
             // txtEmployeeId
             // 
-            txtEmployeeId.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtEmployeeId.Location = new Point(120, 17);
+            txtEmployeeId.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            txtEmployeeId.Location = new Point(120, 16);
             txtEmployeeId.Name = "txtEmployeeId";
-            txtEmployeeId.Size = new Size(200, 23);
+            txtEmployeeId.Size = new Size(180, 23);
             txtEmployeeId.TabIndex = 1;
             // 
             // dtpAttendanceDate
             // 
-            dtpAttendanceDate.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dtpAttendanceDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
             dtpAttendanceDate.Location = new Point(132, 53);
             dtpAttendanceDate.Name = "dtpAttendanceDate";
-            dtpAttendanceDate.Size = new Size(249, 23);
+            dtpAttendanceDate.Size = new Size(250, 23);
             dtpAttendanceDate.TabIndex = 3;
             // 
-            // txtStatus
+            // txtReason
             // 
-            txtStatus.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtStatus.Location = new Point(120, 97);
-            txtStatus.Name = "txtStatus";
-            txtStatus.Size = new Size(200, 23);
-            txtStatus.TabIndex = 5;
+            txtReason.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            txtReason.Location = new Point(280, 95);
+            txtReason.Name = "txtReason";
+            txtReason.Size = new Size(250, 23);
+            txtReason.TabIndex = 7;
             // 
-            // btnGetAll
+            // cmbIsPresent
             // 
-            btnGetAll.BackColor = Color.Goldenrod;
-            btnGetAll.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnGetAll.Location = new Point(350, 15);
-            btnGetAll.Name = "btnGetAll";
-            btnGetAll.Size = new Size(100, 25);
-            btnGetAll.TabIndex = 6;
-            btnGetAll.Text = "Get All";
-            btnGetAll.UseVisualStyleBackColor = false;
-            btnGetAll.Click += btnGetAll_Click;
+            cmbIsPresent.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbIsPresent.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            cmbIsPresent.Items.AddRange(new object[] { "Present", "Absent" });
+            cmbIsPresent.Location = new Point(80, 95);
+            cmbIsPresent.Name = "cmbIsPresent";
+            cmbIsPresent.Size = new Size(121, 23);
+            cmbIsPresent.TabIndex = 5;
             // 
             // btnGetByEmployeeAndDate
             // 
-            btnGetByEmployeeAndDate.BackColor = Color.Goldenrod;
-            btnGetByEmployeeAndDate.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnGetByEmployeeAndDate.Location = new Point(470, 53);
+            btnGetByEmployeeAndDate.BackColor = SystemColors.MenuHighlight;
+            btnGetByEmployeeAndDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnGetByEmployeeAndDate.Location = new Point(627, 60);
             btnGetByEmployeeAndDate.Name = "btnGetByEmployeeAndDate";
-            btnGetByEmployeeAndDate.Size = new Size(100, 25);
-            btnGetByEmployeeAndDate.TabIndex = 7;
+            btnGetByEmployeeAndDate.Size = new Size(111, 30);
+            btnGetByEmployeeAndDate.TabIndex = 9;
             btnGetByEmployeeAndDate.Text = "Get by ID & Date";
             btnGetByEmployeeAndDate.UseVisualStyleBackColor = false;
             btnGetByEmployeeAndDate.Click += btnGetByEmployeeAndDate_Click;
@@ -135,11 +168,11 @@
             // btnCreate
             // 
             btnCreate.BackColor = Color.FromArgb(0, 192, 0);
-            btnCreate.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCreate.Location = new Point(470, 15);
+            btnCreate.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnCreate.Location = new Point(541, 15);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(100, 25);
-            btnCreate.TabIndex = 8;
+            btnCreate.Size = new Size(80, 30);
+            btnCreate.TabIndex = 10;
             btnCreate.Text = "Create";
             btnCreate.UseVisualStyleBackColor = false;
             btnCreate.Click += btnCreate_Click;
@@ -147,11 +180,11 @@
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.Goldenrod;
-            btnUpdate.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnUpdate.Location = new Point(590, 53);
+            btnUpdate.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnUpdate.Location = new Point(541, 53);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(100, 25);
-            btnUpdate.TabIndex = 9;
+            btnUpdate.Size = new Size(80, 30);
+            btnUpdate.TabIndex = 11;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = false;
             btnUpdate.Click += btnUpdate_Click;
@@ -159,11 +192,11 @@
             // btnDelete
             // 
             btnDelete.BackColor = Color.Red;
-            btnDelete.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(590, 15);
+            btnDelete.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnDelete.Location = new Point(541, 91);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(100, 25);
-            btnDelete.TabIndex = 10;
+            btnDelete.Size = new Size(80, 30);
+            btnDelete.TabIndex = 12;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
@@ -171,33 +204,152 @@
             // dgvAttendance
             // 
             dgvAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvAttendance.Location = new Point(20, 140);
+            dgvAttendance.BackgroundColor = Color.White;
+            dgvAttendance.Location = new Point(20, 164);
             dgvAttendance.Name = "dgvAttendance";
-            dgvAttendance.Size = new Size(821, 528);
-            dgvAttendance.TabIndex = 11;
+            dgvAttendance.ReadOnly = true;
+            dgvAttendance.Size = new Size(770, 476);
+            dgvAttendance.TabIndex = 13;
+            dgvAttendance.CellClick += dgvAttendance_CellClick;
+            // 
+            // dgvMultipleAttendance
+            // 
+            dgvMultipleAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvMultipleAttendance.BackgroundColor = Color.White;
+            dgvMultipleAttendance.Location = new Point(20, 60);
+            dgvMultipleAttendance.Name = "dgvMultipleAttendance";
+            dgvMultipleAttendance.Size = new Size(760, 580);
+            dgvMultipleAttendance.TabIndex = 0;
+            // 
+            // btnMultipleSave
+            // 
+            btnMultipleSave.BackColor = Color.FromArgb(0, 192, 0);
+            btnMultipleSave.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnMultipleSave.Location = new Point(298, 15);
+            btnMultipleSave.Name = "btnMultipleSave";
+            btnMultipleSave.Size = new Size(140, 30);
+            btnMultipleSave.TabIndex = 1;
+            btnMultipleSave.Text = "Create Date";
+            btnMultipleSave.UseVisualStyleBackColor = false;
+            btnMultipleSave.Click += btnMultipleSave_Click;
+            // 
+            // tabControlAttendance
+            // 
+            tabControlAttendance.Controls.Add(tabMultipleAttendance);
+            tabControlAttendance.Controls.Add(tabSingleAttendance);
+            tabControlAttendance.Font = new Font("Arial Rounded MT Bold", 9F);
+            tabControlAttendance.Location = new Point(5, 5);
+            tabControlAttendance.Name = "tabControlAttendance";
+            tabControlAttendance.SelectedIndex = 0;
+            tabControlAttendance.Size = new Size(810, 670);
+            tabControlAttendance.TabIndex = 0;
+            // 
+            // tabMultipleAttendance
+            // 
+            tabMultipleAttendance.BackColor = Color.White;
+            tabMultipleAttendance.Controls.Add(dateTimePicker2);
+            tabMultipleAttendance.Controls.Add(dateTimePicker1);
+            tabMultipleAttendance.Controls.Add(dateTime2);
+            tabMultipleAttendance.Controls.Add(btnMultipleSave);
+            tabMultipleAttendance.Controls.Add(dgvMultipleAttendance);
+            tabMultipleAttendance.Location = new Point(4, 23);
+            tabMultipleAttendance.Name = "tabMultipleAttendance";
+            tabMultipleAttendance.Size = new Size(802, 643);
+            tabMultipleAttendance.TabIndex = 1;
+            tabMultipleAttendance.Text = "Create Date";
+            // 
+            // dateTimePicker2
+            // 
+            dateTimePicker2.Location = new Point(36, 19);
+            dateTimePicker2.Name = "dateTimePicker2";
+            dateTimePicker2.Size = new Size(244, 21);
+            dateTimePicker2.TabIndex = 2;
+            dateTimePicker2.Value = new DateTime(2025, 6, 15, 13, 4, 55, 0);
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(36, 19);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(244, 21);
+            dateTimePicker1.TabIndex = 2;
+            // 
+            // dateTime2
+            // 
+            dateTime2.Location = new Point(36, 19);
+            dateTime2.Name = "dateTime2";
+            dateTime2.Size = new Size(244, 21);
+            dateTime2.TabIndex = 2;
+            // 
+            // tabSingleAttendance
+            // 
+            tabSingleAttendance.BackColor = Color.White;
+            tabSingleAttendance.Controls.Add(btnGetAll);
+            tabSingleAttendance.Controls.Add(btnById);
+            tabSingleAttendance.Controls.Add(lblEmployeeId);
+            tabSingleAttendance.Controls.Add(txtEmployeeId);
+            tabSingleAttendance.Controls.Add(lblDate);
+            tabSingleAttendance.Controls.Add(dtpAttendanceDate);
+            tabSingleAttendance.Controls.Add(lblIsPresent);
+            tabSingleAttendance.Controls.Add(cmbIsPresent);
+            tabSingleAttendance.Controls.Add(lblStatus);
+            tabSingleAttendance.Controls.Add(txtReason);
+            tabSingleAttendance.Controls.Add(btnGetByEmployeeAndDate);
+            tabSingleAttendance.Controls.Add(btnCreate);
+            tabSingleAttendance.Controls.Add(btnUpdate);
+            tabSingleAttendance.Controls.Add(btnDelete);
+            tabSingleAttendance.Controls.Add(dgvAttendance);
+            tabSingleAttendance.Location = new Point(4, 23);
+            tabSingleAttendance.Name = "tabSingleAttendance";
+            tabSingleAttendance.Size = new Size(802, 643);
+            tabSingleAttendance.TabIndex = 0;
+            tabSingleAttendance.Text = "Single Attendance";
+            // 
+            // btnGetAll
+            // 
+            btnGetAll.Image = Properties.Resources.icons8_refresh_48;
+            btnGetAll.Location = new Point(20, 155);
+            btnGetAll.Name = "btnGetAll";
+            btnGetAll.Size = new Size(31, 22);
+            btnGetAll.SizeMode = PictureBoxSizeMode.Zoom;
+            btnGetAll.TabIndex = 15;
+            btnGetAll.TabStop = false;
+            btnGetAll.Click += btnGetAll_Click;
+            // 
+            // btnById
+            // 
+            btnById.BackColor = SystemColors.MenuHighlight;
+            btnById.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnById.Location = new Point(627, 16);
+            btnById.Name = "btnById";
+            btnById.Size = new Size(80, 28);
+            btnById.TabIndex = 14;
+            btnById.Text = "Get By ID";
+            btnById.UseVisualStyleBackColor = false;
+            btnById.Click += btnById_Click;
             // 
             // Attendance
             // 
             BackColor = Color.White;
-            Controls.Add(lblEmployeeId);
-            Controls.Add(txtEmployeeId);
-            Controls.Add(lblDate);
-            Controls.Add(dtpAttendanceDate);
-            Controls.Add(lblStatus);
-            Controls.Add(txtStatus);
-            Controls.Add(btnGetAll);
-            Controls.Add(btnGetByEmployeeAndDate);
-            Controls.Add(btnCreate);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnDelete);
-            Controls.Add(dgvAttendance);
+            Controls.Add(tabControlAttendance);
             Name = "Attendance";
-            Size = new Size(855, 690);
+            Size = new Size(820, 680);
+            Load += Attendance_Load;
             ((System.ComponentModel.ISupportInitialize)dgvAttendance).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvMultipleAttendance).EndInit();
+            tabControlAttendance.ResumeLayout(false);
+            tabMultipleAttendance.ResumeLayout(false);
+            tabSingleAttendance.ResumeLayout(false);
+            tabSingleAttendance.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)btnGetAll).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
+
+        private DateTimePicker dateTime2;
+        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dateTimePicker2;
+        private Button btnById;
+        private PictureBox btnGetAll;
     }
 }

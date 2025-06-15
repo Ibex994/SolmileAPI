@@ -125,11 +125,6 @@ namespace Solmile.Forms.ManagerForms
             this.Close();
         }
 
-        private void pictureBoxMinimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
         private void btnAttendance_Click(object sender, EventArgs e)
         {
             OpenChildForm(new Attendance(), sender);
@@ -228,6 +223,11 @@ namespace Solmile.Forms.ManagerForms
         {
             timer1.Start();
             labelUsername.Text = username;
+        }
+
+        private void pictureBoxMinimize_Click_1(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }

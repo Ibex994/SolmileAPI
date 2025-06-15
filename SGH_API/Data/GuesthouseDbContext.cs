@@ -200,11 +200,18 @@ namespace SolmileGuesthouseAPI.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Attendance → Employee
-            modelBuilder.Entity<Attendance>()
-                .HasOne(a => a.Employee)
-                .WithMany(e => e.Attendances)
-                .HasForeignKey(a => a.EmployeeId)
+            modelBuilder.Entity<EmployeeAttendance>()
+                .HasOne(ea => ea.Employee)
+                .WithMany(e => e.EmployeeAttendances)
+                .HasForeignKey(ea => ea.EmployeeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EmployeeAttendance>()
+                .HasOne(ea => ea.Attendance)
+                .WithMany(a => a.EmployeeAttendances)
+                .HasForeignKey(ea => ea.AttendanceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             // MonthlyAttendanceSummary
             modelBuilder.Entity<MonthlyAttendanceSummary>()

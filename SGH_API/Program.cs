@@ -84,6 +84,7 @@ builder.Services.AddScoped<TaxInterface, TaxRepo>();
 builder.Services.AddScoped<PaymentInterface, PaymentRepo>();
 builder.Services.AddScoped<PaymentMethodInterface, PaymentMethodRepo>();
 builder.Services.AddScoped<TaxBracketInterface,TaxBracketRepo>();
+builder.Services.AddScoped<MonthlyAttendanceSummaryInterface, MonthlyAttendanceSummaryRepo>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Enable Reference Handling
 builder.Services.AddControllers()

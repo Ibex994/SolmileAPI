@@ -118,6 +118,7 @@
             pictureBoxMinimize.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxMinimize.TabIndex = 3;
             pictureBoxMinimize.TabStop = false;
+            pictureBoxMinimize.Click += pictureBoxMinimize_Click_1;
             // 
             // panelLogo
             // 

@@ -13,9 +13,11 @@ namespace SolmileGuesthouseAPI.Interface
 
         Task<List<EmployeeAttendance>> GetAttendanceByDateAsync(DateTime attendanceDate);
 
-        Task<bool> CreateDailyAttendanceAsync(DateTime date, List<EmployeeAttendance> employeeAttendances);
+        Task<bool> CreateDailyEmployeeAttendanceAsync(DateTime date, List<EmployeeAttendance> employeeAttendances);
 
         Task<(AttendanceResponse Response, EmployeeAttendance? Data)> UpdateEmployeeAttendanceAsync(EmployeeAttendance updated);
         Task<bool> DeleteAttendanceAsync(int employeeId, DateTime attendanceDate);
+        Task<bool> CreateDailyAttendanceAsync(DateTime attendanceDate);
+        Task<IEnumerable<DateTime>> GetAllAttendanceDatesAsync();
     }
 }

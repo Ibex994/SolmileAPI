@@ -175,6 +175,14 @@ namespace SolmileGuesthouseAPI.Data
                 .WithMany(e => e.Payrolls)
                 .HasForeignKey(p => p.EmployeeId)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Payroll>(entity =>
+            {
+                entity.Property(p => p.BasicSalary).HasPrecision(18, 2);
+                entity.Property(p => p.Allowances).HasPrecision(18, 2);
+                entity.Property(p => p.Tax).HasPrecision(18, 2);
+                entity.Property(p => p.Deductions).HasPrecision(18, 2);
+                entity.Property(p => p.NetSalary).HasPrecision(18, 2);
+            });
             //Tax
             modelBuilder.Entity<Tax>()
                  .HasOne(t => t.Employee)
@@ -212,13 +220,12 @@ namespace SolmileGuesthouseAPI.Data
                 .HasForeignKey(ea => ea.AttendanceId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
             // MonthlyAttendanceSummary
             modelBuilder.Entity<MonthlyAttendanceSummary>()
-                .HasOne(m => m.Employee)
-                .WithOne(e => e.MonthlyAttendanceSummary)
-                .HasForeignKey<MonthlyAttendanceSummary>(m => m.EmployeeId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(s => s.Employee)
+                .WithMany(e => e.MonthlySummaries)
+                .HasForeignKey(s => s.EmployeeId);
+
             // YearlyRatingsSummary
             modelBuilder.Entity<YearlyRatingsSummary>()
                 .HasOne(y => y.Employee)

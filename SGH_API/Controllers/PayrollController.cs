@@ -89,9 +89,9 @@ namespace SolmileGuesthouseAPI.Controllers
                     return BadRequest("No applicable tax bracket found for the given basic salary.");
                 }
 
-                payroll.Tax = (decimal)(payroll.BasicSalary * 0.15); 
+                payroll.Tax = payroll.BasicSalary * 0.15m; 
 
-                payroll.NetSalary = (double)payroll.BasicSalary + (double)payroll.Allowances - (double)payroll.Deductions - (double)payroll.Tax;
+                payroll.NetSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions - payroll.Tax;
 
 
                 var createdPayroll = await _payrollInterface.CreateOrUpdatePayrollAsync(payroll);

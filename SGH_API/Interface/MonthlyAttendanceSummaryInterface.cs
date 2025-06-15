@@ -6,7 +6,8 @@ namespace SolmileGuesthouseAPI.Interface
 {
     public interface MonthlyAttendanceSummaryInterface
     {
-        Task<IEnumerable<MonthlyAttendanceSummaryDto>> GetMonthlySummariesAsync(string yearMonth);
+        Task GetMonthlySummariesAsync(string yearMonth);
+        Task<List<MonthlyAttendanceSummaryDto>> GetMonthlySummariesDataAsync(string yearMonth);
         Task<MonthlyAttendanceSummaryDto?> GetMonthlySummaryByEmployeeIdAsync(int employeeId, string yearMonth);
     }
 }

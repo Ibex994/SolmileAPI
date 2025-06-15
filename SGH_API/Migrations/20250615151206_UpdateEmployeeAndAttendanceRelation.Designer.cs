@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolmileGuesthouseAPI.Data;
 
@@ -11,9 +12,11 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    partial class GuesthouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250615151206_UpdateEmployeeAndAttendanceRelation")]
+    partial class UpdateEmployeeAndAttendanceRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -396,34 +399,29 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PayrollId"));
 
-                    b.Property<decimal>("Allowances")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Allowances")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("BasicSalary")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("BasicSalary")
+                        .HasColumnType("float");
 
                     b.Property<string>("DeductionReason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Deductions")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Deductions")
+                        .HasColumnType("float");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("NetSalary")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("NetSalary")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("PayPeriod")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Tax")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("PayrollId");

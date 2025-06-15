@@ -295,12 +295,30 @@ namespace SolmileGuesthouseAPI.Controllers
             }
         }
 
-        [HttpGet("monthly-summary")]
-        public async Task<IActionResult> GetAll([FromQuery] string yearMonth)
+        [HttpPost("monthly-summary/{yearMonth}")]
+        public async Task<IActionResult> GenerateMonthlySummary(string yearMonth)
         {
-            var result = await _monthlyAttendanceSummaryInterface.GetMonthlySummariesAsync(yearMonth);
-            return Ok(result);
+            await _monthlyAttendanceSummaryInterface.GetMonthlySummariesAsync(yearMonth);
+            return Ok(new { message = $"Monthly summaries for {yearMonth} generated successfully." });
         }
+        [HttpGet("monthly-summary/{yearMonth}")]
+        public async Task<IActionResult> GetMonthlySummary(string yearMonth)
+        {
+            try
+            {
+                var summaries = await _monthlyAttendanceSummaryInterface.GetMonthlySummariesDataAsync(yearMonth);
+                if (summaries == null || !summaries.Any())
+                    return NotFound($"No summaries found for {yearMonth}.");
+
+                return Ok(summaries);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving monthly summary for {YearMonth}", yearMonth);
+                return StatusCode(500, "Error retrieving monthly summary.");
+            }
+        }
+
 
         [HttpGet("monthly-summary/employee/{employeeId}/year-month/{yearMonth}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

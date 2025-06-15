@@ -43,7 +43,7 @@ namespace SolmileGuesthouseAPI.Data.Models
         public ICollection<Tax> Taxs { get; set; }
         public ICollection<Attendance> Attendances { get; set; }
         public ICollection<EmployeeAttendance> EmployeeAttendances { get; set; }
-        public MonthlyAttendanceSummary MonthlyAttendanceSummary { get; set; }
+        public ICollection<MonthlyAttendanceSummary> MonthlySummaries { get; set; } = new List<MonthlyAttendanceSummary>();
         public YearlyRatingsSummary YearlyRatingsSummary { get; set; }
     }
 }

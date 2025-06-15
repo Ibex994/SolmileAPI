@@ -62,9 +62,9 @@ namespace SolmileGuesthouseAPI.Repository
             var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
             if (payroll == null) throw new Exception("Payroll not found");
 
-            payroll.Tax = (decimal)(payroll.BasicSalary * 0.15);
+            payroll.Tax = payroll.BasicSalary * 0.15m;
 
-            payroll.NetSalary = (double)payroll.BasicSalary + (double)payroll.Allowances - (double)payroll.Deductions - (double)payroll.Tax;
+            payroll.NetSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions - payroll.Tax;
 
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
@@ -222,7 +222,7 @@ namespace SolmileGuesthouseAPI.Repository
             var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
             if (payroll == null) throw new Exception("Payroll not found");
 
-            payroll.Deductions += amount;
+            payroll.Deductions += (decimal)amount;
             payroll.DeductionReason = reason;
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }

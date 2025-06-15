@@ -16,7 +16,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
 {
     public partial class Attendance : UserControl
     {
-        private const string BaseUrl = "https://localhost:7107/api/Attendance/update";
+        private const string BaseUrl = "https://localhost:7107/api/Attendance/";
         private readonly HttpClient httpClient;
         private List<DailyAttendCreateDto> savedDates = new();
 
@@ -64,7 +64,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 ShowUserFriendlyError("Invalid Input", "Enter a valid Employee ID.");
                 return;
             }
-
+            ClearForm();
             try
             {
                 DateTime date = dtpAttendanceDate.Value;
@@ -80,6 +80,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                         cmbIsPresent.SelectedIndex = 0;
                     });
                     return;
+                    ClearForm();
                 }
 
                 response.EnsureSuccessStatusCode();
@@ -93,9 +94,8 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                         ShowUserFriendlyError("Not Found", "Attendance record is empty.");
                         txtReason.Clear();
                         cmbIsPresent.SelectedIndex = 0;
-                        return;
+                        return;        
                     }
-
                     txtReason.Text = attendance.Reason ?? "";
                     cmbIsPresent.SelectedIndex = attendance.IsPresent ? 0 : 1;
                 });
@@ -104,6 +104,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             {
                 Invoke(() => ShowUserFriendlyError("Search Failed", GetUserFriendlyError(ex)));
             }
+            ClearForm();
         }
 
         private async Task CreateAttendanceAsync()
@@ -113,7 +114,6 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 ShowUserFriendlyError("Invalid ID", "Enter a valid Employee ID.");
                 return;
             }
-
             try
             {
                 bool isPresent = cmbIsPresent.SelectedIndex == 0;
@@ -160,6 +160,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             {
                 Invoke(() => ShowUserFriendlyError("Error", GetUserFriendlyError(ex)));
             }
+            ClearForm();
         }
         private async Task UpdateAttendanceAsync()
         {
@@ -204,6 +205,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             {
                 Invoke(() => MessageBox.Show("Error: " + GetUserFriendlyError(ex)));
             }
+            ClearForm();
         }
 
         private async Task DeleteAttendanceAsync()
@@ -250,6 +252,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             {
                 Invoke(() => MessageBox.Show("Error: " + GetUserFriendlyError(ex)));
             }
+            ClearForm();
         }
 
         private void ShowUserFriendlyError(string title, string message)
@@ -259,17 +262,22 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
 
         private string GetUserFriendlyError(Exception ex)
         {
-            if (ex is HttpRequestException httpEx)
-                return $"HTTP Error: {httpEx.Message}";
+            switch (ex)
+            {
+                case HttpRequestException httpEx:
+                    return $"Network Error:\n{httpEx.Message}\n\nPlease check your internet connection or try again later.";
 
-            if (ex is System.Text.Json.JsonException jsonEx)
-                return $"JSON Parse Error: {jsonEx.Message}";
+                case System.Text.Json.JsonException jsonEx:
+                    return $"Data Processing Error:\n{jsonEx.Message}\n\nThe server response could not be processed.";
 
-            if (ex.InnerException != null)
-                return $"Internal Error: {ex.InnerException.Message}";
+                default:
+                    if (ex.InnerException != null)
+                        return $"Internal Error:\n{ex.InnerException.Message}";
 
-            return $"Unexpected Error: {ex.Message}";
+                    return $"Unexpected Error:\n{ex.Message}\n\nPlease contact support if the problem continues.";
+            }
         }
+
 
         private async void btnGetAll_Click(object sender, EventArgs e)
         {
@@ -306,53 +314,6 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             btnDelete.Enabled = true;
         }
 
-        //private async void btnMultipleLoad_Click(object sender, EventArgs e)
-        //{
-        //    btnMultipleLoad.Enabled = false;
-
-        //    try
-        //    {
-        //        DateTime selectedDate = dateTime2.Value.Date;
-        //        string formattedDate = selectedDate.ToString("MMMM-dd-yyyy");
-        //        string url = $"date/{formattedDate}";
-        //        var response = await httpClient.GetAsync(url).ConfigureAwait(false);
-
-        //        if (response.StatusCode == HttpStatusCode.NotFound)
-        //        {
-        //            Invoke(() =>
-        //            {
-        //                MessageBox.Show($"No attendance records found for {formattedDate}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //                dgvAttendance.DataSource = null;
-        //            });
-        //            return;
-        //        }
-
-        //        if (!response.IsSuccessStatusCode)
-        //        {
-        //            var error = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-        //            Invoke(() => ShowUserFriendlyError("Server Error", error));
-        //            return;
-        //        }
-
-        //        var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-        //        var attendances = JsonConvert.DeserializeObject<List<EmployeeAttendanceCreateDto>>(json);
-
-        //        Invoke(() =>
-        //        {
-        //            dgvAttendance.DataSource = attendances ?? new List<EmployeeAttendanceCreateDto>();
-        //            MessageBox.Show($"Loaded {attendances.Count} record(s) for {formattedDate}.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Invoke(() => ShowUserFriendlyError("Unexpected Error", GetUserFriendlyError(ex)));
-        //    }
-        //    finally
-        //    {
-        //        btnMultipleLoad.Enabled = true;
-        //    }
-        //}
-
         private async Task<bool> SaveAttendanceDateAsync(DateTime attendanceDate)
         {
             var createDto = new DailyAttendCreateDto
@@ -374,9 +335,8 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 savedDates.Add(createDto);
                 dgvMultipleAttendance.DataSource = null;
                 dgvMultipleAttendance.DataSource = savedDates;
-                MessageBox.Show("Attendance date saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Attendance For {attendanceDate.ToString("MM/dd/yyyy")} date saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
-
             return true;
         }
 
@@ -387,7 +347,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             try
             {
                 var attendanceDate = dateTime2.Value.Date;
-                MessageBox.Show(attendanceDate.ToString("MM/dd/yyyy"));
+
                 await SaveAttendanceDateAsync(attendanceDate);
             }
             catch (Exception ex)
@@ -416,7 +376,6 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 else
                 {
                     string error = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"Failed to load attendance dates.\n\n{error}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -494,7 +453,124 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                     dgvAttendance.DataSource = new List<EmployeeAttendanceCreateDto> { attendance };
                 }
             }
+            ClearForm();
         }
 
+        private async void btnGenerateSummary_Click(object sender, EventArgs e)
+        {
+
+            var selectedDate = dateTime2.Value.Date;
+            string yearMonth = selectedDate.ToString("yyyy-MM");
+
+            try
+            {
+                var generateResponse = await httpClient.PostAsync($"monthly-summary/{yearMonth}", null);
+                if (!generateResponse.IsSuccessStatusCode)
+                {
+                    MessageBox.Show(
+                        $"❗ Could not generate monthly summary for {yearMonth}.\n" +
+                        $"Please ensure attendance records exist for that month and try again.",
+                        "Generation Failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    return;
+                }
+
+                var summaryResponse = await httpClient.GetAsync($"monthly-summary/{yearMonth}");
+                if (!summaryResponse.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Summary was generated but could not be loaded.\nPlease try refreshing.", "Load Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var summaryList = await summaryResponse.Content.ReadFromJsonAsync<List<MonthlyAttendanceSummaryDto>>();
+
+                if (summaryList != null && summaryList.Any())
+                {
+                    dgvMonthlySummary.DataSource = summaryList.Select(s => new
+                    {
+                        s.EmployeeId,
+                        s.EmployeeFullName,
+                        s.YearMonth,
+                        s.TotalDaysPresent
+                    }).ToList();
+                }
+                else
+                {
+                    MessageBox.Show("No summary data available for the selected month.", "No Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred:\n\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private async void btnGetIdDate_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(txtEmpId.Text.Trim(), out int employeeId))
+            {
+                MessageBox.Show("Please enter a valid numeric Employee ID.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string yearMonth = dateTimePicker1.Value.ToString("yyyy-MM");
+
+            try
+            {
+                string url = $"monthly-summary/employee/{employeeId}/year-month/{yearMonth}";
+                HttpResponseMessage response = await httpClient.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var summary = await response.Content.ReadFromJsonAsync<MonthlyAttendanceSummaryDto>();
+                    dgvMonthlySummary.DataSource = new List<MonthlyAttendanceSummaryDto> { summary };
+                    ClearForm();
+                }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    MessageBox.Show(
+                        $"No summary data found for Employee ID {employeeId} in {yearMonth}.",
+                        "No Data Found",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
+                    
+                }
+                else
+                {
+                    string error = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Unexpected server error:\n{error}", "Server Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred:\n\n{ex.Message}", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            ClearForm();
+        }
+
+        private void ClearForm()
+        {
+            txtEmpId.Text = string.Empty;
+            txtEmployeeId.Text = string.Empty;
+            dateTimePicker1.Value = DateTime.Today;
+            dateTimePicker2.Value = DateTime.Today;
+            dtpAttendanceDate.Value = DateTime.Today;
+            txtEmpId.Focus();
+            txtEmployeeId.Focus();
+        }
+
+        private void btnClear_Click_1(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
+
+        private void clear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
     }
 }

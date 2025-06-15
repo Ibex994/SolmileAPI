@@ -31,6 +31,7 @@ namespace SolmileGuesthouseAPI.Data.Models
         public int EmployeeId { get; set; }
         public string YearMonth { get; set; }
         public int TotalDaysPresent { get; set; }
+        public string? EmployeeFullName { get; set; }
         public Employee Employee { get; set; }
     }
 }

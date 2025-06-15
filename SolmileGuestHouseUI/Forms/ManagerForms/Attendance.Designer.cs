@@ -10,8 +10,9 @@
         private System.Windows.Forms.Label lblIsPresent;
 
         private System.Windows.Forms.ComboBox cmbIsPresent;
+        //private System.Windows.Forms.TextBox.txtEmployeeId;
 
-        private System.Windows.Forms.TextBox txtEmployeeId;
+
         private System.Windows.Forms.DateTimePicker dtpAttendanceDate;
         private System.Windows.Forms.TextBox txtReason;
         private System.Windows.Forms.Button btnGetByEmployeeAndDate;
@@ -22,6 +23,10 @@
         private System.Windows.Forms.TabControl tabControlAttendance;
         private System.Windows.Forms.TabPage tabSingleAttendance;
         private System.Windows.Forms.TabPage tabMultipleAttendance;
+
+        private TabPage tabSummary;
+        private Button btnGenerateSummary;
+        private DataGridView dgvMonthlySummary;
 
         private System.Windows.Forms.DataGridView dgvAttendance;
         private System.Windows.Forms.DataGridView dgvMultipleAttendance;
@@ -48,7 +53,6 @@
             lblDate = new Label();
             lblStatus = new Label();
             lblIsPresent = new Label();
-            txtEmployeeId = new TextBox();
             dtpAttendanceDate = new DateTimePicker();
             txtReason = new TextBox();
             cmbIsPresent = new ComboBox();
@@ -65,14 +69,25 @@
             dateTimePicker1 = new DateTimePicker();
             dateTime2 = new DateTimePicker();
             tabSingleAttendance = new TabPage();
+            txtEmployeeId = new TextBox();
             btnGetAll = new PictureBox();
             btnById = new Button();
+            btnClear = new Button();
+            tabSummary = new TabPage();
+            txtEmpId = new TextBox();
+            dtpSummaryMonth = new DateTimePicker();
+            btnGetIdDate = new Button();
+            btnGenerateSummary = new Button();
+            dgvMonthlySummary = new DataGridView();
+            clear = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvAttendance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvMultipleAttendance).BeginInit();
             tabControlAttendance.SuspendLayout();
             tabMultipleAttendance.SuspendLayout();
             tabSingleAttendance.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnGetAll).BeginInit();
+            tabSummary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvMonthlySummary).BeginInit();
             SuspendLayout();
             // 
             // lblEmployeeId
@@ -119,14 +134,6 @@
             lblIsPresent.TabIndex = 4;
             lblIsPresent.Text = "Status:";
             // 
-            // txtEmployeeId
-            // 
-            txtEmployeeId.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            txtEmployeeId.Location = new Point(120, 16);
-            txtEmployeeId.Name = "txtEmployeeId";
-            txtEmployeeId.Size = new Size(180, 23);
-            txtEmployeeId.TabIndex = 1;
-            // 
             // dtpAttendanceDate
             // 
             dtpAttendanceDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
@@ -157,7 +164,7 @@
             // 
             btnGetByEmployeeAndDate.BackColor = SystemColors.MenuHighlight;
             btnGetByEmployeeAndDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnGetByEmployeeAndDate.Location = new Point(627, 60);
+            btnGetByEmployeeAndDate.Location = new Point(627, 51);
             btnGetByEmployeeAndDate.Name = "btnGetByEmployeeAndDate";
             btnGetByEmployeeAndDate.Size = new Size(111, 30);
             btnGetByEmployeeAndDate.TabIndex = 9;
@@ -205,7 +212,7 @@
             // 
             dgvAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAttendance.BackgroundColor = Color.White;
-            dgvAttendance.Location = new Point(20, 164);
+            dgvAttendance.Location = new Point(20, 127);
             dgvAttendance.Name = "dgvAttendance";
             dgvAttendance.ReadOnly = true;
             dgvAttendance.Size = new Size(770, 476);
@@ -237,6 +244,7 @@
             // 
             tabControlAttendance.Controls.Add(tabMultipleAttendance);
             tabControlAttendance.Controls.Add(tabSingleAttendance);
+            tabControlAttendance.Controls.Add(tabSummary);
             tabControlAttendance.Font = new Font("Arial Rounded MT Bold", 9F);
             tabControlAttendance.Location = new Point(5, 5);
             tabControlAttendance.Name = "tabControlAttendance";
@@ -283,16 +291,17 @@
             // tabSingleAttendance
             // 
             tabSingleAttendance.BackColor = Color.White;
+            tabSingleAttendance.Controls.Add(txtEmployeeId);
             tabSingleAttendance.Controls.Add(btnGetAll);
             tabSingleAttendance.Controls.Add(btnById);
             tabSingleAttendance.Controls.Add(lblEmployeeId);
-            tabSingleAttendance.Controls.Add(txtEmployeeId);
             tabSingleAttendance.Controls.Add(lblDate);
             tabSingleAttendance.Controls.Add(dtpAttendanceDate);
             tabSingleAttendance.Controls.Add(lblIsPresent);
             tabSingleAttendance.Controls.Add(cmbIsPresent);
             tabSingleAttendance.Controls.Add(lblStatus);
             tabSingleAttendance.Controls.Add(txtReason);
+            tabSingleAttendance.Controls.Add(btnClear);
             tabSingleAttendance.Controls.Add(btnGetByEmployeeAndDate);
             tabSingleAttendance.Controls.Add(btnCreate);
             tabSingleAttendance.Controls.Add(btnUpdate);
@@ -303,6 +312,13 @@
             tabSingleAttendance.Size = new Size(802, 643);
             tabSingleAttendance.TabIndex = 0;
             tabSingleAttendance.Text = "Single Attendance";
+            // 
+            // txtEmployeeId
+            // 
+            txtEmployeeId.Location = new Point(132, 17);
+            txtEmployeeId.Name = "txtEmployeeId";
+            txtEmployeeId.Size = new Size(250, 21);
+            txtEmployeeId.TabIndex = 16;
             // 
             // btnGetAll
             // 
@@ -327,6 +343,92 @@
             btnById.UseVisualStyleBackColor = false;
             btnById.Click += btnById_Click;
             // 
+            // btnClear
+            // 
+            btnClear.BackColor = SystemColors.MenuHighlight;
+            btnClear.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnClear.Location = new Point(737, 609);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(53, 30);
+            btnClear.TabIndex = 9;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = false;
+            btnClear.Click += btnClear_Click_1;
+            // 
+            // tabSummary
+            // 
+            tabSummary.BackColor = Color.White;
+            tabSummary.Controls.Add(clear);
+            tabSummary.Controls.Add(txtEmpId);
+            tabSummary.Controls.Add(dtpSummaryMonth);
+            tabSummary.Controls.Add(btnGetIdDate);
+            tabSummary.Controls.Add(btnGenerateSummary);
+            tabSummary.Controls.Add(dgvMonthlySummary);
+            tabSummary.Location = new Point(4, 23);
+            tabSummary.Name = "tabSummary";
+            tabSummary.Size = new Size(802, 643);
+            tabSummary.TabIndex = 2;
+            tabSummary.Text = "Monthly Summary";
+            // 
+            // txtEmpId
+            // 
+            txtEmpId.Location = new Point(215, 26);
+            txtEmpId.Name = "txtEmpId";
+            txtEmpId.Size = new Size(231, 21);
+            txtEmpId.TabIndex = 5;
+            // 
+            // dtpSummaryMonth
+            // 
+            dtpSummaryMonth.Location = new Point(215, 53);
+            dtpSummaryMonth.Name = "dtpSummaryMonth";
+            dtpSummaryMonth.Size = new Size(231, 21);
+            dtpSummaryMonth.TabIndex = 4;
+            // 
+            // btnGetIdDate
+            // 
+            btnGetIdDate.BackColor = SystemColors.MenuHighlight;
+            btnGetIdDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnGetIdDate.Location = new Point(467, 26);
+            btnGetIdDate.Name = "btnGetIdDate";
+            btnGetIdDate.Size = new Size(131, 25);
+            btnGetIdDate.TabIndex = 1;
+            btnGetIdDate.Text = "Get By ID&Date";
+            btnGetIdDate.UseVisualStyleBackColor = false;
+            btnGetIdDate.Click += btnGetIdDate_Click;
+            // 
+            // btnGenerateSummary
+            // 
+            btnGenerateSummary.BackColor = Color.MediumSeaGreen;
+            btnGenerateSummary.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnGenerateSummary.Location = new Point(467, 58);
+            btnGenerateSummary.Name = "btnGenerateSummary";
+            btnGenerateSummary.Size = new Size(146, 25);
+            btnGenerateSummary.TabIndex = 1;
+            btnGenerateSummary.Text = "Generate Summary";
+            btnGenerateSummary.UseVisualStyleBackColor = false;
+            btnGenerateSummary.Click += btnGenerateSummary_Click;
+            // 
+            // dgvMonthlySummary
+            // 
+            dgvMonthlySummary.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvMonthlySummary.BackgroundColor = Color.White;
+            dgvMonthlySummary.Location = new Point(30, 97);
+            dgvMonthlySummary.Name = "dgvMonthlySummary";
+            dgvMonthlySummary.Size = new Size(760, 513);
+            dgvMonthlySummary.TabIndex = 2;
+            // 
+            // clear
+            // 
+            clear.BackColor = SystemColors.MenuHighlight;
+            clear.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            clear.Location = new Point(737, 613);
+            clear.Name = "clear";
+            clear.Size = new Size(53, 30);
+            clear.TabIndex = 10;
+            clear.Text = "Clear";
+            clear.UseVisualStyleBackColor = false;
+            clear.Click += clear_Click;
+            // 
             // Attendance
             // 
             BackColor = Color.White;
@@ -341,6 +443,9 @@
             tabSingleAttendance.ResumeLayout(false);
             tabSingleAttendance.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnGetAll).EndInit();
+            tabSummary.ResumeLayout(false);
+            tabSummary.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvMonthlySummary).EndInit();
             ResumeLayout(false);
         }
 
@@ -351,5 +456,11 @@
         private DateTimePicker dateTimePicker2;
         private Button btnById;
         private PictureBox btnGetAll;
+        private Button btnGetIdDate;
+        private DateTimePicker dtpSummaryMonth;
+        private TextBox txtEmployeeId;
+        private TextBox txtEmpId;
+        private Button btnClear;
+        private Button clear;
     }
 }

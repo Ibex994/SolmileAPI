@@ -43,6 +43,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         public int EmployeeId { get; set; }
         public string YearMonth { get; set; } = string.Empty;
         public int TotalDaysPresent { get; set; }
-        public string? EmployeeFullName { get; set; } // Optional: for display
+        public string? EmployeeFullName { get; set; }
     }
 }

@@ -16,32 +16,53 @@ namespace SolmileGuesthouseAPI.Repository
         {
             _context = context;
         }
-        public async Task<IEnumerable<MonthlyAttendanceSummaryDto>> GetMonthlySummariesAsync(string yearMonth)
+        public async Task GetMonthlySummariesAsync(string yearMonth)
         {
-            if (!DateTime.TryParseExact(yearMonth + "-01", "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate))
-                return Enumerable.Empty<MonthlyAttendanceSummaryDto>();
+            if (!DateTime.TryParseExact(yearMonth, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedMonth))
+                return;
 
-            DateTime endDate = startDate.AddMonths(1);
+            var startDate = new DateTime(parsedMonth.Year, parsedMonth.Month, 1);
+            var endDate = startDate.AddMonths(1);
 
-            return await _context.EmployeeAttendances
+            var summaries = await _context.EmployeeAttendances
+                .Include(a => a.Employee)
                 .Where(a => a.AttendanceDate >= startDate && a.AttendanceDate < endDate && a.IsPresent)
-                .GroupBy(a => new { a.EmployeeId, a.Employee.FirstName, a.Employee.LastName })
-                .Select(g => new MonthlyAttendanceSummaryDto
+                .GroupBy(a => new { a.EmployeeId })
+                .Select(g => new MonthlyAttendanceSummary
                 {
                     EmployeeId = g.Key.EmployeeId,
                     YearMonth = yearMonth,
                     TotalDaysPresent = g.Count(),
-                    EmployeeFullName = g.Key.FirstName + " " + g.Key.LastName
+                    EmployeeFullName = g.Select(a => a.Employee != null ? a.Employee.Username : "Unknown").FirstOrDefault()
                 })
                 .ToListAsync();
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var existing = _context.monthlyAttendanceSummaries.Where(s => s.YearMonth == yearMonth);
+                _context.monthlyAttendanceSummaries.RemoveRange(existing);
+                await _context.monthlyAttendanceSummaries.AddRangeAsync(summaries);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public async Task<MonthlyAttendanceSummaryDto?> GetMonthlySummaryByEmployeeIdAsync(int employeeId, string yearMonth)
         {
-            if (!DateTime.TryParseExact(yearMonth + "-01", "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate))
+            if (!DateTime.TryParseExact(yearMonth, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedMonth))
                 return null;
 
-            DateTime endDate = startDate.AddMonths(1);
+            var startDate = new DateTime(parsedMonth.Year, parsedMonth.Month, 1);
+            var endDate = startDate.AddMonths(1);
+
 
             var query = await _context.EmployeeAttendances
                 .Where(a => a.EmployeeId == employeeId && a.AttendanceDate >= startDate && a.AttendanceDate < endDate && a.IsPresent)
@@ -57,6 +78,27 @@ namespace SolmileGuesthouseAPI.Repository
 
             return query;
         }
+        public async Task<List<MonthlyAttendanceSummaryDto>> GetMonthlySummariesDataAsync(string yearMonth)
+        {
+            if (!DateTime.TryParseExact(yearMonth + "-01", "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var startDate))
+                return new List<MonthlyAttendanceSummaryDto>(); // or throw exception if preferred
+
+            var endDate = startDate.AddMonths(1);
+
+            var summaries = await _context.monthlyAttendanceSummaries
+                .Where(s => s.YearMonth == yearMonth)
+                .Select(s => new MonthlyAttendanceSummaryDto
+                {
+                    EmployeeId = s.EmployeeId,
+                    EmployeeFullName = s.EmployeeFullName,
+                    YearMonth = s.YearMonth,
+                    TotalDaysPresent = s.TotalDaysPresent
+                })
+                .ToListAsync();
+
+            return summaries;
+        }
+
     }
 }
 

@@ -12,6 +12,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
 {
     public partial class User : UserControl
     {
+        public InputUserDto SelectedItem { get; private set; }
         private readonly HttpClient _client = new HttpClient { BaseAddress = new Uri("https://localhost:7107/") };
 
         public User()
@@ -306,7 +307,12 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 var user = searchForm.SelectedItem as InputUserDto;
                 if (user != null)
                 {
+                    MessageBox.Show($"User found: {user.Username}");
                     dgvUsers.DataSource = new List<InputUserDto> { user };
+                }
+                else
+                {
+                    MessageBox.Show("No user selected or found.");
                 }
             }
         }

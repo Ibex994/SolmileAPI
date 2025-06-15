@@ -90,6 +90,7 @@ namespace SolmileGuesthouseAPI.Repository
                 EmployeeAttendances = employeeAttendances.Select(ea => new EmployeeAttendance
                 {
                     EmployeeId = ea.EmployeeId,
+                    EmployeeFullName = ea.EmployeeFullName,
                     AttendanceDate = ea.AttendanceDate,
                     IsPresent = ea.IsPresent,
                     Reason = ea.Reason
@@ -151,7 +152,8 @@ namespace SolmileGuesthouseAPI.Repository
             {
                 EmployeeId = emp.Id,
                 AttendanceDate = attendanceDate.Date,
-                AttendanceId = attendance.AttendanceId, 
+                EmployeeFullName = emp.Username,
+                AttendanceId = attendance.AttendanceId,
                 IsPresent = true,
                 Reason = null
             }).ToList();

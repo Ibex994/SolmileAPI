@@ -10,7 +10,6 @@
         private System.Windows.Forms.Label lblIsPresent;
 
         private System.Windows.Forms.ComboBox cmbIsPresent;
-        //private System.Windows.Forms.TextBox.txtEmployeeId;
 
 
         private System.Windows.Forms.DateTimePicker dtpAttendanceDate;
@@ -74,12 +73,12 @@
             btnById = new Button();
             btnClear = new Button();
             tabSummary = new TabPage();
+            clear = new Button();
             txtEmpId = new TextBox();
             dtpSummaryMonth = new DateTimePicker();
             btnGetIdDate = new Button();
             btnGenerateSummary = new Button();
             dgvMonthlySummary = new DataGridView();
-            clear = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvAttendance).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvMultipleAttendance).BeginInit();
             tabControlAttendance.SuspendLayout();
@@ -159,6 +158,8 @@
             cmbIsPresent.Name = "cmbIsPresent";
             cmbIsPresent.Size = new Size(121, 23);
             cmbIsPresent.TabIndex = 5;
+            cmbIsPresent.SelectedIndexChanged += cmbIsPresent_SelectedIndexChanged;
+
             // 
             // btnGetByEmployeeAndDate
             // 
@@ -323,7 +324,7 @@
             // btnGetAll
             // 
             btnGetAll.Image = Properties.Resources.icons8_refresh_48;
-            btnGetAll.Location = new Point(20, 155);
+            btnGetAll.Location = new Point(20, 117);
             btnGetAll.Name = "btnGetAll";
             btnGetAll.Size = new Size(31, 22);
             btnGetAll.SizeMode = PictureBoxSizeMode.Zoom;
@@ -369,6 +370,18 @@
             tabSummary.Size = new Size(802, 643);
             tabSummary.TabIndex = 2;
             tabSummary.Text = "Monthly Summary";
+            // 
+            // clear
+            // 
+            clear.BackColor = SystemColors.MenuHighlight;
+            clear.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            clear.Location = new Point(737, 613);
+            clear.Name = "clear";
+            clear.Size = new Size(53, 30);
+            clear.TabIndex = 10;
+            clear.Text = "Clear";
+            clear.UseVisualStyleBackColor = false;
+            clear.Click += clear_Click;
             // 
             // txtEmpId
             // 
@@ -416,18 +429,6 @@
             dgvMonthlySummary.Name = "dgvMonthlySummary";
             dgvMonthlySummary.Size = new Size(760, 513);
             dgvMonthlySummary.TabIndex = 2;
-            // 
-            // clear
-            // 
-            clear.BackColor = SystemColors.MenuHighlight;
-            clear.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            clear.Location = new Point(737, 613);
-            clear.Name = "clear";
-            clear.Size = new Size(53, 30);
-            clear.TabIndex = 10;
-            clear.Text = "Clear";
-            clear.UseVisualStyleBackColor = false;
-            clear.Click += clear_Click;
             // 
             // Attendance
             // 

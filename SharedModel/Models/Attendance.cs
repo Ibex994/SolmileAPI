@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SolmileGuesthouseAPI.Data.Models
 {
@@ -13,17 +14,27 @@ namespace SolmileGuesthouseAPI.Data.Models
     public class EmployeeAttendance
     {
         [Key]
-        public int EmpAttendanceId { get; set; }
-        [Required]
+        public int EmployeeAttendanceId { get; set; }
+
         public int EmployeeId { get; set; }
-        public DateTime AttendanceDate { get; set; } 
-        public bool IsPresent { get; set; }
-        public string? Reason { get; set; }
-        [Required]
+
         public int AttendanceId { get; set; }
+
+        public DateTime AttendanceDate { get; set; }
+
+        public bool IsPresent { get; set; }
+
+        public string? EmployeeFullName { get; set; }
+
+        public string? Reason { get; set; }
+
+        [ForeignKey("AttendanceId")]
         public Attendance Attendance { get; set; } = null!;
-        public Employee Employee { get; set; } 
+
+        [ForeignKey("EmployeeId")]
+        public Employee Employee { get; set; } = null!;
     }
+
     public class MonthlyAttendanceSummary
     {
         [Key]

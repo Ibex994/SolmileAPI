@@ -15,6 +15,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
     public class EmployeeAttendanceCreateDto
     {
         public int EmployeeId { get; set; }
+        public string? EmployeeFullName { get; set; }
         [Required]
         public DateTime AttendanceDate { get; set; }
 

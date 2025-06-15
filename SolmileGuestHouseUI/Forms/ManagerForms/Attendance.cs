@@ -207,6 +207,16 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             }
             ClearForm();
         }
+        private void cmbIsPresent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool isPresent = cmbIsPresent.SelectedIndex == 0;
+            txtReason.Enabled = !isPresent;
+            if (isPresent)
+            {
+                txtReason.Text = "";
+            }
+        }
+
 
         private async Task DeleteAttendanceAsync()
         {
@@ -245,7 +255,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 Invoke(() =>
                 {
                     MessageBox.Show("Deleted successfully.");
-                    _ = GetAllAttendanceAsync(); // Refresh grid or list
+                    _ = GetAllAttendanceAsync();
                 });
             }
             catch (Exception ex)

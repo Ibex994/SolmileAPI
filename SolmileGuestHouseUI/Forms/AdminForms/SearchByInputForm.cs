@@ -13,7 +13,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             InitializeComponent();
 
             _searchFunction = searchFunction ?? throw new ArgumentNullException(nameof(searchFunction));
-            this.Text = title;
+            txtSearchInput.PlaceholderText = title;
 
             btnFind.Click += BtnFind_Click;
             txtSearchInput.KeyDown += TxtSearchInput_KeyDown;
@@ -28,6 +28,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
 
         private async Task PerformSearchAsync()
         {
+            
             string input = txtSearchInput.Text.Trim();
 
             if (string.IsNullOrEmpty(input))

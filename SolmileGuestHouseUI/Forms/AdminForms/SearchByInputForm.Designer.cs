@@ -67,6 +67,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(380, 100);
             Controls.Add(pictureBoxClose);
             Controls.Add(btnFind);
@@ -75,7 +76,6 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SearchByInputForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Search by Username";
             ((System.ComponentModel.ISupportInitialize)pictureBoxClose).EndInit();
             ResumeLayout(false);
             PerformLayout();

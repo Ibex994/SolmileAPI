@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
+using SolmileGuestHouseUI.Forms.AdminForms;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
 
 namespace SolmileGuestHouseUI.Forms.ManagerForms
@@ -249,9 +250,48 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             dgvComplaints.ClearSelection();
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        private async void btnClear_Click(object sender, EventArgs e)
         {
             ClearForm();
+            await LoadComplaintsAsync();
         }
+
+        private async void btnHistory_Click(object sender, EventArgs e)
+        {
+            var searchForm = new SearchByInputForm(
+                "Search by Customer ID",
+                async (input) =>
+                {
+                    if (!int.TryParse(input, out int customerId))
+                        return null;
+
+                    string url = $"api/complaints/History/{customerId}";
+
+                    try
+                    {
+                        var response = await _client.GetAsync(url);
+                        if (!response.IsSuccessStatusCode)
+                            return null;
+
+                        var json = await response.Content.ReadAsStringAsync();
+                        var complaints = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ComplaintDto>>(json);
+                        return complaints;
+                    }
+                    catch
+                    {
+                        return null;
+                    }
+                });
+
+            if (searchForm.ShowDialog() == DialogResult.OK &&
+                searchForm.SelectedItem is List<ComplaintDto> complaintList)
+            {
+                dgvComplaints.DataSource = complaintList;
+            }
+
+            ClearForm();
+        }
+
+
     }
 }

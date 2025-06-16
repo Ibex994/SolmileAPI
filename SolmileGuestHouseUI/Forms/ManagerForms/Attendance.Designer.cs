@@ -68,10 +68,11 @@
             dateTimePicker1 = new DateTimePicker();
             dateTime2 = new DateTimePicker();
             tabSingleAttendance = new TabPage();
+            txtUsername = new TextBox();
             txtEmployeeId = new TextBox();
             btnGetAll = new PictureBox();
             btnById = new Button();
-            btnClear = new Button();
+            lblName = new Label();
             tabSummary = new TabPage();
             clear = new Button();
             txtEmpId = new TextBox();
@@ -94,7 +95,7 @@
             lblEmployeeId.AutoSize = true;
             lblEmployeeId.Font = new Font("Arial Rounded MT Bold", 9F);
             lblEmployeeId.ForeColor = Color.Goldenrod;
-            lblEmployeeId.Location = new Point(20, 20);
+            lblEmployeeId.Location = new Point(20, 24);
             lblEmployeeId.Name = "lblEmployeeId";
             lblEmployeeId.Size = new Size(85, 14);
             lblEmployeeId.TabIndex = 0;
@@ -159,7 +160,6 @@
             cmbIsPresent.Size = new Size(121, 23);
             cmbIsPresent.TabIndex = 5;
             cmbIsPresent.SelectedIndexChanged += cmbIsPresent_SelectedIndexChanged;
-
             // 
             // btnGetByEmployeeAndDate
             // 
@@ -216,7 +216,7 @@
             dgvAttendance.Location = new Point(20, 127);
             dgvAttendance.Name = "dgvAttendance";
             dgvAttendance.ReadOnly = true;
-            dgvAttendance.Size = new Size(770, 476);
+            dgvAttendance.Size = new Size(770, 499);
             dgvAttendance.TabIndex = 13;
             dgvAttendance.CellClick += dgvAttendance_CellClick;
             // 
@@ -292,9 +292,11 @@
             // tabSingleAttendance
             // 
             tabSingleAttendance.BackColor = Color.White;
+            tabSingleAttendance.Controls.Add(txtUsername);
             tabSingleAttendance.Controls.Add(txtEmployeeId);
             tabSingleAttendance.Controls.Add(btnGetAll);
             tabSingleAttendance.Controls.Add(btnById);
+            tabSingleAttendance.Controls.Add(lblName);
             tabSingleAttendance.Controls.Add(lblEmployeeId);
             tabSingleAttendance.Controls.Add(lblDate);
             tabSingleAttendance.Controls.Add(dtpAttendanceDate);
@@ -302,7 +304,6 @@
             tabSingleAttendance.Controls.Add(cmbIsPresent);
             tabSingleAttendance.Controls.Add(lblStatus);
             tabSingleAttendance.Controls.Add(txtReason);
-            tabSingleAttendance.Controls.Add(btnClear);
             tabSingleAttendance.Controls.Add(btnGetByEmployeeAndDate);
             tabSingleAttendance.Controls.Add(btnCreate);
             tabSingleAttendance.Controls.Add(btnUpdate);
@@ -314,11 +315,18 @@
             tabSingleAttendance.TabIndex = 0;
             tabSingleAttendance.Text = "Single Attendance";
             // 
+            // txtUsername
+            // 
+            txtUsername.Location = new Point(364, 21);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(114, 21);
+            txtUsername.TabIndex = 16;
+            // 
             // txtEmployeeId
             // 
-            txtEmployeeId.Location = new Point(132, 17);
+            txtEmployeeId.Location = new Point(132, 21);
             txtEmployeeId.Name = "txtEmployeeId";
-            txtEmployeeId.Size = new Size(250, 21);
+            txtEmployeeId.Size = new Size(114, 21);
             txtEmployeeId.TabIndex = 16;
             // 
             // btnGetAll
@@ -344,17 +352,16 @@
             btnById.UseVisualStyleBackColor = false;
             btnById.Click += btnById_Click;
             // 
-            // btnClear
+            // lblName
             // 
-            btnClear.BackColor = SystemColors.MenuHighlight;
-            btnClear.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnClear.Location = new Point(737, 609);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(53, 30);
-            btnClear.TabIndex = 9;
-            btnClear.Text = "Clear";
-            btnClear.UseVisualStyleBackColor = false;
-            btnClear.Click += btnClear_Click_1;
+            lblName.AutoSize = true;
+            lblName.Font = new Font("Arial Rounded MT Bold", 9F);
+            lblName.ForeColor = Color.Goldenrod;
+            lblName.Location = new Point(252, 24);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(106, 14);
+            lblName.TabIndex = 0;
+            lblName.Text = "Employee Name:";
             // 
             // tabSummary
             // 
@@ -381,7 +388,6 @@
             clear.TabIndex = 10;
             clear.Text = "Clear";
             clear.UseVisualStyleBackColor = false;
-            clear.Click += clear_Click;
             // 
             // txtEmpId
             // 
@@ -461,7 +467,8 @@
         private DateTimePicker dtpSummaryMonth;
         private TextBox txtEmployeeId;
         private TextBox txtEmpId;
-        private Button btnClear;
         private Button clear;
+        private TextBox txtUsername;
+        private Label lblName;
     }
 }

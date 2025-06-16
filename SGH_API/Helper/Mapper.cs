@@ -14,8 +14,9 @@ namespace SolmileGuesthouseAPI.Helper
             CreateMap<Complaint, ComplaintDto>();
             CreateMap<ComplaintDto, Complaint>();
             CreateMap<Complaint, UpdateCompDto>();
-
-           //AttendanceDto
+            CreateMap<CreateCompDto, Complaint>();
+            CreateMap<Complaint, ComplaintDto>();
+            //AttendanceDto
             CreateMap<EmployeeAttendanceCreateDto, EmployeeAttendance>();
             CreateMap<EmployeeAttendanceCreateDto, Attendance>();
             CreateMap<Attendance, EmployeeAttendanceCreateDto>();

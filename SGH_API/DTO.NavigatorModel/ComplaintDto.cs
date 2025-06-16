@@ -8,6 +8,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         public string? Status { get; set; }
         public int CustomerId { get; set; }
         public int? EmployeeId { get; set; }
+    }
         public class CreateCompDto
         {
             public string Details { get; set; }
@@ -16,6 +17,4 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         {
             public bool status { get; set; }
         }
-
-    }
 }

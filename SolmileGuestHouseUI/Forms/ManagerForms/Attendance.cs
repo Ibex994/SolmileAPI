@@ -64,7 +64,9 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 ShowUserFriendlyError("Invalid Input", "Enter a valid Employee ID.");
                 return;
             }
+
             ClearForm();
+
             try
             {
                 DateTime date = dtpAttendanceDate.Value;
@@ -76,15 +78,14 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                     Invoke(() =>
                     {
                         ShowUserFriendlyError("Not Found", "No attendance found for the selected date.");
-                        txtReason.Clear();
-                        cmbIsPresent.SelectedIndex = 0;
+                        dgvAttendance.DataSource = null;
                     });
                     return;
-                    ClearForm();
                 }
 
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
                 var attendance = JsonConvert.DeserializeObject<EmployeeAttendanceCreateDto>(json);
 
                 Invoke(() =>
@@ -92,20 +93,19 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                     if (attendance == null)
                     {
                         ShowUserFriendlyError("Not Found", "Attendance record is empty.");
-                        txtReason.Clear();
-                        cmbIsPresent.SelectedIndex = 0;
-                        return;        
+                        dgvAttendance.DataSource = null;
+                        return;
                     }
-                    txtReason.Text = attendance.Reason ?? "";
-                    cmbIsPresent.SelectedIndex = attendance.IsPresent ? 0 : 1;
+
+                    dgvAttendance.DataSource = new List<EmployeeAttendanceCreateDto> { attendance };
                 });
             }
             catch (Exception ex)
             {
                 Invoke(() => ShowUserFriendlyError("Search Failed", GetUserFriendlyError(ex)));
             }
-            ClearForm();
         }
+
 
         private async Task CreateAttendanceAsync()
         {
@@ -118,15 +118,17 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             {
                 bool isPresent = cmbIsPresent.SelectedIndex == 0;
                 string reason = txtReason.Text.Trim();
+                string Username = txtUsername.Text;
 
                 var createDto = new AttendanceCreateDto
                 {
-                    AttendanceDate = dtpAttendanceDate.Value,
+                    AttendanceDate = dtpAttendanceDate.Value.Date,
                     EmployeeAttendances = new List<EmployeeAttendanceCreateDto>
             {
                 new EmployeeAttendanceCreateDto
                 {
                     EmployeeId = employeeId,
+                    EmployeeFullName=Username,
                     AttendanceDate = dtpAttendanceDate.Value,
                     IsPresent = isPresent,
                     Reason = reason
@@ -433,8 +435,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                     if (!int.TryParse(input, out int employeeId))
                         return null;
 
-                    var date = dtpAttendanceDate.Value.Date;
-                    string url = $"employee/{employeeId}/date/{date:yyyy-MM-dd}";
+                    string url = $"employee/{employeeId}";
 
                     try
                     {
@@ -443,8 +444,8 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                             return null;
 
                         var json = await response.Content.ReadAsStringAsync();
-                        var attendance = JsonConvert.DeserializeObject<EmployeeAttendanceCreateDto>(json);
-                        return attendance;
+                        var attendances = JsonConvert.DeserializeObject<List<EmployeeAttendanceCreateDto>>(json);
+                        return attendances;
                     }
                     catch
                     {
@@ -452,17 +453,12 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                     }
                 });
 
-            if (searchForm.ShowDialog() == DialogResult.OK)
+            if (searchForm.ShowDialog() == DialogResult.OK &&
+                searchForm.SelectedItem is List<EmployeeAttendanceCreateDto> attendanceList)
             {
-                if (searchForm.SelectedItem is EmployeeAttendanceCreateDto attendance)
-                {
-                    //txtEmployeeId.Text = attendance.EmployeeId.ToString();
-                    //dtpAttendanceDate.Value = attendance.AttendanceDate;
-                    //txtReason.Text = attendance.Reason ?? "";
-                    //cmbIsPresent.SelectedIndex = attendance.IsPresent ? 0 : 1;
-                    dgvAttendance.DataSource = new List<EmployeeAttendanceCreateDto> { attendance };
-                }
+                dgvAttendance.DataSource = attendanceList;
             }
+
             ClearForm();
         }
 
@@ -571,16 +567,6 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             dtpAttendanceDate.Value = DateTime.Today;
             txtEmpId.Focus();
             txtEmployeeId.Focus();
-        }
-
-        private void btnClear_Click_1(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
-
-        private void clear_Click(object sender, EventArgs e)
-        {
-            ClearForm();
         }
     }
 }

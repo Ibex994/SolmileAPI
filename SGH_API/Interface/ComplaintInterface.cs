@@ -5,7 +5,7 @@ namespace SolmileGuesthouseAPI.Interface
     public interface ComplaintInterface
     {
         Task<bool> UpdateComplaintStatusAsync(int complaintId, string status);
-        Task<bool> ResolveComplaintAsync(int complaintId, string resolutionDetails);
+        Task<bool> ResolveComplaintAsync(int complaintId);
         Task<Complaint> GetComplaintDetailsAsync(int complaintId);
         Task<bool> AssignComplaintHandlerAsync(int employeeId, int complaintId);
         Task<string> TrackComplaintStatusAsync(int complaintId);

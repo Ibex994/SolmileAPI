@@ -127,7 +127,30 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public int BranchId { get; set; }
         }
 
-     
+        public class EmpDto
+        {
+            public int Id { get; set; }
+            [JsonIgnore]
+            public string? EmployeePhotoUrl { get; set; }
+            public string Username { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Position { get; set; }
+            public string Phone { get; set; }
+            public string Email { get; set; }
+            public DateTime DateOfBirth { get; set; }
+            public DateTime HireDate { get; set; }
+            public bool Status { get; set; }
+            public string Gender { get; set; }
+            public int BranchId { get; set; }
+
+            // Add this:
+            public string FullName => $"{FirstName} {LastName}";
+        }
+
+
+        // Assuming this DTO is similar to what you already have
+
 
         // DTOs/RatingDto.cs
         public class RatingDto

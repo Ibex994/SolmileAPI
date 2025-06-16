@@ -13,7 +13,7 @@ namespace Solmile.Forms.Themes
         public static Color SecondaryColor { get; set; }
         public static List<string> ColorList = new List<string>()
 {
-            // Sophisticated Neutrals
+    "#111827" , // Charcoal
     "#2D3748", // Dark slate
     "#4A5568", // Cool gray
     "#718096", // Medium gray

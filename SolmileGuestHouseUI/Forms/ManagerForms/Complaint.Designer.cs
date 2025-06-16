@@ -17,8 +17,6 @@
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.ComboBox cmbStatus;
         private System.Windows.Forms.ComboBox cmbHandler;
-
-        private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnUpdateStatus;
         private System.Windows.Forms.Button btnAssignHandler;
         private System.Windows.Forms.Button btnResolve;
@@ -43,182 +41,228 @@
 
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-
-            // Labels
-            this.lblComplaintId = new System.Windows.Forms.Label();
-            this.lblCustomerId = new System.Windows.Forms.Label();
-            this.lblComplaintDate = new System.Windows.Forms.Label();
-            this.lblDescription = new System.Windows.Forms.Label();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.lblHandler = new System.Windows.Forms.Label();
-
-            // TextBoxes and DateTimePicker
-            this.txtComplaintId = new System.Windows.Forms.TextBox();
-            this.txtCustomerId = new System.Windows.Forms.TextBox();
-            this.dtpComplaintDate = new System.Windows.Forms.DateTimePicker();
-            this.txtDescription = new System.Windows.Forms.TextBox();
-
-            // ComboBoxes
-            this.cmbStatus = new System.Windows.Forms.ComboBox();
-            this.cmbHandler = new System.Windows.Forms.ComboBox();
-
-            // Buttons
-            this.btnCreate = new System.Windows.Forms.Button();
-            this.btnUpdateStatus = new System.Windows.Forms.Button();
-            this.btnAssignHandler = new System.Windows.Forms.Button();
-            this.btnResolve = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnGetDetails = new System.Windows.Forms.Button();
-
-            // DataGridView
-            this.dgvComplaints = new System.Windows.Forms.DataGridView();
-
-            ((System.ComponentModel.ISupportInitialize)(this.dgvComplaints)).BeginInit();
-            this.SuspendLayout();
-
+            lblComplaintId = new Label();
+            lblCustomerId = new Label();
+            lblComplaintDate = new Label();
+            lblDescription = new Label();
+            lblStatus = new Label();
+            lblHandler = new Label();
+            txtComplaintId = new TextBox();
+            txtCustomerId = new TextBox();
+            dtpComplaintDate = new DateTimePicker();
+            txtDescription = new TextBox();
+            cmbStatus = new ComboBox();
+            cmbHandler = new ComboBox();
+            btnUpdateStatus = new Button();
+            btnAssignHandler = new Button();
+            btnResolve = new Button();
+            btnDelete = new Button();
+            btnGetDetails = new Button();
+            dgvComplaints = new DataGridView();
+            btnClear = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvComplaints).BeginInit();
+            SuspendLayout();
+            // 
             // lblComplaintId
-            this.lblComplaintId.AutoSize = true;
-            this.lblComplaintId.Location = new System.Drawing.Point(20, 20);
-            this.lblComplaintId.Name = "lblComplaintId";
-            this.lblComplaintId.Text = "Complaint ID:";
-
-            // txtComplaintId
-            this.txtComplaintId.Location = new System.Drawing.Point(120, 17);
-            this.txtComplaintId.Name = "txtComplaintId";
-            this.txtComplaintId.Size = new System.Drawing.Size(200, 23);
-
+            // 
+            lblComplaintId.AutoSize = true;
+            lblComplaintId.Location = new Point(20, 20);
+            lblComplaintId.Name = "lblComplaintId";
+            lblComplaintId.Size = new Size(80, 15);
+            lblComplaintId.TabIndex = 0;
+            lblComplaintId.Text = "Complaint ID:";
+            // 
             // lblCustomerId
-            this.lblCustomerId.AutoSize = true;
-            this.lblCustomerId.Location = new System.Drawing.Point(20, 60);
-            this.lblCustomerId.Name = "lblCustomerId";
-            this.lblCustomerId.Text = "Customer ID:";
-
-            // txtCustomerId
-            this.txtCustomerId.Location = new System.Drawing.Point(120, 57);
-            this.txtCustomerId.Name = "txtCustomerId";
-            this.txtCustomerId.Size = new System.Drawing.Size(200, 23);
-
+            // 
+            lblCustomerId.AutoSize = true;
+            lblCustomerId.Location = new Point(20, 60);
+            lblCustomerId.Name = "lblCustomerId";
+            lblCustomerId.Size = new Size(76, 15);
+            lblCustomerId.TabIndex = 2;
+            lblCustomerId.Text = "Customer ID:";
+            // 
             // lblComplaintDate
-            this.lblComplaintDate.AutoSize = true;
-            this.lblComplaintDate.Location = new System.Drawing.Point(20, 100);
-            this.lblComplaintDate.Name = "lblComplaintDate";
-            this.lblComplaintDate.Text = "Complaint Date:";
-
-            // dtpComplaintDate
-            this.dtpComplaintDate.Location = new System.Drawing.Point(120, 97);
-            this.dtpComplaintDate.Name = "dtpComplaintDate";
-            this.dtpComplaintDate.Size = new System.Drawing.Size(200, 23);
-
+            // 
+            lblComplaintDate.AutoSize = true;
+            lblComplaintDate.Location = new Point(20, 100);
+            lblComplaintDate.Name = "lblComplaintDate";
+            lblComplaintDate.Size = new Size(93, 15);
+            lblComplaintDate.TabIndex = 4;
+            lblComplaintDate.Text = "Complaint Date:";
+            // 
             // lblDescription
-            this.lblDescription.AutoSize = true;
-            this.lblDescription.Location = new System.Drawing.Point(20, 140);
-            this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Text = "Description:";
-
-            // txtDescription
-            this.txtDescription.Location = new System.Drawing.Point(120, 137);
-            this.txtDescription.Multiline = true;
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(450, 80);
-
+            // 
+            lblDescription.AutoSize = true;
+            lblDescription.Location = new Point(20, 140);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(70, 15);
+            lblDescription.TabIndex = 6;
+            lblDescription.Text = "Description:";
+            // 
             // lblStatus
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(20, 230);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Text = "Status:";
-
-            // cmbStatus
-            this.cmbStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbStatus.Location = new System.Drawing.Point(120, 227);
-            this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Size = new System.Drawing.Size(200, 23);
-
+            // 
+            lblStatus.AutoSize = true;
+            lblStatus.Location = new Point(344, 20);
+            lblStatus.Name = "lblStatus";
+            lblStatus.Size = new Size(42, 15);
+            lblStatus.TabIndex = 8;
+            lblStatus.Text = "Status:";
+            // 
             // lblHandler
-            this.lblHandler.AutoSize = true;
-            this.lblHandler.Location = new System.Drawing.Point(20, 270);
-            this.lblHandler.Name = "lblHandler";
-            this.lblHandler.Text = "Handler:";
-
+            // 
+            lblHandler.AutoSize = true;
+            lblHandler.Location = new Point(336, 60);
+            lblHandler.Name = "lblHandler";
+            lblHandler.Size = new Size(52, 15);
+            lblHandler.TabIndex = 10;
+            lblHandler.Text = "Handler:";
+            // 
+            // txtComplaintId
+            // 
+            txtComplaintId.Location = new Point(120, 17);
+            txtComplaintId.Name = "txtComplaintId";
+            txtComplaintId.Size = new Size(200, 23);
+            txtComplaintId.TabIndex = 1;
+            // 
+            // txtCustomerId
+            // 
+            txtCustomerId.Location = new Point(120, 57);
+            txtCustomerId.Name = "txtCustomerId";
+            txtCustomerId.Size = new Size(200, 23);
+            txtCustomerId.TabIndex = 3;
+            // 
+            // dtpComplaintDate
+            // 
+            dtpComplaintDate.Location = new Point(120, 97);
+            dtpComplaintDate.Name = "dtpComplaintDate";
+            dtpComplaintDate.Size = new Size(200, 23);
+            dtpComplaintDate.TabIndex = 5;
+            // 
+            // txtDescription
+            // 
+            txtDescription.Location = new Point(120, 137);
+            txtDescription.Multiline = true;
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(450, 140);
+            txtDescription.TabIndex = 7;
+            // 
+            // cmbStatus
+            // 
+            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbStatus.Location = new Point(403, 20);
+            cmbStatus.Name = "cmbStatus";
+            cmbStatus.Size = new Size(200, 23);
+            cmbStatus.TabIndex = 9;
+            // 
             // cmbHandler
-            this.cmbHandler.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbHandler.Location = new System.Drawing.Point(120, 267);
-            this.cmbHandler.Name = "cmbHandler";
-            this.cmbHandler.Size = new System.Drawing.Size(200, 23);
-
-            // Buttons
-            this.btnCreate.Location = new System.Drawing.Point(600, 20);
-            this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(100, 30);
-            this.btnCreate.Text = "Create";
-            this.btnCreate.UseVisualStyleBackColor = true;
-
-            this.btnUpdateStatus.Location = new System.Drawing.Point(600, 60);
-            this.btnUpdateStatus.Name = "btnUpdateStatus";
-            this.btnUpdateStatus.Size = new System.Drawing.Size(100, 30);
-            this.btnUpdateStatus.Text = "Update Status";
-            this.btnUpdateStatus.UseVisualStyleBackColor = true;
-
-            this.btnAssignHandler.Location = new System.Drawing.Point(600, 100);
-            this.btnAssignHandler.Name = "btnAssignHandler";
-            this.btnAssignHandler.Size = new System.Drawing.Size(100, 30);
-            this.btnAssignHandler.Text = "Assign Handler";
-            this.btnAssignHandler.UseVisualStyleBackColor = true;
-
-            this.btnResolve.Location = new System.Drawing.Point(600, 140);
-            this.btnResolve.Name = "btnResolve";
-            this.btnResolve.Size = new System.Drawing.Size(100, 30);
-            this.btnResolve.Text = "Resolve";
-            this.btnResolve.UseVisualStyleBackColor = true;
-
-            this.btnDelete.Location = new System.Drawing.Point(600, 180);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(100, 30);
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.UseVisualStyleBackColor = true;
-
-            this.btnGetDetails.Location = new System.Drawing.Point(600, 220);
-            this.btnGetDetails.Name = "btnGetDetails";
-            this.btnGetDetails.Size = new System.Drawing.Size(100, 30);
-            this.btnGetDetails.Text = "Get Details";
-            this.btnGetDetails.UseVisualStyleBackColor = true;
-
+            // 
+            cmbHandler.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbHandler.Location = new Point(403, 52);
+            cmbHandler.Name = "cmbHandler";
+            cmbHandler.Size = new Size(200, 23);
+            cmbHandler.TabIndex = 11;
+            // 
+            // btnUpdateStatus
+            // 
+            btnUpdateStatus.Location = new Point(676, 60);
+            btnUpdateStatus.Name = "btnUpdateStatus";
+            btnUpdateStatus.Size = new Size(100, 30);
+            btnUpdateStatus.TabIndex = 13;
+            btnUpdateStatus.Text = "Update Status";
+            btnUpdateStatus.UseVisualStyleBackColor = true;
+            btnUpdateStatus.Click += btnUpdateStatus_Click;
+            // 
+            // btnAssignHandler
+            // 
+            btnAssignHandler.Location = new Point(676, 100);
+            btnAssignHandler.Name = "btnAssignHandler";
+            btnAssignHandler.Size = new Size(100, 30);
+            btnAssignHandler.TabIndex = 14;
+            btnAssignHandler.Text = "Assign Handler";
+            btnAssignHandler.UseVisualStyleBackColor = true;
+            btnAssignHandler.Click += btnAssignHandler_Click;
+            // 
+            // btnResolve
+            // 
+            btnResolve.Location = new Point(676, 140);
+            btnResolve.Name = "btnResolve";
+            btnResolve.Size = new Size(100, 30);
+            btnResolve.TabIndex = 15;
+            btnResolve.Text = "Resolve";
+            btnResolve.UseVisualStyleBackColor = true;
+            btnResolve.Click += btnResolve_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(676, 180);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(100, 30);
+            btnDelete.TabIndex = 16;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
+            // btnGetDetails
+            // 
+            btnGetDetails.Location = new Point(676, 216);
+            btnGetDetails.Name = "btnGetDetails";
+            btnGetDetails.Size = new Size(100, 30);
+            btnGetDetails.TabIndex = 17;
+            btnGetDetails.Text = "Get Details";
+            btnGetDetails.UseVisualStyleBackColor = true;
+            // 
             // dgvComplaints
-            this.dgvComplaints.Location = new System.Drawing.Point(20, 320);
-            this.dgvComplaints.Name = "dgvComplaints";
-            this.dgvComplaints.Size = new System.Drawing.Size(780, 350);
-            this.dgvComplaints.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-
+            // 
+            dgvComplaints.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvComplaints.BackgroundColor = Color.White;
+            dgvComplaints.Location = new Point(20, 296);
+            dgvComplaints.Name = "dgvComplaints";
+            dgvComplaints.Size = new Size(805, 350);
+            dgvComplaints.TabIndex = 18;
+            dgvComplaints.CellClick += dgvComplaints_CellClick;
+            // 
+            // btnClear
+            // 
+            btnClear.Location = new Point(774, 652);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(51, 24);
+            btnClear.TabIndex = 17;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
+            // 
             // Complaint
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lblComplaintId);
-            this.Controls.Add(this.txtComplaintId);
-            this.Controls.Add(this.lblCustomerId);
-            this.Controls.Add(this.txtCustomerId);
-            this.Controls.Add(this.lblComplaintDate);
-            this.Controls.Add(this.dtpComplaintDate);
-            this.Controls.Add(this.lblDescription);
-            this.Controls.Add(this.txtDescription);
-            this.Controls.Add(this.lblStatus);
-            this.Controls.Add(this.cmbStatus);
-            this.Controls.Add(this.lblHandler);
-            this.Controls.Add(this.cmbHandler);
-            this.Controls.Add(this.btnCreate);
-            this.Controls.Add(this.btnUpdateStatus);
-            this.Controls.Add(this.btnAssignHandler);
-            this.Controls.Add(this.btnResolve);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnGetDetails);
-            this.Controls.Add(this.dgvComplaints);
-            this.Name = "Complaint";
-            this.Size = new System.Drawing.Size(855, 690);
-
-            ((System.ComponentModel.ISupportInitialize)(this.dgvComplaints)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblComplaintId);
+            Controls.Add(txtComplaintId);
+            Controls.Add(lblCustomerId);
+            Controls.Add(txtCustomerId);
+            Controls.Add(lblComplaintDate);
+            Controls.Add(dtpComplaintDate);
+            Controls.Add(lblDescription);
+            Controls.Add(txtDescription);
+            Controls.Add(lblStatus);
+            Controls.Add(cmbStatus);
+            Controls.Add(lblHandler);
+            Controls.Add(cmbHandler);
+            Controls.Add(btnUpdateStatus);
+            Controls.Add(btnAssignHandler);
+            Controls.Add(btnResolve);
+            Controls.Add(btnDelete);
+            Controls.Add(btnClear);
+            Controls.Add(btnGetDetails);
+            Controls.Add(dgvComplaints);
+            Name = "Complaint";
+            Size = new Size(855, 690);
+            ((System.ComponentModel.ISupportInitialize)dgvComplaints).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Button btnClear;
     }
 }

@@ -62,15 +62,18 @@ namespace SolmileGuesthouseAPI.Repository
            .ToListAsync();
         }
 
-        public async Task<bool> ResolveComplaintAsync(int complaintId, string resolutionDetails)
+        public async Task<bool> ResolveComplaintAsync(int complaintId)
         {
             var complaint = await _context.Complaints.FindAsync(complaintId);
             if (complaint == null)
                 return false;
-            complaint.Details += $"\nResolution: {resolutionDetails}";
+
+            complaint.Status = "Resolved";
+
             await _context.SaveChangesAsync();
             return true;
         }
+
 
         public async Task<string> TrackComplaintStatusAsync(int complaintId)
         {

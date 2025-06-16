@@ -102,13 +102,15 @@ namespace SolmileGuesthouseAPI.Controllers
         [HttpPut("Resolve/{complaintId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> ResolveComplaint(int complaintId, [FromBody] string resolutionDetails)
+        public async Task<IActionResult> ResolveComplaint(int complaintId)
         {
-            var result = await _complaintRepo.ResolveComplaintAsync(complaintId, resolutionDetails);
+            var result = await _complaintRepo.ResolveComplaintAsync(complaintId);
             if (!result)
                 return NotFound();
-            return NoContent();
+
+            return NoContent(); 
         }
+
 
         [HttpPut("AssignHandler")]
         [ProducesResponseType(204)]

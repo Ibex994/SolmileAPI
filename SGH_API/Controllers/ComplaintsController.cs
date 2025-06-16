@@ -85,11 +85,9 @@ namespace SolmileGuesthouseAPI.Controllers
         }
 
         [HttpPut("UpdateStatus/{complaintId}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateComplaintStatus(int complaintId, [FromBody] UpdateCompDto updateDto)
         {
-            var status = updateDto.status ? "Resolved" : "Unresolved";
+            var status = updateDto.status;
 
             var result = await _complaintRepo.UpdateComplaintStatusAsync(complaintId, status);
             if (!result)
@@ -97,7 +95,6 @@ namespace SolmileGuesthouseAPI.Controllers
 
             return NoContent();
         }
-
 
         [HttpPut("Resolve/{complaintId}")]
         [ProducesResponseType(204)]

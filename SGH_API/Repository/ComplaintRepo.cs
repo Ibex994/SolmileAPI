@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SolmileGuesthouseAPI.Data;
 using SolmileGuesthouseAPI.Data.Models;
+using SolmileGuesthouseAPI.DTO.NavigatorModel;
 using SolmileGuesthouseAPI.Interface;
 
 namespace SolmileGuesthouseAPI.Repository
@@ -86,7 +87,7 @@ namespace SolmileGuesthouseAPI.Repository
             var complaint = await _context.Complaints.FindAsync(complaintId);
             if (complaint == null) return false;
 
-            complaint.Status = "Resolved";
+            complaint.Status = status; 
             await _context.SaveChangesAsync();
             return true;
         }

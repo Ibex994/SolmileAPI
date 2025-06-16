@@ -82,7 +82,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         public class EmployeeDto
         {
             public int Id { get; set; }
-            [JsonIgnore]
             public string? EmployeePhotoUrl { get; set; }
             public string Username { get; set; }
             public string FirstName { get; set; }
@@ -130,7 +129,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         public class EmpDto
         {
             public int Id { get; set; }
-            [JsonIgnore]
             public string? EmployeePhotoUrl { get; set; }
             public string Username { get; set; }
             public string FirstName { get; set; }

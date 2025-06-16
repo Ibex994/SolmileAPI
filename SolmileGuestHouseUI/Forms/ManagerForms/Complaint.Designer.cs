@@ -61,52 +61,62 @@
             // lblComplaintId
             // 
             lblComplaintId.AutoSize = true;
+            lblComplaintId.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblComplaintId.ForeColor = Color.Goldenrod;
             lblComplaintId.Location = new Point(20, 20);
             lblComplaintId.Name = "lblComplaintId";
-            lblComplaintId.Size = new Size(80, 15);
+            lblComplaintId.Size = new Size(102, 18);
             lblComplaintId.TabIndex = 0;
             lblComplaintId.Text = "Complaint ID:";
             // 
             // lblCustomerId
             // 
             lblCustomerId.AutoSize = true;
+            lblCustomerId.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblCustomerId.ForeColor = Color.Goldenrod;
             lblCustomerId.Location = new Point(20, 60);
             lblCustomerId.Name = "lblCustomerId";
-            lblCustomerId.Size = new Size(76, 15);
+            lblCustomerId.Size = new Size(100, 18);
             lblCustomerId.TabIndex = 2;
             lblCustomerId.Text = "Customer ID:";
             // 
             // lblDescription
             // 
             lblDescription.AutoSize = true;
+            lblDescription.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblDescription.ForeColor = Color.Goldenrod;
             lblDescription.Location = new Point(20, 113);
             lblDescription.Name = "lblDescription";
-            lblDescription.Size = new Size(70, 15);
+            lblDescription.Size = new Size(94, 18);
             lblDescription.TabIndex = 6;
             lblDescription.Text = "Description:";
             // 
             // lblStatus
             // 
             lblStatus.AutoSize = true;
+            lblStatus.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblStatus.ForeColor = Color.Goldenrod;
             lblStatus.Location = new Point(407, 20);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(42, 15);
+            lblStatus.Size = new Size(57, 18);
             lblStatus.TabIndex = 8;
             lblStatus.Text = "Status:";
             // 
             // lblHandler
             // 
             lblHandler.AutoSize = true;
+            lblHandler.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblHandler.ForeColor = Color.Goldenrod;
             lblHandler.Location = new Point(399, 60);
             lblHandler.Name = "lblHandler";
-            lblHandler.Size = new Size(52, 15);
+            lblHandler.Size = new Size(68, 18);
             lblHandler.TabIndex = 10;
             lblHandler.Text = "Handler:";
             // 
             // txtComplaintId
             // 
             txtComplaintId.Enabled = false;
-            txtComplaintId.Location = new Point(120, 17);
+            txtComplaintId.Location = new Point(128, 19);
             txtComplaintId.Name = "txtComplaintId";
             txtComplaintId.Size = new Size(200, 23);
             txtComplaintId.TabIndex = 1;
@@ -114,7 +124,7 @@
             // txtCustomerId
             // 
             txtCustomerId.Enabled = false;
-            txtCustomerId.Location = new Point(120, 57);
+            txtCustomerId.Location = new Point(128, 59);
             txtCustomerId.Name = "txtCustomerId";
             txtCustomerId.Size = new Size(200, 23);
             txtCustomerId.TabIndex = 3;
@@ -123,7 +133,7 @@
             // 
             cmbStatus.BackColor = Color.White;
             cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbStatus.Location = new Point(466, 20);
+            cmbStatus.Location = new Point(481, 20);
             cmbStatus.Name = "cmbStatus";
             cmbStatus.Size = new Size(200, 23);
             cmbStatus.TabIndex = 9;
@@ -132,59 +142,79 @@
             // 
             cmbHandler.BackColor = Color.White;
             cmbHandler.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbHandler.Location = new Point(466, 52);
+            cmbHandler.Location = new Point(481, 52);
             cmbHandler.Name = "cmbHandler";
             cmbHandler.Size = new Size(200, 23);
             cmbHandler.TabIndex = 11;
             // 
             // btnUpdateStatus
             // 
-            btnUpdateStatus.Location = new Point(725, 73);
+            btnUpdateStatus.BackColor = Color.FromArgb(241, 196, 15);
+            btnUpdateStatus.FlatStyle = FlatStyle.Flat;
+            btnUpdateStatus.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnUpdateStatus.ForeColor = Color.White;
+            btnUpdateStatus.Location = new Point(707, 78);
             btnUpdateStatus.Name = "btnUpdateStatus";
-            btnUpdateStatus.Size = new Size(100, 30);
+            btnUpdateStatus.Size = new Size(134, 31);
             btnUpdateStatus.TabIndex = 13;
             btnUpdateStatus.Text = "Update Status";
-            btnUpdateStatus.UseVisualStyleBackColor = true;
+            btnUpdateStatus.UseVisualStyleBackColor = false;
             btnUpdateStatus.Click += btnUpdateStatus_Click;
             // 
             // btnAssignHandler
             // 
-            btnAssignHandler.Location = new Point(725, 113);
+            btnAssignHandler.BackColor = Color.FromArgb(39, 174, 96);
+            btnAssignHandler.FlatStyle = FlatStyle.Flat;
+            btnAssignHandler.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnAssignHandler.ForeColor = Color.White;
+            btnAssignHandler.Location = new Point(707, 112);
             btnAssignHandler.Name = "btnAssignHandler";
-            btnAssignHandler.Size = new Size(100, 30);
+            btnAssignHandler.Size = new Size(134, 31);
             btnAssignHandler.TabIndex = 14;
             btnAssignHandler.Text = "Assign Handler";
-            btnAssignHandler.UseVisualStyleBackColor = true;
+            btnAssignHandler.UseVisualStyleBackColor = false;
             btnAssignHandler.Click += btnAssignHandler_Click;
             // 
             // btnResolve
             // 
-            btnResolve.Location = new Point(725, 153);
+            btnResolve.BackColor = Color.FromArgb(52, 152, 219);
+            btnResolve.FlatStyle = FlatStyle.Flat;
+            btnResolve.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnResolve.ForeColor = Color.White;
+            btnResolve.Location = new Point(707, 149);
             btnResolve.Name = "btnResolve";
-            btnResolve.Size = new Size(100, 30);
+            btnResolve.Size = new Size(134, 31);
             btnResolve.TabIndex = 15;
             btnResolve.Text = "Resolve";
-            btnResolve.UseVisualStyleBackColor = true;
+            btnResolve.UseVisualStyleBackColor = false;
             btnResolve.Click += btnResolve_Click;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(725, 196);
+            btnDelete.BackColor = Color.FromArgb(231, 76, 60);
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(707, 186);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(100, 30);
+            btnDelete.Size = new Size(134, 31);
             btnDelete.TabIndex = 16;
             btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // btnHistory
             // 
-            btnHistory.Location = new Point(725, 232);
+            btnHistory.BackColor = Color.DimGray;
+            btnHistory.FlatStyle = FlatStyle.Flat;
+            btnHistory.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            btnHistory.ForeColor = Color.White;
+            btnHistory.Location = new Point(707, 223);
             btnHistory.Name = "btnHistory";
-            btnHistory.Size = new Size(100, 30);
+            btnHistory.Size = new Size(134, 31);
             btnHistory.TabIndex = 17;
             btnHistory.Text = "History";
-            btnHistory.UseVisualStyleBackColor = true;
+            btnHistory.UseVisualStyleBackColor = false;
             btnHistory.Click += btnHistory_Click;
             // 
             // dgvComplaints
@@ -193,6 +223,7 @@
             dgvComplaints.BackgroundColor = Color.White;
             dgvComplaints.Location = new Point(20, 345);
             dgvComplaints.Name = "dgvComplaints";
+            dgvComplaints.ReadOnly = true;
             dgvComplaints.Size = new Size(805, 301);
             dgvComplaints.TabIndex = 18;
             dgvComplaints.CellClick += dgvComplaints_CellClick;
@@ -210,7 +241,7 @@
             // txtDescription
             // 
             txtDescription.BackColor = Color.White;
-            txtDescription.Location = new Point(96, 110);
+            txtDescription.Location = new Point(120, 110);
             txtDescription.Name = "txtDescription";
             txtDescription.ReadOnly = true;
             txtDescription.Size = new Size(570, 186);
@@ -221,6 +252,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             Controls.Add(txtDescription);
             Controls.Add(lblComplaintId);
             Controls.Add(txtComplaintId);
@@ -238,8 +270,10 @@
             Controls.Add(btnClear);
             Controls.Add(btnHistory);
             Controls.Add(dgvComplaints);
+            ForeColor = Color.Black;
             Name = "Complaint";
             Size = new Size(855, 690);
+            Load += Complaint_Load;
             ((System.ComponentModel.ISupportInitialize)dgvComplaints).EndInit();
             ResumeLayout(false);
             PerformLayout();

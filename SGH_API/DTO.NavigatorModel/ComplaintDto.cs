@@ -15,6 +15,6 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         }
         public class UpdateCompDto
         {
-            public bool status { get; set; }
+            public string status { get; set; }
         }
 }

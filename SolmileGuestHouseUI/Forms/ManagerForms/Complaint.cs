@@ -25,7 +25,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            LoadStatusDropdown();
+            //LoadStatusDropdown();
             _ = LoadHandlersAsync();
             _ = LoadComplaintsAsync();
         }
@@ -33,7 +33,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
         {
             try
             {
-                var response = await _client.GetAsync("api/complaints");
+                var response = await _client.GetAsync("api/Complaints");
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
@@ -47,16 +47,12 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             }
         }
 
-        private void LoadStatusDropdown()
-        {
-            var statuses = new List<string> { "New", "In Progress", "Closed", "Rejected" };
-            cmbStatus.DataSource = statuses;
-        }
+
         private async Task LoadHandlersAsync()
         {
             try
             {
-                var response = await _client.GetAsync("api/employees");
+                var response = await _client.GetAsync("api/Employees");
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
@@ -111,14 +107,21 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 return;
             }
 
-            bool isResolved = cmbStatus.SelectedItem?.ToString().Equals("Resolved", StringComparison.OrdinalIgnoreCase) ?? false;
+            if (cmbStatus.SelectedIndex < 0)
+            {
+                MessageBox.Show("Please select a complaint status.");
+                return;
+            }
 
-            var updateDto = new UpdateCompDto { status = isResolved };
+            btnUpdateStatus.Enabled = false;  // disable button to prevent multiple clicks
+
+            var selectedStatus = cmbStatus.SelectedItem?.ToString();
+            var updateDto = new UpdateCompDto { status = selectedStatus };
 
             try
             {
                 var content = new StringContent(JsonSerializer.Serialize(updateDto), Encoding.UTF8, "application/json");
-                var response = await _client.PutAsync($"api/complaints/updatestatus/{complaintId}", content);
+                var response = await _client.PutAsync($"api/Complaints/UpdateStatus/{complaintId}", content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -127,17 +130,21 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 }
                 else
                 {
-                    MessageBox.Show("Failed to update complaint status.");
+                    string error = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Failed to update complaint status.\n\n{error}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error updating status: {ex.Message}");
             }
-            ClearForm();
+            finally
+            {
+                btnUpdateStatus.Enabled = true;
+                ClearForm();
+            }
         }
 
-        // Assign handler button click
         private async void btnAssignHandler_Click(object sender, EventArgs e)
         {
             if (!int.TryParse(txtComplaintId.Text, out var complaintId))
@@ -154,7 +161,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
 
             try
             {
-                var response = await _client.PutAsync($"api/complaints/assignhandler?complaintId={complaintId}&employeeId={employeeId}", null);
+                var response = await _client.PutAsync($"api/Complaints/AssignHandler?complaintId={complaintId}&employeeId={employeeId}", null);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -186,7 +193,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
 
             try
             {
-                var response = await _client.DeleteAsync($"api/complaints/delete/{complaintId}");
+                var response = await _client.DeleteAsync($"api/Complaints/Delete/{complaintId}");
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Complaint deleted.");
@@ -218,7 +225,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
 
             try
             {
-                var response = await _client.PutAsync($"api/complaints/resolve/{complaintId}", null);
+                var response = await _client.PutAsync($"api/Complaints/Resolve/{complaintId}", null);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -292,6 +299,23 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             ClearForm();
         }
 
+        private void Complaint_Load(object sender, EventArgs e)
+        {
+            var statuses = new List<string>
+    {
+        "-- Select Status --", 
+        "Pending",
+        "In Progress",
+        "Resolved",
+        "Closed",
+        "Rejected"
+    };
+
+            cmbStatus.DataSource = statuses;
+            cmbStatus.SelectedIndex = 0;
+
+            cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
+        }
 
     }
 }

@@ -93,51 +93,51 @@
             // lblEmployeeId
             // 
             lblEmployeeId.AutoSize = true;
-            lblEmployeeId.Font = new Font("Arial Rounded MT Bold", 9F);
+            lblEmployeeId.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblEmployeeId.ForeColor = Color.Goldenrod;
             lblEmployeeId.Location = new Point(20, 24);
             lblEmployeeId.Name = "lblEmployeeId";
-            lblEmployeeId.Size = new Size(85, 14);
+            lblEmployeeId.Size = new Size(100, 18);
             lblEmployeeId.TabIndex = 0;
             lblEmployeeId.Text = "Employee ID:";
             // 
             // lblDate
             // 
             lblDate.AutoSize = true;
-            lblDate.Font = new Font("Arial Rounded MT Bold", 9F);
+            lblDate.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblDate.ForeColor = Color.Goldenrod;
-            lblDate.Location = new Point(20, 60);
+            lblDate.Location = new Point(20, 78);
             lblDate.Name = "lblDate";
-            lblDate.Size = new Size(108, 14);
+            lblDate.Size = new Size(129, 18);
             lblDate.TabIndex = 2;
             lblDate.Text = "Attendance Date:";
             // 
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Font = new Font("Arial Rounded MT Bold", 9F);
+            lblStatus.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblStatus.ForeColor = Color.Goldenrod;
-            lblStatus.Location = new Point(220, 100);
+            lblStatus.Location = new Point(20, 225);
             lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(55, 14);
+            lblStatus.Size = new Size(66, 18);
             lblStatus.TabIndex = 6;
             lblStatus.Text = "Reason:";
             // 
             // lblIsPresent
             // 
             lblIsPresent.AutoSize = true;
-            lblIsPresent.Font = new Font("Arial Rounded MT Bold", 9F);
+            lblIsPresent.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblIsPresent.ForeColor = Color.Goldenrod;
-            lblIsPresent.Location = new Point(20, 100);
+            lblIsPresent.Location = new Point(20, 129);
             lblIsPresent.Name = "lblIsPresent";
-            lblIsPresent.Size = new Size(48, 14);
+            lblIsPresent.Size = new Size(57, 18);
             lblIsPresent.TabIndex = 4;
             lblIsPresent.Text = "Status:";
             // 
             // dtpAttendanceDate
             // 
             dtpAttendanceDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            dtpAttendanceDate.Location = new Point(132, 53);
+            dtpAttendanceDate.Location = new Point(157, 73);
             dtpAttendanceDate.Name = "dtpAttendanceDate";
             dtpAttendanceDate.Size = new Size(250, 23);
             dtpAttendanceDate.TabIndex = 3;
@@ -145,7 +145,7 @@
             // txtReason
             // 
             txtReason.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            txtReason.Location = new Point(280, 95);
+            txtReason.Location = new Point(157, 220);
             txtReason.Name = "txtReason";
             txtReason.Size = new Size(250, 23);
             txtReason.TabIndex = 7;
@@ -155,19 +155,20 @@
             cmbIsPresent.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbIsPresent.Font = new Font("Arial Rounded MT Bold", 9.75F);
             cmbIsPresent.Items.AddRange(new object[] { "Present", "Absent" });
-            cmbIsPresent.Location = new Point(80, 95);
+            cmbIsPresent.Location = new Point(157, 128);
             cmbIsPresent.Name = "cmbIsPresent";
-            cmbIsPresent.Size = new Size(121, 23);
+            cmbIsPresent.Size = new Size(250, 23);
             cmbIsPresent.TabIndex = 5;
             cmbIsPresent.SelectedIndexChanged += cmbIsPresent_SelectedIndexChanged;
             // 
             // btnGetByEmployeeAndDate
             // 
-            btnGetByEmployeeAndDate.BackColor = SystemColors.MenuHighlight;
+            btnGetByEmployeeAndDate.BackColor = Color.FromArgb(52, 152, 219);
+            btnGetByEmployeeAndDate.FlatStyle = FlatStyle.Flat;
             btnGetByEmployeeAndDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnGetByEmployeeAndDate.Location = new Point(627, 51);
+            btnGetByEmployeeAndDate.Location = new Point(619, 137);
             btnGetByEmployeeAndDate.Name = "btnGetByEmployeeAndDate";
-            btnGetByEmployeeAndDate.Size = new Size(111, 30);
+            btnGetByEmployeeAndDate.Size = new Size(134, 31);
             btnGetByEmployeeAndDate.TabIndex = 9;
             btnGetByEmployeeAndDate.Text = "Get by ID & Date";
             btnGetByEmployeeAndDate.UseVisualStyleBackColor = false;
@@ -175,11 +176,13 @@
             // 
             // btnCreate
             // 
-            btnCreate.BackColor = Color.FromArgb(0, 192, 0);
+            btnCreate.BackColor = Color.FromArgb(39, 174, 96);
+            btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnCreate.Location = new Point(541, 15);
+            btnCreate.ForeColor = Color.White;
+            btnCreate.Location = new Point(619, 24);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(80, 30);
+            btnCreate.Size = new Size(134, 31);
             btnCreate.TabIndex = 10;
             btnCreate.Text = "Create";
             btnCreate.UseVisualStyleBackColor = false;
@@ -187,11 +190,13 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.BackColor = Color.Goldenrod;
+            btnUpdate.BackColor = Color.FromArgb(241, 196, 15);
+            btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnUpdate.Location = new Point(541, 53);
+            btnUpdate.ForeColor = Color.White;
+            btnUpdate.Location = new Point(619, 62);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(80, 30);
+            btnUpdate.Size = new Size(134, 31);
             btnUpdate.TabIndex = 11;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = false;
@@ -199,11 +204,13 @@
             // 
             // btnDelete
             // 
-            btnDelete.BackColor = Color.Red;
+            btnDelete.BackColor = Color.FromArgb(231, 76, 60);
+            btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnDelete.Location = new Point(541, 91);
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(619, 100);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(80, 30);
+            btnDelete.Size = new Size(134, 31);
             btnDelete.TabIndex = 12;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = false;
@@ -213,10 +220,10 @@
             // 
             dgvAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAttendance.BackgroundColor = Color.White;
-            dgvAttendance.Location = new Point(20, 127);
+            dgvAttendance.Location = new Point(20, 270);
             dgvAttendance.Name = "dgvAttendance";
             dgvAttendance.ReadOnly = true;
-            dgvAttendance.Size = new Size(770, 499);
+            dgvAttendance.Size = new Size(770, 356);
             dgvAttendance.TabIndex = 13;
             dgvAttendance.CellClick += dgvAttendance_CellClick;
             // 
@@ -231,7 +238,8 @@
             // 
             // btnMultipleSave
             // 
-            btnMultipleSave.BackColor = Color.FromArgb(0, 192, 0);
+            btnMultipleSave.BackColor = Color.FromArgb(39, 174, 96);
+            btnMultipleSave.FlatStyle = FlatStyle.Flat;
             btnMultipleSave.Font = new Font("Arial Rounded MT Bold", 9.75F);
             btnMultipleSave.Location = new Point(298, 15);
             btnMultipleSave.Name = "btnMultipleSave";
@@ -317,22 +325,22 @@
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(364, 21);
+            txtUsername.Location = new Point(157, 175);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(114, 21);
+            txtUsername.Size = new Size(250, 21);
             txtUsername.TabIndex = 16;
             // 
             // txtEmployeeId
             // 
-            txtEmployeeId.Location = new Point(132, 21);
+            txtEmployeeId.Location = new Point(157, 24);
             txtEmployeeId.Name = "txtEmployeeId";
-            txtEmployeeId.Size = new Size(114, 21);
+            txtEmployeeId.Size = new Size(250, 21);
             txtEmployeeId.TabIndex = 16;
             // 
             // btnGetAll
             // 
             btnGetAll.Image = Properties.Resources.icons8_refresh_48;
-            btnGetAll.Location = new Point(20, 117);
+            btnGetAll.Location = new Point(20, 260);
             btnGetAll.Name = "btnGetAll";
             btnGetAll.Size = new Size(31, 22);
             btnGetAll.SizeMode = PictureBoxSizeMode.Zoom;
@@ -342,11 +350,12 @@
             // 
             // btnById
             // 
-            btnById.BackColor = SystemColors.MenuHighlight;
+            btnById.BackColor = Color.FromArgb(52, 152, 219);
+            btnById.FlatStyle = FlatStyle.Flat;
             btnById.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnById.Location = new Point(627, 16);
+            btnById.Location = new Point(619, 178);
             btnById.Name = "btnById";
-            btnById.Size = new Size(80, 28);
+            btnById.Size = new Size(134, 31);
             btnById.TabIndex = 14;
             btnById.Text = "Get By ID";
             btnById.UseVisualStyleBackColor = false;
@@ -355,11 +364,11 @@
             // lblName
             // 
             lblName.AutoSize = true;
-            lblName.Font = new Font("Arial Rounded MT Bold", 9F);
+            lblName.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblName.ForeColor = Color.Goldenrod;
-            lblName.Location = new Point(252, 24);
+            lblName.Location = new Point(20, 178);
             lblName.Name = "lblName";
-            lblName.Size = new Size(106, 14);
+            lblName.Size = new Size(125, 18);
             lblName.TabIndex = 0;
             lblName.Text = "Employee Name:";
             // 
@@ -405,11 +414,12 @@
             // 
             // btnGetIdDate
             // 
-            btnGetIdDate.BackColor = SystemColors.MenuHighlight;
+            btnGetIdDate.BackColor = Color.FromArgb(52, 152, 219);
+            btnGetIdDate.FlatStyle = FlatStyle.Flat;
             btnGetIdDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnGetIdDate.Location = new Point(467, 26);
+            btnGetIdDate.Location = new Point(467, 16);
             btnGetIdDate.Name = "btnGetIdDate";
-            btnGetIdDate.Size = new Size(131, 25);
+            btnGetIdDate.Size = new Size(134, 31);
             btnGetIdDate.TabIndex = 1;
             btnGetIdDate.Text = "Get By ID&Date";
             btnGetIdDate.UseVisualStyleBackColor = false;
@@ -417,11 +427,12 @@
             // 
             // btnGenerateSummary
             // 
-            btnGenerateSummary.BackColor = Color.MediumSeaGreen;
+            btnGenerateSummary.BackColor = Color.FromArgb(39, 174, 96);
+            btnGenerateSummary.FlatStyle = FlatStyle.Flat;
             btnGenerateSummary.Font = new Font("Arial Rounded MT Bold", 9.75F);
             btnGenerateSummary.Location = new Point(467, 58);
             btnGenerateSummary.Name = "btnGenerateSummary";
-            btnGenerateSummary.Size = new Size(146, 25);
+            btnGenerateSummary.Size = new Size(134, 31);
             btnGenerateSummary.TabIndex = 1;
             btnGenerateSummary.Text = "Generate Summary";
             btnGenerateSummary.UseVisualStyleBackColor = false;

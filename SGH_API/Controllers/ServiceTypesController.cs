@@ -83,6 +83,13 @@ namespace SolmileGuesthouseAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ServiceTypeDto>> PostServiceType(ServiceTypeDto serviceTypeDto)
         {
+            // Check if the ServiceTypeId already exists
+            var existing = await _context.ServiceTypes.FindAsync(serviceTypeDto.ServiceTypeId);
+            if (existing != null)
+            {
+                return Conflict($"A service type with ID {serviceTypeDto.ServiceTypeId} already exists.");
+            }
+
             var serviceType = new ServiceType
             {
                 ServiceTypeId = serviceTypeDto.ServiceTypeId,
@@ -92,13 +99,11 @@ namespace SolmileGuesthouseAPI.Controllers
             _context.ServiceTypes.Add(serviceType);
             await _context.SaveChangesAsync();
 
-            serviceTypeDto.ServiceTypeId = serviceType.ServiceTypeId;
             return new ServiceTypeDto
             {
                 ServiceTypeId = serviceType.ServiceTypeId,
                 ServiceTypeName = serviceType.ServiceTypeName
             };
-
         }
 
         [HttpDelete("{id}")]

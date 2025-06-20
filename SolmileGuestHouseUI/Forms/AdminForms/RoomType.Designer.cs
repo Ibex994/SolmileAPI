@@ -158,12 +158,32 @@
             // 
             // dgvRoomTypes
             // 
+            dgvRoomTypes.AllowUserToAddRows = false;
+            dgvRoomTypes.AllowUserToDeleteRows = false;
+            dgvRoomTypes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvRoomTypes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvRoomTypes.BackgroundColor = Color.White;
+            dgvRoomTypes.BorderStyle = BorderStyle.None;
+            dgvRoomTypes.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvRoomTypes.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvRoomTypes.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvRoomTypes.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvRoomTypes.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvRoomTypes.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvRoomTypes.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvRoomTypes.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvRoomTypes.EnableHeadersVisualStyles = false;
+            dgvRoomTypes.GridColor = Color.LightGray;
             dgvRoomTypes.Location = new Point(30, 263);
+            dgvRoomTypes.MultiSelect = false;
             dgvRoomTypes.Name = "dgvRoomTypes";
+            dgvRoomTypes.ReadOnly = true;
+            dgvRoomTypes.RowHeadersVisible = false;
+            dgvRoomTypes.RowTemplate.Height = 30;
+            dgvRoomTypes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvRoomTypes.Size = new Size(752, 404);
             dgvRoomTypes.TabIndex = 11;
+
             // 
             // pictureBox
             // 

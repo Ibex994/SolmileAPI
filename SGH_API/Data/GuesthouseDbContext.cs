@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolmileGuesthouseAPI.Data.Models;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
+using SharedModel.Models;
 
 namespace SolmileGuesthouseAPI.Data
 {
@@ -48,6 +49,7 @@ namespace SolmileGuesthouseAPI.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<TaxBracket> TaxBrackets { get; set; }
         public DbSet<OTP> Otps { get; set; }
+        public DbSet<ErrorLog> ErrorLogs { get; set; }
 
 
 
@@ -60,7 +62,7 @@ namespace SolmileGuesthouseAPI.Data
                 .Property(r => r.TypeId)
                 .ValueGeneratedNever(); // This disables identity/auto-increment
 
-         // Configure ServiceType's ServiceTypeId to not be auto-generated
+            // Configure ServiceType's ServiceTypeId to not be auto-generated
             modelBuilder.Entity<ServiceType>()
                 .Property(r => r.ServiceTypeId)
                 .ValueGeneratedNever(); // This disables identity/auto-increment
@@ -287,6 +289,13 @@ namespace SolmileGuesthouseAPI.Data
                 .HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
+
+            //errorlog
+            modelBuilder.Entity<ErrorLog>()
+                .HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

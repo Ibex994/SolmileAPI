@@ -48,6 +48,12 @@
 
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             lblEmployeeId = new Label();
             lblDate = new Label();
             lblStatus = new Label();
@@ -218,21 +224,76 @@
             // 
             // dgvAttendance
             // 
+            dgvAttendance.AllowUserToAddRows = false;
+            dgvAttendance.AllowUserToDeleteRows = false;
             dgvAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAttendance.BackgroundColor = Color.White;
+            dgvAttendance.BorderStyle = BorderStyle.None;
+            dgvAttendance.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvAttendance.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvAttendance.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvAttendance.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvAttendance.EnableHeadersVisualStyles = false;
+            dgvAttendance.GridColor = Color.LightGray;
             dgvAttendance.Location = new Point(20, 270);
+            dgvAttendance.MultiSelect = false;
             dgvAttendance.Name = "dgvAttendance";
             dgvAttendance.ReadOnly = true;
+            dgvAttendance.RowHeadersVisible = false;
+            dgvAttendance.RowTemplate.Height = 30;
+            dgvAttendance.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAttendance.Size = new Size(770, 356);
             dgvAttendance.TabIndex = 13;
             dgvAttendance.CellClick += dgvAttendance_CellClick;
             // 
             // dgvMultipleAttendance
             // 
+            dgvMultipleAttendance.AllowUserToAddRows = false;
+            dgvMultipleAttendance.AllowUserToDeleteRows = false;
             dgvMultipleAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvMultipleAttendance.BackgroundColor = Color.White;
+            dgvMultipleAttendance.BorderStyle = BorderStyle.None;
+            dgvMultipleAttendance.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvMultipleAttendance.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvMultipleAttendance.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvMultipleAttendance.DefaultCellStyle = dataGridViewCellStyle4;
+            dgvMultipleAttendance.EnableHeadersVisualStyles = false;
+            dgvMultipleAttendance.GridColor = Color.LightGray;
             dgvMultipleAttendance.Location = new Point(20, 60);
+            dgvMultipleAttendance.MultiSelect = false;
             dgvMultipleAttendance.Name = "dgvMultipleAttendance";
+            dgvMultipleAttendance.ReadOnly = true;
+            dgvMultipleAttendance.RowHeadersVisible = false;
+            dgvMultipleAttendance.RowTemplate.Height = 30;
+            dgvMultipleAttendance.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvMultipleAttendance.Size = new Size(760, 580);
             dgvMultipleAttendance.TabIndex = 0;
             // 
@@ -281,7 +342,7 @@
             dateTimePicker2.Name = "dateTimePicker2";
             dateTimePicker2.Size = new Size(244, 21);
             dateTimePicker2.TabIndex = 2;
-            dateTimePicker2.Value = new DateTime(2025, 6, 15, 13, 4, 55, 0);
+            dateTimePicker2.Value = new DateTime(2025, 6, 20, 18, 31, 27, 0);
             // 
             // dateTimePicker1
             // 
@@ -440,10 +501,38 @@
             // 
             // dgvMonthlySummary
             // 
+            dgvMonthlySummary.AllowUserToAddRows = false;
+            dgvMonthlySummary.AllowUserToDeleteRows = false;
             dgvMonthlySummary.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvMonthlySummary.BackgroundColor = Color.White;
+            dgvMonthlySummary.BorderStyle = BorderStyle.None;
+            dgvMonthlySummary.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvMonthlySummary.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvMonthlySummary.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = SystemColors.Window;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle6.SelectionForeColor = Color.White;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dgvMonthlySummary.DefaultCellStyle = dataGridViewCellStyle6;
+            dgvMonthlySummary.EnableHeadersVisualStyles = false;
+            dgvMonthlySummary.GridColor = Color.LightGray;
             dgvMonthlySummary.Location = new Point(30, 97);
+            dgvMonthlySummary.MultiSelect = false;
             dgvMonthlySummary.Name = "dgvMonthlySummary";
+            dgvMonthlySummary.ReadOnly = true;
+            dgvMonthlySummary.RowHeadersVisible = false;
+            dgvMonthlySummary.RowTemplate.Height = 30;
+            dgvMonthlySummary.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvMonthlySummary.Size = new Size(760, 513);
             dgvMonthlySummary.TabIndex = 2;
             // 

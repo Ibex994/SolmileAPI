@@ -28,154 +28,191 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
- 
-            this.dgvServiceTypes = new System.Windows.Forms.DataGridView();
-
-            this.lblId = new System.Windows.Forms.Label();
-            this.txtId = new System.Windows.Forms.TextBox();
-
-            this.lblName = new System.Windows.Forms.Label();
-            this.txtName = new System.Windows.Forms.TextBox();
-
-            this.lblDescription = new System.Windows.Forms.Label();
-            this.txtDescription = new System.Windows.Forms.TextBox();
-
-            this.btnGetAll = new System.Windows.Forms.Button();
-            this.btnGetById = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-
-            this.btnGetIdByName = new System.Windows.Forms.Button();
-            this.btnGetListForCustomer = new System.Windows.Forms.Button();
-
-            ((System.ComponentModel.ISupportInitialize)(this.dgvServiceTypes)).BeginInit();
-            this.SuspendLayout();
-
-            // DataGridView: Service Types
-            this.dgvServiceTypes.Location = new System.Drawing.Point(20, 180);
-            this.dgvServiceTypes.Size = new System.Drawing.Size(700, 300);
-            this.dgvServiceTypes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            this.dgvServiceTypes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-
-            // Label: ID
-            this.lblId.Text = "Service Type ID:";
-            this.lblId.Location = new System.Drawing.Point(20, 20);
-            this.lblId.Size = new System.Drawing.Size(110, 23);
-
-            // TextBox: ID
-            this.txtId.Location = new System.Drawing.Point(140, 20);
-            this.txtId.Size = new System.Drawing.Size(200, 22);
-            this.txtId.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Label: Name
-            this.lblName.Text = "Name:";
-            this.lblName.Location = new System.Drawing.Point(20, 60);
-            this.lblName.Size = new System.Drawing.Size(110, 23);
-
-            // TextBox: Name
-            this.txtName.Location = new System.Drawing.Point(140, 60);
-            this.txtName.Size = new System.Drawing.Size(200, 22);
-            this.txtName.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Label: Description
-            this.lblDescription.Text = "Description:";
-            this.lblDescription.Location = new System.Drawing.Point(20, 100);
-            this.lblDescription.Size = new System.Drawing.Size(110, 23);
-
-            // TextBox: Description
-            this.txtDescription.Location = new System.Drawing.Point(140, 100);
-            this.txtDescription.Size = new System.Drawing.Size(200, 60);
-            this.txtDescription.Multiline = true;
-            this.txtDescription.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Get All Service Types
-            this.btnGetAll.Text = "Get All";
-            this.btnGetAll.Location = new System.Drawing.Point(360, 18);
-            this.btnGetAll.Size = new System.Drawing.Size(90, 28);
-            this.btnGetAll.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Get By ID
-            this.btnGetById.Text = "Get By ID";
-            this.btnGetById.Location = new System.Drawing.Point(460, 18);
-            this.btnGetById.Size = new System.Drawing.Size(90, 28);
-            this.btnGetById.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Add
-            this.btnAdd.Text = "Add";
-            this.btnAdd.Location = new System.Drawing.Point(560, 18);
-            this.btnAdd.Size = new System.Drawing.Size(90, 28);
-            this.btnAdd.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Update
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.Location = new System.Drawing.Point(660, 18);
-            this.btnUpdate.Size = new System.Drawing.Size(90, 28);
-            this.btnUpdate.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Delete
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.Location = new System.Drawing.Point(360, 60);
-            this.btnDelete.Size = new System.Drawing.Size(90, 28);
-            this.btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Get ServiceType ID By Name
-            this.btnGetIdByName.Text = "Get ID By Name";
-            this.btnGetIdByName.Location = new System.Drawing.Point(460, 60);
-            this.btnGetIdByName.Size = new System.Drawing.Size(130, 28);
-            this.btnGetIdByName.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Get Service List For Customer
-            this.btnGetListForCustomer.Text = "Get Service List For Customer";
-            this.btnGetListForCustomer.Location = new System.Drawing.Point(600, 60);
-            this.btnGetListForCustomer.Size = new System.Drawing.Size(180, 28);
-            this.btnGetListForCustomer.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Add controls to form
-            this.Controls.Add(this.dgvServiceTypes);
-
-            this.Controls.Add(this.lblId);
-            this.Controls.Add(this.txtId);
-
-            this.Controls.Add(this.lblName);
-            this.Controls.Add(this.txtName);
-
-            this.Controls.Add(this.lblDescription);
-            this.Controls.Add(this.txtDescription);
-
-            this.Controls.Add(this.btnGetAll);
-            this.Controls.Add(this.btnGetById);
-            this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(this.btnDelete);
-
-            this.Controls.Add(this.btnGetIdByName);
-            this.Controls.Add(this.btnGetListForCustomer);
-
-            this.Text = "Service Types Management";
-            this.ClientSize = new System.Drawing.Size(800, 500);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
-            ((System.ComponentModel.ISupportInitialize)(this.dgvServiceTypes)).EndInit();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            dgvServiceTypes = new DataGridView();
+            lblId = new Label();
+            txtId = new TextBox();
+            lblName = new Label();
+            txtName = new TextBox();
+            btnGetAll = new Button();
+            btnFindByIdOrName = new Button();
+            btnAdd = new Button();
+            btnUpdate = new Button();
+            btnDelete = new Button();
+            btnGetListForCustomer = new Button();
+            btnClear = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvServiceTypes).BeginInit();
+            SuspendLayout();
+            // 
+            // dgvServiceTypes
+            // 
+            dgvServiceTypes.AllowUserToAddRows = false;
+            dgvServiceTypes.AllowUserToDeleteRows = false;
+            dgvServiceTypes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvServiceTypes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvServiceTypes.BackgroundColor = Color.White;
+            dgvServiceTypes.BorderStyle = BorderStyle.None;
+            dgvServiceTypes.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvServiceTypes.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvServiceTypes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvServiceTypes.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvServiceTypes.EnableHeadersVisualStyles = false;
+            dgvServiceTypes.GridColor = Color.LightGray;
+            dgvServiceTypes.Location = new Point(20, 130);
+            dgvServiceTypes.MultiSelect = false;
+            dgvServiceTypes.Name = "dgvServiceTypes";
+            dgvServiceTypes.ReadOnly = true;
+            dgvServiceTypes.RowHeadersVisible = false;
+            dgvServiceTypes.RowTemplate.Height = 30;
+            dgvServiceTypes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvServiceTypes.Size = new Size(810, 570);
+            dgvServiceTypes.TabIndex = 0;
+            dgvServiceTypes.SelectionChanged += DgvServiceTypes_SelectionChanged;
+            // 
+            // lblId
+            // 
+            lblId.Location = new Point(20, 20);
+            lblId.Name = "lblId";
+            lblId.Size = new Size(110, 23);
+            lblId.TabIndex = 1;
+            lblId.Text = "Service Type ID:";
+            // 
+            // txtId
+            // 
+            txtId.Location = new Point(140, 20);
+            txtId.Name = "txtId";
+            txtId.Size = new Size(200, 23);
+            txtId.TabIndex = 2;
+            // 
+            // lblName
+            // 
+            lblName.Location = new Point(20, 60);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(110, 23);
+            lblName.TabIndex = 3;
+            lblName.Text = "Name:";
+            // 
+            // txtName
+            // 
+            txtName.Location = new Point(140, 60);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(200, 23);
+            txtName.TabIndex = 4;
+            // 
+            // btnGetAll
+            // 
+            btnGetAll.Location = new Point(494, 13);
+            btnGetAll.Name = "btnGetAll";
+            btnGetAll.Size = new Size(90, 28);
+            btnGetAll.TabIndex = 7;
+            btnGetAll.Text = "Get All";
+            // 
+            // btnFindByIdOrName
+            // 
+            btnFindByIdOrName.Location = new Point(494, 47);
+            btnFindByIdOrName.Name = "btnFindByIdOrName";
+            btnFindByIdOrName.Size = new Size(115, 28);
+            btnFindByIdOrName.TabIndex = 8;
+            btnFindByIdOrName.Text = "Get By ID / Name";
+            btnFindByIdOrName.Click += btnFindByIdOrName_Click;
+            // 
+            // btnAdd
+            // 
+            btnAdd.Location = new Point(371, 13);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(90, 28);
+            btnAdd.TabIndex = 9;
+            btnAdd.Text = "Add";
+            btnAdd.Click += btnAdd_Click;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.Location = new Point(371, 81);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(90, 28);
+            btnUpdate.TabIndex = 10;
+            btnUpdate.Text = "Update";
+            btnUpdate.Click += btnUpdate_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(371, 47);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(90, 28);
+            btnDelete.TabIndex = 11;
+            btnDelete.Text = "Delete";
+            btnDelete.Click += btnDelete_Click;
+            // 
+            // btnGetListForCustomer
+            // 
+            btnGetListForCustomer.Location = new Point(494, 87);
+            btnGetListForCustomer.Name = "btnGetListForCustomer";
+            btnGetListForCustomer.Size = new Size(180, 28);
+            btnGetListForCustomer.TabIndex = 13;
+            btnGetListForCustomer.Text = "Get Service List For Customer";
+            // 
+            // btnClear
+            // 
+            btnClear.Location = new Point(642, 18);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(75, 23);
+            btnClear.TabIndex = 14;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
+            // 
+            // ServiceType
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            Controls.Add(btnClear);
+            Controls.Add(dgvServiceTypes);
+            Controls.Add(lblId);
+            Controls.Add(txtId);
+            Controls.Add(lblName);
+            Controls.Add(txtName);
+            Controls.Add(btnGetAll);
+            Controls.Add(btnFindByIdOrName);
+            Controls.Add(btnAdd);
+            Controls.Add(btnUpdate);
+            Controls.Add(btnDelete);
+            Controls.Add(btnGetListForCustomer);
+            Name = "ServiceType";
+            Size = new Size(860, 720);
+            ((System.ComponentModel.ISupportInitialize)dgvServiceTypes).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
+
 
         private System.Windows.Forms.DataGridView dgvServiceTypes;
         private System.Windows.Forms.Label lblId;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblDescription;
-        private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Button btnGetAll;
-        private System.Windows.Forms.Button btnGetById;
+        private System.Windows.Forms.Button btnFindByIdOrName;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnGetIdByName;
         private System.Windows.Forms.Button btnGetListForCustomer;
+        private Button btnClear;
     }
 
         #endregion

@@ -37,16 +37,34 @@
             // 
             // dgvBranches
             // 
+            dgvBranches.AllowUserToAddRows = false;
+            dgvBranches.AllowUserToDeleteRows = false;
             dgvBranches.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvBranches.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvBranches.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
             dgvBranches.BackgroundColor = Color.White;
-            dgvBranches.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvBranches.BorderStyle = BorderStyle.None;
+            dgvBranches.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvBranches.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvBranches.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvBranches.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvBranches.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvBranches.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvBranches.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvBranches.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvBranches.EnableHeadersVisualStyles = false;
+            dgvBranches.GridColor = Color.LightGray;
             dgvBranches.Location = new Point(23, 118);
+            dgvBranches.MultiSelect = false;
             dgvBranches.Name = "dgvBranches";
+            dgvBranches.ReadOnly = true;
+            dgvBranches.RowHeadersVisible = false;
+            dgvBranches.RowTemplate.Height = 30;
+            dgvBranches.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBranches.Size = new Size(823, 438);
             dgvBranches.TabIndex = 0;
             dgvBranches.Click += dgvBranches_CellClick;
+
             // 
             // txtBranchName
             // 

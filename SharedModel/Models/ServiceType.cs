@@ -8,7 +8,6 @@ namespace SolmileGuesthouseAPI.Data.Models
     {
         [Key]
         public int ServiceTypeId { get; set; }
-
         [Required]
         public string ServiceTypeName { get; set; }
         public ICollection<ServiceRequest> ServiceRequests { get; set; }

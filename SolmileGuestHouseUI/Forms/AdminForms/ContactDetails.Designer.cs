@@ -136,16 +136,34 @@
             // 
             // dgvContacts
             // 
+            dgvContacts.AllowUserToAddRows = false;
+            dgvContacts.AllowUserToDeleteRows = false;
             dgvContacts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvContacts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvContacts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
             dgvContacts.BackgroundColor = Color.White;
+            dgvContacts.BorderStyle = BorderStyle.None;
+            dgvContacts.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvContacts.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvContacts.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvContacts.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvContacts.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvContacts.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvContacts.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvContacts.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvContacts.EnableHeadersVisualStyles = false;
+            dgvContacts.GridColor = Color.LightGray;
             dgvContacts.Location = new Point(17, 185);
+            dgvContacts.MultiSelect = false;
             dgvContacts.Name = "dgvContacts";
+            dgvContacts.ReadOnly = true;
+            dgvContacts.RowHeadersVisible = false;
+            dgvContacts.RowTemplate.Height = 30;
             dgvContacts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvContacts.Size = new Size(782, 398);
             dgvContacts.TabIndex = 11;
             dgvContacts.SelectionChanged += dgvContacts_SelectionChanged_1;
+
             // 
             // BtnClear
             // 

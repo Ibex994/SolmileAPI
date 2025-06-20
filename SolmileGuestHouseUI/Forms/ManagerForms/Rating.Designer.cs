@@ -2,15 +2,26 @@
 {
     partial class Rating
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        private System.Windows.Forms.DataGridView dgvRatings;
+        private System.Windows.Forms.TextBox txtEmployeeId;
+        private System.Windows.Forms.TextBox txtServiceRequestId;
+        private System.Windows.Forms.TextBox txtRatingValue;
+        private System.Windows.Forms.TextBox txtGivenBy;
+        private System.Windows.Forms.TextBox txtRatingIdSearch;
+        private System.Windows.Forms.TextBox txtServiceRequestSearch;
+        private System.Windows.Forms.Button btnGetAll;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnLoadById;
+        private System.Windows.Forms.Button btnGetValueNA;
+        private System.Windows.Forms.Label labelEmployeeId;
+        private System.Windows.Forms.Label labelServiceRequestId;
+        private System.Windows.Forms.Label labelRatingValue;
+        private System.Windows.Forms.Label labelGivenBy;
+        private System.Windows.Forms.Label labelRatingIdSearch;
+        private System.Windows.Forms.Label labelServiceRequestSearch;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,145 +33,240 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.dgvRatings = new System.Windows.Forms.DataGridView();
-
-            this.lblRatingId = new System.Windows.Forms.Label();
-            this.txtRatingId = new System.Windows.Forms.TextBox();
-
-            this.lblServiceRequestId = new System.Windows.Forms.Label();
-            this.txtServiceRequestId = new System.Windows.Forms.TextBox();
-
-            this.lblRatingValue = new System.Windows.Forms.Label();
-            this.txtRatingValue = new System.Windows.Forms.TextBox();
-
-            this.btnGetAll = new System.Windows.Forms.Button();
-            this.btnGetById = new System.Windows.Forms.Button();
-            this.btnAddOrUpdate = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnGetRatingValueOrNA = new System.Windows.Forms.Button();
-
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRatings)).BeginInit();
-            this.SuspendLayout();
-
-            // DataGridView: Ratings
-            this.dgvRatings.Location = new System.Drawing.Point(20, 170);
-            this.dgvRatings.Size = new System.Drawing.Size(760, 320);
-            this.dgvRatings.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            this.dgvRatings.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-
-            // Label: Rating ID
-            this.lblRatingId.Text = "Rating ID:";
-            this.lblRatingId.Location = new System.Drawing.Point(20, 20);
-            this.lblRatingId.Size = new System.Drawing.Size(80, 23);
-
-            // TextBox: Rating ID
-            this.txtRatingId.Location = new System.Drawing.Point(130, 20);
-            this.txtRatingId.Size = new System.Drawing.Size(200, 22);
-            this.txtRatingId.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Label: Service Request ID
-            this.lblServiceRequestId.Text = "Service Request ID:";
-            this.lblServiceRequestId.Location = new System.Drawing.Point(20, 60);
-            this.lblServiceRequestId.Size = new System.Drawing.Size(120, 23);
-
-            // TextBox: Service Request ID
-            this.txtServiceRequestId.Location = new System.Drawing.Point(150, 60);
-            this.txtServiceRequestId.Size = new System.Drawing.Size(180, 22);
-            this.txtServiceRequestId.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Label: Rating Value
-            this.lblRatingValue.Text = "Rating Value:";
-            this.lblRatingValue.Location = new System.Drawing.Point(20, 100);
-            this.lblRatingValue.Size = new System.Drawing.Size(100, 23);
-
-            // TextBox: Rating Value
-            this.txtRatingValue.Location = new System.Drawing.Point(130, 100);
-            this.txtRatingValue.Size = new System.Drawing.Size(200, 22);
-            this.txtRatingValue.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Get All Ratings
-            this.btnGetAll.Text = "Get All";
-            this.btnGetAll.Location = new System.Drawing.Point(360, 18);
-            this.btnGetAll.Size = new System.Drawing.Size(90, 28);
-            this.btnGetAll.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Get by ID
-            this.btnGetById.Text = "Get by ID";
-            this.btnGetById.Location = new System.Drawing.Point(460, 18);
-            this.btnGetById.Size = new System.Drawing.Size(90, 28);
-            this.btnGetById.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Add or Update (POST /AddOrUpdate)
-            this.btnAddOrUpdate.Text = "Add/Update";
-            this.btnAddOrUpdate.Location = new System.Drawing.Point(560, 18);
-            this.btnAddOrUpdate.Size = new System.Drawing.Size(100, 28);
-            this.btnAddOrUpdate.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Update (PUT)
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.Location = new System.Drawing.Point(670, 18);
-            this.btnUpdate.Size = new System.Drawing.Size(90, 28);
-            this.btnUpdate.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Button: Delete
-            this.btnDelete.Text = "Delete";
-            this.btnDelete.Location = new System.Drawing.Point(770, 18);
-            this.btnDelete.Size = new System.Drawing.Size(90, 28);
-            this.btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-            // Button: Get Rating Value or NA (GET /GetRatingValueOrNA/{serviceRequestId})
-            this.btnGetRatingValueOrNA.Text = "Get Rating Value or NA";
-            this.btnGetRatingValueOrNA.Location = new System.Drawing.Point(360, 60);
-            this.btnGetRatingValueOrNA.Size = new System.Drawing.Size(200, 28);
-            this.btnGetRatingValueOrNA.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Add controls to form
-            this.Controls.Add(this.dgvRatings);
-
-            this.Controls.Add(this.lblRatingId);
-            this.Controls.Add(this.txtRatingId);
-
-            this.Controls.Add(this.lblServiceRequestId);
-            this.Controls.Add(this.txtServiceRequestId);
-
-            this.Controls.Add(this.lblRatingValue);
-            this.Controls.Add(this.txtRatingValue);
-
-            this.Controls.Add(this.btnGetAll);
-            this.Controls.Add(this.btnGetById);
-            this.Controls.Add(this.btnAddOrUpdate);
-            this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnGetRatingValueOrNA);
-
-            this.Text = "Ratings Management";
-            this.ClientSize = new System.Drawing.Size(880, 510);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
-            ((System.ComponentModel.ISupportInitialize)(this.dgvRatings)).EndInit();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            dgvRatings = new DataGridView();
+            txtEmployeeId = new TextBox();
+            txtServiceRequestId = new TextBox();
+            txtRatingValue = new TextBox();
+            txtGivenBy = new TextBox();
+            txtRatingIdSearch = new TextBox();
+            txtServiceRequestSearch = new TextBox();
+            btnGetAll = new Button();
+            btnDelete = new Button();
+            btnLoadById = new Button();
+            btnGetValueNA = new Button();
+            labelEmployeeId = new Label();
+            labelServiceRequestId = new Label();
+            labelRatingValue = new Label();
+            labelGivenBy = new Label();
+            labelRatingIdSearch = new Label();
+            labelServiceRequestSearch = new Label();
+            label1 = new Label();
+            ((System.ComponentModel.ISupportInitialize)dgvRatings).BeginInit();
+            SuspendLayout();
+            // 
+            // dgvRatings
+            // 
+            dgvRatings.AllowUserToAddRows = false;
+            dgvRatings.AllowUserToDeleteRows = false;
+            dgvRatings.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvRatings.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvRatings.BackgroundColor = Color.White;
+            dgvRatings.BorderStyle = BorderStyle.None;
+            dgvRatings.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvRatings.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvRatings.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvRatings.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvRatings.EnableHeadersVisualStyles = false;
+            dgvRatings.GridColor = Color.LightGray;
+            dgvRatings.Location = new Point(20, 125);
+            dgvRatings.MultiSelect = false;
+            dgvRatings.Name = "dgvRatings";
+            dgvRatings.ReadOnly = true;
+            dgvRatings.RowHeadersVisible = false;
+            dgvRatings.RowTemplate.Height = 30;
+            dgvRatings.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvRatings.Size = new Size(842, 416);
+            dgvRatings.TabIndex = 0;
+            dgvRatings.SelectionChanged += dgvRatings_SelectionChanged;
+            // 
+            // txtEmployeeId
+            // 
+            txtEmployeeId.Location = new Point(124, 54);
+            txtEmployeeId.Name = "txtEmployeeId";
+            txtEmployeeId.ReadOnly = true;
+            txtEmployeeId.Size = new Size(107, 23);
+            txtEmployeeId.TabIndex = 2;
+            // 
+            // txtServiceRequestId
+            // 
+            txtServiceRequestId.Location = new Point(137, 91);
+            txtServiceRequestId.Name = "txtServiceRequestId";
+            txtServiceRequestId.ReadOnly = true;
+            txtServiceRequestId.Size = new Size(94, 23);
+            txtServiceRequestId.TabIndex = 4;
+            // 
+            // txtRatingValue
+            // 
+            txtRatingValue.Location = new Point(396, 19);
+            txtRatingValue.Name = "txtRatingValue";
+            txtRatingValue.ReadOnly = true;
+            txtRatingValue.Size = new Size(84, 23);
+            txtRatingValue.TabIndex = 6;
+            // 
+            // txtGivenBy
+            // 
+            txtGivenBy.Location = new Point(396, 53);
+            txtGivenBy.Name = "txtGivenBy";
+            txtGivenBy.ReadOnly = true;
+            txtGivenBy.Size = new Size(150, 23);
+            txtGivenBy.TabIndex = 8;
+            // 
+            // txtRatingIdSearch
+            // 
+            txtRatingIdSearch.Enabled = false;
+            txtRatingIdSearch.Location = new Point(124, 20);
+            txtRatingIdSearch.Name = "txtRatingIdSearch";
+            txtRatingIdSearch.Size = new Size(107, 23);
+            txtRatingIdSearch.TabIndex = 10;
+            // 
+            // txtServiceRequestSearch
+            // 
+            txtServiceRequestSearch.Enabled = false;
+            txtServiceRequestSearch.Location = new Point(464, 91);
+            txtServiceRequestSearch.Name = "txtServiceRequestSearch";
+            txtServiceRequestSearch.ReadOnly = true;
+            txtServiceRequestSearch.Size = new Size(82, 23);
+            txtServiceRequestSearch.TabIndex = 13;
+            // 
+            // btnGetAll
+            // 
+            btnGetAll.Location = new Point(742, 12);
+            btnGetAll.Name = "btnGetAll";
+            btnGetAll.Size = new Size(120, 30);
+            btnGetAll.TabIndex = 15;
+            btnGetAll.Text = "Refresh All";
+            btnGetAll.Click += btnGetAll_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(742, 53);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(120, 30);
+            btnDelete.TabIndex = 16;
+            btnDelete.Text = "Delete Selected";
+            btnDelete.Click += btnDelete_Click;
+            // 
+            // btnLoadById
+            // 
+            btnLoadById.Location = new Point(602, 13);
+            btnLoadById.Name = "btnLoadById";
+            btnLoadById.Size = new Size(120, 30);
+            btnLoadById.TabIndex = 11;
+            btnLoadById.Text = "Load By ID";
+            btnLoadById.Click += btnLoadById_Click;
+            // 
+            // btnGetValueNA
+            // 
+            btnGetValueNA.Location = new Point(602, 49);
+            btnGetValueNA.Name = "btnGetValueNA";
+            btnGetValueNA.Size = new Size(130, 30);
+            btnGetValueNA.TabIndex = 14;
+            btnGetValueNA.Text = "Get Rating Value / NA";
+            btnGetValueNA.Click += btnGetValueNA_Click;
+            // 
+            // labelEmployeeId
+            // 
+            labelEmployeeId.Location = new Point(20, 49);
+            labelEmployeeId.Name = "labelEmployeeId";
+            labelEmployeeId.Size = new Size(78, 25);
+            labelEmployeeId.TabIndex = 1;
+            labelEmployeeId.Text = "Employee ID:";
+            // 
+            // labelServiceRequestId
+            // 
+            labelServiceRequestId.Location = new Point(20, 91);
+            labelServiceRequestId.Name = "labelServiceRequestId";
+            labelServiceRequestId.Size = new Size(111, 25);
+            labelServiceRequestId.TabIndex = 3;
+            labelServiceRequestId.Text = "Service Request ID:";
+            // 
+            // labelRatingValue
+            // 
+            labelRatingValue.Location = new Point(306, 23);
+            labelRatingValue.Name = "labelRatingValue";
+            labelRatingValue.Size = new Size(75, 25);
+            labelRatingValue.TabIndex = 5;
+            labelRatingValue.Text = "Rating Value:";
+            // 
+            // labelGivenBy
+            // 
+            labelGivenBy.Location = new Point(306, 58);
+            labelGivenBy.Name = "labelGivenBy";
+            labelGivenBy.Size = new Size(78, 25);
+            labelGivenBy.TabIndex = 7;
+            labelGivenBy.Text = "Given By:";
+            // 
+            // labelRatingIdSearch
+            // 
+            labelRatingIdSearch.Location = new Point(20, 17);
+            labelRatingIdSearch.Name = "labelRatingIdSearch";
+            labelRatingIdSearch.Size = new Size(78, 25);
+            labelRatingIdSearch.TabIndex = 9;
+            labelRatingIdSearch.Text = "Rating ID:";
+            // 
+            // labelServiceRequestSearch
+            // 
+            labelServiceRequestSearch.Location = new Point(306, 97);
+            labelServiceRequestSearch.Name = "labelServiceRequestSearch";
+            labelServiceRequestSearch.Size = new Size(152, 25);
+            labelServiceRequestSearch.TabIndex = 12;
+            labelServiceRequestSearch.Text = "Get Rating Value by SR ID:";
+            // 
+            // label1
+            // 
+            label1.Location = new Point(306, 23);
+            label1.Name = "label1";
+            label1.Size = new Size(75, 25);
+            label1.TabIndex = 5;
+            label1.Text = "Rating Value:";
+            // 
+            // Rating
+            // 
+            BackColor = Color.White;
+            Controls.Add(dgvRatings);
+            Controls.Add(labelEmployeeId);
+            Controls.Add(txtEmployeeId);
+            Controls.Add(labelServiceRequestId);
+            Controls.Add(txtServiceRequestId);
+            Controls.Add(label1);
+            Controls.Add(labelRatingValue);
+            Controls.Add(txtRatingValue);
+            Controls.Add(labelGivenBy);
+            Controls.Add(txtGivenBy);
+            Controls.Add(labelRatingIdSearch);
+            Controls.Add(txtRatingIdSearch);
+            Controls.Add(btnLoadById);
+            Controls.Add(labelServiceRequestSearch);
+            Controls.Add(txtServiceRequestSearch);
+            Controls.Add(btnGetValueNA);
+            Controls.Add(btnGetAll);
+            Controls.Add(btnDelete);
+            Name = "Rating";
+            Size = new Size(884, 566);
+            ((System.ComponentModel.ISupportInitialize)dgvRatings).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
-        private System.Windows.Forms.DataGridView dgvRatings;
-        private System.Windows.Forms.Label lblRatingId;
-        private System.Windows.Forms.TextBox txtRatingId;
-        private System.Windows.Forms.Label lblServiceRequestId;
-        private System.Windows.Forms.TextBox txtServiceRequestId;
-        private System.Windows.Forms.Label lblRatingValue;
-        private System.Windows.Forms.TextBox txtRatingValue;
-        private System.Windows.Forms.Button btnGetAll;
-        private System.Windows.Forms.Button btnGetById;
-        private System.Windows.Forms.Button btnAddOrUpdate;
-        private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnGetRatingValueOrNA;
+        #endregion
+        private Label label1;
     }
-    #endregion
 }

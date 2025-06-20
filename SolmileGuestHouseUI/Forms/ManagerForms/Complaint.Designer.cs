@@ -219,14 +219,32 @@
             // 
             // dgvComplaints
             // 
+            dgvComplaints.AllowUserToAddRows = false;
+            dgvComplaints.AllowUserToDeleteRows = false;
             dgvComplaints.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvComplaints.BackgroundColor = Color.White;
+            dgvComplaints.BorderStyle = BorderStyle.None;
+            dgvComplaints.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvComplaints.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvComplaints.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvComplaints.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvComplaints.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvComplaints.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvComplaints.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvComplaints.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvComplaints.EnableHeadersVisualStyles = false;
+            dgvComplaints.GridColor = Color.LightGray;
             dgvComplaints.Location = new Point(20, 345);
+            dgvComplaints.MultiSelect = false;
             dgvComplaints.Name = "dgvComplaints";
             dgvComplaints.ReadOnly = true;
+            dgvComplaints.RowHeadersVisible = false;
+            dgvComplaints.RowTemplate.Height = 30;
+            dgvComplaints.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvComplaints.Size = new Size(805, 301);
             dgvComplaints.TabIndex = 18;
             dgvComplaints.CellClick += dgvComplaints_CellClick;
+
             // 
             // btnClear
             // 

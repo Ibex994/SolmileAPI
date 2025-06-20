@@ -14,6 +14,11 @@ namespace SolmileGuesthouseAPI.Repository
             _context = context;
         }
 
+        public async Task<IEnumerable<FeedBack>> GetAllFeedbacksAsync()
+        {
+            return await _context.Feedback.ToListAsync();
+        }
+
         public async Task<(bool, string)> CreateFeedbackAsync(FeedBack feedback)
         {
             try

@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -10,6 +11,7 @@ using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.Helper;
 using SolmileGuesthouseAPI.Interface;
 using SolmileGuesthouseAPI.Repository;
+using Task = System.Threading.Tasks.Task;
 
 var builder = WebApplication.CreateBuilder(args);
 QuestPDF.Settings.License = LicenseType.Community;
@@ -85,6 +87,7 @@ builder.Services.AddScoped<PaymentInterface, PaymentRepo>();
 builder.Services.AddScoped<PaymentMethodInterface, PaymentMethodRepo>();
 builder.Services.AddScoped<TaxBracketInterface,TaxBracketRepo>();
 builder.Services.AddScoped<MonthlyAttendanceSummaryInterface, MonthlyAttendanceSummaryRepo>();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Enable Reference Handling
 builder.Services.AddControllers()
@@ -111,8 +114,6 @@ builder.Services.AddAuthentication("Bearer")
             )
         };
     });
-
-
 
 
 

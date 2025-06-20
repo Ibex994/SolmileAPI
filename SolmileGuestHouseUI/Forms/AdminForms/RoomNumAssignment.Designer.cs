@@ -40,14 +40,33 @@
             // 
             // dgvRoomNumAssign
             // 
+            dgvRoomNumAssign.AllowUserToAddRows = false;
+            dgvRoomNumAssign.AllowUserToDeleteRows = false;
+            dgvRoomNumAssign.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvRoomNumAssign.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvRoomNumAssign.BackgroundColor = Color.White;
+            dgvRoomNumAssign.BorderStyle = BorderStyle.None;
+            dgvRoomNumAssign.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvRoomNumAssign.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvRoomNumAssign.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvRoomNumAssign.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvRoomNumAssign.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvRoomNumAssign.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvRoomNumAssign.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvRoomNumAssign.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvRoomNumAssign.EnableHeadersVisualStyles = false;
+            dgvRoomNumAssign.GridColor = Color.LightGray;
             dgvRoomNumAssign.Location = new Point(18, 154);
+            dgvRoomNumAssign.MultiSelect = false;
             dgvRoomNumAssign.Name = "dgvRoomNumAssign";
+            dgvRoomNumAssign.ReadOnly = true;
+            dgvRoomNumAssign.RowHeadersVisible = false;
+            dgvRoomNumAssign.RowTemplate.Height = 30;
             dgvRoomNumAssign.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvRoomNumAssign.Size = new Size(821, 411);
             dgvRoomNumAssign.TabIndex = 0;
             dgvRoomNumAssign.CellClick += dgvRoomNumAssign_CellClick;
+
             // 
             // txtBranchId
             // 

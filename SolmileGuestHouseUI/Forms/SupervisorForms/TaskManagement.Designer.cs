@@ -59,12 +59,34 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvTasks)).BeginInit();
             this.SuspendLayout();
 
+            // 
             // dgvTasks
-            this.dgvTasks.Location = new System.Drawing.Point(20, 180);
-            this.dgvTasks.Size = new System.Drawing.Size(760, 300);
-            this.dgvTasks.Name = "dgvTasks";
-            this.dgvTasks.TabIndex = 0;
-
+            // 
+            dgvTasks.AllowUserToAddRows = false;
+            dgvTasks.AllowUserToDeleteRows = false;
+            dgvTasks.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvTasks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvTasks.BackgroundColor = Color.White;
+            dgvTasks.BorderStyle = BorderStyle.None;
+            dgvTasks.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvTasks.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvTasks.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvTasks.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvTasks.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvTasks.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvTasks.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvTasks.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvTasks.EnableHeadersVisualStyles = false;
+            dgvTasks.GridColor = Color.LightGray;
+            dgvTasks.Location = new Point(20, 180);
+            dgvTasks.MultiSelect = false;
+            dgvTasks.Name = "dgvTasks";
+            dgvTasks.ReadOnly = true;
+            dgvTasks.RowHeadersVisible = false;
+            dgvTasks.RowTemplate.Height = 30;
+            dgvTasks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvTasks.Size = new Size(760, 300);
+            dgvTasks.TabIndex = 0;
             // txtName
             this.txtName.Location = new System.Drawing.Point(20, 20);
             this.txtName.Size = new System.Drawing.Size(180, 23);

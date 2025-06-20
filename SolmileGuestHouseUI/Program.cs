@@ -26,7 +26,7 @@ namespace SharedModel
             //Application.Run(new ReceptionForm());
             Application.Run(new ManagerForm());
             //Application.Run(new SupervisorForm());
-            //Application.Run(new AdminForm());
+            //Application.Run(new AdminForm(userService));
             //Application.Run(new HRForm());
         }
     }

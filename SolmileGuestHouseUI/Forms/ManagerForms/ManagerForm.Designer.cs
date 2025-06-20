@@ -88,7 +88,7 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Microsoft Sans Serif", 12F);
             label1.ForeColor = Color.Black;
             label1.Location = new Point(3, 23);
             label1.Name = "label1";
@@ -100,7 +100,7 @@
             // 
             labelDateTime.AutoSize = true;
             labelDateTime.BackColor = Color.Transparent;
-            labelDateTime.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelDateTime.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold);
             labelDateTime.Location = new Point(0, 0);
             labelDateTime.Name = "labelDateTime";
             labelDateTime.Size = new Size(15, 16);
@@ -160,7 +160,7 @@
             // lblTitle
             // 
             lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.Font = new Font("Arial", 14.25F, FontStyle.Bold);
             lblTitle.ForeColor = Color.Black;
             lblTitle.Location = new Point(0, 9);
             lblTitle.Name = "lblTitle";
@@ -209,7 +209,7 @@
             // 
             labelUsername.AutoSize = true;
             labelUsername.BackColor = Color.Transparent;
-            labelUsername.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelUsername.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold);
             labelUsername.ForeColor = Color.Black;
             labelUsername.Location = new Point(79, 23);
             labelUsername.Name = "labelUsername";

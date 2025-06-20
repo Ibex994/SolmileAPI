@@ -28,111 +28,206 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.lblFeedbackId = new System.Windows.Forms.Label();
-            this.txtFeedbackId = new System.Windows.Forms.TextBox();
-            this.lblCustomerId = new System.Windows.Forms.Label();
-            this.txtCustomerId = new System.Windows.Forms.TextBox();
-            this.lblFeedbackText = new System.Windows.Forms.Label();
-            this.txtFeedbackText = new System.Windows.Forms.TextBox();
-            this.lblDate = new System.Windows.Forms.Label();
-            this.dtpDate = new System.Windows.Forms.DateTimePicker();
-            this.lblRating = new System.Windows.Forms.Label();
-            this.nudRating = new System.Windows.Forms.NumericUpDown();
-            this.btnCreate = new System.Windows.Forms.Button();
-            this.btnGetByCustomer = new System.Windows.Forms.Button();
-            this.btnGetById = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.dgvFeedbacks = new System.Windows.Forms.DataGridView();
+            lblFeedbackId = new Label();
+            txtFeedbackId = new TextBox();
+            lblCustomerId = new Label();
+            txtCustomerId = new TextBox();
+            lblFeedbackText = new Label();
+            lblDate = new Label();
+            dtpDate = new DateTimePicker();
+            lblRating = new Label();
+            btnGetByCustomer = new Button();
+            btnGetById = new Button();
+            btnUpdate = new Button();
+            btnDelete = new Button();
+            dgvFeedbacks = new DataGridView();
+            richTextBox1 = new RichTextBox();
+            textBox1 = new TextBox();
+            ((System.ComponentModel.ISupportInitialize)dgvFeedbacks).BeginInit();
+            SuspendLayout();
+            // 
+            // lblFeedbackId
+            // 
+            lblFeedbackId.Location = new Point(20, 20);
+            lblFeedbackId.Name = "lblFeedbackId";
+            lblFeedbackId.Size = new Size(100, 23);
+            lblFeedbackId.TabIndex = 0;
+            lblFeedbackId.Text = "Feedback ID:";
+            // 
+            // txtFeedbackId
+            // 
+            txtFeedbackId.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtFeedbackId.Location = new Point(140, 17);
+            txtFeedbackId.Name = "txtFeedbackId";
+            txtFeedbackId.ReadOnly = true;
+            txtFeedbackId.Size = new Size(122, 23);
+            txtFeedbackId.TabIndex = 1;
+            // 
+            // lblCustomerId
+            // 
+            lblCustomerId.Location = new Point(20, 60);
+            lblCustomerId.Name = "lblCustomerId";
+            lblCustomerId.Size = new Size(100, 23);
+            lblCustomerId.TabIndex = 2;
+            lblCustomerId.Text = "Customer ID:";
+            // 
+            // txtCustomerId
+            // 
+            txtCustomerId.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtCustomerId.Location = new Point(140, 57);
+            txtCustomerId.Name = "txtCustomerId";
+            txtCustomerId.ReadOnly = true;
+            txtCustomerId.Size = new Size(122, 23);
+            txtCustomerId.TabIndex = 3;
+            // 
+            // lblFeedbackText
+            // 
+            lblFeedbackText.Location = new Point(20, 100);
+            lblFeedbackText.Name = "lblFeedbackText";
+            lblFeedbackText.Size = new Size(100, 23);
+            lblFeedbackText.TabIndex = 4;
+            lblFeedbackText.Text = "Feedback:";
+            // 
+            // lblDate
+            // 
+            lblDate.Location = new Point(20, 234);
+            lblDate.Name = "lblDate";
+            lblDate.Size = new Size(100, 23);
+            lblDate.TabIndex = 6;
+            lblDate.Text = "Date:";
+            // 
+            // dtpDate
+            // 
+            dtpDate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dtpDate.Enabled = false;
+            dtpDate.Location = new Point(140, 231);
+            dtpDate.Name = "dtpDate";
+            dtpDate.Size = new Size(400, 23);
+            dtpDate.TabIndex = 7;
+            // 
+            // lblRating
+            // 
+            lblRating.Location = new Point(333, 17);
+            lblRating.Name = "lblRating";
+            lblRating.Size = new Size(79, 23);
+            lblRating.TabIndex = 8;
+            lblRating.Text = "Rating (1-5):";
+            // 
+            // btnGetByCustomer
+            // 
+            btnGetByCustomer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnGetByCustomer.FlatStyle = FlatStyle.Flat;
+            btnGetByCustomer.Location = new Point(597, 90);
+            btnGetByCustomer.Name = "btnGetByCustomer";
+            btnGetByCustomer.Size = new Size(133, 33);
+            btnGetByCustomer.TabIndex = 11;
+            btnGetByCustomer.Text = "Get by Customer ID";
+            btnGetByCustomer.Click += btnGetByCustomer_Click;
+            // 
+            // btnGetById
+            // 
+            btnGetById.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnGetById.FlatStyle = FlatStyle.Flat;
+            btnGetById.Location = new Point(597, 130);
+            btnGetById.Name = "btnGetById";
+            btnGetById.Size = new Size(133, 33);
+            btnGetById.TabIndex = 12;
+            btnGetById.Text = "Get by Feedback ID";
+            btnGetById.Click += btnGetById_Click;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnUpdate.FlatStyle = FlatStyle.Flat;
+            btnUpdate.Location = new Point(597, 170);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(133, 33);
+            btnUpdate.TabIndex = 13;
+            btnUpdate.Text = "Update (PUT)";
+            btnUpdate.Click += btnUpdate_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Location = new Point(597, 210);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(133, 33);
+            btnDelete.TabIndex = 14;
+            btnDelete.Text = "Delete (DELETE)";
+            btnDelete.Click += btnDelete_Click;
+            // 
+            // dgvFeedbacks
+            // 
+            dgvFeedbacks.AllowUserToAddRows = false;
+            dgvFeedbacks.AllowUserToDeleteRows = false;
+            dgvFeedbacks.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvFeedbacks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvFeedbacks.BackgroundColor = Color.White;
+            dgvFeedbacks.BorderStyle = BorderStyle.None;
+            dgvFeedbacks.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvFeedbacks.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvFeedbacks.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvFeedbacks.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvFeedbacks.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvFeedbacks.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvFeedbacks.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvFeedbacks.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvFeedbacks.EnableHeadersVisualStyles = false;
+            dgvFeedbacks.GridColor = Color.LightGray;
+            dgvFeedbacks.Location = new Point(20, 270);
+            dgvFeedbacks.MultiSelect = false;
+            dgvFeedbacks.Name = "dgvFeedbacks";
+            dgvFeedbacks.ReadOnly = true;
+            dgvFeedbacks.RowHeadersVisible = false;
+            dgvFeedbacks.RowTemplate.Height = 30;
+            dgvFeedbacks.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvFeedbacks.Size = new Size(760, 200);
+            dgvFeedbacks.TabIndex = 15;
 
-            ((System.ComponentModel.ISupportInitialize)(this.nudRating)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFeedbacks)).BeginInit();
-            this.SuspendLayout();
-
-            // Feedback ID
-            this.lblFeedbackId.Text = "Feedback ID:";
-            this.lblFeedbackId.Location = new System.Drawing.Point(20, 20);
-            this.txtFeedbackId.Location = new System.Drawing.Point(140, 17);
-            this.txtFeedbackId.Size = new System.Drawing.Size(400, 22);
-            this.txtFeedbackId.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-
-            // Customer ID
-            this.lblCustomerId.Text = "Customer ID:";
-            this.lblCustomerId.Location = new System.Drawing.Point(20, 60);
-            this.txtCustomerId.Location = new System.Drawing.Point(140, 57);
-            this.txtCustomerId.Size = new System.Drawing.Size(400, 22);
-            this.txtCustomerId.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-
-            // Feedback Text
-            this.lblFeedbackText.Text = "Feedback:";
-            this.lblFeedbackText.Location = new System.Drawing.Point(20, 100);
-            this.txtFeedbackText.Location = new System.Drawing.Point(140, 97);
-            this.txtFeedbackText.Size = new System.Drawing.Size(400, 60);
-            this.txtFeedbackText.Multiline = true;
-            this.txtFeedbackText.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-
-            // Date
-            this.lblDate.Text = "Date:";
-            this.lblDate.Location = new System.Drawing.Point(20, 180);
-            this.dtpDate.Location = new System.Drawing.Point(140, 177);
-            this.dtpDate.Size = new System.Drawing.Size(400, 22);
-            this.dtpDate.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-
-            // Rating
-            this.lblRating.Text = "Rating (1-5):";
-            this.lblRating.Location = new System.Drawing.Point(20, 220);
-            this.nudRating.Location = new System.Drawing.Point(140, 217);
-            this.nudRating.Minimum = 1;
-            this.nudRating.Maximum = 5;
-            this.nudRating.Value = 5;
-            this.nudRating.Size = new System.Drawing.Size(60, 22);
-            this.nudRating.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-
-            // Buttons
-            this.btnCreate.Text = "Create (POST)";
-            this.btnCreate.Location = new System.Drawing.Point(600, 17);
-            this.btnCreate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-            this.btnGetByCustomer.Text = "Get by Customer ID";
-            this.btnGetByCustomer.Location = new System.Drawing.Point(600, 57);
-            this.btnGetByCustomer.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-            this.btnGetById.Text = "Get by Feedback ID";
-            this.btnGetById.Location = new System.Drawing.Point(600, 97);
-            this.btnGetById.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-            this.btnUpdate.Text = "Update (PUT)";
-            this.btnUpdate.Location = new System.Drawing.Point(600, 137);
-            this.btnUpdate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-            this.btnDelete.Text = "Delete (DELETE)";
-            this.btnDelete.Location = new System.Drawing.Point(600, 177);
-            this.btnDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-
-            // DataGridView
-            this.dgvFeedbacks.Location = new System.Drawing.Point(20, 270);
-            this.dgvFeedbacks.Size = new System.Drawing.Size(760, 200);
-            this.dgvFeedbacks.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-
-            // Add controls to form
-            this.Controls.AddRange(new System.Windows.Forms.Control[] {
-                this.lblFeedbackId, this.txtFeedbackId,
-                this.lblCustomerId, this.txtCustomerId,
-                this.lblFeedbackText, this.txtFeedbackText,
-                this.lblDate, this.dtpDate,
-                this.lblRating, this.nudRating,
-                this.btnCreate, this.btnGetByCustomer,
-                this.btnGetById, this.btnUpdate,
-                this.btnDelete, this.dgvFeedbacks
-            });
-
-            // Form settings
-            this.Text = "Feedback Management";
-            this.ClientSize = new System.Drawing.Size(800, 500);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Location = new Point(140, 97);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new Size(400, 119);
+            richTextBox1.TabIndex = 16;
+            richTextBox1.Text = "";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(418, 14);
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.Size = new Size(50, 23);
+            textBox1.TabIndex = 17;
+            // 
+            // Feedback
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            Controls.Add(textBox1);
+            Controls.Add(richTextBox1);
+            Controls.Add(lblFeedbackId);
+            Controls.Add(txtFeedbackId);
+            Controls.Add(lblCustomerId);
+            Controls.Add(txtCustomerId);
+            Controls.Add(lblFeedbackText);
+            Controls.Add(lblDate);
+            Controls.Add(dtpDate);
+            Controls.Add(lblRating);
+            Controls.Add(btnGetByCustomer);
+            Controls.Add(btnGetById);
+            Controls.Add(btnUpdate);
+            Controls.Add(btnDelete);
+            Controls.Add(dgvFeedbacks);
+            Name = "Feedback";
+            Size = new Size(800, 500);
+            ((System.ComponentModel.ISupportInitialize)dgvFeedbacks).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         private System.Windows.Forms.Label lblFeedbackId;
@@ -140,17 +235,16 @@
         private System.Windows.Forms.Label lblCustomerId;
         private System.Windows.Forms.TextBox txtCustomerId;
         private System.Windows.Forms.Label lblFeedbackText;
-        private System.Windows.Forms.TextBox txtFeedbackText;
         private System.Windows.Forms.Label lblDate;
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.Label lblRating;
-        private System.Windows.Forms.NumericUpDown nudRating;
-        private System.Windows.Forms.Button btnCreate;
         private System.Windows.Forms.Button btnGetByCustomer;
         private System.Windows.Forms.Button btnGetById;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.DataGridView dgvFeedbacks;
+        private RichTextBox richTextBox1;
+        private TextBox textBox1;
     }
 
         #endregion

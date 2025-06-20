@@ -137,7 +137,7 @@
             grpStatus.Controls.Add(rbtnActive);
             grpStatus.Controls.Add(rbtnInactive);
             grpStatus.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            grpStatus.Location = new Point(333, 106);
+            grpStatus.Location = new Point(333, 111);
             grpStatus.Name = "grpStatus";
             grpStatus.Size = new Size(171, 43);
             grpStatus.TabIndex = 10;
@@ -170,7 +170,7 @@
             cmbPosition.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbPosition.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
             cmbPosition.FormattingEnabled = true;
-            cmbPosition.Location = new Point(115, 234);
+            cmbPosition.Location = new Point(104, 239);
             cmbPosition.Name = "cmbPosition";
             cmbPosition.Size = new Size(116, 23);
             cmbPosition.TabIndex = 17;
@@ -178,7 +178,7 @@
             // txtPhone
             // 
             txtPhone.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
-            txtPhone.Location = new Point(115, 194);
+            txtPhone.Location = new Point(104, 204);
             txtPhone.Name = "txtPhone";
             txtPhone.Size = new Size(116, 20);
             txtPhone.TabIndex = 16;
@@ -186,7 +186,7 @@
             // txtEmail
             // 
             txtEmail.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
-            txtEmail.Location = new Point(115, 155);
+            txtEmail.Location = new Point(104, 162);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(116, 20);
             txtEmail.TabIndex = 16;
@@ -194,7 +194,7 @@
             // txtLastName
             // 
             txtLastName.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
-            txtLastName.Location = new Point(115, 115);
+            txtLastName.Location = new Point(104, 122);
             txtLastName.Name = "txtLastName";
             txtLastName.Size = new Size(116, 20);
             txtLastName.TabIndex = 16;
@@ -202,7 +202,7 @@
             // txtFirstName
             // 
             txtFirstName.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
-            txtFirstName.Location = new Point(115, 76);
+            txtFirstName.Location = new Point(104, 83);
             txtFirstName.Name = "txtFirstName";
             txtFirstName.Size = new Size(116, 20);
             txtFirstName.TabIndex = 16;
@@ -211,7 +211,7 @@
             // 
             txtEmployeeId.Enabled = false;
             txtEmployeeId.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
-            txtEmployeeId.Location = new Point(115, 38);
+            txtEmployeeId.Location = new Point(116, 42);
             txtEmployeeId.Name = "txtEmployeeId";
             txtEmployeeId.Size = new Size(116, 20);
             txtEmployeeId.TabIndex = 16;
@@ -240,7 +240,7 @@
             // dtpHireDate
             // 
             dtpHireDate.Font = new Font("Arial Narrow", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpHireDate.Location = new Point(382, 160);
+            dtpHireDate.Location = new Point(382, 173);
             dtpHireDate.Name = "dtpHireDate";
             dtpHireDate.Size = new Size(197, 22);
             dtpHireDate.TabIndex = 13;
@@ -248,7 +248,7 @@
             // dtpDateOfBirth
             // 
             dtpDateOfBirth.Font = new Font("Arial Narrow", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dtpDateOfBirth.Location = new Point(382, 204);
+            dtpDateOfBirth.Location = new Point(382, 217);
             dtpDateOfBirth.Name = "dtpDateOfBirth";
             dtpDateOfBirth.Size = new Size(197, 22);
             dtpDateOfBirth.TabIndex = 13;
@@ -280,7 +280,7 @@
             lblEmployeeId.AutoSize = true;
             lblEmployeeId.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblEmployeeId.ForeColor = Color.Goldenrod;
-            lblEmployeeId.Location = new Point(25, 38);
+            lblEmployeeId.Location = new Point(10, 42);
             lblEmployeeId.Name = "lblEmployeeId";
             lblEmployeeId.Size = new Size(100, 18);
             lblEmployeeId.TabIndex = 0;
@@ -302,7 +302,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             label9.ForeColor = Color.Goldenrod;
-            label9.Location = new Point(257, 160);
+            label9.Location = new Point(257, 173);
             label9.Name = "label9";
             label9.Size = new Size(94, 18);
             label9.TabIndex = 0;
@@ -313,7 +313,7 @@
             lblFirstName.AutoSize = true;
             lblFirstName.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblFirstName.ForeColor = Color.Goldenrod;
-            lblFirstName.Location = new Point(25, 80);
+            lblFirstName.Location = new Point(10, 84);
             lblFirstName.Name = "lblFirstName";
             lblFirstName.Size = new Size(88, 18);
             lblFirstName.TabIndex = 2;
@@ -336,7 +336,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             label2.ForeColor = Color.Goldenrod;
-            label2.Location = new Point(257, 204);
+            label2.Location = new Point(257, 217);
             label2.Name = "label2";
             label2.Size = new Size(109, 18);
             label2.TabIndex = 0;
@@ -347,7 +347,7 @@
             lblLastName.AutoSize = true;
             lblLastName.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblLastName.ForeColor = Color.Goldenrod;
-            lblLastName.Location = new Point(25, 120);
+            lblLastName.Location = new Point(10, 124);
             lblLastName.Name = "lblLastName";
             lblLastName.Size = new Size(86, 18);
             lblLastName.TabIndex = 4;
@@ -358,7 +358,7 @@
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblEmail.ForeColor = Color.Goldenrod;
-            lblEmail.Location = new Point(25, 160);
+            lblEmail.Location = new Point(10, 164);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(50, 18);
             lblEmail.TabIndex = 6;
@@ -369,7 +369,7 @@
             lblPhone.AutoSize = true;
             lblPhone.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblPhone.ForeColor = Color.Goldenrod;
-            lblPhone.Location = new Point(25, 200);
+            lblPhone.Location = new Point(10, 204);
             lblPhone.Name = "lblPhone";
             lblPhone.Size = new Size(58, 18);
             lblPhone.TabIndex = 8;
@@ -380,7 +380,7 @@
             lblPosition.AutoSize = true;
             lblPosition.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             lblPosition.ForeColor = Color.Goldenrod;
-            lblPosition.Location = new Point(25, 240);
+            lblPosition.Location = new Point(10, 244);
             lblPosition.Name = "lblPosition";
             lblPosition.Size = new Size(70, 18);
             lblPosition.TabIndex = 10;
@@ -534,12 +534,23 @@
             dgvEmployees.AllowUserToDeleteRows = false;
             dgvEmployees.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEmployees.BackgroundColor = Color.White;
-            dgvEmployees.Font = new Font("Segoe UI", 9F);
+            dgvEmployees.BorderStyle = BorderStyle.None;
+            dgvEmployees.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvEmployees.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvEmployees.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvEmployees.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvEmployees.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvEmployees.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvEmployees.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvEmployees.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvEmployees.EnableHeadersVisualStyles = false;
+            dgvEmployees.GridColor = Color.LightGray;
             dgvEmployees.Location = new Point(15, 410);
             dgvEmployees.MultiSelect = false;
             dgvEmployees.Name = "dgvEmployees";
             dgvEmployees.ReadOnly = true;
             dgvEmployees.RowHeadersVisible = false;
+            dgvEmployees.RowTemplate.Height = 30;
             dgvEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvEmployees.Size = new Size(835, 219);
             dgvEmployees.TabIndex = 3;

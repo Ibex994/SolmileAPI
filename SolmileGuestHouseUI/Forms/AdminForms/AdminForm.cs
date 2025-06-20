@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Drawing;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Solmile;
 using Solmile.Forms.Themes;
 using Solmile.Interface;
@@ -12,57 +15,62 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
     {
         public string username;
         private Button? currentButton;
-        private Random random;
+        private readonly Random random;
         private int tempIndex;
-        private Form activeForm;
-        private UserControl activeControl;
+        private Form? activeForm = null;
+        private UserControl? activeControl = null;
         private readonly IUserService _userService;
         private readonly HttpClient _httpClient;
-        public AdminForm()
+
+        public AdminForm(IUserService userService)
         {
             InitializeComponent();
+
             random = new Random();
             btnCloseChildForm.Visible = false;
             this.Text = string.Empty;
             this.ControlBox = false;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri("https://localhost:7107/")
             };
+
+            _userService = userService;
         }
+
         private void DisableButton()
         {
             foreach (Control previousBtn in panelMenu.Controls)
             {
-                if (previousBtn.GetType() == typeof(Button))
+                if (previousBtn is Button)
                 {
                     previousBtn.BackColor = Color.Transparent;
                     previousBtn.ForeColor = Color.Black;
-                    previousBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    previousBtn.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold);
                 }
             }
         }
+
         private void ActivateButton(object btnSender)
         {
-            if (btnSender != null)
+            if (btnSender is Button button && currentButton != button)
             {
-                if (currentButton != (Button)btnSender)
-                {
-                    DisableButton();
-                    Color color = SelectThemeColor();
-                    currentButton = (Button)btnSender;
-                    currentButton.BackColor = color;
-                    currentButton.ForeColor = Color.White;
-                    currentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    panelTitleBar.BackColor = color;
-                    panelLogo.BackColor = ThemeColor.ChangeColorBrightness(color, -0.3);
-                    ThemeColor.PrimaryColor = color;
-                    ThemeColor.SecondaryColor = ThemeColor.ChangeColorBrightness(color, -0.3);
-                    btnCloseChildForm.Visible = true;
-                }
+                DisableButton();
+                Color color = SelectThemeColor();
+                currentButton = button;
+                currentButton.BackColor = color;
+                currentButton.ForeColor = Color.White;
+                currentButton.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold);
+                panelTitleBar.BackColor = color;
+                panelLogo.BackColor = ThemeColor.ChangeColorBrightness(color, -0.3);
+                ThemeColor.PrimaryColor = color;
+                ThemeColor.SecondaryColor = ThemeColor.ChangeColorBrightness(color, -0.3);
+                btnCloseChildForm.Visible = true;
             }
         }
+
         private Color SelectThemeColor()
         {
             int index = random.Next(ThemeColor.ColorList.Count);
@@ -74,38 +82,38 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             string color = ThemeColor.ColorList[index];
             return ColorTranslator.FromHtml(color);
         }
+
         private void OpenChildForm(Form childForm, object btnSender)
         {
-            if (activeForm != null)
-                activeForm.Close();
+            activeForm?.Close();
             ActivateButton(btnSender);
+
             activeForm = childForm;
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
-            this.panelDesktopPane.Controls.Add(childForm);
-            this.panelDesktopPane.Tag = childForm;
+
+            panelDesktopPane.Controls.Add(childForm);
+            panelDesktopPane.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
             lblTitle.Text = childForm.Text;
-
         }
+
         private void OpenChildForm(UserControl childControl, object btnSender)
         {
             if (activeControl != null)
-                this.panelDesktopPane.Controls.Remove(activeControl);
+                panelDesktopPane.Controls.Remove(activeControl);
 
             ActivateButton(btnSender);
             activeControl = childControl;
-
             childControl.Dock = DockStyle.Fill;
-            this.panelDesktopPane.Controls.Add(childControl);
-            this.panelDesktopPane.Tag = childControl;
+            panelDesktopPane.Controls.Add(childControl);
+            panelDesktopPane.Tag = childControl;
             childControl.BringToFront();
-            childControl.Show();
-
             lblTitle.Text = childControl.Name;
         }
+
         private void Reset()
         {
             DisableButton();
@@ -115,12 +123,11 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             currentButton = null;
             btnCloseChildForm.Visible = false;
         }
+
         private void btnCloseChildForm_Click(object sender, EventArgs e)
         {
-            if (activeForm != null)
-                activeForm.Close();
-            if (activeControl != null)
-                activeControl.Hide();
+            activeForm?.Close();
+            activeControl?.Hide();
             Reset();
         }
 
@@ -154,35 +161,27 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             OpenChildForm(new UserRole(), sender);
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private async void btnLogout_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are You Sure You Want To LogOut", "LogOut", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Are You Sure You Want To LogOut?", "LogOut", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                Task.Run(() =>
+                // Fade out
+                for (double opacity = 1.0; opacity > 0; opacity -= 0.1)
                 {
-                    for (double opacity = 1.0; opacity > 0; opacity -= 0.1)
-                    {
+                    this.Opacity = opacity;
+                    await Task.Delay(50);
+                }
 
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            this.Opacity = opacity;
-                        });
-                    }
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        var LoginForm = new Login(_userService);
-                        LoginForm.Show();
-                        this.Close();
-                    });
-                });
-
+                var loginForm = new Login(_userService);
+                loginForm.Show();
+                this.Close();
             }
         }
 
         private void pictureBoxClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Application.Exit();
         }
 
         private void pictureBoxMinimize_Click(object sender, EventArgs e)

@@ -35,18 +35,26 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Unable to load the list of branches. Please check your network connection or try again later.",
-                    "Loading Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"🔌 Failed to load branches.\n\nDetails: {ex.Message}", "Load Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private async void btnAdd_Click(object sender, EventArgs e)
         {
+            if (!ValidateInputs()) return;
+
+            if (!int.TryParse(txtContactId.Text, out int contactId))
+            {
+                MessageBox.Show("⚠️ Contact ID must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var newBranch = new UInsertionBranchDto
             {
-                Name = txtBranchName.Text,
-                Location = txtLocation.Text,
-                ContactId = int.Parse(txtContactId.Text)
+                Name = txtBranchName.Text.Trim(),
+                Location = txtLocation.Text.Trim(),
+                ContactId = contactId
             };
 
             try
@@ -57,28 +65,40 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 var response = await _httpClient.PostAsync(BaseUrl, content);
                 response.EnsureSuccessStatusCode();
 
-                MessageBox.Show("Branch has been added successfully.", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("✅ Branch added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadBranches();
+                ClearForm();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to add branch. Make sure the Contact ID exists and is not already linked to another branch.",
+                MessageBox.Show($"❌ Failed to add branch.\nMake sure the Contact ID exists and is not used already.\n\nDetails: {ex.Message}",
                     "Add Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (dgvBranches.CurrentRow == null) return;
+            if (dgvBranches.CurrentRow == null)
+            {
+                MessageBox.Show("⚠️ Please select a branch to update.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!ValidateInputs()) return;
 
             int id = Convert.ToInt32(dgvBranches.CurrentRow.Cells["branchId"].Value);
 
+            if (!int.TryParse(txtContactId.Text, out int contactId))
+            {
+                MessageBox.Show("⚠️ Contact ID must be a valid number.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var updateBranch = new UInsertionBranchDto
             {
-                Name = txtBranchName.Text,
-                Location = txtLocation.Text,
-                ContactId = int.Parse(txtContactId.Text)
+                Name = txtBranchName.Text.Trim(),
+                Location = txtLocation.Text.Trim(),
+                ContactId = contactId
             };
 
             try
@@ -89,20 +109,24 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 var response = await _httpClient.PutAsync($"{BaseUrl}/{id}", content);
                 response.EnsureSuccessStatusCode();
 
-                MessageBox.Show("Branch details updated successfully.", "Update Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("✅ Branch details updated successfully.", "Update Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadBranches();
+                ClearForm();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to update branch. Ensure the Contact ID is valid and not already used by another branch.",
+                MessageBox.Show($"❌ Failed to update branch.\nCheck if the contact is valid or already in use.\n\nDetails: {ex.Message}",
                     "Update Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvBranches.CurrentRow == null) return;
+            if (dgvBranches.CurrentRow == null)
+            {
+                MessageBox.Show("⚠️ Please select a branch to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             int id = Convert.ToInt32(dgvBranches.CurrentRow.Cells["branchId"].Value);
 
@@ -115,16 +139,17 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 var response = await _httpClient.DeleteAsync($"{BaseUrl}/{id}");
                 response.EnsureSuccessStatusCode();
 
-                MessageBox.Show("Branch has been deleted successfully.", "Delete Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("🗑️ Branch deleted successfully.", "Delete Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadBranches();
+                ClearForm();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to delete branch. It may be linked with other records.",
+                MessageBox.Show($"❌ Failed to delete branch.\nIt may be linked to other data.\n\nDetails: {ex.Message}",
                     "Delete Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void dgvBranches_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvBranches.CurrentRow == null) return;
@@ -133,24 +158,25 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             txtLocation.Text = dgvBranches.CurrentRow.Cells["location"].Value?.ToString();
             txtContactId.Text = dgvBranches.CurrentRow.Cells["contactId"].Value?.ToString();
         }
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            LoadBranches();
-        }
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
-            LoadBranches();
-        }
+
+        private void btnRefresh_Click(object sender, EventArgs e) => LoadBranches();
+
+        private void btnLoad_Click(object sender, EventArgs e) => LoadBranches();
+
         private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+            MessageBox.Show("🧹 Form cleared. Ready for new entry or update.", "Form Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ClearForm()
         {
             txtBranchName.Text = "";
             txtLocation.Text = "";
             txtContactId.Text = "";
             dgvBranches.ClearSelection();
-
-            MessageBox.Show("Form has been cleared. You can now add or update a new branch.",
-                "Form Reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         private void dgvBranches_CellClick(object sender, EventArgs e)
         {
             if (dgvBranches.CurrentRow != null)
@@ -160,6 +186,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 txtContactId.Text = dgvBranches.CurrentRow.Cells["contactId"].Value?.ToString();
             }
         }
+
         private async Task<object> GetBranchByInputAsync(string input)
         {
             try
@@ -173,11 +200,13 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: " + ex.Message);
+                MessageBox.Show($"🔍 Search failed.\n\nDetails: {ex.Message}", "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             return null;
         }
-        private async void btnSearch_Click(object sender, EventArgs e)
+
+        private void btnSearch_Click(object sender, EventArgs e)
         {
             var searchForm = new SearchByInputForm("Search Branch", GetBranchByInputAsync);
             if (searchForm.ShowDialog() == DialogResult.OK)
@@ -190,6 +219,18 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             }
         }
 
-    }
+        private bool ValidateInputs()
+        {
+            if (string.IsNullOrWhiteSpace(txtBranchName.Text) ||
+                string.IsNullOrWhiteSpace(txtLocation.Text) ||
+                string.IsNullOrWhiteSpace(txtContactId.Text))
+            {
+                MessageBox.Show("⚠️ All fields are required. Please fill in branch name, location, and contact ID.",
+                    "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
 
+            return true;
+        }
+    }
 }

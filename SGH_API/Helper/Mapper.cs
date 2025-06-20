@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SharedModel.Models;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.ComplaintDto;

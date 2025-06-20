@@ -4,6 +4,7 @@ namespace SolmileGuesthouseAPI.Interface
 {
     public interface FeedBackInterface
     {
+        Task<IEnumerable<FeedBack>> GetAllFeedbacksAsync();
         Task<(bool, string)> CreateFeedbackAsync(FeedBack feedback);
         Task<List<FeedBack>> GetFeedbacksByCustomerIdAsync(int customerId);
         Task<FeedBack?> GetFeedbackByIdAsync(int feedbackId);

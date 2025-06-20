@@ -94,7 +94,7 @@ namespace Solmile
                     // Show a form based on role
                     Form nextForm = role switch
                     {
-                        "Admin" => new AdminForm(),
+                        "Admin" => new AdminForm(_userService),
                         "Reception" => new ReceptionForm(),
                         "Manager" => new ManagerForm(),
                         "Supervisor" => new SupervisorForm(),

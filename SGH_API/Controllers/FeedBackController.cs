@@ -20,6 +20,22 @@ namespace SolmileGuesthouseAPI.Controllers
             _feedBackInterface = feedBackInterface;
             _mapper = mapper;
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<FeedbackDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<FeedbackDto>>> GetAllFeedbacks()
+        {
+            var feedbacks = await _feedBackInterface.GetAllFeedbacksAsync();
+
+            if (feedbacks == null || !feedbacks.Any())
+                return NotFound("No feedback records found.");
+
+            var result = _mapper.Map<List<FeedbackDto>>(feedbacks);
+            return Ok(result);
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]

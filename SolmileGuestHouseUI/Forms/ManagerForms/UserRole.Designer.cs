@@ -71,16 +71,32 @@
             // 
             // dgvUserRoles
             // 
+            dgvUserRoles.AllowUserToAddRows = false;
+            dgvUserRoles.AllowUserToDeleteRows = false;
             dgvUserRoles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUserRoles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUserRoles.BackgroundColor = Color.White;
+            dgvUserRoles.BorderStyle = BorderStyle.None;
+            dgvUserRoles.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvUserRoles.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dgvUserRoles.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
+            dgvUserRoles.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvUserRoles.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dgvUserRoles.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dgvUserRoles.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dgvUserRoles.DefaultCellStyle.SelectionForeColor = Color.White;
+            dgvUserRoles.EnableHeadersVisualStyles = false;
+            dgvUserRoles.GridColor = Color.LightGray;
             dgvUserRoles.Location = new Point(30, 130);
             dgvUserRoles.MultiSelect = false;
             dgvUserRoles.Name = "dgvUserRoles";
             dgvUserRoles.ReadOnly = true;
+            dgvUserRoles.RowHeadersVisible = false;
+            dgvUserRoles.RowTemplate.Height = 30;
             dgvUserRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUserRoles.Size = new Size(793, 415);
             dgvUserRoles.TabIndex = 4;
+
             // 
             // UserRole
             // 

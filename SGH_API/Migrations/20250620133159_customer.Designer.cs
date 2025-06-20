@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolmileGuesthouseAPI.Data;
 
@@ -11,9 +12,11 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    partial class GuesthouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250620133159_customer")]
+    partial class customer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -648,6 +651,9 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Property<byte[]>("AttachPhotoUrl")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
@@ -677,6 +683,8 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequestId");
+
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("EmployeeId");
 
@@ -1130,6 +1138,10 @@ namespace SolmileGuesthouseAPI.Migrations
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.ServiceRequest", b =>
                 {
+                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Customer", null)
+                        .WithMany("ServiceRequests")
+                        .HasForeignKey("CustomerId");
+
                     b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
                         .WithMany("ServiceRequests")
                         .HasForeignKey("EmployeeId")
@@ -1243,6 +1255,8 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Navigation("Feedbacks");
 
                     b.Navigation("Reservations");
+
+                    b.Navigation("ServiceRequests");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.PaymentMethod", b =>

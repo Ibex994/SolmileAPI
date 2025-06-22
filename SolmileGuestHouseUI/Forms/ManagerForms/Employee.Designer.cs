@@ -28,10 +28,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
 
-        private System.Windows.Forms.GroupBox grpSearch;
-        private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.Button btnSearch;
-
         private System.Windows.Forms.DataGridView dgvEmployees;
         private System.Windows.Forms.ToolTip toolTip;
 
@@ -50,6 +46,8 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             grpEmployeeDetails = new GroupBox();
             grpStatus = new GroupBox();
             rbtnActive = new RadioButton();
@@ -82,16 +80,12 @@
             btnUpdate = new Button();
             btnDelete = new Button();
             btnFindById = new Button();
-            grpSearch = new GroupBox();
-            txtSearch = new TextBox();
-            btnSearch = new Button();
             dgvEmployees = new DataGridView();
             toolTip = new ToolTip(components);
             grpEmployeeDetails.SuspendLayout();
             grpStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             grpActions.SuspendLayout();
-            grpSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEmployees).BeginInit();
             SuspendLayout();
             // 
@@ -400,22 +394,23 @@
             grpActions.Location = new Point(686, 15);
             grpActions.Name = "grpActions";
             grpActions.Padding = new Padding(20);
-            grpActions.Size = new Size(164, 257);
+            grpActions.Size = new Size(164, 317);
             grpActions.TabIndex = 1;
             grpActions.TabStop = false;
             grpActions.Text = "Actions";
             // 
             // btnClear
             // 
+            btnClear.BackColor = Color.Snow;
             btnClear.FlatStyle = FlatStyle.Popup;
             btnClear.Font = new Font("Arial Narrow", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnClear.ForeColor = Color.Black;
-            btnClear.Location = new Point(124, 233);
+            btnClear.Location = new Point(127, 296);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(40, 23);
+            btnClear.Size = new Size(37, 21);
             btnClear.TabIndex = 4;
             btnClear.Text = "Clear";
-            btnClear.UseVisualStyleBackColor = true;
+            btnClear.UseVisualStyleBackColor = false;
             btnClear.Click += btnClear_Click;
             // 
             // btnCreateAccount
@@ -476,57 +471,15 @@
             btnFindById.FlatAppearance.BorderSize = 0;
             btnFindById.FlatStyle = FlatStyle.Flat;
             btnFindById.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnFindById.ForeColor = Color.Black;
+            btnFindById.ForeColor = Color.White;
             btnFindById.Location = new Point(17, 183);
             btnFindById.Name = "btnFindById";
             btnFindById.Size = new Size(134, 31);
             btnFindById.TabIndex = 3;
-            btnFindById.Text = "Find by ID";
+            btnFindById.Text = "Find";
             toolTip.SetToolTip(btnFindById, "Find employee by their ID");
             btnFindById.UseVisualStyleBackColor = false;
             btnFindById.Click += btnFindById_Click;
-            // 
-            // grpSearch
-            // 
-            grpSearch.BackColor = Color.White;
-            grpSearch.Controls.Add(txtSearch);
-            grpSearch.Controls.Add(btnSearch);
-            grpSearch.FlatStyle = FlatStyle.Flat;
-            grpSearch.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            grpSearch.ForeColor = Color.FromArgb(45, 45, 48);
-            grpSearch.Location = new Point(15, 330);
-            grpSearch.Name = "grpSearch";
-            grpSearch.Padding = new Padding(20);
-            grpSearch.Size = new Size(835, 70);
-            grpSearch.TabIndex = 2;
-            grpSearch.TabStop = false;
-            grpSearch.Text = "Search Employees";
-            // 
-            // txtSearch
-            // 
-            txtSearch.BorderStyle = BorderStyle.FixedSingle;
-            txtSearch.Font = new Font("Segoe UI", 10F);
-            txtSearch.Location = new Point(25, 32);
-            txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(650, 25);
-            txtSearch.TabIndex = 0;
-            toolTip.SetToolTip(txtSearch, "Enter employee name, email, or phone to search");
-            // 
-            // btnSearch
-            // 
-            btnSearch.BackColor = Color.FromArgb(52, 152, 219);
-            btnSearch.Cursor = Cursors.Hand;
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(690, 30);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(120, 30);
-            btnSearch.TabIndex = 1;
-            btnSearch.Text = "Search";
-            btnSearch.UseVisualStyleBackColor = false;
-            btnSearch.Click += btnSearch_Click;
             // 
             // dgvEmployees
             // 
@@ -537,22 +490,32 @@
             dgvEmployees.BorderStyle = BorderStyle.None;
             dgvEmployees.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvEmployees.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvEmployees.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
-            dgvEmployees.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvEmployees.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvEmployees.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            dgvEmployees.DefaultCellStyle.SelectionForeColor = Color.White;
-            dgvEmployees.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvEmployees.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvEmployees.DefaultCellStyle = dataGridViewCellStyle2;
             dgvEmployees.EnableHeadersVisualStyles = false;
             dgvEmployees.GridColor = Color.LightGray;
-            dgvEmployees.Location = new Point(15, 410);
+            dgvEmployees.Location = new Point(15, 338);
             dgvEmployees.MultiSelect = false;
             dgvEmployees.Name = "dgvEmployees";
             dgvEmployees.ReadOnly = true;
             dgvEmployees.RowHeadersVisible = false;
             dgvEmployees.RowTemplate.Height = 30;
             dgvEmployees.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvEmployees.Size = new Size(835, 219);
+            dgvEmployees.Size = new Size(835, 291);
             dgvEmployees.TabIndex = 3;
             dgvEmployees.CellClick += dgvEmployees_CellClick;
             // 
@@ -561,7 +524,6 @@
             BackColor = Color.White;
             Controls.Add(grpEmployeeDetails);
             Controls.Add(grpActions);
-            Controls.Add(grpSearch);
             Controls.Add(dgvEmployees);
             Font = new Font("Segoe UI", 9F);
             ForeColor = Color.Black;
@@ -573,8 +535,6 @@
             grpStatus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             grpActions.ResumeLayout(false);
-            grpSearch.ResumeLayout(false);
-            grpSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEmployees).EndInit();
             ResumeLayout(false);
 

@@ -36,27 +36,32 @@
 
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             tabControl = new TabControl();
             tabManageUsers = new TabPage();
+            groupBox1 = new GroupBox();
+            btnLoadUsers = new Button();
+            btnUpdateUser = new Button();
+            btnSearch = new Button();
+            btnDeleteUser = new Button();
             dgvUsers = new DataGridView();
             txtUserId = new TextBox();
             txtUsername = new TextBox();
             txtPassword = new TextBox();
-            btnLoadUsers = new Button();
-            btnSearch = new Button();
-            btnUpdateUser = new Button();
-            btnDeleteUser = new Button();
             btnClearManage = new Button();
             tabLockUnlock = new TabPage();
             btnGetLockedUsers = new Button();
             btnIsLocked = new Button();
             btnUnlock = new Button();
             btnLock = new Button();
+            groupBox2 = new GroupBox();
             tabUtility = new TabPage();
             btnCheckUsername = new Button();
             btnClearUtility = new Button();
             tabControl.SuspendLayout();
             tabManageUsers.SuspendLayout();
+            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
             tabLockUnlock.SuspendLayout();
             tabUtility.SuspendLayout();
@@ -77,20 +82,87 @@
             // tabManageUsers
             // 
             tabManageUsers.BackColor = Color.White;
+            tabManageUsers.Controls.Add(groupBox1);
             tabManageUsers.Controls.Add(dgvUsers);
             tabManageUsers.Controls.Add(txtUserId);
             tabManageUsers.Controls.Add(txtUsername);
             tabManageUsers.Controls.Add(txtPassword);
-            tabManageUsers.Controls.Add(btnLoadUsers);
-            tabManageUsers.Controls.Add(btnSearch);
-            tabManageUsers.Controls.Add(btnUpdateUser);
-            tabManageUsers.Controls.Add(btnDeleteUser);
-            tabManageUsers.Controls.Add(btnClearManage);
             tabManageUsers.Location = new Point(4, 24);
             tabManageUsers.Name = "tabManageUsers";
             tabManageUsers.Size = new Size(858, 543);
             tabManageUsers.TabIndex = 0;
             tabManageUsers.Text = "Manage Users";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(btnLoadUsers);
+            groupBox1.Controls.Add(btnUpdateUser);
+            groupBox1.Controls.Add(btnSearch);
+            groupBox1.Controls.Add(btnDeleteUser);
+            groupBox1.Controls.Add(btnClearManage);
+            groupBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            groupBox1.Location = new Point(421, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(309, 133);
+            groupBox1.TabIndex = 10;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Action";
+            // 
+            // btnLoadUsers
+            // 
+            btnLoadUsers.BackColor = Color.FromArgb(52, 152, 219);
+            btnLoadUsers.FlatStyle = FlatStyle.Flat;
+            btnLoadUsers.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnLoadUsers.ForeColor = Color.White;
+            btnLoadUsers.Location = new Point(29, 24);
+            btnLoadUsers.Name = "btnLoadUsers";
+            btnLoadUsers.Size = new Size(134, 31);
+            btnLoadUsers.TabIndex = 3;
+            btnLoadUsers.Text = "Load All Users";
+            btnLoadUsers.UseVisualStyleBackColor = false;
+            btnLoadUsers.Click += btnLoadUsers_Click;
+            // 
+            // btnUpdateUser
+            // 
+            btnUpdateUser.BackColor = Color.FromArgb(241, 196, 15);
+            btnUpdateUser.FlatStyle = FlatStyle.Flat;
+            btnUpdateUser.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnUpdateUser.ForeColor = Color.White;
+            btnUpdateUser.Location = new Point(29, 61);
+            btnUpdateUser.Name = "btnUpdateUser";
+            btnUpdateUser.Size = new Size(134, 31);
+            btnUpdateUser.TabIndex = 5;
+            btnUpdateUser.Text = "Update User";
+            btnUpdateUser.UseVisualStyleBackColor = false;
+            btnUpdateUser.Click += btnUpdateUser_Click;
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.FromArgb(52, 152, 219);
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnSearch.ForeColor = Color.White;
+            btnSearch.Location = new Point(169, 24);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(134, 31);
+            btnSearch.TabIndex = 4;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // btnDeleteUser
+            // 
+            btnDeleteUser.BackColor = Color.FromArgb(231, 76, 60);
+            btnDeleteUser.FlatStyle = FlatStyle.Flat;
+            btnDeleteUser.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnDeleteUser.ForeColor = Color.White;
+            btnDeleteUser.Location = new Point(29, 98);
+            btnDeleteUser.Name = "btnDeleteUser";
+            btnDeleteUser.Size = new Size(134, 31);
+            btnDeleteUser.TabIndex = 6;
+            btnDeleteUser.Text = "Delete User";
+            btnDeleteUser.UseVisualStyleBackColor = false;
+            btnDeleteUser.Click += btnDeleteUser_Click;
             // 
             // dgvUsers
             // 
@@ -102,91 +174,70 @@
             dgvUsers.BorderStyle = BorderStyle.None;
             dgvUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvUsers.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
-            dgvUsers.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvUsers.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvUsers.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvUsers.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            dgvUsers.DefaultCellStyle.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvUsers.DefaultCellStyle = dataGridViewCellStyle2;
             dgvUsers.EnableHeadersVisualStyles = false;
             dgvUsers.GridColor = Color.LightGray;
-            dgvUsers.Location = new Point(10, 110);
+            dgvUsers.Location = new Point(10, 151);
             dgvUsers.MultiSelect = false;
             dgvUsers.Name = "dgvUsers";
             dgvUsers.ReadOnly = true;
             dgvUsers.RowHeadersVisible = false;
             dgvUsers.RowTemplate.Height = 30;
             dgvUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvUsers.Size = new Size(800, 416);
+            dgvUsers.Size = new Size(814, 375);
             dgvUsers.TabIndex = 9;
             dgvUsers.CellClick += dgvUsers_CellClick;
             // 
             // txtUserId
             // 
             txtUserId.Enabled = false;
-            txtUserId.Location = new Point(10, 10);
+            txtUserId.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
+            txtUserId.Location = new Point(149, 42);
             txtUserId.Name = "txtUserId";
             txtUserId.PlaceholderText = "User ID";
-            txtUserId.Size = new Size(250, 23);
+            txtUserId.Size = new Size(250, 20);
             txtUserId.TabIndex = 0;
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(10, 40);
+            txtUsername.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
+            txtUsername.Location = new Point(149, 72);
             txtUsername.Name = "txtUsername";
             txtUsername.PlaceholderText = "Username";
-            txtUsername.Size = new Size(250, 23);
+            txtUsername.Size = new Size(250, 20);
             txtUsername.TabIndex = 1;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(10, 70);
+            txtPassword.Font = new Font("Arial Narrow", 8.25F, FontStyle.Bold);
+            txtPassword.Location = new Point(149, 102);
             txtPassword.Name = "txtPassword";
             txtPassword.PlaceholderText = "Password";
-            txtPassword.Size = new Size(250, 23);
+            txtPassword.Size = new Size(250, 20);
             txtPassword.TabIndex = 2;
-            // 
-            // btnLoadUsers
-            // 
-            btnLoadUsers.Location = new Point(280, 10);
-            btnLoadUsers.Name = "btnLoadUsers";
-            btnLoadUsers.Size = new Size(110, 23);
-            btnLoadUsers.TabIndex = 3;
-            btnLoadUsers.Text = "Load All Users";
-            btnLoadUsers.Click += btnLoadUsers_Click;
-            // 
-            // btnSearch
-            // 
-            btnSearch.Location = new Point(280, 40);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(110, 23);
-            btnSearch.TabIndex = 4;
-            btnSearch.Text = "Search";
-            btnSearch.Click += btnSearch_Click;
-            // 
-            // btnUpdateUser
-            // 
-            btnUpdateUser.Location = new Point(400, 10);
-            btnUpdateUser.Name = "btnUpdateUser";
-            btnUpdateUser.Size = new Size(110, 23);
-            btnUpdateUser.TabIndex = 5;
-            btnUpdateUser.Text = "Update User";
-            btnUpdateUser.Click += btnUpdateUser_Click;
-            // 
-            // btnDeleteUser
-            // 
-            btnDeleteUser.Location = new Point(400, 40);
-            btnDeleteUser.Name = "btnDeleteUser";
-            btnDeleteUser.Size = new Size(110, 23);
-            btnDeleteUser.TabIndex = 6;
-            btnDeleteUser.Text = "Delete User";
-            btnDeleteUser.Click += btnDeleteUser_Click;
             // 
             // btnClearManage
             // 
-            btnClearManage.Location = new Point(280, 70);
+            btnClearManage.FlatStyle = FlatStyle.Flat;
+            btnClearManage.Font = new Font("Segoe UI", 9F);
+            btnClearManage.Location = new Point(260, 109);
             btnClearManage.Name = "btnClearManage";
-            btnClearManage.Size = new Size(110, 23);
+            btnClearManage.Size = new Size(49, 24);
             btnClearManage.TabIndex = 7;
             btnClearManage.Text = "Clear";
             btnClearManage.Click += btnClear_Click;
@@ -198,6 +249,7 @@
             tabLockUnlock.Controls.Add(btnIsLocked);
             tabLockUnlock.Controls.Add(btnUnlock);
             tabLockUnlock.Controls.Add(btnLock);
+            tabLockUnlock.Controls.Add(groupBox2);
             tabLockUnlock.Location = new Point(4, 24);
             tabLockUnlock.Name = "tabLockUnlock";
             tabLockUnlock.Size = new Size(858, 543);
@@ -206,39 +258,69 @@
             // 
             // btnGetLockedUsers
             // 
-            btnGetLockedUsers.Location = new Point(300, 20);
+            btnGetLockedUsers.BackColor = Color.FromArgb(52, 152, 219);
+            btnGetLockedUsers.FlatStyle = FlatStyle.Flat;
+            btnGetLockedUsers.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnGetLockedUsers.ForeColor = Color.White;
+            btnGetLockedUsers.Location = new Point(435, 46);
             btnGetLockedUsers.Name = "btnGetLockedUsers";
-            btnGetLockedUsers.Size = new Size(130, 23);
+            btnGetLockedUsers.Size = new Size(134, 31);
             btnGetLockedUsers.TabIndex = 1;
             btnGetLockedUsers.Text = "Get Locked Users";
+            btnGetLockedUsers.UseVisualStyleBackColor = false;
             btnGetLockedUsers.Click += btnGetLockedUsers_Click;
             // 
             // btnIsLocked
             // 
-            btnIsLocked.Location = new Point(300, 50);
+            btnIsLocked.BackColor = Color.FromArgb(52, 152, 219);
+            btnIsLocked.FlatStyle = FlatStyle.Flat;
+            btnIsLocked.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnIsLocked.ForeColor = Color.White;
+            btnIsLocked.Location = new Point(299, 46);
             btnIsLocked.Name = "btnIsLocked";
-            btnIsLocked.Size = new Size(130, 23);
+            btnIsLocked.Size = new Size(134, 31);
             btnIsLocked.TabIndex = 2;
             btnIsLocked.Text = "Is Locked?";
+            btnIsLocked.UseVisualStyleBackColor = false;
             btnIsLocked.Click += btnIsLocked_Click;
             // 
             // btnUnlock
             // 
-            btnUnlock.Location = new Point(300, 80);
+            btnUnlock.BackColor = Color.FromArgb(52, 152, 219);
+            btnUnlock.FlatStyle = FlatStyle.Flat;
+            btnUnlock.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnUnlock.ForeColor = Color.White;
+            btnUnlock.Location = new Point(163, 46);
             btnUnlock.Name = "btnUnlock";
-            btnUnlock.Size = new Size(130, 23);
+            btnUnlock.Size = new Size(134, 31);
             btnUnlock.TabIndex = 3;
             btnUnlock.Text = "Unlock User";
+            btnUnlock.UseVisualStyleBackColor = false;
             btnUnlock.Click += btnUnlock_Click;
             // 
             // btnLock
             // 
-            btnLock.Location = new Point(440, 20);
+            btnLock.BackColor = Color.FromArgb(52, 152, 219);
+            btnLock.FlatStyle = FlatStyle.Flat;
+            btnLock.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnLock.ForeColor = Color.White;
+            btnLock.Location = new Point(571, 46);
             btnLock.Name = "btnLock";
-            btnLock.Size = new Size(130, 23);
+            btnLock.Size = new Size(134, 31);
             btnLock.TabIndex = 4;
             btnLock.Text = "Lock User";
+            btnLock.UseVisualStyleBackColor = false;
             btnLock.Click += btnLock_Click;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            groupBox2.Location = new Point(129, 26);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(597, 81);
+            groupBox2.TabIndex = 5;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Action";
             // 
             // tabUtility
             // 
@@ -253,18 +335,23 @@
             // 
             // btnCheckUsername
             // 
+            btnCheckUsername.BackColor = Color.FromArgb(52, 152, 219);
+            btnCheckUsername.FlatStyle = FlatStyle.Flat;
+            btnCheckUsername.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnCheckUsername.ForeColor = Color.White;
             btnCheckUsername.Location = new Point(324, 20);
             btnCheckUsername.Name = "btnCheckUsername";
-            btnCheckUsername.Size = new Size(160, 23);
+            btnCheckUsername.Size = new Size(134, 31);
             btnCheckUsername.TabIndex = 1;
             btnCheckUsername.Text = "Check Username Exists";
+            btnCheckUsername.UseVisualStyleBackColor = false;
             btnCheckUsername.Click += btnCheckUsername_Click;
             // 
             // btnClearUtility
             // 
-            btnClearUtility.Location = new Point(494, 20);
+            btnClearUtility.Location = new Point(480, 25);
             btnClearUtility.Name = "btnClearUtility";
-            btnClearUtility.Size = new Size(80, 23);
+            btnClearUtility.Size = new Size(43, 23);
             btnClearUtility.TabIndex = 2;
             btnClearUtility.Text = "Clear";
             btnClearUtility.Click += btnClear_Click;
@@ -278,11 +365,14 @@
             tabControl.ResumeLayout(false);
             tabManageUsers.ResumeLayout(false);
             tabManageUsers.PerformLayout();
+            groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
             tabLockUnlock.ResumeLayout(false);
             tabUtility.ResumeLayout(false);
             ResumeLayout(false);
         }
         private DataGridView dgvUsers;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
     }
 }

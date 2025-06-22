@@ -27,6 +27,8 @@
 
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             cbUsers = new ComboBox();
             cbRoles = new ComboBox();
             btnAssign = new Button();
@@ -53,20 +55,30 @@
             // 
             // btnAssign
             // 
-            btnAssign.Location = new Point(231, 77);
+            btnAssign.BackColor = Color.FromArgb(241, 196, 15);
+            btnAssign.FlatStyle = FlatStyle.Flat;
+            btnAssign.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnAssign.ForeColor = Color.White;
+            btnAssign.Location = new Point(268, 76);
             btnAssign.Name = "btnAssign";
-            btnAssign.Size = new Size(120, 30);
+            btnAssign.Size = new Size(134, 31);
             btnAssign.TabIndex = 2;
             btnAssign.Text = "Update Role";
+            btnAssign.UseVisualStyleBackColor = false;
             btnAssign.Click += BtnAssign_Click;
             // 
             // btnRemove
             // 
-            btnRemove.Location = new Point(430, 77);
+            btnRemove.BackColor = Color.FromArgb(231, 76, 60);
+            btnRemove.FlatStyle = FlatStyle.Flat;
+            btnRemove.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnRemove.ForeColor = Color.White;
+            btnRemove.Location = new Point(467, 76);
             btnRemove.Name = "btnRemove";
-            btnRemove.Size = new Size(200, 30);
+            btnRemove.Size = new Size(134, 31);
             btnRemove.TabIndex = 3;
             btnRemove.Text = "Remove Selected Role";
+            btnRemove.UseVisualStyleBackColor = false;
             btnRemove.Click += BtnRemove_Click;
             // 
             // dgvUserRoles
@@ -76,15 +88,24 @@
             dgvUserRoles.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUserRoles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvUserRoles.BackgroundColor = Color.White;
-            dgvUserRoles.BorderStyle = BorderStyle.None;
             dgvUserRoles.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dgvUserRoles.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvUserRoles.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
-            dgvUserRoles.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvUserRoles.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvUserRoles.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvUserRoles.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            dgvUserRoles.DefaultCellStyle.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvUserRoles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dgvUserRoles.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvUserRoles.DefaultCellStyle = dataGridViewCellStyle2;
             dgvUserRoles.EnableHeadersVisualStyles = false;
             dgvUserRoles.GridColor = Color.LightGray;
             dgvUserRoles.Location = new Point(30, 130);
@@ -96,7 +117,6 @@
             dgvUserRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvUserRoles.Size = new Size(793, 415);
             dgvUserRoles.TabIndex = 4;
-
             // 
             // UserRole
             // 

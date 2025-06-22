@@ -41,7 +41,7 @@
             dgvBranches.AllowUserToDeleteRows = false;
             dgvBranches.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvBranches.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvBranches.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
+            dgvBranches.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells; // or AllCellsExceptHeaders
             dgvBranches.BackgroundColor = Color.White;
             dgvBranches.BorderStyle = BorderStyle.None;
             dgvBranches.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;

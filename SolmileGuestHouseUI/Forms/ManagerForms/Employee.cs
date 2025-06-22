@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
+using SolmileGuestHouseUI.Forms.AdminForms;
 using System.Text;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
 using Task = System.Threading.Tasks.Task;
@@ -37,7 +38,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var branches = JsonConvert.DeserializeObject<List<Branch>>(json);
+                    var branches = JsonConvert.DeserializeObject<List<SolmileGuesthouseAPI.Data.Models.Branch>>(json);
                     cmbBranch.DataSource = branches;
                     cmbBranch.DisplayMember = "Name";
                     cmbBranch.ValueMember = "BranchId";
@@ -410,59 +411,60 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
 
         private async void btnFindById_Click(object sender, EventArgs e)
         {
-            try
+            async Task<object> SearchEmployeeByQuery(string input)
             {
-                if (!int.TryParse(txtEmployeeId.Text, out int employeeId) || employeeId == 0)
+                if (string.IsNullOrWhiteSpace(input))
                 {
-                    MessageBox.Show("Please enter a valid Employee ID to find.");
-                    return;
+                    MessageBox.Show("Please enter a valid Employee ID or Username.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return null;
                 }
 
-                var response = await _httpClient.GetAsync($"FindById/{employeeId}");
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var emp = JsonConvert.DeserializeObject<EmployeeDto>(json);
-                    SetFormFromEmployee(emp);
-                }
-                else
-                {
-                    MessageBox.Show("Employee not found.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error finding employee: " + ex.Message);
-            }
-        }
+                    HttpResponseMessage response;
 
-        private async void btnSearch_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var query = txtSearch.Text.Trim();
-                if (string.IsNullOrEmpty(query))
-                {
-                    MessageBox.Show("Please enter a search query.");
-                    return;
-                }
+                    if (int.TryParse(input, out int employeeId))
+                    {
+                        response = await _httpClient.GetAsync($"FindById/{employeeId}");
 
-                var response = await _httpClient.GetAsync($"Search?query={Uri.EscapeDataString(query)}");
-                if (response.IsSuccessStatusCode)
-                {
-                    var json = await response.Content.ReadAsStringAsync();
-                    var employees = JsonConvert.DeserializeObject<List<EmployeeDto>>(json);
-                    dgvEmployees.DataSource = employees;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var json = await response.Content.ReadAsStringAsync();
+                            var employee = JsonConvert.DeserializeObject<EmployeeDto>(json);
+                            return employee;
+                        }
+                    }
+
+                    // Search by username returns single employee now
+                    response = await _httpClient.GetAsync($"Search?query={Uri.EscapeDataString(input)}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        var employee = JsonConvert.DeserializeObject<EmployeeDto>(json);
+
+                        if (employee != null)
+                        {
+                            return employee;
+                        }
+                    }
+
+                    MessageBox.Show("No matching employee found.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return null;
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("No employees found.");
-                    dgvEmployees.DataSource = null;
+                    MessageBox.Show("Error retrieving employee: " + ex.Message);
+                    return null;
                 }
             }
-            catch (Exception ex)
+
+            using var searchForm = new SearchByInputForm("Enter Employee ID or Username", SearchEmployeeByQuery);
+            var result = searchForm.ShowDialog();
+
+            if (result == DialogResult.OK && searchForm.SelectedItem is EmployeeDto emp)
             {
-                MessageBox.Show("Error searching employees: " + ex.Message);
+                SetFormFromEmployee(emp);
             }
         }
 

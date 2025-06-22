@@ -33,6 +33,8 @@
 
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             lblPhone = new Label();
             txtPhone = new TextBox();
             lblEmail = new Label();
@@ -140,17 +142,26 @@
             dgvContacts.AllowUserToDeleteRows = false;
             dgvContacts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvContacts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvContacts.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
             dgvContacts.BackgroundColor = Color.White;
             dgvContacts.BorderStyle = BorderStyle.None;
             dgvContacts.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvContacts.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvContacts.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
-            dgvContacts.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvContacts.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvContacts.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvContacts.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            dgvContacts.DefaultCellStyle.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvContacts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvContacts.DefaultCellStyle = dataGridViewCellStyle2;
             dgvContacts.EnableHeadersVisualStyles = false;
             dgvContacts.GridColor = Color.LightGray;
             dgvContacts.Location = new Point(17, 185);
@@ -161,9 +172,8 @@
             dgvContacts.RowTemplate.Height = 30;
             dgvContacts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvContacts.Size = new Size(782, 398);
-            dgvContacts.TabIndex = 11;
+            dgvContacts.TabIndex = 14;
             dgvContacts.SelectionChanged += dgvContacts_SelectionChanged_1;
-
             // 
             // BtnClear
             // 

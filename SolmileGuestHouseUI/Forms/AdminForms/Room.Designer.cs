@@ -32,6 +32,8 @@
 
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             txtRoomId = new TextBox();
             txtRoomNumberAssignmentId = new TextBox();
             cmbStatus = new ComboBox();
@@ -124,12 +126,22 @@
             dgvRooms.BorderStyle = BorderStyle.None;
             dgvRooms.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvRooms.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvRooms.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
-            dgvRooms.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvRooms.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvRooms.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvRooms.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            dgvRooms.DefaultCellStyle.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvRooms.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvRooms.DefaultCellStyle = dataGridViewCellStyle2;
             dgvRooms.EnableHeadersVisualStyles = false;
             dgvRooms.GridColor = Color.LightGray;
             dgvRooms.Location = new Point(30, 176);
@@ -140,11 +152,11 @@
             dgvRooms.RowTemplate.Height = 30;
             dgvRooms.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvRooms.Size = new Size(818, 383);
-            dgvRooms.TabIndex = 8;
-
+            dgvRooms.TabIndex = 14;
             // 
             // Room
             // 
+            BackColor = Color.White;
             Controls.Add(txtRoomId);
             Controls.Add(txtRoomNumberAssignmentId);
             Controls.Add(cmbStatus);

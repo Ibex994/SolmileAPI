@@ -42,7 +42,9 @@
             btnDelete = new Button();
             btnGetListForCustomer = new Button();
             btnClear = new Button();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dgvServiceTypes).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // dgvServiceTypes
@@ -73,19 +75,21 @@
             dgvServiceTypes.DefaultCellStyle = dataGridViewCellStyle2;
             dgvServiceTypes.EnableHeadersVisualStyles = false;
             dgvServiceTypes.GridColor = Color.LightGray;
-            dgvServiceTypes.Location = new Point(20, 130);
+            dgvServiceTypes.Location = new Point(20, 194);
             dgvServiceTypes.MultiSelect = false;
             dgvServiceTypes.Name = "dgvServiceTypes";
             dgvServiceTypes.ReadOnly = true;
             dgvServiceTypes.RowHeadersVisible = false;
             dgvServiceTypes.RowTemplate.Height = 30;
             dgvServiceTypes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvServiceTypes.Size = new Size(810, 570);
+            dgvServiceTypes.Size = new Size(810, 506);
             dgvServiceTypes.TabIndex = 0;
             dgvServiceTypes.SelectionChanged += DgvServiceTypes_SelectionChanged;
             // 
             // lblId
             // 
+            lblId.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblId.ForeColor = Color.Goldenrod;
             lblId.Location = new Point(20, 20);
             lblId.Name = "lblId";
             lblId.Size = new Size(110, 23);
@@ -94,13 +98,15 @@
             // 
             // txtId
             // 
-            txtId.Location = new Point(140, 20);
+            txtId.Location = new Point(136, 18);
             txtId.Name = "txtId";
             txtId.Size = new Size(200, 23);
             txtId.TabIndex = 2;
             // 
             // lblName
             // 
+            lblName.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblName.ForeColor = Color.Goldenrod;
             lblName.Location = new Point(20, 60);
             lblName.Name = "lblName";
             lblName.Size = new Size(110, 23);
@@ -116,86 +122,130 @@
             // 
             // btnGetAll
             // 
-            btnGetAll.Location = new Point(494, 13);
+            btnGetAll.BackColor = Color.FromArgb(52, 152, 219);
+            btnGetAll.FlatStyle = FlatStyle.Flat;
+            btnGetAll.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnGetAll.ForeColor = Color.White;
+            btnGetAll.Location = new Point(179, 38);
             btnGetAll.Name = "btnGetAll";
-            btnGetAll.Size = new Size(90, 28);
+            btnGetAll.Size = new Size(147, 31);
             btnGetAll.TabIndex = 7;
             btnGetAll.Text = "Get All";
+            btnGetAll.UseVisualStyleBackColor = false;
             // 
             // btnFindByIdOrName
             // 
-            btnFindByIdOrName.Location = new Point(494, 47);
+            btnFindByIdOrName.BackColor = Color.FromArgb(52, 152, 219);
+            btnFindByIdOrName.FlatStyle = FlatStyle.Flat;
+            btnFindByIdOrName.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnFindByIdOrName.ForeColor = Color.White;
+            btnFindByIdOrName.Location = new Point(179, 70);
             btnFindByIdOrName.Name = "btnFindByIdOrName";
-            btnFindByIdOrName.Size = new Size(115, 28);
+            btnFindByIdOrName.Size = new Size(147, 31);
             btnFindByIdOrName.TabIndex = 8;
             btnFindByIdOrName.Text = "Get By ID / Name";
+            btnFindByIdOrName.UseVisualStyleBackColor = false;
             btnFindByIdOrName.Click += btnFindByIdOrName_Click;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(371, 13);
+            btnAdd.BackColor = Color.FromArgb(39, 174, 96);
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnAdd.ForeColor = Color.White;
+            btnAdd.Location = new Point(20, 39);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(90, 28);
+            btnAdd.Size = new Size(147, 31);
             btnAdd.TabIndex = 9;
             btnAdd.Text = "Add";
+            btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(371, 81);
+            btnUpdate.BackColor = Color.FromArgb(241, 196, 15);
+            btnUpdate.FlatStyle = FlatStyle.Flat;
+            btnUpdate.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnUpdate.ForeColor = Color.White;
+            btnUpdate.Location = new Point(20, 107);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(90, 28);
+            btnUpdate.Size = new Size(147, 31);
             btnUpdate.TabIndex = 10;
             btnUpdate.Text = "Update";
+            btnUpdate.UseVisualStyleBackColor = false;
             btnUpdate.Click += btnUpdate_Click;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(371, 47);
+            btnDelete.BackColor = Color.FromArgb(231, 76, 60);
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(20, 73);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(90, 28);
+            btnDelete.Size = new Size(147, 31);
             btnDelete.TabIndex = 11;
             btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // btnGetListForCustomer
             // 
-            btnGetListForCustomer.Location = new Point(494, 87);
+            btnGetListForCustomer.BackColor = Color.FromArgb(52, 152, 219);
+            btnGetListForCustomer.FlatStyle = FlatStyle.Flat;
+            btnGetListForCustomer.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnGetListForCustomer.ForeColor = Color.White;
+            btnGetListForCustomer.Location = new Point(179, 107);
             btnGetListForCustomer.Name = "btnGetListForCustomer";
-            btnGetListForCustomer.Size = new Size(180, 28);
+            btnGetListForCustomer.Size = new Size(147, 31);
             btnGetListForCustomer.TabIndex = 13;
             btnGetListForCustomer.Text = "Get Service List For Customer";
+            btnGetListForCustomer.UseVisualStyleBackColor = false;
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(642, 18);
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Font = new Font("Segoe UI", 9F);
+            btnClear.Location = new Point(316, 141);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(75, 23);
+            btnClear.Size = new Size(44, 23);
             btnClear.TabIndex = 14;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(btnGetAll);
+            groupBox1.Controls.Add(btnClear);
+            groupBox1.Controls.Add(btnFindByIdOrName);
+            groupBox1.Controls.Add(btnGetListForCustomer);
+            groupBox1.Controls.Add(btnAdd);
+            groupBox1.Controls.Add(btnDelete);
+            groupBox1.Controls.Add(btnUpdate);
+            groupBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            groupBox1.Location = new Point(356, 18);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(360, 170);
+            groupBox1.TabIndex = 15;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Action";
             // 
             // ServiceType
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            Controls.Add(btnClear);
+            Controls.Add(groupBox1);
             Controls.Add(dgvServiceTypes);
             Controls.Add(lblId);
             Controls.Add(txtId);
             Controls.Add(lblName);
             Controls.Add(txtName);
-            Controls.Add(btnGetAll);
-            Controls.Add(btnFindByIdOrName);
-            Controls.Add(btnAdd);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnDelete);
-            Controls.Add(btnGetListForCustomer);
             Name = "ServiceType";
             Size = new Size(860, 720);
             ((System.ComponentModel.ISupportInitialize)dgvServiceTypes).EndInit();
+            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -213,6 +263,7 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnGetListForCustomer;
         private Button btnClear;
+        private GroupBox groupBox1;
     }
 
         #endregion

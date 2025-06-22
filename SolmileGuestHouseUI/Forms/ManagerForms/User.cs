@@ -76,25 +76,42 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
 
         private async Task<object> GetUserByInputAsync(string input)
         {
-            HttpResponseMessage response;
-
-            if (int.TryParse(input, out int id))
+            try
             {
-                response = await _client.GetAsync($"api/Users/{id}");
-            }
-            else
-            {
-                var payload = new { Username = input };
-                var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
-                response = await _client.PostAsync("api/Users/find-by-username", content);
-            }
+                HttpResponseMessage response;
+                if (int.TryParse(input, out int id))
+                {
+                    // Search by ID
+                    response = await _client.GetAsync($"api/Users/{id}");
+                }
+                else
+                {
+                    // Search by username
+                    response = await _client.GetAsync($"api/Users/find-by-username/{input}");
+                }
 
-            if (!response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"API Error: {response.StatusCode}\n{errorContent}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
+
+                string json = await response.Content.ReadAsStringAsync();
+                var user = System.Text.Json.JsonSerializer.Deserialize<InputUserDto>(json, new System.Text.Json.JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Request failed: {ex.Message}", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
-
-            var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<UserDto>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
         }
+
 
         private async void btnDeleteUser_Click(object sender, EventArgs e)
         {
@@ -395,6 +412,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
                 }
             }
         }
+
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {

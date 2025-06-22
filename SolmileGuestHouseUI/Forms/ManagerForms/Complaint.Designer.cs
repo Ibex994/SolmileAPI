@@ -38,6 +38,8 @@
 
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             lblComplaintId = new Label();
             lblCustomerId = new Label();
             lblDescription = new Label();
@@ -55,7 +57,9 @@
             dgvComplaints = new DataGridView();
             btnClear = new Button();
             txtDescription = new RichTextBox();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dgvComplaints).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // lblComplaintId
@@ -153,7 +157,7 @@
             btnUpdateStatus.FlatStyle = FlatStyle.Flat;
             btnUpdateStatus.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnUpdateStatus.ForeColor = Color.White;
-            btnUpdateStatus.Location = new Point(707, 78);
+            btnUpdateStatus.Location = new Point(707, 143);
             btnUpdateStatus.Name = "btnUpdateStatus";
             btnUpdateStatus.Size = new Size(134, 31);
             btnUpdateStatus.TabIndex = 13;
@@ -167,7 +171,7 @@
             btnAssignHandler.FlatStyle = FlatStyle.Flat;
             btnAssignHandler.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnAssignHandler.ForeColor = Color.White;
-            btnAssignHandler.Location = new Point(707, 112);
+            btnAssignHandler.Location = new Point(707, 106);
             btnAssignHandler.Name = "btnAssignHandler";
             btnAssignHandler.Size = new Size(134, 31);
             btnAssignHandler.TabIndex = 14;
@@ -181,7 +185,7 @@
             btnResolve.FlatStyle = FlatStyle.Flat;
             btnResolve.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnResolve.ForeColor = Color.White;
-            btnResolve.Location = new Point(707, 149);
+            btnResolve.Location = new Point(707, 179);
             btnResolve.Name = "btnResolve";
             btnResolve.Size = new Size(134, 31);
             btnResolve.TabIndex = 15;
@@ -195,7 +199,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(707, 186);
+            btnDelete.Location = new Point(707, 216);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(134, 31);
             btnDelete.TabIndex = 16;
@@ -209,7 +213,7 @@
             btnHistory.FlatStyle = FlatStyle.Flat;
             btnHistory.Font = new Font("Arial", 11.25F, FontStyle.Bold);
             btnHistory.ForeColor = Color.White;
-            btnHistory.Location = new Point(707, 223);
+            btnHistory.Location = new Point(707, 253);
             btnHistory.Name = "btnHistory";
             btnHistory.Size = new Size(134, 31);
             btnHistory.TabIndex = 17;
@@ -226,12 +230,22 @@
             dgvComplaints.BorderStyle = BorderStyle.None;
             dgvComplaints.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvComplaints.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvComplaints.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
-            dgvComplaints.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvComplaints.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvComplaints.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvComplaints.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            dgvComplaints.DefaultCellStyle.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvComplaints.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvComplaints.DefaultCellStyle = dataGridViewCellStyle2;
             dgvComplaints.EnableHeadersVisualStyles = false;
             dgvComplaints.GridColor = Color.LightGray;
             dgvComplaints.Location = new Point(20, 345);
@@ -241,16 +255,17 @@
             dgvComplaints.RowHeadersVisible = false;
             dgvComplaints.RowTemplate.Height = 30;
             dgvComplaints.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvComplaints.Size = new Size(805, 301);
+            dgvComplaints.Size = new Size(821, 318);
             dgvComplaints.TabIndex = 18;
             dgvComplaints.CellClick += dgvComplaints_CellClick;
-
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(774, 652);
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Font = new Font("Arial Narrow", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClear.Location = new Point(106, 205);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(51, 24);
+            btnClear.Size = new Size(47, 24);
             btnClear.TabIndex = 17;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
@@ -262,15 +277,32 @@
             txtDescription.Location = new Point(120, 110);
             txtDescription.Name = "txtDescription";
             txtDescription.ReadOnly = true;
-            txtDescription.Size = new Size(570, 186);
+            txtDescription.Size = new Size(570, 203);
             txtDescription.TabIndex = 19;
             txtDescription.Text = "";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(btnClear);
+            groupBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            groupBox1.Location = new Point(696, 84);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(159, 229);
+            groupBox1.TabIndex = 20;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Action";
             // 
             // Complaint
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
+            Controls.Add(btnUpdateStatus);
+            Controls.Add(btnAssignHandler);
+            Controls.Add(btnResolve);
+            Controls.Add(btnDelete);
+            Controls.Add(btnHistory);
+            Controls.Add(groupBox1);
             Controls.Add(txtDescription);
             Controls.Add(lblComplaintId);
             Controls.Add(txtComplaintId);
@@ -281,18 +313,13 @@
             Controls.Add(cmbStatus);
             Controls.Add(lblHandler);
             Controls.Add(cmbHandler);
-            Controls.Add(btnUpdateStatus);
-            Controls.Add(btnAssignHandler);
-            Controls.Add(btnResolve);
-            Controls.Add(btnDelete);
-            Controls.Add(btnClear);
-            Controls.Add(btnHistory);
             Controls.Add(dgvComplaints);
             ForeColor = Color.Black;
             Name = "Complaint";
             Size = new Size(855, 690);
             Load += Complaint_Load;
             ((System.ComponentModel.ISupportInitialize)dgvComplaints).EndInit();
+            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -301,5 +328,6 @@
 
         private Button btnClear;
         private RichTextBox txtDescription;
+        private GroupBox groupBox1;
     }
 }

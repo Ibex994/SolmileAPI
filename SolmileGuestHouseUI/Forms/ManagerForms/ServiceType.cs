@@ -28,7 +28,7 @@ namespace SolmileGuestHouseUI.Forms.ManagerForms
             {
                 var services = await _httpClient.GetFromJsonAsync<List<ServiceTypeDto>>(BaseApiUrl);
                 dgvServiceTypes.DataSource = services;
-                ClearForm();
+                //ClearForm();
             }
             catch (Exception ex)
             {

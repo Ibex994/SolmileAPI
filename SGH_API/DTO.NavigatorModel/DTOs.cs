@@ -142,12 +142,9 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public string Gender { get; set; }
             public int BranchId { get; set; }
 
-            // Add this:
             public string FullName => $"{FirstName} {LastName}";
         }
 
-
-        // Assuming this DTO is similar to what you already have
 
 
         // DTOs/RatingDto.cs
@@ -198,7 +195,7 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public bool DoorKey { get; set; } = false;
             [JsonIgnore]
             public string? Status { get; set; }
-            public int PaymentMethodId { get; set; }
+     
 
         }
         public class UpdateReservationDto

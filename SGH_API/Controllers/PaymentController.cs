@@ -28,6 +28,19 @@ namespace SolmileGuesthouseAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<PaymentDto>>(payments));
         }
 
+        [HttpGet("reservation/{reservationId}")]
+        [ProducesResponseType(typeof(IEnumerable<PaymentDto>), 200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetPaymentsByReservationId(string reservationId)
+        {
+            var payments = await _paymentInterface.GetPaymentsByReservationIdAsync(reservationId);
+            if (payments == null || !payments.Any())
+                return NotFound(new { Message = $"No payments found for reservation ID {reservationId}" });
+
+            return Ok(_mapper.Map<IEnumerable<PaymentDto>>(payments));
+        }
+
+
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(PaymentDto), 200)]
         [ProducesResponseType(404)]
@@ -39,7 +52,7 @@ namespace SolmileGuesthouseAPI.Controllers
 
             return Ok(_mapper.Map<PaymentDto>(payment));
         }
-
+        [Authorize(Roles = "Reception")]
         [HttpPost]
         [ProducesResponseType(typeof(PaymentDto), 201)]
         [ProducesResponseType(400)]
@@ -52,7 +65,7 @@ namespace SolmileGuesthouseAPI.Controllers
             var created = await _paymentInterface.CreatePaymentAsync(payment);
             return CreatedAtAction(nameof(GetPaymentById), new { id = created.PaymentId }, _mapper.Map<PaymentDto>(created));
         }
-
+        [Authorize(Roles = "Reception")]
         [HttpPut("{id:int}")]
         [ProducesResponseType(typeof(PaymentDto), 200)]
         [ProducesResponseType(400)]
@@ -70,7 +83,7 @@ namespace SolmileGuesthouseAPI.Controllers
 
             return Ok(_mapper.Map<PaymentDto>(updated));
         }
-
+        [Authorize(Roles = "Manager")]
         [HttpDelete("{id:int}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -88,7 +101,8 @@ namespace SolmileGuesthouseAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _paymentInterface.ProcessPaymentAsync(dto.ReservationId, dto.Amount, dto.MethodId);
+
+            var result = await _paymentInterface.ProcessPaymentAsync(dto.ReservationId, dto.MethodId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

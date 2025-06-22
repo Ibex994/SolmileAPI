@@ -21,6 +21,7 @@ namespace SolmileGuesthouseAPI.Repository
         {
             return await _context.Payroll
                 .Include(p => p.Employee)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.PayrollId == payrollId)
                 .ConfigureAwait(false);
         }
@@ -193,15 +194,14 @@ namespace SolmileGuesthouseAPI.Repository
             });
 
             using var stream = new MemoryStream();
+
             document.GeneratePdf(stream);
             var pdfBytes = stream.ToArray();
-
-            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "GeneratedPayrollslips");
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string folderPath = Path.Combine(desktopPath, "GeneratedPayrollslips");
             Directory.CreateDirectory(folderPath);
-
             string safeName = string.Join("_", (employeeName ?? "Unknown").Split(Path.GetInvalidFileNameChars()));
             string filePath = Path.Combine(folderPath, $"Payslip_{safeName}_{DateTime.Now:yyyyMMddHHmmss}.pdf");
-
             await File.WriteAllBytesAsync(filePath, pdfBytes);
 
             return pdfBytes;
@@ -215,17 +215,32 @@ namespace SolmileGuesthouseAPI.Repository
                 .Include(p => p.Employee)
                 .ToListAsync()
                 .ConfigureAwait(false);
-        }     
+        }
 
-        public async Task AddDeductionAsync(int payrollId, float amount, string reason)
+        public async Task<Payroll> AddDeductionAsync(int payrollId, float amount, string reason)
         {
-            var payroll = await GetPayrollByIdAsync(payrollId).ConfigureAwait(false);
-            if (payroll == null) throw new Exception("Payroll not found");
+            var payroll = await _context.Payroll.FindAsync(payrollId);
+            if (payroll == null)
+                throw new Exception("Payroll not found");
 
             payroll.Deductions += (decimal)amount;
-            payroll.DeductionReason = reason;
-            await _context.SaveChangesAsync().ConfigureAwait(false);
+
+            // Append or set the deduction reason
+            if (string.IsNullOrWhiteSpace(payroll.DeductionReason))
+            {
+                payroll.DeductionReason = reason;
+            }
+            else
+            {
+                payroll.DeductionReason += $". {reason}";
+            }
+
+            _context.Payroll.Update(payroll);
+            await _context.SaveChangesAsync();
+
+            return payroll;
         }
+
         public async Task<List<Payroll>> GetPayrollsByDateAsync(DateTime payPeriod)
         {
             return await _context.Payroll
@@ -306,9 +321,23 @@ namespace SolmileGuesthouseAPI.Repository
 
             using var stream = new MemoryStream();
             document.GeneratePdf(stream);
-            return stream.ToArray();
+            var pdfBytes = stream.ToArray();
 
-            static IContainer CellStyle(IContainer container) => container.PaddingVertical(2);
+            // Save to Desktop
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string folderPath = Path.Combine(desktopPath, "GeneratedPayrollslips");
+            Directory.CreateDirectory(folderPath);
+
+            // Filename based on date
+            string filePath = Path.Combine(folderPath, $"PayrollReport_{payPeriod:yyyyMMdd}.pdf");
+
+            await File.WriteAllBytesAsync(filePath, pdfBytes);
+            return pdfBytes;
         }
+        private static IContainer CellStyle(IContainer container)
+        {
+            return container.PaddingVertical(2);
+        }
+
     }
-    }
+}

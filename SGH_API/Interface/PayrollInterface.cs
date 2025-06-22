@@ -11,7 +11,7 @@ namespace SolmileGuesthouseAPI.Interface
         Task<float> CalculateNetSalaryAsync(int payrollId);
         Task<byte[]> GeneratePayslipPdfAsync(int EmployeeId);
         Task<List<Payroll>> GetPayrollsByEmployeeIdAsync(int employeeId);
-        Task AddDeductionAsync(int payrollId, float amount, string reason);
+        Task<Payroll> AddDeductionAsync(int payrollId, float amount, string reason);
         Task<List<Payroll>> GetPayrollsByDateAsync(DateTime payPeriod);
         Task<byte[]> GeneratePayrollPdfByDateAsync(DateTime payPeriod);
     }

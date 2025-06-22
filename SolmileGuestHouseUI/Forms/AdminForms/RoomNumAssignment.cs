@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using static SolmileGuesthouseAPI.DTO.NavigatorModel.DTOs;
+using System;
+using Task = System.Threading.Tasks.Task;
 
 namespace SolmileGuestHouseUI.Forms.AdminForms
 {
@@ -13,11 +15,38 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
         private readonly HttpClient _httpClient = new HttpClient();
         private int? selectedId = null;
         private const string BaseUrl = "https://localhost:7107/api/RoomNumberAssignments";
+        private const string BranchUrl = "https://localhost:7107/api/Branches";
 
         public RoomNumAssignment()
         {
             InitializeComponent();
+            _ = LoadBranchesAsync();
             LoadRoomNumberAssignments();
+        }
+
+        private async Task LoadBranchesAsync()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync(BranchUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var branches = JsonConvert.DeserializeObject<List<BranchDto>>(json);
+
+                    cmbBranchList.DataSource = branches;
+                    cmbBranchList.DisplayMember = "Name"; // Correct property from your BranchDto
+                    cmbBranchList.ValueMember = "BranchId";
+                }
+                else
+                {
+                    MessageBox.Show("Failed to load branches.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading branches:\n{ex.Message}", "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private async void LoadRoomNumberAssignments()
@@ -40,8 +69,9 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
 
         private void ClearFields()
         {
-            txtBranchId.Clear();
+            cmbBranchList.SelectedIndex = -1;
             txtRoomNumber.Clear();
+            assignId.Clear();
             selectedId = null;
             dgvRoomNumAssign.ClearSelection();
         }
@@ -51,9 +81,10 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
             if (e.RowIndex >= 0)
             {
                 var row = dgvRoomNumAssign.Rows[e.RowIndex];
-                selectedId = (int)row.Cells["RoomNumberAssignmentId"].Value;
-                txtBranchId.Text = row.Cells["BranchId"].Value.ToString();
+                selectedId = Convert.ToInt32(row.Cells["RoomNumberAssignmentId"].Value);
+                cmbBranchList.SelectedValue = Convert.ToInt32(row.Cells["BranchId"].Value);
                 txtRoomNumber.Text = row.Cells["RoomNumber"].Value.ToString();
+                assignId.Text = selectedId.ToString();
             }
         }
 
@@ -94,12 +125,24 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
 
         private async void btnAdd_Click(object sender, EventArgs e)
         {
+            if (cmbBranchList.SelectedIndex == -1 || string.IsNullOrWhiteSpace(txtRoomNumber.Text))
+            {
+                MessageBox.Show("Please select a branch and enter a room number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!int.TryParse(txtRoomNumber.Text.Trim(), out int roomNumber))
+            {
+                MessageBox.Show("Room number must be a valid number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 var dto = new
                 {
-                    BranchId = int.Parse(txtBranchId.Text),
-                    RoomNumber = txtRoomNumber.Text
+                    BranchId = (int)cmbBranchList.SelectedValue,
+                    RoomNumber = roomNumber
                 };
 
                 var json = JsonConvert.SerializeObject(dto);
@@ -114,7 +157,8 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 }
                 else
                 {
-                    MessageBox.Show("Failed to add room assignment. Please check the data and try again.", "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var error = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Failed to add room assignment.\nDetails: {error}", "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
@@ -131,18 +175,25 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 return;
             }
 
+            if (!int.TryParse(txtRoomNumber.Text.Trim(), out int roomNumber))
+            {
+                MessageBox.Show("Room number must be a valid number.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 var dto = new
                 {
-                    BranchId = int.Parse(txtBranchId.Text),
-                    RoomNumber = txtRoomNumber.Text
+                    RoomNumberAssignmentId = selectedId.Value,
+                    BranchId = (int)cmbBranchList.SelectedValue,
+                    RoomNumber = roomNumber
                 };
 
                 var json = JsonConvert.SerializeObject(dto);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PutAsync($"{BaseUrl}/{selectedId}", content);
+                var response = await _httpClient.PutAsync($"{BaseUrl}/{selectedId.Value}", content);
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Room assignment updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -151,7 +202,8 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 }
                 else
                 {
-                    MessageBox.Show("Failed to update room assignment. Please try again.", "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var error = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Failed to update room assignment.\nDetails: {error}", "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
@@ -173,7 +225,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
 
             try
             {
-                var response = await _httpClient.DeleteAsync($"{BaseUrl}/{selectedId}");
+                var response = await _httpClient.DeleteAsync($"{BaseUrl}/{selectedId.Value}");
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Room assignment deleted successfully!", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -182,7 +234,8 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                 }
                 else
                 {
-                    MessageBox.Show("Failed to delete the selected room assignment. Please try again.", "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    var error = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Failed to delete room assignment.\nDetails: {error}", "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)

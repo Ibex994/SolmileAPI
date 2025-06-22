@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             dgvRoles = new DataGridView();
             lblRoleId = new Label();
             txtRoleId = new TextBox();
@@ -39,7 +39,9 @@
             btnAdd = new Button();
             btnDelete = new Button();
             btnClear = new Button();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dgvRoles).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // dgvRoles
@@ -52,36 +54,38 @@
             dgvRoles.BorderStyle = BorderStyle.None;
             dgvRoles.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvRoles.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvRoles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            dataGridViewCellStyle2.SelectionForeColor = Color.White;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvRoles.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvRoles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle4.ForeColor = Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvRoles.DefaultCellStyle = dataGridViewCellStyle4;
             dgvRoles.EnableHeadersVisualStyles = false;
             dgvRoles.GridColor = Color.LightGray;
-            dgvRoles.Location = new Point(20, 130);
+            dgvRoles.Location = new Point(20, 167);
             dgvRoles.MultiSelect = false;
             dgvRoles.Name = "dgvRoles";
             dgvRoles.ReadOnly = true;
             dgvRoles.RowHeadersVisible = false;
             dgvRoles.RowTemplate.Height = 30;
             dgvRoles.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvRoles.Size = new Size(810, 570);
+            dgvRoles.Size = new Size(810, 533);
             dgvRoles.TabIndex = 0;
             // 
             // lblRoleId
             // 
+            lblRoleId.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblRoleId.ForeColor = Color.Goldenrod;
             lblRoleId.Location = new Point(127, 47);
             lblRoleId.Name = "lblRoleId";
             lblRoleId.Size = new Size(80, 23);
@@ -91,7 +95,7 @@
             // txtRoleId
             // 
             txtRoleId.Enabled = false;
-            txtRoleId.Location = new Point(207, 47);
+            txtRoleId.Location = new Point(213, 42);
             txtRoleId.Name = "txtRoleId";
             txtRoleId.ReadOnly = true;
             txtRoleId.Size = new Size(200, 23);
@@ -99,6 +103,8 @@
             // 
             // lblRoleName
             // 
+            lblRoleName.Font = new Font("Arial", 11.25F, FontStyle.Bold);
+            lblRoleName.ForeColor = Color.Goldenrod;
             lblRoleName.Location = new Point(127, 87);
             lblRoleName.Name = "lblRoleName";
             lblRoleName.Size = new Size(80, 23);
@@ -107,63 +113,93 @@
             // 
             // txtRoleName
             // 
-            txtRoleName.Location = new Point(207, 87);
+            txtRoleName.Location = new Point(213, 82);
             txtRoleName.Name = "txtRoleName";
             txtRoleName.Size = new Size(200, 23);
             txtRoleName.TabIndex = 4;
             // 
             // btnGetAll
             // 
-            btnGetAll.Location = new Point(473, 47);
+            btnGetAll.BackColor = Color.FromArgb(52, 152, 219);
+            btnGetAll.FlatStyle = FlatStyle.Flat;
+            btnGetAll.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnGetAll.ForeColor = Color.White;
+            btnGetAll.Location = new Point(41, 27);
             btnGetAll.Name = "btnGetAll";
-            btnGetAll.Size = new Size(90, 28);
+            btnGetAll.Size = new Size(134, 31);
             btnGetAll.TabIndex = 5;
             btnGetAll.Text = "Get All";
+            btnGetAll.UseVisualStyleBackColor = false;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(573, 47);
+            btnAdd.BackColor = Color.FromArgb(39, 174, 96);
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnAdd.ForeColor = Color.White;
+            btnAdd.Location = new Point(41, 64);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(90, 28);
+            btnAdd.Size = new Size(134, 31);
             btnAdd.TabIndex = 6;
             btnAdd.Text = "Add Role";
+            btnAdd.UseVisualStyleBackColor = false;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(673, 47);
+            btnDelete.BackColor = Color.FromArgb(231, 76, 60);
+            btnDelete.FlatStyle = FlatStyle.Flat;
+            btnDelete.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(41, 101);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(100, 28);
+            btnDelete.Size = new Size(134, 31);
             btnDelete.TabIndex = 7;
             btnDelete.Text = "Delete Role";
+            btnDelete.UseVisualStyleBackColor = false;
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(673, 81);
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.Font = new Font("Arial Narrow", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnClear.Location = new Point(192, 110);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(100, 23);
+            btnClear.Size = new Size(47, 25);
             btnClear.TabIndex = 8;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(btnGetAll);
+            groupBox1.Controls.Add(btnAdd);
+            groupBox1.Controls.Add(btnClear);
+            groupBox1.Controls.Add(btnDelete);
+            groupBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            groupBox1.Location = new Point(440, 20);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(242, 141);
+            groupBox1.TabIndex = 9;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Action";
             // 
             // Role
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            Controls.Add(btnClear);
+            Controls.Add(groupBox1);
             Controls.Add(dgvRoles);
             Controls.Add(lblRoleId);
             Controls.Add(txtRoleId);
             Controls.Add(lblRoleName);
             Controls.Add(txtRoleName);
-            Controls.Add(btnGetAll);
-            Controls.Add(btnAdd);
-            Controls.Add(btnDelete);
+            ForeColor = Color.Black;
             Name = "Role";
             Size = new Size(860, 730);
             Load += Role_Load;
             ((System.ComponentModel.ISupportInitialize)dgvRoles).EndInit();
+            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -177,6 +213,7 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
         private Button btnClear;
+        private GroupBox groupBox1;
     }
 
         #endregion

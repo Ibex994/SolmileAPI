@@ -13,7 +13,6 @@ namespace SolmileGuesthouseAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Produces("application/json")]
     //[Authorize(Roles = "HR")]
     public class PayrollController : Controller
     {
@@ -70,6 +69,66 @@ namespace SolmileGuesthouseAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(PayrollResponseDto), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdatePayroll(int id, [FromBody] PayrollCreateDto dto)
+        {
+            try
+            {
+                var existingPayroll = await _payrollInterface.GetPayrollByIdAsync(id);
+                if (existingPayroll == null)
+                    return NotFound("Payroll record not found.");
+
+                var payroll = _mapper.Map<Payroll>(dto);
+                payroll.PayrollId = id;
+
+                // Auto-calculate tax again
+                var taxResult = await _taxInterface.CalculateTaxAsync((float)payroll.BasicSalary);
+                if (taxResult == null)
+                    return BadRequest("No applicable tax bracket found.");
+
+                payroll.Tax = payroll.BasicSalary * 0.15m;
+                payroll.NetSalary = payroll.BasicSalary + payroll.Allowances - payroll.Deductions - payroll.Tax;
+
+                await _payrollInterface.CreateOrUpdatePayrollAsync(payroll);
+
+                var updatedPayroll = await _payrollInterface.GetPayrollByIdAsync(id);
+                var result = _mapper.Map<PayrollResponseDto>(updatedPayroll);
+                result.EmployeeName = $"{updatedPayroll.Employee?.FirstName} {updatedPayroll.Employee?.LastName}";
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating payroll");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeletePayroll(int id)
+        {
+            try
+            {
+                var payroll = await _payrollInterface.GetPayrollByIdAsync(id);
+                if (payroll == null)
+                    return NotFound("Payroll not found.");
+
+                await _payrollInterface.DeletePayrollAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting payroll");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
 
         [HttpPost]
         [ProducesResponseType(typeof(PayrollResponseDto), 201)]
@@ -79,8 +138,6 @@ namespace SolmileGuesthouseAPI.Controllers
             try
             {
                 var payroll = _mapper.Map<Payroll>(dto);
-
-                // Auto-calculate tax using only salary
                 var taxResult = await _taxInterface.CalculateTaxAsync((float)payroll.BasicSalary);
 
                 if (taxResult == null)

@@ -258,36 +258,17 @@ namespace SolmileGuesthouseAPI.Controllers
             };
         }
         [HttpGet("Search")]
-        public async Task<ActionResult<IEnumerable<EmployeeDto>>> SearchEmployees(
-                                                            [FromQuery] string? email,
-                                                            [FromQuery] string? gender,
-                                                            [FromQuery] string? position,
-                                                            [FromQuery] bool? status)
+        public async Task<ActionResult<EmployeeDto>> SearchEmployeeByUsername([FromQuery] string query)
         {
-            var query = _context.Employees.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(query))
             {
-                var emailLower = email.Trim().ToLower();
-                query = query.Where(e => e.Email != null && e.Email.ToLower().Contains(emailLower));
+                return BadRequest("Query parameter is required.");
             }
 
-            if (!string.IsNullOrWhiteSpace(gender))
-            {
-                query = query.Where(e => e.Gender != null && e.Gender.ToLower() == gender.ToLower());
-            }
+            var usernameLower = query.Trim().ToLower();
 
-            if (!string.IsNullOrWhiteSpace(position))
-            {
-                query = query.Where(e => e.Position != null && e.Position.ToLower().Contains(position.ToLower()));
-            }
-
-            if (status.HasValue)
-            {
-                query = query.Where(e => e.Status == status.Value);
-            }
-
-            var results = await query
+            var employee = await _context.Employees
+                .Where(e => e.Username != null && e.Username.ToLower().Contains(usernameLower))
                 .Select(e => new EmployeeDto
                 {
                     Id = e.Id,
@@ -302,19 +283,15 @@ namespace SolmileGuesthouseAPI.Controllers
                     Status = e.Status,
                     Gender = e.Gender,
                     BranchId = e.BranchId,
-                    EmployeePhotoUrl = e.EmployeePhotoUrl != null ?
-            Convert.ToBase64String(e.EmployeePhotoUrl) : null,
+                    EmployeePhotoUrl = e.EmployeePhotoUrl != null ? Convert.ToBase64String(e.EmployeePhotoUrl) : null,
                 })
-                .ToListAsync();
+                .FirstOrDefaultAsync();
 
-            if (results.Count == 0)
-            {
-                return NotFound("No employees matched the search criteria.");
-            }
+            if (employee == null)
+                return NotFound("No employee found matching the username.");
 
-            return Ok(results);
+            return Ok(employee);
         }
-
 
     }
 }

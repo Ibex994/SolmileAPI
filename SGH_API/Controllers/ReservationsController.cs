@@ -200,8 +200,8 @@ namespace SolmileGuesthouseAPI.Controllers
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 
-            
-            var payment = new Payment
+
+            /*var payment = new Payment
             {
                 ReservationId = reservation.ReservationId,
                 Amount = reservation.TotalPrice,
@@ -216,7 +216,7 @@ namespace SolmileGuesthouseAPI.Controllers
                 .Include(p => p.PaymentMethod)
                 .FirstOrDefaultAsync(p => p.ReservationId == reservation.ReservationId);
 
-            string paymentMethod = savedPayment?.PaymentMethod?.MethodName ?? "N/A";
+            string paymentMethod = savedPayment?.PaymentMethod?.MethodName ?? "N/A";*/
 
             var customer = await _context.Customers
                 .FirstOrDefaultAsync(c => c.CustomerId == reservation.CustomerId);
@@ -242,19 +242,19 @@ namespace SolmileGuesthouseAPI.Controllers
                 CheckIn = reservation.CheckInDate,
                 CheckOut = reservation.CheckOutDate,
                 AmountPaid = reservation.TotalPrice,
-                PaymentMethod = paymentMethod,
+                /*PaymentMethod = paymentMethod,*/
                 ReservationCode = reservation.ReservationId
             };
 
-            var pdfSlip = new PdfSlipGenerator(slipDto);
+            /* var pdfSlip = new PdfSlipGenerator(slipDto);
 
-            string folderPath = @"C:\Users\Temeb\source\repos\Ibex994\SolmileAPI\SGH_API\GeneratedSlip";
-            Directory.CreateDirectory(folderPath);
+             string folderPath = @"C:\Users\Temeb\source\repos\Ibex994\SolmileAPI\SGH_API\GeneratedSlip";
+             Directory.CreateDirectory(folderPath);
 
-            string fileName = $"Slip-{slipDto.ReservationCode}-{customer.FirstName}.pdf";
-            string filePath = Path.Combine(folderPath, fileName);
+             string fileName = $"Slip-{slipDto.ReservationCode}-{customer.FirstName}.pdf";
+             string filePath = Path.Combine(folderPath, fileName);
 
-            pdfSlip.SaveToFile(filePath);
+             pdfSlip.SaveToFile(filePath);*/
 
             return CreatedAtAction("GetReservation", new { id = reservation.ReservationId }, resultDto);
         }

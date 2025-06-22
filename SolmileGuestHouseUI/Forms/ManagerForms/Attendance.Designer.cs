@@ -74,10 +74,11 @@
             dateTimePicker1 = new DateTimePicker();
             dateTime2 = new DateTimePicker();
             tabSingleAttendance = new TabPage();
+            groupBox1 = new GroupBox();
+            btnById = new Button();
             txtUsername = new TextBox();
             txtEmployeeId = new TextBox();
             btnGetAll = new PictureBox();
-            btnById = new Button();
             lblName = new Label();
             tabSummary = new TabPage();
             clear = new Button();
@@ -91,6 +92,7 @@
             tabControlAttendance.SuspendLayout();
             tabMultipleAttendance.SuspendLayout();
             tabSingleAttendance.SuspendLayout();
+            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnGetAll).BeginInit();
             tabSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvMonthlySummary).BeginInit();
@@ -172,7 +174,8 @@
             btnGetByEmployeeAndDate.BackColor = Color.FromArgb(52, 152, 219);
             btnGetByEmployeeAndDate.FlatStyle = FlatStyle.Flat;
             btnGetByEmployeeAndDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnGetByEmployeeAndDate.Location = new Point(619, 137);
+            btnGetByEmployeeAndDate.ForeColor = Color.White;
+            btnGetByEmployeeAndDate.Location = new Point(39, 140);
             btnGetByEmployeeAndDate.Name = "btnGetByEmployeeAndDate";
             btnGetByEmployeeAndDate.Size = new Size(134, 31);
             btnGetByEmployeeAndDate.TabIndex = 9;
@@ -186,7 +189,7 @@
             btnCreate.FlatStyle = FlatStyle.Flat;
             btnCreate.Font = new Font("Arial Rounded MT Bold", 9.75F);
             btnCreate.ForeColor = Color.White;
-            btnCreate.Location = new Point(619, 24);
+            btnCreate.Location = new Point(39, 27);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(134, 31);
             btnCreate.TabIndex = 10;
@@ -200,7 +203,7 @@
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Arial Rounded MT Bold", 9.75F);
             btnUpdate.ForeColor = Color.White;
-            btnUpdate.Location = new Point(619, 62);
+            btnUpdate.Location = new Point(39, 65);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(134, 31);
             btnUpdate.TabIndex = 11;
@@ -214,7 +217,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Arial Rounded MT Bold", 9.75F);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(619, 100);
+            btnDelete.Location = new Point(39, 103);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(134, 31);
             btnDelete.TabIndex = 12;
@@ -264,6 +267,7 @@
             // 
             dgvMultipleAttendance.AllowUserToAddRows = false;
             dgvMultipleAttendance.AllowUserToDeleteRows = false;
+            dgvMultipleAttendance.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvMultipleAttendance.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvMultipleAttendance.BackgroundColor = Color.White;
             dgvMultipleAttendance.BorderStyle = BorderStyle.None;
@@ -302,6 +306,7 @@
             btnMultipleSave.BackColor = Color.FromArgb(39, 174, 96);
             btnMultipleSave.FlatStyle = FlatStyle.Flat;
             btnMultipleSave.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnMultipleSave.ForeColor = Color.White;
             btnMultipleSave.Location = new Point(298, 15);
             btnMultipleSave.Name = "btnMultipleSave";
             btnMultipleSave.Size = new Size(140, 30);
@@ -361,10 +366,10 @@
             // tabSingleAttendance
             // 
             tabSingleAttendance.BackColor = Color.White;
+            tabSingleAttendance.Controls.Add(groupBox1);
             tabSingleAttendance.Controls.Add(txtUsername);
             tabSingleAttendance.Controls.Add(txtEmployeeId);
             tabSingleAttendance.Controls.Add(btnGetAll);
-            tabSingleAttendance.Controls.Add(btnById);
             tabSingleAttendance.Controls.Add(lblName);
             tabSingleAttendance.Controls.Add(lblEmployeeId);
             tabSingleAttendance.Controls.Add(lblDate);
@@ -373,16 +378,41 @@
             tabSingleAttendance.Controls.Add(cmbIsPresent);
             tabSingleAttendance.Controls.Add(lblStatus);
             tabSingleAttendance.Controls.Add(txtReason);
-            tabSingleAttendance.Controls.Add(btnGetByEmployeeAndDate);
-            tabSingleAttendance.Controls.Add(btnCreate);
-            tabSingleAttendance.Controls.Add(btnUpdate);
-            tabSingleAttendance.Controls.Add(btnDelete);
             tabSingleAttendance.Controls.Add(dgvAttendance);
             tabSingleAttendance.Location = new Point(4, 23);
             tabSingleAttendance.Name = "tabSingleAttendance";
             tabSingleAttendance.Size = new Size(802, 643);
             tabSingleAttendance.TabIndex = 0;
             tabSingleAttendance.Text = "Single Attendance";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(btnById);
+            groupBox1.Controls.Add(btnCreate);
+            groupBox1.Controls.Add(btnGetByEmployeeAndDate);
+            groupBox1.Controls.Add(btnDelete);
+            groupBox1.Controls.Add(btnUpdate);
+            groupBox1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            groupBox1.Location = new Point(585, 24);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(205, 240);
+            groupBox1.TabIndex = 17;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Action";
+            // 
+            // btnById
+            // 
+            btnById.BackColor = Color.FromArgb(52, 152, 219);
+            btnById.FlatStyle = FlatStyle.Flat;
+            btnById.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnById.ForeColor = Color.White;
+            btnById.Location = new Point(39, 181);
+            btnById.Name = "btnById";
+            btnById.Size = new Size(134, 31);
+            btnById.TabIndex = 14;
+            btnById.Text = "Get By ID";
+            btnById.UseVisualStyleBackColor = false;
+            btnById.Click += btnById_Click;
             // 
             // txtUsername
             // 
@@ -408,19 +438,6 @@
             btnGetAll.TabIndex = 15;
             btnGetAll.TabStop = false;
             btnGetAll.Click += btnGetAll_Click;
-            // 
-            // btnById
-            // 
-            btnById.BackColor = Color.FromArgb(52, 152, 219);
-            btnById.FlatStyle = FlatStyle.Flat;
-            btnById.Font = new Font("Arial Rounded MT Bold", 9.75F);
-            btnById.Location = new Point(619, 178);
-            btnById.Name = "btnById";
-            btnById.Size = new Size(134, 31);
-            btnById.TabIndex = 14;
-            btnById.Text = "Get By ID";
-            btnById.UseVisualStyleBackColor = false;
-            btnById.Click += btnById_Click;
             // 
             // lblName
             // 
@@ -478,6 +495,7 @@
             btnGetIdDate.BackColor = Color.FromArgb(52, 152, 219);
             btnGetIdDate.FlatStyle = FlatStyle.Flat;
             btnGetIdDate.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnGetIdDate.ForeColor = Color.White;
             btnGetIdDate.Location = new Point(467, 16);
             btnGetIdDate.Name = "btnGetIdDate";
             btnGetIdDate.Size = new Size(134, 31);
@@ -491,6 +509,7 @@
             btnGenerateSummary.BackColor = Color.FromArgb(39, 174, 96);
             btnGenerateSummary.FlatStyle = FlatStyle.Flat;
             btnGenerateSummary.Font = new Font("Arial Rounded MT Bold", 9.75F);
+            btnGenerateSummary.ForeColor = Color.White;
             btnGenerateSummary.Location = new Point(467, 58);
             btnGenerateSummary.Name = "btnGenerateSummary";
             btnGenerateSummary.Size = new Size(134, 31);
@@ -549,6 +568,7 @@
             tabMultipleAttendance.ResumeLayout(false);
             tabSingleAttendance.ResumeLayout(false);
             tabSingleAttendance.PerformLayout();
+            groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)btnGetAll).EndInit();
             tabSummary.ResumeLayout(false);
             tabSummary.PerformLayout();
@@ -570,5 +590,6 @@
         private Button clear;
         private TextBox txtUsername;
         private Label lblName;
+        private GroupBox groupBox1;
     }
 }

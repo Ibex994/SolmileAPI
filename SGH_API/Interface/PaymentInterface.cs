@@ -10,6 +10,7 @@ namespace SolmileGuesthouseAPI.Interface
         Task<Payment> GetPaymentByIdAsync(int paymentId);
         Task<Payment> UpdatePaymentAsync(int paymentId, Payment updatedPayment);
         Task<bool> DeletePaymentAsync(int paymentId);
-        Task<PaymentResultDto> ProcessPaymentAsync(string reservationId, float amount, int methodId);
+        Task<IEnumerable<Payment>> GetPaymentsByReservationIdAsync(string reservationId);
+        Task<PaymentResultDto> ProcessPaymentAsync(string reservationId, int methodId);
     }
 }

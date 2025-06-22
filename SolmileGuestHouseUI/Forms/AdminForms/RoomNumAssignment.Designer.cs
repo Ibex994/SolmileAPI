@@ -77,7 +77,7 @@
             dgvRoomNumAssign.RowHeadersVisible = false;
             dgvRoomNumAssign.RowTemplate.Height = 30;
             dgvRoomNumAssign.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvRoomNumAssign.Size = new Size(821, 411);
+            dgvRoomNumAssign.Size = new Size(821, 533);
             dgvRoomNumAssign.TabIndex = 0;
             dgvRoomNumAssign.CellClick += dgvRoomNumAssign_CellClick;
             // 

@@ -12,8 +12,8 @@ using SolmileGuesthouseAPI.Data;
 namespace SolmileGuesthouseAPI.Migrations
 {
     [DbContext(typeof(GuesthouseDbContext))]
-    [Migration("20250603165749_AddTaxBracketsTable")]
-    partial class AddTaxBracketsTable
+    [Migration("20250622130357_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,37 @@ namespace SolmileGuesthouseAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("SharedModel.Models.ErrorLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Source")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StackTrace")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ErrorLogs");
+                });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Attendance", b =>
                 {
@@ -36,7 +67,7 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Property<DateTime>("AttendanceDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
                     b.HasKey("AttendanceId");
@@ -170,17 +201,20 @@ namespace SolmileGuesthouseAPI.Migrations
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.EmployeeAttendance", b =>
                 {
-                    b.Property<int>("EmpAttendanceId")
+                    b.Property<int>("EmployeeAttendanceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmpAttendanceId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeAttendanceId"));
 
                     b.Property<DateTime>("AttendanceDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("AttendanceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("EmployeeFullName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
@@ -191,7 +225,7 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EmpAttendanceId");
+                    b.HasKey("EmployeeAttendanceId");
 
                     b.HasIndex("AttendanceId");
 
@@ -280,6 +314,9 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SummaryId"));
 
+                    b.Property<string>("EmployeeFullName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
@@ -292,10 +329,52 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     b.HasKey("SummaryId");
 
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("monthlyAttendanceSummaries");
+                });
+
+            modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.OTP", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiryAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResetTokenExpiryAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("ResetTokenUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Otps");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Payment", b =>
@@ -354,27 +433,35 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PayrollId"));
 
-                    b.Property<double>("Allowances")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Allowances")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<double>("BasicSalary")
-                        .HasColumnType("float");
+                    b.Property<decimal>("BasicSalary")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("DeductionReason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Deductions")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Deductions")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.Property<double>("NetSalary")
-                        .HasColumnType("float");
+                    b.Property<decimal>("NetSalary")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("PayPeriod")
                         .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Tax")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("PayrollId");
 
@@ -564,9 +651,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Property<byte[]>("AttachPhotoUrl")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
 
@@ -596,8 +680,6 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RequestId");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("EmployeeId");
 
@@ -695,14 +777,16 @@ namespace SolmileGuesthouseAPI.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("From")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("RatePercent")
-                        .HasPrecision(5, 4)
-                        .HasColumnType("decimal(5,4)");
+                        .HasPrecision(7, 4)
+                        .HasColumnType("decimal(7,4)");
 
                     b.Property<decimal>("To")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 
@@ -845,15 +929,21 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.HasDiscriminator().HasValue("Employee");
                 });
 
+            modelBuilder.Entity("SharedModel.Models.ErrorLog", b =>
+                {
+                    b.HasOne("SolmileGuesthouseAPI.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Attendance", b =>
                 {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
+                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", null)
                         .WithMany("Attendances")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.Branch", b =>
@@ -935,8 +1025,8 @@ namespace SolmileGuesthouseAPI.Migrations
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.MonthlyAttendanceSummary", b =>
                 {
                     b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
-                        .WithOne("MonthlyAttendanceSummary")
-                        .HasForeignKey("SolmileGuesthouseAPI.Data.Models.MonthlyAttendanceSummary", "EmployeeId")
+                        .WithMany("MonthlySummaries")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1043,10 +1133,6 @@ namespace SolmileGuesthouseAPI.Migrations
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.ServiceRequest", b =>
                 {
-                    b.HasOne("SolmileGuesthouseAPI.Data.Models.Customer", null)
-                        .WithMany("ServiceRequests")
-                        .HasForeignKey("CustomerId");
-
                     b.HasOne("SolmileGuesthouseAPI.Data.Models.Employee", "Employee")
                         .WithMany("ServiceRequests")
                         .HasForeignKey("EmployeeId")
@@ -1160,8 +1246,6 @@ namespace SolmileGuesthouseAPI.Migrations
                     b.Navigation("Feedbacks");
 
                     b.Navigation("Reservations");
-
-                    b.Navigation("ServiceRequests");
                 });
 
             modelBuilder.Entity("SolmileGuesthouseAPI.Data.Models.PaymentMethod", b =>
@@ -1227,8 +1311,7 @@ namespace SolmileGuesthouseAPI.Migrations
 
                     b.Navigation("Logs");
 
-                    b.Navigation("MonthlyAttendanceSummary")
-                        .IsRequired();
+                    b.Navigation("MonthlySummaries");
 
                     b.Navigation("Payrolls");
 

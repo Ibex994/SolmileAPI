@@ -465,7 +465,7 @@ namespace SolmileGuesthouseAPI.Controllers
             return serviceTypeId switch
             {
                 1 or 2 => "Housekeeping",
-                3 or 4 or 5 => "Chufaree",
+                3 or 4 or 5 => "Chauffare",
                 8 => "Manager",
                 _ => null
             };

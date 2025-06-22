@@ -14,6 +14,8 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
             public int ContactId { get; set; }
             [JsonIgnore]
             public ContactDetailsDto ContactDetails { get; set; }
+            [JsonIgnore]
+            public string DisplayName => $"{Name} - {Location}";
         }
       //
         public class UsernameCheckDto
@@ -212,6 +214,14 @@ namespace SolmileGuesthouseAPI.DTO.NavigatorModel
         }
 
         // DTOs/RoomDto.cs
+        public class RoomWithRNARequestDto
+        {
+            public string RoomId { get; set; }
+            public string Status { get; set; }
+            public int TypeId { get; set; }
+            public int BranchId { get; set; }
+            public int RoomNumber { get; set; }
+        }
         public class RoomDto
         {
             public string RoomId { get; set; }

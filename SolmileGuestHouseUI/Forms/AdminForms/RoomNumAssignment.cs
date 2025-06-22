@@ -35,7 +35,7 @@ namespace SolmileGuestHouseUI.Forms.AdminForms
                     var branches = JsonConvert.DeserializeObject<List<BranchDto>>(json);
 
                     cmbBranchList.DataSource = branches;
-                    cmbBranchList.DisplayMember = "Name"; // Correct property from your BranchDto
+                    cmbBranchList.DisplayMember = "DisplayName";
                     cmbBranchList.ValueMember = "BranchId";
                 }
                 else

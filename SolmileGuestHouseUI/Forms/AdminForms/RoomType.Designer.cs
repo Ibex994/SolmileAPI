@@ -9,8 +9,6 @@
         private System.Windows.Forms.TextBox txtTypeId;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtTitle;
-        private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.TextBox txtAmenities;
         private System.Windows.Forms.TextBox txtPrice;
         private System.Windows.Forms.TextBox txtCapacity;
         private System.Windows.Forms.Button btnAdd;
@@ -36,11 +34,11 @@
 
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             txtTypeId = new TextBox();
             txtName = new TextBox();
             txtTitle = new TextBox();
-            txtDescription = new TextBox();
-            txtAmenities = new TextBox();
             txtPrice = new TextBox();
             txtCapacity = new TextBox();
             btnAdd = new Button();
@@ -51,6 +49,8 @@
             pictureBox = new PictureBox();
             btnBrowseImage = new Button();
             btnSearch = new Button();
+            txtDescription = new RichTextBox();
+            txtAmenities = new RichTextBox();
             ((System.ComponentModel.ISupportInitialize)dgvRoomTypes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
             SuspendLayout();
@@ -82,30 +82,10 @@
             txtTitle.Size = new Size(200, 23);
             txtTitle.TabIndex = 2;
             // 
-            // txtDescription
-            // 
-            txtDescription.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtDescription.Location = new Point(236, 120);
-            txtDescription.Multiline = true;
-            txtDescription.Name = "txtDescription";
-            txtDescription.PlaceholderText = "Description";
-            txtDescription.Size = new Size(200, 60);
-            txtDescription.TabIndex = 3;
-            // 
-            // txtAmenities
-            // 
-            txtAmenities.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtAmenities.Location = new Point(30, 139);
-            txtAmenities.Multiline = true;
-            txtAmenities.Name = "txtAmenities";
-            txtAmenities.PlaceholderText = "Amenities";
-            txtAmenities.Size = new Size(200, 60);
-            txtAmenities.TabIndex = 4;
-            // 
             // txtPrice
             // 
             txtPrice.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtPrice.Location = new Point(30, 205);
+            txtPrice.Location = new Point(30, 251);
             txtPrice.Name = "txtPrice";
             txtPrice.PlaceholderText = "Price Per Night";
             txtPrice.Size = new Size(200, 23);
@@ -114,7 +94,7 @@
             // txtCapacity
             // 
             txtCapacity.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtCapacity.Location = new Point(30, 234);
+            txtCapacity.Location = new Point(30, 280);
             txtCapacity.Name = "txtCapacity";
             txtCapacity.PlaceholderText = "Capacity";
             txtCapacity.Size = new Size(200, 23);
@@ -122,36 +102,36 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(442, 30);
+            btnAdd.Location = new Point(507, 30);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(100, 30);
+            btnAdd.Size = new Size(69, 30);
             btnAdd.TabIndex = 7;
             btnAdd.Text = "Add";
             btnAdd.Click += btnAdd_Click;
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(442, 70);
+            btnUpdate.Location = new Point(507, 70);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(100, 30);
+            btnUpdate.Size = new Size(69, 30);
             btnUpdate.TabIndex = 8;
             btnUpdate.Text = "Update";
             btnUpdate.Click += btnUpdate_Click;
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(442, 110);
+            btnDelete.Location = new Point(507, 110);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(100, 30);
+            btnDelete.Size = new Size(69, 30);
             btnDelete.TabIndex = 9;
             btnDelete.Text = "Delete";
             btnDelete.Click += btnDelete_Click;
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(442, 150);
+            btnClear.Location = new Point(507, 150);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(100, 30);
+            btnClear.Size = new Size(69, 30);
             btnClear.TabIndex = 10;
             btnClear.Text = "Clear";
             btnClear.Click += btnClear_Click;
@@ -166,24 +146,33 @@
             dgvRoomTypes.BorderStyle = BorderStyle.None;
             dgvRoomTypes.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dgvRoomTypes.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dgvRoomTypes.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(52, 152, 219);
-            dgvRoomTypes.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dgvRoomTypes.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dgvRoomTypes.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            dgvRoomTypes.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            dgvRoomTypes.DefaultCellStyle.SelectionForeColor = Color.White;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvRoomTypes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvRoomTypes.DefaultCellStyle = dataGridViewCellStyle2;
             dgvRoomTypes.EnableHeadersVisualStyles = false;
             dgvRoomTypes.GridColor = Color.LightGray;
-            dgvRoomTypes.Location = new Point(30, 263);
+            dgvRoomTypes.Location = new Point(30, 309);
             dgvRoomTypes.MultiSelect = false;
             dgvRoomTypes.Name = "dgvRoomTypes";
             dgvRoomTypes.ReadOnly = true;
             dgvRoomTypes.RowHeadersVisible = false;
             dgvRoomTypes.RowTemplate.Height = 30;
             dgvRoomTypes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvRoomTypes.Size = new Size(752, 404);
+            dgvRoomTypes.Size = new Size(752, 358);
             dgvRoomTypes.TabIndex = 11;
-
             // 
             // pictureBox
             // 
@@ -206,20 +195,38 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(442, 190);
+            btnSearch.Location = new Point(507, 190);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(100, 30);
+            btnSearch.Size = new Size(69, 30);
             btnSearch.TabIndex = 10;
             btnSearch.Text = "Search";
             btnSearch.Click += btnSearch_Click;
             // 
+            // txtDescription
+            // 
+            txtDescription.BackColor = Color.White;
+            txtDescription.Location = new Point(236, 30);
+            txtDescription.Name = "txtDescription";
+            txtDescription.ReadOnly = true;
+            txtDescription.Size = new Size(265, 110);
+            txtDescription.TabIndex = 14;
+            txtDescription.Text = "";
+            // 
+            // txtAmenities
+            // 
+            txtAmenities.Location = new Point(30, 150);
+            txtAmenities.Name = "txtAmenities";
+            txtAmenities.Size = new Size(396, 95);
+            txtAmenities.TabIndex = 14;
+            txtAmenities.Text = "";
+            // 
             // RoomType
             // 
+            Controls.Add(txtAmenities);
+            Controls.Add(txtDescription);
             Controls.Add(txtTypeId);
             Controls.Add(txtName);
             Controls.Add(txtTitle);
-            Controls.Add(txtDescription);
-            Controls.Add(txtAmenities);
             Controls.Add(txtPrice);
             Controls.Add(txtCapacity);
             Controls.Add(btnAdd);
@@ -238,5 +245,7 @@
             PerformLayout();
         }
         private Button btnSearch;
+        private RichTextBox txtDescription;
+        private RichTextBox txtAmenities;
     }
 }

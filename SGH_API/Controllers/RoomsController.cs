@@ -162,6 +162,50 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             return _context.Rooms.Any(e => e.RoomId == id);
         }
+
+        [HttpPost("AddRoomWithRNA")]
+        public async Task<ActionResult<RoomDto>> AddRoomWithRNA([FromBody] RoomWithRNARequestDto requestDto)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var roomNumberAssignment = new RoomNumberAssignment
+                {
+                    BranchId = requestDto.BranchId,
+                    RoomNumber = requestDto.RoomNumber
+                };
+
+                _context.RoomNumberAssignments.Add(roomNumberAssignment);
+                await _context.SaveChangesAsync();
+                var room = new Room
+                {
+                    RoomId = requestDto.RoomId,
+                    RoomNumberAssignmentId = roomNumberAssignment.RoomNumberAssignmentId,
+                    Status = requestDto.Status,
+                    TypeId = requestDto.TypeId
+                };
+
+                _context.Rooms.Add(room);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+                var roomDto = new RoomDto
+                {
+                    RoomId = room.RoomId,
+                    RoomNumberAssignmentId = room.RoomNumberAssignmentId,
+                    Status = room.Status,
+                    TypeId = room.TypeId
+                };
+
+                return CreatedAtAction(nameof(AddRoomWithRNA), new { id = room.RoomId }, roomDto);
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 
 

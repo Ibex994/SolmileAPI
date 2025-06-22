@@ -70,7 +70,7 @@
             dgvRoomNumAssign.DefaultCellStyle = dataGridViewCellStyle2;
             dgvRoomNumAssign.EnableHeadersVisualStyles = false;
             dgvRoomNumAssign.GridColor = Color.LightGray;
-            dgvRoomNumAssign.Location = new Point(18, 154);
+            dgvRoomNumAssign.Location = new Point(18, 159);
             dgvRoomNumAssign.MultiSelect = false;
             dgvRoomNumAssign.Name = "dgvRoomNumAssign";
             dgvRoomNumAssign.ReadOnly = true;
@@ -86,12 +86,12 @@
             txtRoomNumber.Font = new Font("Arial Rounded MT Bold", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtRoomNumber.Location = new Point(236, 107);
             txtRoomNumber.Name = "txtRoomNumber";
-            txtRoomNumber.Size = new Size(150, 23);
+            txtRoomNumber.Size = new Size(209, 23);
             txtRoomNumber.TabIndex = 4;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(451, 17);
+            btnAdd.Location = new Point(523, 21);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(90, 27);
             btnAdd.TabIndex = 5;
@@ -101,7 +101,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(451, 66);
+            btnUpdate.Location = new Point(523, 64);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(90, 27);
             btnUpdate.TabIndex = 6;
@@ -111,7 +111,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(592, 17);
+            btnDelete.Location = new Point(632, 21);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(90, 27);
             btnDelete.TabIndex = 7;
@@ -121,7 +121,7 @@
             // 
             // btnRefresh
             // 
-            btnRefresh.Location = new Point(592, 66);
+            btnRefresh.Location = new Point(632, 64);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(90, 27);
             btnRefresh.TabIndex = 8;
@@ -131,7 +131,7 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(592, 109);
+            btnSearch.Location = new Point(632, 113);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(90, 27);
             btnSearch.TabIndex = 9;
@@ -161,7 +161,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(451, 109);
+            btnClear.Location = new Point(523, 113);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(90, 27);
             btnClear.TabIndex = 9;
@@ -175,7 +175,7 @@
             cmbBranchList.FormattingEnabled = true;
             cmbBranchList.Location = new Point(236, 62);
             cmbBranchList.Name = "cmbBranchList";
-            cmbBranchList.Size = new Size(150, 23);
+            cmbBranchList.Size = new Size(209, 23);
             cmbBranchList.TabIndex = 10;
             // 
             // label1
@@ -193,7 +193,7 @@
             assignId.Enabled = false;
             assignId.Location = new Point(236, 17);
             assignId.Name = "assignId";
-            assignId.Size = new Size(150, 23);
+            assignId.Size = new Size(209, 23);
             assignId.TabIndex = 11;
             // 
             // RoomNumAssignment

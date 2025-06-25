@@ -9,6 +9,7 @@ namespace SolmileGuesthouseAPI.Interface
         Task<TaxResultDto> CalculateTaxAsync(float salary);
         Task<string> ViewTaxDetailsAsync(int employeeId);
         Task<Tax> GetTaxByIdAsync(int taxId);
+        Task<IEnumerable<Tax>> GetTaxesByEmployeeIdAsync(int employeeId);
         Task<IEnumerable<Tax>> GetAllTaxesAsync();
         Task<Tax> CreateTaxAsync(Tax tax);
         Task<Tax> UpdateTaxAsync(int taxId, Tax updatedTax);

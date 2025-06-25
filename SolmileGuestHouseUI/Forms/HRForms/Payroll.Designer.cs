@@ -12,16 +12,9 @@ namespace SolmileGuestHouseUI.Forms.HRForms
         private DateTimePicker dtpPayPeriod, dtpPayPeriodInput;
         private DataGridView dgvPayrolls;
         private GroupBox groupBoxPayrollDetails, groupBoxDeduction;
-
         private Label lblEmpId, lblPayPeriodInput, lblBasicSalary, lblAllowances, lblDeductions, lblDeductReason;
-        private Label lblSearchEmpId, lblPayslipEmpId, lblPayPeriod;
         private TextBox txtEmpId, txtBasicSalary, txtAllowances, txtDeductions, txtDeductReason;
         private TextBox textEmpId;
-
-        // Buttons
-        private Button btnSavePayroll, btnDeletePayroll, btnGetById, btnDownloadPayslip, btnDownloadPDFByDate, btnSearch;
-
-        // Tab control and pages
         private TabControl tabControl;
         private TabPage tabPayrollDetails;
         private TabPage tabDeduction;
@@ -32,6 +25,17 @@ namespace SolmileGuestHouseUI.Forms.HRForms
         private TextBox txtDeductionEmpId, txtDeductionAmount, txtDeductionReason;
         private Button btnSaveDeduction;
 
+        // FIXED: Added missing button declarations
+        private Button btnSavePayroll;
+        private Button btnDeletePayroll;
+        private Button btnSearch;
+        private Button btnDownloadPayslip;
+        private Button btnDownloadPDFByDate;
+        private Label lblPayslipEmpId;
+        private Label lblPayPeriod;
+        private DateTimePicker dtpDeductionPeriod;
+        private Label lblDuductionDate;
+        private PictureBox pictureBox1;
 
         protected override void Dispose(bool disposing)
         {
@@ -42,10 +46,11 @@ namespace SolmileGuestHouseUI.Forms.HRForms
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
             tabControl = new TabControl();
             tabPayrollList = new TabPage();
+            pictureBox1 = new PictureBox();
             btnSearch = new Button();
             dgvPayrolls = new DataGridView();
             tabPayrollDetails = new TabPage();
@@ -83,11 +88,9 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             lblPayPeriod = new Label();
             dtpPayPeriod = new DateTimePicker();
             btnDownloadPDFByDate = new Button();
-            lblSearchEmpId = new Label();
-            btnGetById = new Button();
-            pictureBox1 = new PictureBox();
             tabControl.SuspendLayout();
             tabPayrollList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvPayrolls).BeginInit();
             tabPayrollDetails.SuspendLayout();
             groupBoxPayrollDetails.SuspendLayout();
@@ -95,7 +98,6 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             groupBoxAddDeduction.SuspendLayout();
             tabDeduction.SuspendLayout();
             groupBoxDeduction.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // tabControl
@@ -127,6 +129,17 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             tabPayrollList.Text = "Payroll List";
             tabPayrollList.UseVisualStyleBackColor = true;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.icons8_refresh_48;
+            pictureBox1.Location = new Point(9, 36);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(25, 20);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 2;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
             // btnSearch
             // 
             btnSearch.BackColor = Color.FromArgb(52, 152, 219);
@@ -145,23 +158,23 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             dgvPayrolls.AllowUserToAddRows = false;
             dgvPayrolls.AllowUserToDeleteRows = false;
             dgvPayrolls.BackgroundColor = Color.White;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvPayrolls.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = SystemColors.Control;
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dgvPayrolls.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dgvPayrolls.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvPayrolls.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = SystemColors.Window;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dgvPayrolls.DefaultCellStyle = dataGridViewCellStyle8;
             dgvPayrolls.Location = new Point(9, 48);
             dgvPayrolls.Margin = new Padding(3, 2, 3, 2);
             dgvPayrolls.Name = "dgvPayrolls";
@@ -473,21 +486,19 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             groupBoxDeduction.Controls.Add(lblPayPeriod);
             groupBoxDeduction.Controls.Add(dtpPayPeriod);
             groupBoxDeduction.Controls.Add(btnDownloadPDFByDate);
-            groupBoxDeduction.Controls.Add(lblSearchEmpId);
-            groupBoxDeduction.Controls.Add(btnGetById);
             groupBoxDeduction.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
-            groupBoxDeduction.Location = new Point(190, 82);
+            groupBoxDeduction.Location = new Point(117, 82);
             groupBoxDeduction.Margin = new Padding(3, 2, 3, 2);
             groupBoxDeduction.Name = "groupBoxDeduction";
             groupBoxDeduction.Padding = new Padding(9, 8, 9, 8);
-            groupBoxDeduction.Size = new Size(463, 233);
+            groupBoxDeduction.Size = new Size(580, 259);
             groupBoxDeduction.TabIndex = 0;
             groupBoxDeduction.TabStop = false;
             groupBoxDeduction.Text = "Payslip and PDF Exports";
             // 
             // textEmpId
             // 
-            textEmpId.Location = new Point(158, 26);
+            textEmpId.Location = new Point(223, 44);
             textEmpId.Margin = new Padding(3, 2, 3, 2);
             textEmpId.Name = "textEmpId";
             textEmpId.Size = new Size(219, 29);
@@ -497,7 +508,7 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             // 
             lblPayslipEmpId.AutoSize = true;
             lblPayslipEmpId.ForeColor = Color.Goldenrod;
-            lblPayslipEmpId.Location = new Point(24, 35);
+            lblPayslipEmpId.Location = new Point(89, 53);
             lblPayslipEmpId.Name = "lblPayslipEmpId";
             lblPayslipEmpId.Size = new Size(106, 21);
             lblPayslipEmpId.TabIndex = 0;
@@ -508,7 +519,7 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             btnDownloadPayslip.BackColor = Color.FromArgb(52, 152, 219);
             btnDownloadPayslip.FlatStyle = FlatStyle.Flat;
             btnDownloadPayslip.ForeColor = Color.White;
-            btnDownloadPayslip.Location = new Point(158, 59);
+            btnDownloadPayslip.Location = new Point(248, 77);
             btnDownloadPayslip.Margin = new Padding(3, 2, 3, 2);
             btnDownloadPayslip.Name = "btnDownloadPayslip";
             btnDownloadPayslip.Size = new Size(156, 31);
@@ -520,7 +531,7 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             // 
             lblPayPeriod.AutoSize = true;
             lblPayPeriod.ForeColor = Color.Goldenrod;
-            lblPayPeriod.Location = new Point(24, 131);
+            lblPayPeriod.Location = new Point(89, 131);
             lblPayPeriod.Name = "lblPayPeriod";
             lblPayPeriod.Size = new Size(90, 21);
             lblPayPeriod.TabIndex = 3;
@@ -529,7 +540,7 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             // dtpPayPeriod
             // 
             dtpPayPeriod.Format = DateTimePickerFormat.Short;
-            dtpPayPeriod.Location = new Point(158, 124);
+            dtpPayPeriod.Location = new Point(223, 125);
             dtpPayPeriod.Margin = new Padding(3, 2, 3, 2);
             dtpPayPeriod.Name = "dtpPayPeriod";
             dtpPayPeriod.Size = new Size(219, 29);
@@ -540,47 +551,13 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             btnDownloadPDFByDate.BackColor = Color.FromArgb(52, 152, 219);
             btnDownloadPDFByDate.FlatStyle = FlatStyle.Flat;
             btnDownloadPDFByDate.ForeColor = Color.White;
-            btnDownloadPDFByDate.Location = new Point(201, 172);
+            btnDownloadPDFByDate.Location = new Point(248, 169);
             btnDownloadPDFByDate.Margin = new Padding(3, 2, 3, 2);
             btnDownloadPDFByDate.Name = "btnDownloadPDFByDate";
             btnDownloadPDFByDate.Size = new Size(129, 31);
             btnDownloadPDFByDate.TabIndex = 5;
             btnDownloadPDFByDate.Text = "Download PDF";
             btnDownloadPDFByDate.UseVisualStyleBackColor = false;
-            // 
-            // lblSearchEmpId
-            // 
-            lblSearchEmpId.AutoSize = true;
-            lblSearchEmpId.ForeColor = Color.Goldenrod;
-            lblSearchEmpId.Location = new Point(24, 94);
-            lblSearchEmpId.Name = "lblSearchEmpId";
-            lblSearchEmpId.Size = new Size(106, 21);
-            lblSearchEmpId.TabIndex = 6;
-            lblSearchEmpId.Text = "Employee ID:";
-            // 
-            // btnGetById
-            // 
-            btnGetById.BackColor = Color.FromArgb(52, 152, 219);
-            btnGetById.FlatStyle = FlatStyle.Flat;
-            btnGetById.ForeColor = Color.White;
-            btnGetById.Location = new Point(320, 59);
-            btnGetById.Margin = new Padding(3, 2, 3, 2);
-            btnGetById.Name = "btnGetById";
-            btnGetById.Size = new Size(94, 31);
-            btnGetById.TabIndex = 7;
-            btnGetById.Text = "Get By ID";
-            btnGetById.UseVisualStyleBackColor = false;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.icons8_refresh_48;
-            pictureBox1.Location = new Point(9, 36);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(25, 20);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // Payroll
             // 
@@ -592,6 +569,7 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             Size = new Size(805, 480);
             tabControl.ResumeLayout(false);
             tabPayrollList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvPayrolls).EndInit();
             tabPayrollDetails.ResumeLayout(false);
             groupBoxPayrollDetails.ResumeLayout(false);
@@ -602,12 +580,7 @@ namespace SolmileGuestHouseUI.Forms.HRForms
             tabDeduction.ResumeLayout(false);
             groupBoxDeduction.ResumeLayout(false);
             groupBoxDeduction.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
-
         }
-        private DateTimePicker dtpDeductionPeriod;
-        private Label lblDuductionDate;
-        private PictureBox pictureBox1;
     }
 }

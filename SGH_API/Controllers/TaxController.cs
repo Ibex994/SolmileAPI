@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolmileGuesthouseAPI.Data.Models;
 using SolmileGuesthouseAPI.DTO.NavigatorModel;
 using SolmileGuesthouseAPI.Interface;
+using TaxDto = SolmileGuesthouseAPI.DTO.NavigatorModel.TaxDto;
 
 namespace SolmileGuesthouseAPI.Controllers
     {
@@ -14,12 +14,14 @@ namespace SolmileGuesthouseAPI.Controllers
         {
             private readonly TaxInterface _taxInterface;
             private readonly IMapper _mapper;
+        private readonly TaxBracketInterface _taxBracketInterface;
 
-            public TaxController(TaxInterface taxInterface, IMapper mapper)
+        public TaxController(TaxInterface taxInterface, IMapper mapper,TaxBracketInterface taxBracketInterface)
             {
                 _taxInterface = taxInterface;
                 _mapper = mapper;
-            }
+                _taxBracketInterface = taxBracketInterface;
+        }
 
             [HttpGet("{id}")]
             [ProducesResponseType(typeof(TaxDto), 200)]
@@ -40,22 +42,44 @@ namespace SolmileGuesthouseAPI.Controllers
                 return Ok(_mapper.Map<IEnumerable<TaxDto>>(taxes));
             }
 
-            [HttpPost]
-            [ProducesResponseType(typeof(TaxDto), 201)]
-            [ProducesResponseType(400)]
-            public async Task<IActionResult> CreateTax([FromBody] CreateTaxDto dto)
+        [HttpPost]
+        [ProducesResponseType(typeof(TaxDto), 201)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateTax([FromBody] CreateTaxDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (dto.GrossSalary <= 0)
+                return BadRequest("Gross salary must be greater than 0.");
+
+            var brackets = await _taxBracketInterface.GetAllTaxBracketsAsync();
+
+            var bracket = brackets
+                .OrderBy(b => b.From)
+                .FirstOrDefault(b => dto.GrossSalary >= b.From && dto.GrossSalary <= b.To);
+
+            if (bracket == null)
+                return NotFound("No applicable tax bracket found.");
+
+            var taxAmount = ((dto.GrossSalary * bracket.RatePercent) / 100) - bracket.Deductible;
+            if (taxAmount < 0) taxAmount = 0;
+            var tax = new Tax
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                EmployeeId = dto.EmployeeId,
+                GrossSalary = dto.GrossSalary,        
+                TaxRate = bracket.RatePercent,
+                TaxAmount = Math.Round(taxAmount, 2),
+                Deduction = bracket.Deductible        
+            };
 
-                var tax = _mapper.Map<Tax>(dto);
-                tax.TaxAmount = 0;
+            var created = await _taxInterface.CreateTaxAsync(tax);
 
-                var created = await _taxInterface.CreateTaxAsync(tax);
-                return CreatedAtAction(nameof(GetTaxById), new { id = created.TaxId }, _mapper.Map<TaxDto>(created));
-            }
+            var resultDto = _mapper.Map<TaxDto>(created);
+            return CreatedAtAction(nameof(GetTaxById), new { id = resultDto.TaxId }, resultDto);
+        }
 
-            [HttpPut("{id}")]
+             [HttpPut("{id}")]
             [ProducesResponseType(typeof(TaxDto), 200)]
             [ProducesResponseType(400)]
             [ProducesResponseType(404)]
@@ -90,6 +114,18 @@ namespace SolmileGuesthouseAPI.Controllers
                 if (result == null) return NotFound();
                 return Ok(result);
             }
+
+        [HttpGet("employee/{employeeId}")]
+        [ProducesResponseType(typeof(IEnumerable<TaxDto>), 200)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> GetTaxesByEmployeeId(int employeeId)
+        {
+            var taxes = await _taxInterface.GetTaxesByEmployeeIdAsync(employeeId);
+            if (taxes == null || !taxes.Any())
+                return NotFound($"No tax records found for Employee ID: {employeeId}");
+
+            return Ok(_mapper.Map<IEnumerable<TaxDto>>(taxes));
+        }
 
 
         [HttpGet("details/{employeeId}")]

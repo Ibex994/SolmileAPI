@@ -53,14 +53,18 @@ using SolmileGuesthouseAPI.Interface;
                 return await _context.Taxs.ToListAsync();
             }
 
-            public async Task<Tax> CreateTaxAsync(Tax tax)
-            {
-                _context.Taxs.Add(tax);
-                await _context.SaveChangesAsync();
-                return tax;
-            }
+        public async Task<Tax> CreateTaxAsync(Tax tax)
+        {
+            var employeeExists = await _context.Employees.AnyAsync(e => e.Id == tax.EmployeeId);
+            if (!employeeExists)
+                throw new ArgumentException("Employee not found");
 
-            public async Task<Tax> UpdateTaxAsync(int taxId, Tax updatedTax)
+            _context.Taxs.Add(tax);
+            await _context.SaveChangesAsync();
+            return tax;
+        }
+
+        public async Task<Tax> UpdateTaxAsync(int taxId, Tax updatedTax)
             {
                 var tax = await _context.Taxs.FindAsync(taxId);
                 if (tax == null)
@@ -84,5 +88,13 @@ using SolmileGuesthouseAPI.Interface;
                 await _context.SaveChangesAsync();
                 return true;
             }
-     }
+
+        public async Task<IEnumerable<Tax>> GetTaxesByEmployeeIdAsync(int employeeId)
+        {
+            return await _context.Taxs
+                .Where(t => t.EmployeeId == employeeId)
+                .ToListAsync();
+        }
+
     }
+}

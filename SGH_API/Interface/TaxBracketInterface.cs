@@ -1,4 +1,5 @@
 ﻿using SolmileGuesthouseAPI.Data.Models;
+using SolmileGuesthouseAPI.DTO.NavigatorModel;
 
 namespace SolmileGuesthouseAPI.Interface
 {
@@ -6,7 +7,7 @@ namespace SolmileGuesthouseAPI.Interface
     {
         Task<TaxBracket> CreateTaxBracketAsync(TaxBracket bracket);
         Task<TaxBracket> GetTaxBracketByIdAsync(int id);
-        Task<IEnumerable<TaxBracket>> GetAllTaxBracketsAsync();
+        Task<IEnumerable<TaxBracketDto>> GetAllTaxBracketsAsync();
 
     }
 }

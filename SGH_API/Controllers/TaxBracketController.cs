@@ -40,6 +40,16 @@ public class TaxBracketController : ControllerBase
         return Ok(bracket);
     }
 
+    [HttpGet("all")]
+    [ProducesResponseType(typeof(IEnumerable<TaxBracketDto>), 200)]
+    public async Task<IActionResult> GetAllTaxBrackets()
+    {
+        var brackets = await _taxBracketInterface.GetAllTaxBracketsAsync();
+        var dto = _mapper.Map<IEnumerable<TaxBracketDto>>(brackets);
+        return Ok(dto);
+    }
+
+
     [HttpPost("calculate")]
     [ProducesResponseType(typeof(TaxResultDto), 200)]
     public async Task<IActionResult> CalculateTax([FromBody] GrossSalaryDto dto)

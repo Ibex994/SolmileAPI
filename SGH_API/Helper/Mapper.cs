@@ -51,8 +51,11 @@ namespace SolmileGuesthouseAPI.Helper
             CreateMap<DeductionRequestDto, Payroll>();
 
             //TaxDto
-            CreateMap<Tax, TaxDto>();
-            CreateMap<TaxDto, Tax>();
+            CreateMap<Tax, TaxDto>()
+                .ForMember(dest => dest.Deductible, opt => opt.MapFrom(src => src.Deduction));
+            CreateMap<TaxDto, Tax>()
+                .ForMember(dest => dest.Deduction, opt => opt.MapFrom(src => src.Deductible));
+
             CreateMap<Tax, CreateTaxDto>();
             CreateMap<CreateTaxDto, Tax>();
             CreateMap<Tax, UpdateTaxDto>();
@@ -84,6 +87,7 @@ namespace SolmileGuesthouseAPI.Helper
             CreateMap<RoleReadDto, Role>();
 
             //TaxBracket
+            CreateMap<TaxBracket, TaxBracketDto>();
             CreateMap<CreateTaxBracketDto, TaxBracket>();
             CreateMap<GrossSalaryDto, TaxBracket>();
 
